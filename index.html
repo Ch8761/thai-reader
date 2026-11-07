@@ -343,7 +343,7 @@ section.view, div.view { border: 0; background: transparent; padding: 0; border-
 .dside .cmove { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font-size: 14px; padding: 0 8px; }
 .dside .cdel { min-height: 40px; font-size: 14px; }
 .docempty { text-align: center; padding: 48px 16px; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 12px; border: 1px dashed var(--line); border-radius: 14px; }
-.testtools > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+button.speaking, .pop button.say.speaking { background: #2f6fd6; color: #ffffff; border-color: #2f6fd6; font-weight: 700; }\n:root[data-theme="dark"] button.speaking { background: #5b8fe6; color: #0b1322; border-color: #5b8fe6; }\n@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) button.speaking { background: #5b8fe6; color: #0b1322; border-color: #5b8fe6; } }\n.testtools > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
 #view-cards .cardbody, #view-cards .cfolders { background: transparent; }
 @media (max-width: 480px) { .tabbar button { font-size: 11px; } .vhead h1 { font-size: 20px; } }
 </style>
@@ -23751,16 +23751,36 @@ window.GRAMMAR = window.GRAMMAR.concat([
     if (cur.trim()) { out.push(cur.trim()); }
     return out;
   }
+  /* 朗讀中：把按下的那顆朗讀按鈕填成藍色，唸完或按停止就恢復 */
+  var lastTapBtn = null, lastTapAt = 0, speakBtn = null, speakTimer = null;
+  document.addEventListener('click', function (e) { var b = e.target && e.target.closest ? e.target.closest('button') : null; if (b) { lastTapBtn = b; lastTapAt = Date.now(); } }, true);
+  function markSpeaking(b) {
+    if (speakBtn && speakBtn !== b) { speakBtn.classList.remove('speaking'); speakBtn.removeAttribute('aria-pressed'); }
+    speakBtn = b;
+    if (speakTimer) { clearInterval(speakTimer); speakTimer = null; }
+    if (!b) { return; }
+    b.classList.add('speaking'); b.setAttribute('aria-pressed', 'true');
+    var started = Date.now();
+    speakTimer = setInterval(function () {
+      var on = hasTTS && (window.speechSynthesis.speaking || window.speechSynthesis.pending);
+      if (!on && Date.now() - started > 800) { stopSpeakingMark(); }
+    }, 300);
+  }
+  function stopSpeakingMark() {
+    if (speakTimer) { clearInterval(speakTimer); speakTimer = null; }
+    if (speakBtn) { speakBtn.classList.remove('speaking'); speakBtn.removeAttribute('aria-pressed'); speakBtn = null; }
+  }
   function speak(text) {
     if (!hasTTS) { $('ttsnote').textContent = '這個瀏覽器不支援朗讀。'; return; }
     window.speechSynthesis.cancel();
+    markSpeaking(lastTapBtn && Date.now() - lastTapAt < 1500 && lastTapBtn.id !== 'stopRead' ? lastTapBtn : null);
     var list = chunks(text);
     list.forEach(function (c, i) {
       var u = new SpeechSynthesisUtterance(c);
       u.lang = 'th-TH';
       if (thVoice) { u.voice = thVoice; }
       u.rate = ttsRate;
-      if (i === list.length - 1) { u.onend = function () { $('ttsnote').textContent = ''; }; }
+      if (i === list.length - 1) { u.onend = function () { $('ttsnote').textContent = ''; stopSpeakingMark(); }; }
       u.onerror = function (e) { $('ttsnote').textContent = '朗讀出錯：' + (e && e.error ? e.error : '未知原因'); };
       window.speechSynthesis.speak(u);
     });
@@ -23771,7 +23791,7 @@ window.GRAMMAR = window.GRAMMAR.concat([
     try { window.speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (err) { window.speechSynthesis.onvoiceschanged = pickVoice; }
   }
   $('readAll').addEventListener('click', function () { speak(state.text); });
-  $('stopRead').addEventListener('click', function () { if (hasTTS) { window.speechSynthesis.cancel(); } $('ttsnote').textContent = ''; });
+  $('stopRead').addEventListener('click', function () { if (hasTTS) { window.speechSynthesis.cancel(); } $('ttsnote').textContent = ''; stopSpeakingMark(); });
   $('slow').addEventListener('click', function () {
     ttsRate = ttsRate === 1 ? 0.7 : 1;
     $('slow').setAttribute('aria-pressed', String(ttsRate !== 1));
@@ -24820,7 +24840,7 @@ window.GRAMMAR = window.GRAMMAR.concat([
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.0.0';
+  var APP_VER = '正式版 v1.0.1';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
