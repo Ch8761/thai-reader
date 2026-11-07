@@ -1,0 +1,30 @@
+{
+  "name": "泰文閱讀",
+  "short_name": "泰文閱讀",
+  "lang": "zh-Hant",
+  "description": "開 PDF 點字查詞、中文詞義、句型說明、筆記與生字卡。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5eedf",
+  "theme_color": "#739488",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
