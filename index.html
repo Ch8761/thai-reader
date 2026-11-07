@@ -343,7 +343,7 @@ section.view, div.view { border: 0; background: transparent; padding: 0; border-
 .dside .cmove { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font-size: 14px; padding: 0 8px; }
 .dside .cdel { min-height: 40px; font-size: 14px; }
 .docempty { text-align: center; padding: 48px 16px; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 12px; border: 1px dashed var(--line); border-radius: 14px; }
-button.speaking, .pop button.say.speaking { background: #2f6fd6; color: #ffffff; border-color: #2f6fd6; font-weight: 700; }\n:root[data-theme="dark"] button.speaking { background: #5b8fe6; color: #0b1322; border-color: #5b8fe6; }\n@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) button.speaking { background: #5b8fe6; color: #0b1322; border-color: #5b8fe6; } }\n.testtools > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+button.speaking, .pop button.say.speaking { background: var(--accent-fill); color: var(--accent-fill-fg); border-color: var(--accent-fill); font-weight: 700; }\n.testtools > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
 #view-cards .cardbody, #view-cards .cfolders { background: transparent; }
 @media (max-width: 480px) { .tabbar button { font-size: 11px; } .vhead h1 { font-size: 20px; } }
 </style>
@@ -24840,7 +24840,7 @@ window.GRAMMAR = window.GRAMMAR.concat([
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.0.1';
+  var APP_VER = '正式版 v1.0.2';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
