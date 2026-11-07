@@ -516,12 +516,12 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <div class="setlabel">歡迎視窗<span class="sethelp">第一次開啟時出現的設定視窗，可以再看一次。</span></div>
       <button type="button" id="reWelcome">再顯示一次</button>
     </div>
-    <div class="setrow">
+    <div class="setrow" hidden>
       <div class="setlabel">顯示 PDF 的文字層<span class="sethelp">測試用：用紅字顯示點字時比對的位置，看是否對準 PDF 上的字。</span></div>
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.0.4</p>
+    <p class="label appver">ไทย Reader 正式版 v1.0.5</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -24841,7 +24841,7 @@ window.GRAMMAR = window.GRAMMAR.concat([
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.0.4';
+  var APP_VER = '正式版 v1.0.5';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -25923,7 +25923,23 @@ window.GRAMMAR = window.GRAMMAR.concat([
 <script>
 /* 離線用的背景程式（Service Worker）：把 App 存在 iPad 上，沒網路也能打開 */
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') { reg.update().catch(function () {}); } });
+    }).catch(function () {});
+  });
+  var hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (!hadController) { hadController = true; return; }
+    if (document.getElementById('updbar')) { return; }
+    var bar = document.createElement('div');
+    bar.id = 'updbar'; bar.setAttribute('role', 'status');
+    bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--card);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:15px;max-width:calc(100% - 32px)';
+    bar.textContent = '有新版本了。';
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'primary'; b.textContent = '重新整理';
+    b.addEventListener('click', function () { location.reload(); });
+    bar.appendChild(b); document.body.appendChild(bar);
+  });
 }
 /* 請瀏覽器不要自動清掉這個 App 的資料（PDF、筆記、生字卡） */
 if (navigator.storage && navigator.storage.persist) { navigator.storage.persisted().then(function (p) { if (!p) { navigator.storage.persist(); } }).catch(function () {}); }
