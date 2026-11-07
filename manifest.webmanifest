@@ -1,6 +1,6 @@
 {
-  "name": "泰文閱讀",
-  "short_name": "泰文閱讀",
+  "name": "ไทย Reader",
+  "short_name": "ไทย Reader",
   "lang": "zh-Hant",
   "description": "開 PDF 點字查詞、中文詞義、句型說明、筆記與生字卡。",
   "start_url": "./",

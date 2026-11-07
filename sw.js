@@ -1,5 +1,5 @@
 /* 泰文閱讀的離線程式。改版時把 VERSION 加一，iPad 會自動換成新版。 */
-const VERSION = 'thai-reader-v1.0.2';
+const VERSION = 'thai-reader-v1.0.3';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
