@@ -554,7 +554,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.4.0</p>
+    <p class="label appver">ไทย Reader 正式版 v1.4.1</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -38123,7 +38123,31 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 ฝันดี|fǎn-dii|晚安、祝好夢|sweet dreams
 สู้ๆ|sûu-sûu|加油！|fighting! keep going!
 ไฟต์ติ้ง|fai-tîng|加油（fighting）|fighting!
-แล้วเจอกัน|lɛ́ɛo-jəə-gan|到時候見、再見|see you then</script>
+แล้วเจอกัน|lɛ́ɛo-jəə-gan|到時候見、再見|see you then
+หล่ะ|là|「ล่ะ」的口語寫法：……呢、……啦|colloquial spelling of lâ
+ไซนัส|sai-nát|鼻竇；鼻竇炎（sinus）|sinus
+บิ้ว|bíu|炒熱氣氛、帶動情緒（build）|to hype up
+เอนเนอร์จี้|en-nəə-jîi|能量、活力（energy）|energy
+เอนเนอจี้|en-nəə-jîi|能量、活力（energy）|energy
+เอเนอร์จี้|ee-nəə-jîi|能量、活力（energy）|energy
+เลิฟ|lə́f|愛（love）|love
+ซีรี่|sii-rîi|影集、劇集（series）|series
+ซีรี่ส์|sii-rîi|影集、劇集（series）|series
+ซีรีส์|sii-riit|影集、劇集（series）|series
+เว่อ|wə̂ə|太誇張、超級（over）|over the top
+เว่อร์|wə̂ə|太誇張、超級（over）|over the top
+สเตป|sà-tép|步驟、一步；舞步（step）|step
+สเต็ป|sà-tép|步驟、一步；舞步（step）|step
+นึง|nʉng|一（「หนึ่ง」的口語，例如 แป๊บนึง＝一下下）|one (colloquial)
+เซฟ|séf|儲存、保存；保護（save）|save
+จ่ะ|jà|好、是（親切的語氣詞，同 จ้ะ）|friendly particle
+วีน|wiin|發脾氣、抓狂|to throw a tantrum
+สต็อก|sà-tɔ́k|庫存（stock）|stock
+สต๊อก|sà-tɔ́k|庫存（stock）|stock
+จัดเต็ม|jàt-tem|火力全開、全力以赴|all-out
+ออกกอง|ɔ̀ɔk-gɔɔng|出外景、去片場拍攝|to go on set
+น้า|náa|（句尾）＝นะ 的撒嬌說法|cute form of ná
+แมสก์|mɛ́t|口罩（mask）|face mask</script>
 <script type="text/plain" id="lib-pdflib">!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t=t||self).PDFLib={})}(this,(function(t){"use strict";
 /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -39366,7 +39390,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
      遇到查不到的片段，就連同前後一個詞用字典重新切；切出來要用到網路用語或拉長寫法才採用。 */
   function slThaiSeg(g) { return g && !g.gz && /^[\u0E01-\u0E4E]+$/.test(g.t); }
   function slUnk(g) { return slThaiSeg(g) && !DICT[g.t] && !dictBase(g.t); }
-  function dpSplit(t) {
+  function dpSplit(t, nOrig) {
     var L = t.length, best = [0], from = [], piece = [];
     for (var k = 1; k <= L; k++) {
       best[k] = Infinity;
@@ -39378,7 +39402,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (best[L] === Infinity) { return null; }
     var parts = [];
     for (var e = L; e > 0; e = from[e]) { parts.unshift(piece[e]); }
+    if (parts.length < nOrig) { return parts; }
     return parts.some(function (w) { return (SLANG_SET && SLANG_SET[w]) || (!DICT[w] && dictBase(w)); }) ? parts : null;
+  }
+  function splitScripts(out) {
+    var res = [];
+    out.forEach(function (g) {
+      if (g.gz || !/[\u0E01-\u0E4E]/.test(g.t) || !/[0-9A-Za-z]/.test(g.t)) { res.push(g); return; }
+      var re = /[\u0E01-\u0E4E]+|[0-9]+|[A-Za-z]+|[^\u0E01-\u0E4E0-9A-Za-z]+/g, m;
+      while ((m = re.exec(g.t))) { res.push({ i: g.i + m.index, n: m[0].length, w: /\S/.test(m[0]), t: m[0] }); }
+    });
+    return res;
   }
   function resegUnknown(out) {
     var res = [], i = 0;
@@ -39390,7 +39424,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var nx = out[j + 1], useNext = slThaiSeg(nx) && out[j].i + out[j].n === nx.i;
       var s0 = usePrev ? p.i : out[i].i, e0 = useNext ? nx.i + nx.n : out[j].i + out[j].n;
       var segText = (usePrev ? p.t : '') + out.slice(i, j + 1).map(function (x) { return x.t; }).join('') + (useNext ? nx.t : '');
-      var parts = dpSplit(segText);
+      var parts = dpSplit(segText, (usePrev ? 1 : 0) + (j - i + 1) + (useNext ? 1 : 0));
       if (parts) {
         if (usePrev) { res.pop(); }
         var o = s0;
@@ -39406,7 +39440,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   /* 斷詞後把被切開的拉長尾巴（มาก|กก|กก）接回前一個詞 */
   function mergeElong(out) {
     if (!DICT) { return out; }
-    var pre = resegUnknown(out);
+    var pre = resegUnknown(splitScripts(out));
     var res = [];
     pre.forEach(function (g) {
       var p = res[res.length - 1];
@@ -40938,7 +40972,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.4.0';
+  var APP_VER = '正式版 v1.4.1';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -41788,16 +41822,30 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         (gazSk[sk.slice(0, 2)] = gazSk[sk.slice(0, 2)] || []).push({ sk: sk, o: o });
       });
     });
-    Object.keys(gazSk).forEach(function (k) { gazSk[k].sort(function (a, b) { return b.sk.length - a.sk.length; }); });
+    /* 字典裡的詞（含網路用語）：骨架只對到一個詞時才用，而且只在原本的字查不到時才換 */
+    if (typeof DICT !== 'undefined' && DICT) {
+      var bySk = {};
+      Object.keys(DICT).forEach(function (w) {
+        if (w.length < 3 || / /.test(w) || !/^[\u0E01-\u0E4E]+$/.test(w)) { return; }
+        var sk = skel(w);
+        if (sk === w || sk.length < 3) { return; }
+        bySk[sk] = Object.prototype.hasOwnProperty.call(bySk, sk) && bySk[sk] !== w ? null : w;
+      });
+      Object.keys(bySk).forEach(function (sk) { if (bySk[sk]) { (gazSk[sk.slice(0, 2)] = gazSk[sk.slice(0, 2)] || []).push({ sk: sk, o: { t: bySk[sk] }, word: true }); } });
+    }
+    Object.keys(gazSk).forEach(function (k) { gazSk[k].sort(function (a, b) { return b.sk.length - a.sk.length || (a.word ? 1 : 0) - (b.word ? 1 : 0); }); });
     return gazSk;
   }
   function ocrNameFix(t) {
     var idx = gazSkeletonIndex();
     if (!/[\u0E01-\u0E2E]/.test(t) || !Object.keys(idx).length) { return { t: t, n: 0 }; }
-    var sk = '', map = [], starts = { 0: 1 };
+    var sk = '', map = [], starts = { 0: 1 }, ends = {}, pieces = [];
     for (var i = 0; i < t.length; i++) { var c = t.charAt(i); if (!TONE_ONLY.test(c)) { map.push(i); sk += skel(c); } }
     map.push(t.length);
-    if (ocrSeg) { Array.from(ocrSeg.segment(t)).forEach(function (x) { starts[x.index] = 1; }); }
+    if (ocrSeg) { Array.from(ocrSeg.segment(t)).forEach(function (x) { starts[x.index] = 1; ends[x.index + x.segment.length] = 1; pieces.push([x.index, x.index + x.segment.length, x.segment]); }); }
+    ends[t.length] = 1;
+    /* 這一段裡有沒有查不到的片段（字典詞的補字只在有查不到的片段時才做，避免把 ความ 改成 คว้า＋ม） */
+    function hasUnknown(a, b) { return pieces.some(function (p) { return p[0] < b && a < p[1] && /[\u0E01-\u0E4E]/.test(p[2]) && !DICT[p[2]]; }); }
     var out = '', pos = 0, n = 0, j = 0;
     while (j < sk.length - 1) {
       var list = idx[sk.substr(j, 2)], hit = null;
@@ -41807,6 +41855,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           if (sk.substr(j, L) !== list[k].sk) { continue; }
           var nx = t.charAt(map[j + L]);
           if (isMark(nx) || /[\u0E30\u0E32\u0E33\u0E45]/.test(nx)) { continue; }
+          if (list[k].word && (DICT[t.slice(map[j], map[j + L])] || !ends[map[j + L]] || !hasUnknown(map[j], map[j + L]))) { continue; }
           hit = list[k]; break;
         }
       }
@@ -41832,6 +41881,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
             return /[A-Za-z0-9\u0E01-\u0E4E\u0E50-\u0E59]/.test(w.text) ? w.confidence >= 20 : w.confidence >= 75;
           });
           if (!ws.length || ln.confidence < 50) { return; }
+          /* 截圖裡的按讚數、時間、使用者名稱旁的符號：字母太少的行不要 */
+          var lineTxt = ws.map(function (w) { return w.text; }).join(''), letters = (lineTxt.match(/[A-Za-z\u0E01-\u0E4E]/g) || []).length;
+          if (letters < 2 || letters / lineTxt.length < 0.5) { return; }
+          /* 泰文字之間孤立的單一符號或英文字母（多半是表情符號） */
+          ws = ws.filter(function (w, k) {
+            var tx = w.text.trim();
+            if (tx.length > 1 || /[\u0E01-\u0E4E0-9]/.test(tx)) { return true; }
+            var a = ws[k - 1], b = ws[k + 1];
+            return !((!a || /[\u0E01-\u0E4E]/.test(a.text)) && (!b || /[\u0E01-\u0E4E]/.test(b.text)));
+          });
+          if (!ws.length) { return; }
           var short = ws.filter(function (w) { return w.text.trim().length <= 2; }).length;
           if (ln.confidence < 80 && ws.length >= 4 && short / ws.length >= 0.6) { return; }
           var ra = ln.rowAttributes || {}, bb = ln.bbox, h = ra.row_height || (bb.y1 - bb.y0);
