@@ -367,6 +367,31 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 #docpages li { margin: 0; }
 .ocrbox p { margin: 0; font-size: 14px; color: var(--fg); line-height: 1.6; }
 .ocrbox .btns { margin: 0; }
+
+/* ---------- 按鈕外觀整理 ---------- */
+.seg { gap: 6px; }
+.seg button { min-height: 36px; padding: 0 14px; font-size: 14px; border-radius: 999px; }
+/* 資料夾列：分類和「＋ 新資料夾」排在同一行 */
+#homeFolders, #cardFolders { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 10px; }
+#homeFolders > .label, #cardFolders > .label { flex-basis: 100%; margin-top: 4px; }
+#homeFolders > .seg, #cardFolders > .seg, #homeFolders > .frow, #cardFolders > .frow { display: contents; }
+#homeFolders .frow > button, #cardFolders .frow > button { min-height: 36px; padding: 0 14px; font-size: 14px; border-radius: 999px; }
+#homeFolders .frow > button:first-child, #cardFolders .frow > button:first-child { border-style: dashed; background: transparent; color: var(--muted); }
+#homeFolders .frow > input.fname, #cardFolders .frow > input.fname { min-height: 36px; border-radius: 999px; padding: 0 14px; flex: 1 1 160px; max-width: 280px; }
+/* 生字卡的「複習／全部清單」：做成一個切換鈕 */
+#cardTabs { display: inline-flex; gap: 0; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); margin: 14px 0 6px; }
+#cardTabs button { border: 0; background: transparent; min-height: 34px; padding: 0 18px; }
+#cardTabs button[aria-checked="true"] { background: var(--accent-fill); color: var(--accent-fill-fg); }
+/* 筆記工具列：維持一排，太窄時可以左右滑，不會只剩一顆掉到下一排 */
+.workbox .toolbar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.workbox .toolbar::-webkit-scrollbar { display: none; }
+.workbox .toolbar > * { flex: 0 0 auto; }
+/* 查詞視窗：按鈕排成整齊的格子 */
+.pop .links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pop .links > * { width: 100%; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; text-align: center; min-height: 40px; padding: 0 8px; font-size: 14px; border-radius: 10px; }
+.pop .links > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+.pop .ent-sec .row2 { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
+.pop .ent-sec .row2 > * { width: 100%; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; text-align: center; min-height: 38px; padding: 0 6px; font-size: 14px; border-radius: 10px; }
 </style>
 </head>
 <body>
@@ -436,7 +461,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <button type="button" id="readAll">朗讀全文</button>
     <button type="button" id="stopRead">停止</button>
     <button type="button" class="toggle" id="slow" aria-pressed="false">慢速</button>
-    <button type="button" id="translateAll" aria-expanded="false" aria-controls="trpanel">整篇翻譯（Google 翻譯）</button>
+    <button type="button" id="translateAll" aria-expanded="false" aria-controls="trpanel">整篇翻譯</button>
     <span id="ttsnote" aria-live="polite"></span>
   </div>
   <div id="trpanel" class="trpanel" hidden>
@@ -453,7 +478,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <span class="sep" aria-hidden="true"></span>
     <button type="button" id="undo">復原</button>
     <button type="button" id="clear">清除全部</button>
-    <button type="button" class="toggle" id="pencil" aria-pressed="false">只讓 Apple Pencil 畫</button>
+    <button type="button" class="toggle" id="pencil" aria-pressed="false">只用 Pencil 畫</button>
     <div class="stylebar" id="stylebar" role="toolbar" aria-label="文字樣式" hidden>
       <span class="sl">大小</span>
       <button type="button" class="sb" data-act="smaller" aria-label="字變小">A−</button>
@@ -555,7 +580,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.4.2</p>
+    <p class="label appver">ไทย Reader 正式版 v1.4.3</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -39651,7 +39676,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var sr = sentenceAround(seg.i), trs = document.createElement('a');
     trs.className = 'ext'; trs.target = '_blank'; trs.rel = 'noopener noreferrer'; trs.textContent = '翻譯這句';
     trs.href = trUrl(state.text.slice(sr[0], sr[1]).trim().slice(0, 600));
-    links.appendChild(trs);
+    links.insertBefore(trs, say.nextSibling);
     pop.appendChild(x); pop.appendChild(head);
     if (en0) { pop.appendChild(buildEntitySection(en0)); }
     if (!(seg.gz && en0)) { pop.appendChild(d); }
@@ -40608,19 +40633,19 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var help = document.createElement('div'); help.className = 'sl2'; help.textContent = en.info ? (en.info.mine ? '你加進「我的專有名詞」的名字。' : '收錄在內建名單' + (en.info.desc ? '：' + en.info.desc : '') + '。' + (en.info.weak ? '這裡只寫了暱稱，也可能是同暱稱的其他人。' : '')) : ENT_HELP[en.type];
     if (en.info && (en.info.zh || en.info.en)) { var inf = document.createElement('div'); inf.className = 'entinfo'; inf.textContent = (en.info.zh ? en.info.zh : '') + (en.info.en ? (en.info.zh ? '（' + en.info.en + '）' : en.info.en) : ''); top.appendChild(inf); }
     var row = document.createElement('div'); row.className = 'row2';
-    var say = document.createElement('button'); say.type = 'button'; say.textContent = '朗讀全名';
+    var say = document.createElement('button'); say.type = 'button'; say.textContent = '朗讀';
     say.addEventListener('click', function () { speak(en.t); });
     row.appendChild(say);
     var fix = document.createElement('button'); fix.type = 'button';
-    fix.textContent = en.info && en.info.mine ? '編輯' : (en.info ? '範圍不對？' : '存成專有名詞');
+    fix.textContent = en.info && en.info.mine ? '編輯' : (en.info ? '調整範圍' : '存成名字');
     fix.addEventListener('click', function () { openNameEditor(en.s, en.e, en); });
     row.appendChild(fix);
     if (en.info && en.info.mine) {
-      var rmv = document.createElement('button'); rmv.type = 'button'; rmv.textContent = '從名單移除';
+      var rmv = document.createElement('button'); rmv.type = 'button'; rmv.textContent = '移除';
       rmv.addEventListener('click', function () { removeMyName(en.info.t); hidePop(); $('info').textContent = '已把「' + en.info.t + '」從我的名單移除。'; });
       row.appendChild(rmv);
     }
-    [['Google 搜尋', 'https://www.google.com/search?q=' + encodeURIComponent(en.t)]].forEach(function (L) {
+    [['Google', 'https://www.google.com/search?q=' + encodeURIComponent(en.t)]].forEach(function (L) {
       var a = document.createElement('a'); a.className = 'ext small'; a.href = L[1]; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = L[0];
       row.appendChild(a);
     });
@@ -40973,7 +40998,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.4.2';
+  var APP_VER = '正式版 v1.4.3';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
