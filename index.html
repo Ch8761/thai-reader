@@ -251,6 +251,7 @@ a.ext.small:focus-visible { outline: 3px solid var(--accent); outline-offset: 2p
 .ent-foreign, .ent-box-foreign { --ec: 100, 116, 139; }
 .ent-other, .ent-box-other { --ec: 13, 148, 136; }
 .pop .entinfo { font-size: 15px; color: var(--fg); }
+.pop .ent-sec .row2 button { min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-weight: 600; font-size: 14px; }
 .pop .nameedit { display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg); }
 .pop .nmrow { display: flex; align-items: center; gap: 6px; }
 .pop .nmprev { flex: 1; min-width: 0; text-align: center; font-family: var(--thai); font-size: 21px; font-weight: 600; padding: 4px 8px; border-radius: 8px; background: var(--card); border: 1px dashed var(--accent); overflow-wrap: anywhere; }
@@ -360,7 +361,9 @@ section.view, div.view { border: 0; background: transparent; padding: 0; border-
 button.speaking, .pop button.say.speaking { background: var(--accent-fill); color: var(--accent-fill-fg); border-color: var(--accent-fill); font-weight: 700; }\n.testtools > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
 #view-cards .cardbody, #view-cards .cfolders { background: transparent; }
 @media (max-width: 480px) { .tabbar button { font-size: 11px; } .vhead h1 { font-size: 20px; } }
-.ocrbox { margin-top: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); display: flex; flex-direction: column; gap: 8px; }
+.ocrbox { margin-top: 6px; display: flex; flex-direction: column; gap: 8px; }
+#docpages { list-style: none; margin: 0; padding: 0; font-size: 14px; color: var(--fg); }
+#docpages li { margin: 0; }
 .ocrbox p { margin: 0; font-size: 14px; color: var(--fg); line-height: 1.6; }
 .ocrbox .btns { margin: 0; }
 </style>
@@ -406,7 +409,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <div class="btns">
         <button type="button" class="primary" id="ocrGo">用文字辨識讀這些頁</button>
         <button type="button" id="ocrStop" hidden>停止</button>
-        <button type="button" id="ocrClear" hidden>清除辨識結果</button>
+        <button type="button" id="ocrRedo" hidden>重新辨識</button>
       </div>
     </div>
   </section>
@@ -551,7 +554,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.3.1</p>
+    <p class="label appver">ไทย Reader 正式版 v1.3.2</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -34638,6 +34641,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 เบ ซูซี่|person|裴秀智|韓國歌手、演員|Bae Suzy
 เบ ยองจุน|person|裴勇俊|韓國演員、模特兒|Bae Yong-joon
 เบ ย็อง จุน|person|裴勇俊|韓國演員、模特兒|Bae Yong-joon
+เบคกี้|person|瑞貝卡·派翠西亞·阿姆斯壯|泰國歌手、演員|Rebecca Patricia Armstrong|w
+เบคกี้ รีเบคก้า|person|瑞貝卡·派翠西亞·阿姆斯壯|泰國歌手、演員|Rebecca Patricia Armstrong
 เบญจณัฏฐ์ อักษรนันทน์|person||泰國演員|
 เบญจมินทร์|person||泰國演員|
 เบญจรงค์ สุวรรณคีรี|person||泰國政治人物|
@@ -34677,6 +34682,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 เบิร์ดกะฮาร์ท|org||樂團|Byrd & Heart
 เบิ้ล ปทุมราช|person|布萊·帕圖姆拉馳|泰國歌手|Ble Patumrach
 เบียร์ พร้อมพงษ์|person||泰國歌手、演員|Beer Phromphong
+เบ็คกี้|person|瑞貝卡·派翠西亞·阿姆斯壯|泰國歌手、演員|Rebecca Patricia Armstrong|w
+เบ็คกี้ รีเบคก้า|person|瑞貝卡·派翠西亞·阿姆斯壯|泰國歌手、演員|Rebecca Patricia Armstrong
 เบ็ญจมาศ อภัยทอง|person||泰國政治人物|
 เบ๊นซ์|person|素乍麗妮·威瓦差拉翁|泰國演員|Sujarinee Vivacharawongse|w
 เบ๊นซ์ สุจาริณี|person|素乍麗妮·威瓦差拉翁|泰國演員|Sujarinee Vivacharawongse
@@ -38090,7 +38097,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var PDF_GAP = 18, PDF_DOC_PREFIX = 'thai-notes-doc:';
   var pdf = null, pdfIO = null, renderBusy = false, libsReady = null, workerMode = '尚未載入', baseRatio = 0;
   var pdfInfo = { status: '目前顯示：範例或貼上的文字', lastError: '' };
-  function setDocStatus(t) { $('docstatus').textContent = t; pdfInfo.status = t; }
+  function setDocStatus(t) { var el = $('docstatus'); el.textContent = t; el.hidden = !t; if (t) { pdfInfo.status = t; } syncDocSec(); }
+  function syncDocSec() { var sec = $('docsec'), ob = $('ocrbox'); if (sec) { sec.hidden = $('docstatus').hidden && $('docpages').hidden && (!ob || ob.hidden); } }
   function injectScript(id) {
     var src = $(id);
     if (!src) { throw new Error('缺少 ' + id); }
@@ -38253,26 +38261,18 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function renderDocInfo() {
     var ul = $('docpages'), help = $('dochelp');
     ul.replaceChildren();
-    if (!pdf) { ul.hidden = true; help.hidden = true; return; }
+    if (!pdf) { ul.hidden = true; help.hidden = true; syncDocSec(); return; }
     var counts = { ok: 0, minor: 0, broken: 0, empty: 0, ocr: 0 };
     pdf.quality.forEach(function (q) { counts[q.st]++; });
     var r = pdf.fix, parts = [];
     Object.keys(FIX_HOW).forEach(function (k) { if (r[k]) { parts.push(FIX_HOW[k] + ' ' + r[k] + ' 個'); } });
     var li0 = document.createElement('li');
-    li0.textContent = '共 ' + pdf.pages.length + ' 頁：正常 ' + counts.ok + ' 頁' + (counts.minor ? '、少量缺字 ' + counts.minor + ' 頁' : '') + (counts.broken ? '、文字可能壞掉 ' + counts.broken + ' 頁' : '') + (counts.empty ? '、沒有文字 ' + counts.empty + ' 頁' : '') + (counts.ocr ? '、用文字辨識 ' + counts.ocr + ' 頁' : '') + '。';
+    li0.textContent = '這份文件共 ' + pdf.pages.length + ' 頁。';
     ul.appendChild(li0);
-    var li1 = document.createElement('li');
-    li1.textContent = parts.length ? '已自動修好泰文字型：' + parts.join('、') + '（' + r.fixedFonts.join('、') + '）。' : '泰文字型不需要修復。';
-    ul.appendChild(li1);
-    var bad = pdf.quality.filter(function (q) { return q.st !== 'ok' && q.st !== 'ocr'; });
-    if (bad.length) {
-      var li2 = document.createElement('li');
-      li2.textContent = '要注意的頁面：' + bad.slice(0, 12).map(function (q) { return '第 ' + q.n + ' 頁' + Q_TEXT[q.st]; }).join('、') + (bad.length > 12 ? '…' : '') + '。';
-      ul.appendChild(li2);
-    }
     help.hidden = true;
     ul.hidden = false;
     if (typeof renderOcrBox === 'function') { renderOcrBox(); }
+    syncDocSec();
   }
   function buildTextLayer() {
     var el = $('text'), mctx = document.createElement('canvas').getContext('2d');
@@ -38480,7 +38480,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       renderText(); layout(); renderBoxes();
       refreshTranslateLink();
       pdf.ms = Date.now() - t0;
-      setDocStatus('目前顯示：' + name + '（' + pages.length + ' 頁，' + (pdf.ms / 1000).toFixed(1) + ' 秒）' + (keep && !restore ? '，已接回上次的筆記' : ''));
+      pdfInfo.status = '目前顯示：' + name + '（' + pages.length + ' 頁，' + (pdf.ms / 1000).toFixed(1) + ' 秒）' + (keep && !restore ? '，已接回上次的筆記' : '');
+      setDocStatus('');
       renderDocInfo();
       save();
       if (typeof libRegisterPdf === 'function') { libRegisterPdf(id, name, bytes.length, pages.length); }
@@ -38597,7 +38598,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     (GAZ[k] = GAZ[k] || []).push(o);
   }
   function gazBuild() {
-    GAZ = {};
+    GAZ = {}; gazSk = null;
     if (!gazBuiltin) {
       gazBuiltin = [];
       var el = $('celebdata');
@@ -38815,8 +38816,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         if (ENT_STOP[first.t] || !/[ก-๎]/.test(first.t)) { continue; }
         if (type === 'work') {
           if (first.t === 'เรื่อง' && k2 + 1 < r.segs.length) { k2++; first = segs[r.segs[k2]]; }
-          var e0 = cutEnd(r, r.segs[k2]);
-          add(first.i, e0, 'work');
+          var e0 = cutEnd(r, r.segs[k2]), ttl = t.slice(first.i, e0);
+          /* 「เรื่องใหม่」（新的）這種一般詞不是劇名 */
+          if (!(known(ttl) && ttl.length <= 6)) { add(first.i, e0, 'work'); }
           a = k2; continue;
         }
         var e1 = cutEnd(r, r.segs[k2]), nAfter = 0;
@@ -38895,9 +38897,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       rmv.addEventListener('click', function () { removeMyName(en.info.t); hidePop(); $('info').textContent = '已把「' + en.info.t + '」從我的名單移除。'; });
       row.appendChild(rmv);
     }
-    [['Google 搜尋', 'https://www.google.com/search?q=' + encodeURIComponent(en.t)],
-     ['維基百科', 'https://th.wikipedia.org/w/index.php?search=' + encodeURIComponent(en.t)],
-     ['翻成中文', 'https://translate.google.com/?sl=th&tl=zh-TW&op=translate&text=' + encodeURIComponent(en.t)]].forEach(function (L) {
+    [['Google 搜尋', 'https://www.google.com/search?q=' + encodeURIComponent(en.t)]].forEach(function (L) {
       var a = document.createElement('a'); a.className = 'ext small'; a.href = L[1]; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = L[0];
       row.appendChild(a);
     });
@@ -39250,7 +39250,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.3.1';
+  var APP_VER = '正式版 v1.3.2';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -39942,7 +39942,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     state = Object.assign({ text: '', hl: [], strokes: [], boxes: [], nextId: 1 }, o || {}, { src: { type: 'text', id: id, name: d.name }, style: state.style });
     segs = segment(state.text); history = []; tapSel = null;
     d.opened = Date.now(); saveLib();
-    setDocStatus('目前顯示：' + d.name + '（文字，' + state.text.length + ' 字）');
+    pdfInfo.status = '目前顯示：' + d.name + '（文字，' + state.text.length + ' 字）';
+    setDocStatus('');
     showTab('doc');
     renderAllNotes(); save(); refreshTranslateLink(); renderHome(); syncDocView();
   }
@@ -40079,7 +40080,56 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       }
       if (!hit) { out += toks[i]; i++; }
     }
-    return { t: out, n: n };
+    var g = ocrNameFix(out);
+    return { t: g.t, n: n + g.n };
+  }
+  /* 用專有名詞名單補回名字裡漏掉的聲調符號（例如 เบคกี → เบคกี้，名單裡要有這個名字） */
+  var gazSk = null, TONE_ONLY = /[\u0E48-\u0E4C]/;
+  /* 名字的「骨架」：拿掉聲調符號，ิ ี ึ ื ็ 當成同一類（辨識最常認錯這幾個） */
+  function skel(s) { return s.replace(/[\u0E48-\u0E4C]/g, '').replace(/[\u0E34-\u0E37\u0E47]/g, '\u0E34'); }
+  function gazSkeletonIndex() {
+    if (gazSk) { return gazSk; }
+    gazSk = {};
+    if (typeof GAZ === 'undefined') { return gazSk; }
+    Object.keys(GAZ).forEach(function (k) {
+      GAZ[k].forEach(function (o) {
+        if (o.t.length < 4 || / /.test(o.t)) { return; }
+        var sk = skel(o.t);
+        if (sk === o.t) { return; }
+        if (sk.length < 3) { return; }
+        (gazSk[sk.slice(0, 2)] = gazSk[sk.slice(0, 2)] || []).push({ sk: sk, o: o });
+      });
+    });
+    Object.keys(gazSk).forEach(function (k) { gazSk[k].sort(function (a, b) { return b.sk.length - a.sk.length; }); });
+    return gazSk;
+  }
+  function ocrNameFix(t) {
+    var idx = gazSkeletonIndex();
+    if (!/[\u0E01-\u0E2E]/.test(t) || !Object.keys(idx).length) { return { t: t, n: 0 }; }
+    var sk = '', map = [], starts = { 0: 1 };
+    for (var i = 0; i < t.length; i++) { var c = t.charAt(i); if (!TONE_ONLY.test(c)) { map.push(i); sk += skel(c); } }
+    map.push(t.length);
+    if (ocrSeg) { Array.from(ocrSeg.segment(t)).forEach(function (x) { starts[x.index] = 1; }); }
+    var out = '', pos = 0, n = 0, j = 0;
+    while (j < sk.length - 1) {
+      var list = idx[sk.substr(j, 2)], hit = null;
+      if (list && (starts[map[j]] || !isThaiCh(t.charAt(map[j] - 1)))) {
+        for (var k = 0; k < list.length; k++) {
+          var L = list[k].sk.length;
+          if (sk.substr(j, L) !== list[k].sk) { continue; }
+          var nx = t.charAt(map[j + L]);
+          if (isMark(nx) || /[\u0E30\u0E32\u0E33\u0E45]/.test(nx)) { continue; }
+          hit = list[k]; break;
+        }
+      }
+      if (hit) {
+        var a = map[j], b = map[j + hit.sk.length];
+        if (t.slice(a, b) !== hit.o.t) { out += t.slice(pos, a) + hit.o.t; pos = b; n++; }
+        j += hit.sk.length; continue;
+      }
+      j++;
+    }
+    return { t: out + t.slice(pos), n: n };
   }
   /* 把 Tesseract 的結果變成文字層的片段：位置都存成「頁寬的幾分之幾」，換螢幕大小也對得上 */
   function ocrItems(data, W) {
@@ -40141,22 +40191,25 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (!pdf || !pdf.quality) { return []; }
     return pdf.quality.filter(function (q) { return q.st === 'empty' || q.st === 'broken'; }).map(function (q) { return q.n; });
   }
+  function ocrHavePages() { return pdf && pdf.quality ? pdf.quality.filter(function (q) { return q.st === 'ocr'; }).map(function (q) { return q.n; }) : []; }
   function ocrHave() { return pdf && pdf.quality ? pdf.quality.filter(function (q) { return q.st === 'ocr'; }).length : 0; }
   function renderOcrBox() {
     var box = $('ocrbox');
     if (!box) { return; }
-    if (!pdf) { box.hidden = true; return; }
+    if (!pdf) { box.hidden = true; if (typeof syncDocSec === 'function') { syncDocSec(); } return; }
     if (ocr.msgId && ocr.msgId !== pdf.id && !ocr.busy) { ocr.msg = ''; ocr.msgId = ''; }
     var need = ocrNeed(), have = ocrHave();
     box.hidden = !need.length && !have && !ocr.busy && !ocr.msg;
     $('ocrGo').hidden = ocr.busy || !need.length;
     $('ocrGo').textContent = '用文字辨識讀' + (need.length === pdf.pages.length ? '全部 ' : '這 ') + need.length + ' 頁';
     $('ocrStop').hidden = !ocr.busy;
-    $('ocrClear').hidden = ocr.busy || !have;
-    var idle = need.length
-      ? (have ? '已辨識 ' + have + ' 頁。' : '') + '有 ' + need.length + ' 頁讀不到文字（可能是掃描或拍照的頁面）。文字辨識（OCR）會「看」頁面的圖，把上面的字認出來，之後就能點字查詞。每頁大約 5–20 秒，第一次要先下載約 8 MB 的辨識工具。'
-      : '有 ' + have + ' 頁是用文字辨識讀出來的，可能有錯字（尤其是聲調符號）。查詞時請對照頁面上的字。';
-    $('ocrmsg').textContent = ocr.busy || ocr.msg ? ocr.msg : idle;
+    $('ocrRedo').hidden = ocr.busy || !have;
+    function pageList(ns) { return ns.length === pdf.pages.length && ns.length > 1 ? '全部頁面' : '第 ' + ns.slice(0, 10).join('、') + (ns.length > 10 ? '…' : '') + ' 頁'; }
+    var haveN = ocrHavePages(), lines = [];
+    if (need.length) { lines.push(pageList(need) + '讀不到文字（可能是掃描或拍照的頁面），可以用文字辨識讀出來，每頁約 5–20 秒。'); }
+    if (haveN.length) { lines.push(pageList(haveN) + '是用文字辨識讀出來的，可能有錯字，查詞時請對照頁面。'); }
+    $('ocrmsg').textContent = ocr.busy || ocr.msg ? ocr.msg : lines.join('');
+    if (typeof syncDocSec === 'function') { syncDocSec(); }
     if (ocr.autoId && ocr.autoId === pdf.id && need.length && !ocr.busy) { ocr.autoId = ''; setTimeout(function () { runOcr(need); }, 50); }
   }
   async function runOcr(nums) {
@@ -40200,7 +40253,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         var bytes = await idbGet(id);
         await openPdfBytes(new Uint8Array(bytes), name, true);
       } catch (err) { fail += '重新整理頁面時出錯：' + String(err && err.message || err).slice(0, 80); }
-      setOcrMsg((ocr.stop ? '已停止：' : '完成：') + '辨識了 ' + ocr.done + ' 頁（' + Math.round(ocr.ms / 1000) + ' 秒）' + (ocr.fixes ? '，自動補回 ' + ocr.fixes + ' 個常見錯字' : '') + '。現在可以點字查詞了，辨識出來的字可能有錯，請對照頁面。' + (fail ? ' ' + fail : ''));
+      setOcrMsg(fail);
     } else {
       setOcrMsg(fail || (ocr.stop ? '已停止。' : '沒有辨識任何頁面。'));
     }
@@ -40208,16 +40261,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   $('ocrGo').addEventListener('click', function () { runOcr(ocrNeed()); });
   $('ocrStop').addEventListener('click', function () { ocr.stop = true; setOcrMsg('辨識完這一頁就停止…'); });
-  $('ocrClear').addEventListener('click', async function () {
-    if (!pdf || ocr.busy) { return; }
-    var id = pdf.id, name = pdf.name;
-    try { await idbDel(ocrKey(id)); } catch (err) {}
-    save();
-    var bytes = await idbGet(id);
-    await openPdfBytes(new Uint8Array(bytes), name, true);
-    setOcrMsg('已清除文字辨識的結果，頁面回到原本的樣子。');
-    renderOcrBox();
-  });
+  $('ocrRedo').addEventListener('click', function () { runOcr(ocrHavePages()); });
 
   /* ---------- 加入圖片：照片、截圖變成一份 PDF 文件，再自動做文字辨識 ---------- */
   function ocrLoadImage(f) {
