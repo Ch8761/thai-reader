@@ -12,6 +12,7 @@
 | 文字辨識（OCR） | Tesseract.js、tesseract.js-core（Tesseract OCR） | Apache-2.0 |
 | 泰文、英文辨識資料 | tessdata_best（Google／Tesseract） | Apache-2.0 |
 | 辨識錯字修正用詞頻 | PyThaiNLP corpus（Thai National Corpus 詞頻） | CC0 |
+| 明星、政治人物、劇集、電影、樂團名單 | Wikidata | CC0 |
 | 簡轉繁 | OpenCC（只在製作字典時使用） | Apache-2.0 |
 | 常用 1,000 詞中文詞義、句型庫說明 | 本專案自行撰寫 | 與本專案相同 |
 
