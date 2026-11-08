@@ -421,7 +421,12 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 .helptabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
 .helptabs button { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; }
 .helptabs button[aria-selected="true"] { background: var(--accent-fill); color: var(--accent-fill-fg); border-color: var(--accent-fill); font-weight: 600; }
-.helpbody ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.6; }
+.helpbody .hlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.helpbody .hlist li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); }
+.helpbody .hnum { flex: 0 0 28px; height: 28px; border-radius: 999px; background: var(--accent-fill); color: var(--accent-fill-fg); font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.helpbody .htitle { font-weight: 800; font-size: 17px; line-height: 1.4; }
+.helpbody .hdesc { font-size: 15px; line-height: 1.9; color: var(--fg); }
+.helpbody .hchip { display: inline-block; margin: 0 3px; padding: 0 10px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-weight: 700; font-size: 14px; line-height: 1.7; white-space: nowrap; background: var(--card); }
 </style>
 </head>
 <body>
@@ -615,7 +620,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.5.0</p>
+    <p class="label appver">ไทย Reader 正式版 v1.5.1</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -41051,7 +41056,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.5.0';
+  var APP_VER = '正式版 v1.5.1';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -41903,14 +41908,52 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
 
   /* ---------- 使用說明：各頁怎麼用，集中在這裡（設定頁、歡迎視窗都能打開） ---------- */
+  /* 每一則：粗體重點＋一句話；「」裡的字會畫成和 App 裡一樣的按鈕樣子，方便對照 */
   var HELP = [
-    ['主頁', ['「＋ 加入 PDF」：選 iPad 裡的 PDF 檔。', '「＋ 加入圖片」：選照片或截圖，App 會做成文件並自動用文字辨識讀出上面的泰文。', '「＋ 貼上文字」：貼上逐字稿、文章等泰文。', '資料夾：上面一排可以切換資料夾，「＋ 新資料夾」建立新的。選了自己建的資料夾後，資料夾名稱旁邊有「改名」「刪除資料夾」。', '每份文件右邊的選單可以把它移到別的資料夾。新加入的文件會放進目前選的資料夾。']],
-    ['文件：查詞', ['用「點字」工具點任何一個泰文字，會跳出查詞視窗：詞義、拼音、朗讀、句型說明。', '有淡色底的是專有名詞（人名、劇名、機構等）。名單裡有的會顯示中文名。', '被切錯的名字或劇名：按「這是名字或劇名？」，用 ‹＋、＋› 調整範圍後存起來，之後所有文件都會把它當成一個詞。', '「翻譯這句」會在 Google 翻譯打開這一句；上方的「整篇翻譯」會把整份文件分段翻譯。', '「整句解析・問 AI」會把這一句和要問的事複製起來，帶到 Claude 等 AI 網站詢問文法。']],
-    ['文件：筆記', ['螢光筆：從一個詞劃到另一個詞，放開後變黃；點一下黃色的地方可以取消。', '手寫：直接用 Apple Pencil 寫。打開「只用 Pencil 畫」後，手指滑動是捲動頁面，不會畫線。', '文字框：點一個泰文詞，會在它正上方加註解；點空白處，放一段自由文字。點已有的註解可以改樣式、拖曳移動。', '「復原」取消上一個動作。所有筆記會自動存起來，下次打開同一份文件會接回來。', '「匯出 PDF」把頁面、筆記、生字表整理成一份 PDF。']],
-    ['文件：掃描頁與圖片', ['掃描或拍照的頁面沒有文字，App 會顯示「用文字辨識讀這 N 頁」，按下去就會把頁面上的字認出來（每頁約 5–20 秒，第一次要先下載約 8 MB 的工具）。', '辨識出來的字可能有錯，尤其是聲調符號，查詞時請對照頁面。', 'App 更新了辨識功能後，可以按「重新辨識」用新版再認一次。']],
-    ['生字卡', ['在查詞視窗按「＋ 生字卡」就會加入。', '「複習」：今天該複習的卡片。先想意思，再按「看答案」；記得就按「會了」，忘了就按「不會」，App 會自動安排下次複習的時間。', '「全部清單」：所有卡片，可以寫上自己的意思、移到別的資料夾、複製成 Anki 格式。', '新加入的卡片會放進目前選的資料夾；選「全部」時會放進「未分類」。']],
-    ['設定與備份', ['外觀、程度、拼音、詞義語言、專有名詞標示都在設定頁。', '「匯出備份檔」把所有文件、筆記、生字卡存成一個檔案，建議存到 iCloud Drive 或 Google Drive。換 iPad 或清除瀏覽器資料前一定要先備份。', '有建議或問題可以在「意見回饋」寫給開發者。']]
+    ['主頁', [
+      ['加文件', '按「＋ 加入 PDF」「＋ 加入圖片」或「＋ 貼上文字」'],
+      ['圖片會自動認字', '照片、截圖加進來，App 會自己讀出泰文'],
+      ['分資料夾', '點上面的分類切換，按「＋ 新資料夾」建新的'],
+      ['搬文件', '文件右邊的選單，選要放的資料夾'],
+      ['改名、刪資料夾', '先點進那個資料夾，再按「改名」或「刪除資料夾」']]],
+    ['查詞', [
+      ['點字查詞', '選「點字」，點任何一個泰文字'],
+      ['看意思', '跳出的視窗有中文、拼音、例句'],
+      ['聽發音', '按「朗讀這個詞」'],
+      ['翻整句', '按「翻譯這句」'],
+      ['名字被切錯', '按「這是名字或劇名？」，調好範圍存起來']]],
+    ['筆記', [
+      ['畫重點', '選「螢光筆」，從一個字劃到另一個字'],
+      ['手寫', '選「手寫」，用 Apple Pencil 寫'],
+      ['寫註解', '選「文字框」，點字或點空白處'],
+      ['畫錯了', '按「復原」'],
+      ['存檔', '自動儲存，不用按'],
+      ['輸出', '右上角「匯出 PDF」']]],
+    ['掃描頁', [
+      ['讀不到字', '按「用文字辨識讀這 N 頁」'],
+      ['等一下', '每頁約 5–20 秒'],
+      ['可能有錯字', '尤其是聲調符號，對照原圖看'],
+      ['想再認一次', '按「重新辨識」']]],
+    ['生字卡', [
+      ['收藏單字', '查詞視窗按「＋ 生字卡」'],
+      ['複習', '按「複習」，先想一想，再按「看答案」'],
+      ['打分數', '記得按「會了」，忘了按「不會」'],
+      ['寫自己的意思', '在「全部清單」裡寫']]],
+    ['設定', [
+      ['換顏色', '「外觀」選淺色或深色'],
+      ['備份', '按「匯出備份檔」，存到 iCloud Drive'],
+      ['換 iPad 前', '一定要先備份！'],
+      ['有建議', '寫在「意見回饋」']]]
   ];
+  function helpLine(text) {
+    var frag = document.createDocumentFragment();
+    text.split(/(「[^」]+」)/).forEach(function (part) {
+      if (!part) { return; }
+      if (/^「.+」$/.test(part)) { var chip = document.createElement('span'); chip.className = 'hchip'; chip.textContent = part.slice(1, -1); frag.appendChild(chip); }
+      else { frag.appendChild(document.createTextNode(part)); }
+    });
+    return frag;
+  }
   function openHelp(start) {
     var m = $('helpModal'), body = $('helpBody'), tabs = $('helpTabs');
     var cur = typeof start === 'number' ? start : 0;
@@ -41922,9 +41965,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         b.addEventListener('click', function () { cur = i; paint(); });
         tabs.appendChild(b);
       });
-      var ul = document.createElement('ul');
-      HELP[cur][1].forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
-      body.appendChild(ul);
+      var ol = document.createElement('ol'); ol.className = 'hlist';
+      HELP[cur][1].forEach(function (it, i) {
+        var li = document.createElement('li');
+        var num = document.createElement('span'); num.className = 'hnum'; num.textContent = String(i + 1);
+        var tx = document.createElement('div'); tx.className = 'htext';
+        var t = document.createElement('div'); t.className = 'htitle'; t.textContent = it[0];
+        var d = document.createElement('div'); d.className = 'hdesc'; d.appendChild(helpLine(it[1]));
+        tx.appendChild(t); tx.appendChild(d);
+        li.appendChild(num); li.appendChild(tx); ol.appendChild(li);
+      });
+      body.appendChild(ol);
     }
     paint();
     m.hidden = false;
