@@ -392,6 +392,36 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 .pop .links > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 .pop .ent-sec .row2 { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
 .pop .ent-sec .row2 > * { width: 100%; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; text-align: center; min-height: 38px; padding: 0 6px; font-size: 14px; border-radius: 10px; }
+
+/* ---------- 資料夾、縮圖、文件資訊、使用說明 ---------- */
+#homeFolders .frow > button.fadd, #cardFolders .frow > button.fadd { border: 1px dashed var(--accent); color: var(--accent); background: transparent; }
+.fbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; padding: 8px 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+.fbar[hidden] { display: none; }
+#cardFolders > .fbar { flex-basis: 100%; }
+.fbar .fbname { font-weight: 700; margin-right: auto; }
+.fbar button { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; }
+.fbar .frow { display: flex; flex: 1; gap: 8px; margin: 0; }
+.fbar .frow input.fname { flex: 1 1 160px; min-height: 34px; border-radius: 999px; padding: 0 12px; }
+.dicon.thumb { padding: 0; overflow: hidden; background: #ffffff; border: 1px solid var(--line); }
+.dicon.thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.dicon.textprev { background: var(--paper); color: var(--fg); border: 1px solid var(--line); font-family: var(--thai); font-size: 7px; line-height: 1.35; font-weight: 400; padding: 4px; align-items: flex-start; justify-content: flex-start; text-align: left; overflow: hidden; word-break: break-all; }
+#docsec { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 8px 12px; }
+#docsec[hidden] { display: none; }
+#docsec #docpages { flex: 0 0 auto; font-size: 14px; }
+#docsec #docstatus { flex: 1 1 100%; margin: 0; }
+#docsec .ocrbox { flex: 1 1 280px; flex-direction: row; align-items: center; gap: 10px; margin: 0; }
+#docsec .ocrbox[hidden] { display: none; }
+#docsec #ocrmsg { flex: 1; font-size: 13px; color: var(--muted); }
+#docsec .ocrbox .btns { flex: 0 0 auto; flex-wrap: nowrap; }
+#docsec .ocrbox button { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; }
+.helpcard { max-width: 620px; }
+.helphead { display: flex; align-items: center; justify-content: space-between; }
+.helphead h2 { margin: 0; }
+.helphead button { min-width: 44px; min-height: 44px; font-size: 20px; border-radius: 999px; }
+.helptabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.helptabs button { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; }
+.helptabs button[aria-selected="true"] { background: var(--accent-fill); color: var(--accent-fill-fg); border-color: var(--accent-fill); font-weight: 600; }
+.helpbody ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -418,6 +448,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <div id="homeMsg" class="label" aria-live="polite"></div>
     <div id="homeFolders" class="cfolders"></div>
     <div id="homeTarget" class="label"></div>
+    <div id="homeFolderBar" class="fbar" hidden></div>
     <ul id="docList" class="doclist"></ul>
     <p id="homeEmpty" class="label" hidden></p>
   </section>
@@ -529,7 +560,11 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <header class="vhead"><h1 id="h-settingsv">設定</h1></header>
   <div id="settings" class="settings">
     <div class="setrow">
-      <div class="setlabel">外觀<span class="sethelp">淺色是奶油白、卡其、深咖啡；深色是黑、灰、藍。「跟隨系統」會照 iPad 的設定自動切換。</span></div>
+      <div class="setlabel">使用說明<span class="sethelp">每一頁怎麼用、各個按鈕的作用。</span></div>
+      <button type="button" id="openHelp">打開使用說明</button>
+    </div>
+    <div class="setrow">
+      <div class="setlabel">外觀<span class="sethelp">淺色是奶油白配綠色；深色是黑、灰、藍。「跟隨系統」會照 iPad 的設定自動切換。</span></div>
       <div class="seg" role="radiogroup" aria-label="外觀" id="themeGroup"></div>
     </div>
     <div class="setrow">
@@ -580,7 +615,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.4.3</p>
+    <p class="label appver">ไทย Reader 正式版 v1.5.0</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -601,10 +636,17 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 
 
 
+  <div id="helpModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="h-help" hidden>
+    <div class="mcard helpcard">
+      <div class="helphead"><h2 id="h-help">使用說明</h2><button type="button" id="helpClose" aria-label="關閉">×</button></div>
+      <div class="helptabs" id="helpTabs" role="tablist" aria-label="說明分類"></div>
+      <div class="helpbody" id="helpBody"></div>
+    </div>
+  </div>
   <div id="welcome" class="modal" role="dialog" aria-modal="true" aria-labelledby="h-welcome" hidden>
     <div class="mcard">
       <h2 id="h-welcome">歡迎！先設定三件事</h2>
-      <p class="wnote">選好就能開始。之後隨時可以按下方的「設定」修改。</p>
+      <p class="wnote">選好就能開始。之後隨時可以按下方的「設定」修改；各頁怎麼用，可以看「設定 → 使用說明」。</p>
       <div class="setrow">
         <div class="setlabel">我的泰文程度<span class="sethelp" id="wLevelHelp"></span></div>
         <div class="seg" role="radiogroup" aria-label="我的泰文程度" id="wLevel"></div>
@@ -38601,6 +38643,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ['o2', '加入圖片：選照片或截圖，會變成文件並自動辨識'],
     ['n1', '查詞時按「這是名字或劇名？」，調整範圍後存起來，整個名字會變成一個詞'],
     ['n2', '設定頁「我的專有名詞」看得到剛加的名字，也能刪除'],
+    ['u1', '主頁：PDF 文件前面顯示第一頁縮圖，文字文件顯示開頭幾行'],
+    ['u2', '設定 → 使用說明：可以切換各頁的說明'],
     ['b1', '備份與還原：匯出備份檔後可以還原']
   ];
 
@@ -40015,7 +40059,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var r = pdf.fix, parts = [];
     Object.keys(FIX_HOW).forEach(function (k) { if (r[k]) { parts.push(FIX_HOW[k] + ' ' + r[k] + ' 個'); } });
     var li0 = document.createElement('li');
-    li0.textContent = '這份文件共 ' + pdf.pages.length + ' 頁。';
+    li0.textContent = '共 ' + pdf.pages.length + ' 頁';
     ul.appendChild(li0);
     help.hidden = true;
     ul.hidden = false;
@@ -40945,17 +40989,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var seg = el('div', 'seg'); seg.setAttribute('role', 'radiogroup'); seg.setAttribute('aria-label', '資料夾');
     host.appendChild(seg);
     segButtons(seg, opts, cardFolder, function (v) { cardFolder = v; folderEdit = null; review = null; saveCards(); renderCards(); });
-    var row = el('div', 'btns frow');
-    if (folderEdit) {
+    function editor(kind) {
+      var row = el('div', 'btns frow');
       var inp = el('input', 'fname'); inp.type = 'text'; inp.maxLength = 30;
       inp.placeholder = '資料夾名稱'; inp.setAttribute('aria-label', '資料夾名稱');
-      inp.value = folderEdit === 'new' ? '' : folderName(cardFolder);
-      var ok = el('button', 'primary', folderEdit === 'new' ? '建立' : '改名'); ok.type = 'button';
+      inp.value = kind === 'new' ? '' : folderName(cardFolder);
+      var ok = el('button', 'primary', kind === 'new' ? '建立' : '改名'); ok.type = 'button';
       var cancel = el('button', '', '取消'); cancel.type = 'button';
       function commit() {
         var name = inp.value.trim();
         if (!name) { inp.focus(); return; }
-        if (folderEdit === 'new') { var f = { id: 'f' + Date.now().toString(36), name: name }; folders.push(f); cardFolder = f.id; }
+        if (kind === 'new') { var f = { id: 'f' + Date.now().toString(36), name: name }; folders.push(f); cardFolder = f.id; }
         else { folders.forEach(function (f) { if (f.id === cardFolder) { f.name = name; } }); }
         folderEdit = null; saveCards(); renderCards();
       }
@@ -40964,28 +41008,37 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       cancel.addEventListener('click', function () { folderEdit = null; renderCards(); });
       row.appendChild(inp); row.appendChild(ok); row.appendChild(cancel);
       setTimeout(function () { inp.focus(); }, 20);
-    } else if (folderEdit === null && host.getAttribute('data-confirm') === cardFolder) {
-      host.removeAttribute('data-confirm');
-    } else {
-      var add = el('button', '', '＋ 新資料夾'); add.type = 'button';
+      return row;
+    }
+    if (folderEdit === 'new') { host.appendChild(editor('new')); }
+    else {
+      var row = el('div', 'btns frow');
+      var add = el('button', 'fadd', '＋ 新資料夾'); add.type = 'button';
       add.addEventListener('click', function () { folderEdit = 'new'; renderCards(); });
       row.appendChild(add);
-      if (cardFolder !== 'all' && cardFolder !== 'none') {
+      host.appendChild(row);
+    }
+    host.appendChild(el('div', 'label', '新加入的生字卡會放進：' + folderName(addTarget())));
+    /* 選了自己建的資料夾：改名、刪除放在資料夾名稱旁邊 */
+    if (cardFolder !== 'all' && cardFolder !== 'none') {
+      var bar = el('div', 'fbar');
+      if (folderEdit === 'rename') { bar.appendChild(editor('rename')); }
+      else {
+        bar.appendChild(el('span', 'fbname', folderName(cardFolder)));
         var ren = el('button', '', '改名'); ren.type = 'button';
         ren.addEventListener('click', function () { folderEdit = 'rename'; renderCards(); });
         var del = el('button', 'cdel', '刪除資料夾'); del.type = 'button';
         del.addEventListener('click', function () {
-          if (del.getAttribute('data-sure') !== '1') { del.setAttribute('data-sure', '1'); del.textContent = '再按一次確定刪除（卡片會移到未分類）'; return; }
+          if (del.getAttribute('data-sure') !== '1') { del.setAttribute('data-sure', '1'); del.textContent = '再按一次確定（卡片會移到未分類）'; return; }
           var id = cardFolder;
           cards.forEach(function (c) { if (c.folder === id) { c.folder = ''; } });
           folders = folders.filter(function (f) { return f.id !== id; });
           cardFolder = 'all'; saveCards(); renderCards();
         });
-        row.appendChild(ren); row.appendChild(del);
+        bar.appendChild(ren); bar.appendChild(del);
       }
+      host.appendChild(bar);
     }
-    host.appendChild(row);
-    host.appendChild(el('div', 'label', '新加入的生字卡會放進：' + folderName(addTarget()) + (cardFolder === 'all' ? '（先選一個資料夾，新卡就會放進那裡）' : '')));
   }
   function renderCards() {
     var host = $('cardbody');
@@ -40998,7 +41051,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.4.3';
+  var APP_VER = '正式版 v1.5.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -41568,22 +41621,24 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function mk(tag, cls, text) { var e = document.createElement(tag); if (cls) { e.className = cls; } if (text !== undefined) { e.textContent = text; } return e; }
   function renderHomeFolders() {
-    var host = $('homeFolders');
+    var host = $('homeFolders'), bar = $('homeFolderBar');
     host.replaceChildren();
+    if (bar) { bar.replaceChildren(); bar.hidden = true; }
     var opts = [['all', '全部（' + lib.docs.length + '）'], ['none', '未分類（' + lib.docs.filter(function (d) { return !d.folder; }).length + '）']]
       .concat(lib.folders.map(function (f) { return [f.id, f.name + '（' + lib.docs.filter(function (d) { return d.folder === f.id; }).length + '）']; }));
     var seg = mk('div', 'seg'); seg.setAttribute('role', 'radiogroup'); seg.setAttribute('aria-label', '文件資料夾');
     host.appendChild(seg);
     segButtons(seg, opts, lib.cur, function (v) { lib.cur = v; libFolderEdit = null; saveLib(); renderHome(); });
-    var row = mk('div', 'btns frow');
-    if (libFolderEdit) {
+    var custom = lib.cur !== 'all' && lib.cur !== 'none';
+    function editor(kind) {
+      var row = mk('div', 'btns frow');
       var inp = mk('input', 'fname'); inp.type = 'text'; inp.maxLength = 30; inp.placeholder = '資料夾名稱'; inp.setAttribute('aria-label', '資料夾名稱');
-      inp.value = libFolderEdit === 'new' ? '' : libFolderName(lib.cur);
-      var ok = mk('button', 'primary', libFolderEdit === 'new' ? '建立' : '改名'); ok.type = 'button';
+      inp.value = kind === 'new' ? '' : libFolderName(lib.cur);
+      var ok = mk('button', 'primary', kind === 'new' ? '建立' : '改名'); ok.type = 'button';
       var no = mk('button', '', '取消'); no.type = 'button';
       var commit = function () {
         var name = inp.value.trim(); if (!name) { inp.focus(); return; }
-        if (libFolderEdit === 'new') { var f = { id: 'd' + Date.now().toString(36), name: name }; lib.folders.push(f); lib.cur = f.id; }
+        if (kind === 'new') { var f = { id: 'd' + Date.now().toString(36), name: name }; lib.folders.push(f); lib.cur = f.id; }
         else { lib.folders.forEach(function (f) { if (f.id === lib.cur) { f.name = name; } }); }
         libFolderEdit = null; saveLib(); renderHome();
       };
@@ -41592,25 +41647,33 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       no.addEventListener('click', function () { libFolderEdit = null; renderHome(); });
       row.appendChild(inp); row.appendChild(ok); row.appendChild(no);
       setTimeout(function () { inp.focus(); }, 20);
-    } else {
-      var add = mk('button', '', '＋ 新資料夾'); add.type = 'button';
+      return row;
+    }
+    if (libFolderEdit === 'new') { host.appendChild(editor('new')); }
+    else {
+      var row = mk('div', 'btns frow');
+      var add = mk('button', 'fadd', '＋ 新資料夾'); add.type = 'button';
       add.addEventListener('click', function () { libFolderEdit = 'new'; renderHome(); });
       row.appendChild(add);
-      if (lib.cur !== 'all' && lib.cur !== 'none') {
-        var ren = mk('button', '', '改名'); ren.type = 'button';
-        ren.addEventListener('click', function () { libFolderEdit = 'rename'; renderHome(); });
-        var del = mk('button', 'cdel', '刪除資料夾'); del.type = 'button';
-        del.addEventListener('click', function () {
-          if (del.getAttribute('data-sure') !== '1') { del.setAttribute('data-sure', '1'); del.textContent = '再按一次確定（文件會移到未分類）'; return; }
-          var id = lib.cur;
-          lib.docs.forEach(function (d) { if (d.folder === id) { d.folder = ''; } });
-          lib.folders = lib.folders.filter(function (f) { return f.id !== id; });
-          lib.cur = 'all'; saveLib(); renderHome();
-        });
-        row.appendChild(ren); row.appendChild(del);
-      }
+      host.appendChild(row);
     }
-    host.appendChild(row);
+    /* 選了自己建的資料夾：在文件清單上方顯示資料夾名稱，改名、刪除放在這裡 */
+    if (custom && bar) {
+      bar.hidden = false;
+      if (libFolderEdit === 'rename') { bar.appendChild(editor('rename')); return; }
+      bar.appendChild(mk('span', 'fbname', libFolderName(lib.cur)));
+      var ren = mk('button', '', '改名'); ren.type = 'button';
+      ren.addEventListener('click', function () { libFolderEdit = 'rename'; renderHome(); });
+      var del = mk('button', 'cdel', '刪除資料夾'); del.type = 'button';
+      del.addEventListener('click', function () {
+        if (del.getAttribute('data-sure') !== '1') { del.setAttribute('data-sure', '1'); del.textContent = '再按一次確定（文件會移到未分類）'; return; }
+        var id = lib.cur;
+        lib.docs.forEach(function (d) { if (d.folder === id) { d.folder = ''; } });
+        lib.folders = lib.folders.filter(function (f) { return f.id !== id; });
+        lib.cur = 'all'; saveLib(); renderHome();
+      });
+      bar.appendChild(ren); bar.appendChild(del);
+    }
   }
   function renderHome() {
     if (!$('docList')) { return; }
@@ -41622,8 +41685,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     $('homeTarget').textContent = '新加入的文件會放進：' + libFolderName(libTarget());
     list.forEach(function (d) {
       var li = mk('li', 'doccard' + (state.src && state.src.id === d.id ? ' current' : ''));
-      var icon = mk('span', 'dicon ' + d.type, d.type === 'pdf' ? 'PDF' : '文');
-      icon.setAttribute('aria-hidden', 'true');
+      var icon = docIcon(d);
       var open = mk('button', 'dopen'); open.type = 'button';
       open.appendChild(mk('span', 'dname', d.name));
       var n = noteCount(d.id);
@@ -41651,7 +41713,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     lib.docs = lib.docs.filter(function (d) { return d.id !== id; });
     saveLib();
     try { localStorage.removeItem(PDF_DOC_PREFIX + id); } catch (err) {}
-    idbDel(id); idbDel('ocr:' + id);
+    idbDel(id); idbDel('ocr:' + id); idbDel('thumb:' + id);
     if (wasCur) {
       teardownPdf();
       state = { text: '', src: null, hl: [], strokes: [], boxes: [], nextId: 1, style: state.style };
@@ -41781,6 +41843,97 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       }, function () {});
     } else { idbPut('setting:theme', theme); }
   } catch (err) {}
+
+  /* ---------- 主頁的文件縮圖：PDF 顯示第一頁，文字文件顯示開頭幾行 ---------- */
+  var THUMBS = {}, thumbQueue = [], thumbBusy = false;
+  function docIcon(d) {
+    var icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    if (d.type === 'pdf') {
+      icon.className = 'dicon pdf';
+      if (THUMBS[d.id]) { setThumb(icon, THUMBS[d.id]); }
+      else { icon.textContent = 'PDF'; icon.setAttribute('data-tid', d.id); queueThumb(d.id); }
+    } else {
+      icon.className = 'dicon textprev'; icon.lang = 'th';
+      icon.textContent = docSnippet(d);
+    }
+    return icon;
+  }
+  function setThumb(icon, url) {
+    icon.textContent = ''; icon.classList.add('thumb');
+    var im = new Image(); im.alt = ''; im.src = url; icon.appendChild(im);
+  }
+  function docSnippet(d) {
+    if (d.snip) { return d.snip; }
+    try {
+      var o = JSON.parse(localStorage.getItem(PDF_DOC_PREFIX + d.id) || 'null');
+      if (o && o.text) { d.snip = o.text.replace(/\s+/g, ' ').slice(0, 70); return d.snip; }
+    } catch (err) {}
+    return '文';
+  }
+  function queueThumb(id) {
+    if (thumbQueue.indexOf(id) < 0) { thumbQueue.push(id); }
+    if (!thumbBusy) { thumbBusy = true; setTimeout(nextThumb, 300); }
+  }
+  async function nextThumb() {
+    var id = thumbQueue.shift();
+    if (!id) { thumbBusy = false; return; }
+    try {
+      var url = await idbGet('thumb:' + id);
+      if (!url) {
+        var bytes = await idbGet(id);
+        if (bytes) {
+          await ensureLibs();
+          var doc = await window.pdfjsLib.getDocument({ data: new Uint8Array(bytes), isEvalSupported: false }).promise;
+          var page = await doc.getPage(1), vp1 = page.getViewport({ scale: 1 }), vp = page.getViewport({ scale: 160 / vp1.width });
+          var c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+          var g = c.getContext('2d'); g.fillStyle = '#ffffff'; g.fillRect(0, 0, c.width, c.height);
+          await page.render({ canvasContext: g, viewport: vp }).promise;
+          url = c.toDataURL('image/jpeg', 0.75);
+          try { doc.destroy(); } catch (err) {}
+          try { idbPut('thumb:' + id, url); } catch (err) {}
+        }
+      }
+      if (url) {
+        THUMBS[id] = url;
+        Array.prototype.forEach.call(document.querySelectorAll('.dicon[data-tid]'), function (el) { if (el.getAttribute('data-tid') === id) { el.removeAttribute('data-tid'); setThumb(el, url); } });
+      }
+    } catch (err) {}
+    setTimeout(nextThumb, 50);
+  }
+
+  /* ---------- 使用說明：各頁怎麼用，集中在這裡（設定頁、歡迎視窗都能打開） ---------- */
+  var HELP = [
+    ['主頁', ['「＋ 加入 PDF」：選 iPad 裡的 PDF 檔。', '「＋ 加入圖片」：選照片或截圖，App 會做成文件並自動用文字辨識讀出上面的泰文。', '「＋ 貼上文字」：貼上逐字稿、文章等泰文。', '資料夾：上面一排可以切換資料夾，「＋ 新資料夾」建立新的。選了自己建的資料夾後，資料夾名稱旁邊有「改名」「刪除資料夾」。', '每份文件右邊的選單可以把它移到別的資料夾。新加入的文件會放進目前選的資料夾。']],
+    ['文件：查詞', ['用「點字」工具點任何一個泰文字，會跳出查詞視窗：詞義、拼音、朗讀、句型說明。', '有淡色底的是專有名詞（人名、劇名、機構等）。名單裡有的會顯示中文名。', '被切錯的名字或劇名：按「這是名字或劇名？」，用 ‹＋、＋› 調整範圍後存起來，之後所有文件都會把它當成一個詞。', '「翻譯這句」會在 Google 翻譯打開這一句；上方的「整篇翻譯」會把整份文件分段翻譯。', '「整句解析・問 AI」會把這一句和要問的事複製起來，帶到 Claude 等 AI 網站詢問文法。']],
+    ['文件：筆記', ['螢光筆：從一個詞劃到另一個詞，放開後變黃；點一下黃色的地方可以取消。', '手寫：直接用 Apple Pencil 寫。打開「只用 Pencil 畫」後，手指滑動是捲動頁面，不會畫線。', '文字框：點一個泰文詞，會在它正上方加註解；點空白處，放一段自由文字。點已有的註解可以改樣式、拖曳移動。', '「復原」取消上一個動作。所有筆記會自動存起來，下次打開同一份文件會接回來。', '「匯出 PDF」把頁面、筆記、生字表整理成一份 PDF。']],
+    ['文件：掃描頁與圖片', ['掃描或拍照的頁面沒有文字，App 會顯示「用文字辨識讀這 N 頁」，按下去就會把頁面上的字認出來（每頁約 5–20 秒，第一次要先下載約 8 MB 的工具）。', '辨識出來的字可能有錯，尤其是聲調符號，查詞時請對照頁面。', 'App 更新了辨識功能後，可以按「重新辨識」用新版再認一次。']],
+    ['生字卡', ['在查詞視窗按「＋ 生字卡」就會加入。', '「複習」：今天該複習的卡片。先想意思，再按「看答案」；記得就按「會了」，忘了就按「不會」，App 會自動安排下次複習的時間。', '「全部清單」：所有卡片，可以寫上自己的意思、移到別的資料夾、複製成 Anki 格式。', '新加入的卡片會放進目前選的資料夾；選「全部」時會放進「未分類」。']],
+    ['設定與備份', ['外觀、程度、拼音、詞義語言、專有名詞標示都在設定頁。', '「匯出備份檔」把所有文件、筆記、生字卡存成一個檔案，建議存到 iCloud Drive 或 Google Drive。換 iPad 或清除瀏覽器資料前一定要先備份。', '有建議或問題可以在「意見回饋」寫給開發者。']]
+  ];
+  function openHelp(start) {
+    var m = $('helpModal'), body = $('helpBody'), tabs = $('helpTabs');
+    var cur = typeof start === 'number' ? start : 0;
+    function paint() {
+      tabs.replaceChildren(); body.replaceChildren();
+      HELP.forEach(function (h, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = h[0];
+        b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+        b.addEventListener('click', function () { cur = i; paint(); });
+        tabs.appendChild(b);
+      });
+      var ul = document.createElement('ul');
+      HELP[cur][1].forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+      body.appendChild(ul);
+    }
+    paint();
+    m.hidden = false;
+    setTimeout(function () { try { $('helpClose').focus(); } catch (err) {} }, 30);
+  }
+  $('helpClose').addEventListener('click', function () { $('helpModal').hidden = true; });
+  $('helpModal').addEventListener('click', function (e) { if (e.target === $('helpModal')) { $('helpModal').hidden = true; } });
+  $('openHelp').addEventListener('click', function () { openHelp(0); });
+  if ($('wHelp')) { $('wHelp').addEventListener('click', function () { openHelp(0); }); }
 
   /* ---------- 文字辨識（OCR）：掃描的 PDF 頁面、照片、截圖 ----------
      做法：把頁面畫成圖，交給 Tesseract（開源的文字辨識程式）認字，
@@ -42010,9 +42163,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     $('ocrRedo').hidden = ocr.busy || !have;
     function pageList(ns) { return ns.length === pdf.pages.length && ns.length > 1 ? '全部頁面' : '第 ' + ns.slice(0, 10).join('、') + (ns.length > 10 ? '…' : '') + ' 頁'; }
     var haveN = ocrHavePages(), lines = [];
-    if (need.length) { lines.push(pageList(need) + '讀不到文字（可能是掃描或拍照的頁面），可以用文字辨識讀出來，每頁約 5–20 秒。'); }
-    if (haveN.length) { lines.push(pageList(haveN) + '是用文字辨識讀出來的，可能有錯字，查詞時請對照頁面。'); }
-    $('ocrmsg').textContent = ocr.busy || ocr.msg ? ocr.msg : lines.join('');
+    if (need.length) { lines.push(pageList(need) + '讀不到文字（掃描或照片），可以用文字辨識讀出來'); }
+    if (haveN.length) { lines.push(pageList(haveN) + '由文字辨識讀出，可能有錯字'); }
+    $('ocrmsg').textContent = ocr.busy || ocr.msg ? ocr.msg : lines.join('；');
     if (typeof syncDocSec === 'function') { syncDocSec(); }
     if (ocr.autoId && ocr.autoId === pdf.id && need.length && !ocr.busy) { ocr.autoId = ''; setTimeout(function () { runOcr(need); }, 50); }
   }
@@ -42111,6 +42264,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         if (!docById(id)) { lib.docs.push({ id: id, name: name, type: 'pdf', size: bytes.length, pages: list.length, added: Date.now(), opened: 0, folder: libTarget(), img: true }); }
         saveLib();
         $('homeMsg').textContent = '已做成文件「' + name + '」（' + list.length + ' 頁），正在打開並開始文字辨識…';
+        setTimeout(function () { $('homeMsg').textContent = ''; }, 8000);
         ocr.autoId = id;
         renderHome();
         openDoc(id);
