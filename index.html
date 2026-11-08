@@ -15,6 +15,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>ไทย Reader</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&family=LXGW+WenKai+TC:wght@300;400;700&display=swap">
+<script>try{var t0=localStorage.getItem('thai-theme');if(t0==='light'||t0==='dark'){document.documentElement.setAttribute('data-theme',t0);}}catch(e){}</script>
 <style>
 /* Layout: a sticky tool strip over one fixed-width "page" (640 logical px) that is scaled to fit the screen, so notes keep their place when the iPad rotates. */
 :root {
@@ -554,7 +555,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.4.1</p>
+    <p class="label appver">ไทย Reader 正式版 v1.4.2</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -40972,7 +40973,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.4.1';
+  var APP_VER = '正式版 v1.4.2';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -41733,15 +41734,28 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function applyTheme() {
     if (theme === 'light' || theme === 'dark') { document.documentElement.setAttribute('data-theme', theme); }
     else { document.documentElement.removeAttribute('data-theme'); }
+    /* iPad 最上方狀態列的底色跟著外觀 */
+    Array.prototype.forEach.call(document.querySelectorAll('meta[name="theme-color"]'), function (m) {
+      if (!m.dataset.orig) { m.dataset.orig = m.content; }
+      m.content = theme === 'light' ? '#f5eedf' : theme === 'dark' ? '#0d1015' : m.dataset.orig;
+    });
     if (typeof redrawInk === 'function' && state && state.strokes) { try { redrawInk(); } catch (err) {} }
   }
   applyTheme();
   function renderTheme() {
     segButtons($('themeGroup'), [['system', '跟隨系統'], ['light', '淺色'], ['dark', '深色']], theme, function (v) {
-      theme = v; try { localStorage.setItem(THEME_KEY, v); } catch (err) {} applyTheme(); renderTheme(); renderReport();
+      theme = v; try { localStorage.setItem(THEME_KEY, v); } catch (err) {} try { idbPut('setting:theme', v); } catch (err) {} applyTheme(); renderTheme(); renderReport();
     });
   }
   renderTheme();
+  /* 備援：如果這台裝置的 localStorage 被清掉，從 IndexedDB 找回外觀設定 */
+  try {
+    if (!localStorage.getItem(THEME_KEY)) {
+      idbGet('setting:theme').then(function (v) {
+        if (v === 'light' || v === 'dark' || v === 'system') { theme = v; try { localStorage.setItem(THEME_KEY, v); } catch (err) {} applyTheme(); renderTheme(); }
+      }, function () {});
+    } else { idbPut('setting:theme', theme); }
+  } catch (err) {}
 
   /* ---------- 文字辨識（OCR）：掃描的 PDF 頁面、照片、截圖 ----------
      做法：把頁面畫成圖，交給 Tesseract（開源的文字辨識程式）認字，
@@ -41783,7 +41797,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   /* 辨識完的修正：常見的錯字型（少了聲調符號、ึ／ื 認錯）換回常用詞 */
   var OCR_FIX = null, ocrSeg = null;
   function ocrFixMap() {
-    if (!OCR_FIX) { try { OCR_FIX = JSON.parse($('ocrfix').textContent); } catch (err) { OCR_FIX = {}; } }
+    if (!OCR_FIX) {
+      try { OCR_FIX = JSON.parse($('ocrfix').textContent); } catch (err) { OCR_FIX = {}; }
+      /* 辨識常見的認錯（從使用者的截圖整理）：นี้／นี่ 的上方符號掉了、น้ำ 少了聲調 */
+      var EXTRA = { 'ตอนนิ': 'ตอนนี้', 'ที่นิ': 'ที่นี่', 'ทีนิ': 'ที่นี่', 'แบบนิ': 'แบบนี้', 'อันนิ': 'อันนี้', 'คนนิ': 'คนนี้', 'วันนิ': 'วันนี้', 'ปีนิ': 'ปีนี้', 'เรื่องนิ': 'เรื่องนี้', 'แบบนี': 'แบบนี้',
+        'ตอนนี่': 'ตอนนี้', 'ตอนนี': 'ตอนนี้', 'วันนี่': 'วันนี้', 'วันนี': 'วันนี้', 'แบบนี่': 'แบบนี้', 'ปีนี่': 'ปีนี้', 'คนนี่': 'คนนี้', 'อันนี่': 'อันนี้', 'เรื่องนี่': 'เรื่องนี้', 'ทีนี่': 'ที่นี่', 'เมื่อกี': 'เมื่อกี้', 'เมือกี้': 'เมื่อกี้',
+        'นำมูก': 'น้ำมูก', 'นำตา': 'น้ำตา', 'นำหนัก': 'น้ำหนัก', 'นำใจ': 'น้ำใจ', 'นำแข็ง': 'น้ำแข็ง', 'นำเสียง': 'น้ำเสียง', 'นำผึ้ง': 'น้ำผึ้ง' };
+      Object.keys(EXTRA).forEach(function (k) { OCR_FIX[k] = EXTRA[k]; });
+    }
     return OCR_FIX;
   }
   function ocrNorm(t) {
@@ -41794,13 +41815,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (!/[ก-๎]/.test(t) || typeof Intl === 'undefined' || !Intl.Segmenter) { return { t: t, n: 0 }; }
     if (!ocrSeg) { ocrSeg = new Intl.Segmenter('th', { granularity: 'word' }); }
     var M = ocrFixMap(), toks = Array.from(ocrSeg.segment(t)).map(function (x) { return x.segment; }), out = '', n = 0;
+    var prevW = '';
     for (var i = 0; i < toks.length;) {
       var hit = false;
       for (var k = Math.min(3, toks.length - i); k >= 1; k--) {
         var w = toks.slice(i, i + k).join('');
-        if (Object.prototype.hasOwnProperty.call(M, w)) { out += M[w]; i += k; n++; hit = true; break; }
+        if (Object.prototype.hasOwnProperty.call(M, w)) { out += M[w]; prevW = M[w]; i += k; n++; hit = true; break; }
       }
-      if (!hit) { out += toks[i]; i++; }
+      if (hit) { continue; }
+      /* ก็ 常被認成 กี้／ก้：前一個是完整的詞時才換（避免改到 เบคกี้、มิกกี้ 這類名字） */
+      if ((toks[i] === 'กี้' || toks[i] === 'ก้' || toks[i] === 'กิ') && prevW.length >= 2 && DICT && DICT[prevW]) { out += 'ก็'; prevW = 'ก็'; i++; n++; continue; }
+      out += toks[i]; prevW = toks[i]; i++;
     }
     var g = ocrNameFix(out);
     return { t: g.t, n: n + g.n };
@@ -41856,6 +41881,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           var nx = t.charAt(map[j + L]);
           if (isMark(nx) || /[\u0E30\u0E32\u0E33\u0E45]/.test(nx)) { continue; }
           if (list[k].word && (DICT[t.slice(map[j], map[j + L])] || !ends[map[j + L]] || !hasUnknown(map[j], map[j + L]))) { continue; }
+          /* 名字也一樣：原本的字全都查得到（例如 นี้ก็）就不改成名字（นิกี้） */
+          if (!list[k].word && !hasUnknown(map[j], map[j + L])) { continue; }
           hit = list[k]; break;
         }
       }
@@ -41887,7 +41914,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           /* 泰文字之間孤立的單一符號或英文字母（多半是表情符號） */
           ws = ws.filter(function (w, k) {
             var tx = w.text.trim();
-            if (tx.length > 1 || /[\u0E01-\u0E4E0-9]/.test(tx)) { return true; }
+            if (tx.length > 1 || !/^[A-Za-z@©®&|$#%*¢§~^`]$/.test(tx)) { return true; }
             var a = ws[k - 1], b = ws[k + 1];
             return !((!a || /[\u0E01-\u0E4E]/.test(a.text)) && (!b || /[\u0E01-\u0E4E]/.test(b.text)));
           });
@@ -41903,7 +41930,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
             var wt = w.text.trim(), at = lt.indexOf(wt, ptr), space;
             if (at >= 0) { space = /\s/.test(lt.slice(ptr, at)); ptr = at + wt.length; }
             else { space = cur ? (w.bbox.x0 - cur.x1) > 0.3 * h : true; }
-            if (cur && !space && (cur.t.length + wt.length <= 24 || wt.length <= 2)) { cur.t += wt; cur.x1 = Math.max(cur.x1, w.bbox.x1); }
+            if (cur && !space) { cur.t += wt; cur.x1 = Math.max(cur.x1, w.bbox.x1); }
             else { cur = { x0: w.bbox.x0, x1: w.bbox.x1, t: wt, jp: items.length ? (space ? ' ' : '') : null }; items.push(cur); }
           });
           items.forEach(function (it) {
