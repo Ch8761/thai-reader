@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="泰文閱讀：開 PDF 點字查詞、中文詞義、句型說明、筆記與生字卡。">
 <meta name="theme-color" content="#f5eedf" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0d1015" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1e2125" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ไทย Reader">
@@ -15,6 +15,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>ไทย Reader</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&family=LXGW+WenKai+TC:wght@300;400;700&display=swap">
+<script>try{var f0={notosans:'"Noto Sans TC", "PingFang TC", system-ui, sans-serif',notoserif:'"Noto Serif TC", "Songti TC", "PMingLiU", serif',wenkai:'"LXGW WenKai TC", "Kaiti TC", "BiauKai", serif'}[localStorage.getItem('thai-font')];if(f0){document.documentElement.style.setProperty('--ui',f0);}}catch(e){}</script>
 <script>try{var t0=localStorage.getItem('thai-theme');if(t0==='light'||t0==='dark'){document.documentElement.setAttribute('data-theme',t0);}}catch(e){}</script>
 <style>
 /* Layout: a sticky tool strip over one fixed-width "page" (640 logical px) that is scaled to fit the screen, so notes keep their place when the iPad rotates. */
@@ -54,16 +55,16 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0d1015; --fg: #e3e8ef; --muted: #98a3b2; --card: #181d25; --paper: #12161c; --line: #2b3340;
-    --accent: #9eb2c0; --accent-fg: #0d1015; --accent-fill: #9eb2c0; --accent-fill-fg: #0d1015; --khaki: #34414c; --hl: #e6c200; --hl-fg: #1a1500; --hl-pv: #c7793a;
+    --bg: #1e2125; --fg: #e8ebef; --muted: #a3abb5; --card: #2a2e33; --paper: #24282c; --line: #3d434a;
+    --accent: #bed2e0; --accent-fg: #17191c; --accent-fill: #bed2e0; --accent-fill-fg: #17191c; --khaki: #3e464f; --hl: #e6c200; --hl-fg: #1a1500; --hl-pv: #c7793a;
     --ink: #8fb0ff; --note: #3a3413; --note-line: #6b5d1c; --note-fg: #f5eccb; --anno: #ff9b8f; --anno-line: #7a3a33; --c-red: #ff8a80; --c-black: #f2f2f2; --c-blue: #8ab4ff; --c-green: #7fd389; --c-purple: #c9a2f2; --c-orange: #ffb46b;
     --ok: #62d09a; --ok-bg: #173a2b; --bad: #f08a80; --bad-bg: #3d1a17;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0d1015; --fg: #e3e8ef; --muted: #98a3b2; --card: #181d25; --paper: #12161c; --line: #2b3340;
-  --accent: #9eb2c0; --accent-fg: #0d1015; --accent-fill: #9eb2c0; --accent-fill-fg: #0d1015; --khaki: #34414c; --hl: #e6c200; --hl-fg: #1a1500; --hl-pv: #c7793a;
+  --bg: #1e2125; --fg: #e8ebef; --muted: #a3abb5; --card: #2a2e33; --paper: #24282c; --line: #3d434a;
+  --accent: #bed2e0; --accent-fg: #17191c; --accent-fill: #bed2e0; --accent-fill-fg: #17191c; --khaki: #3e464f; --hl: #e6c200; --hl-fg: #1a1500; --hl-pv: #c7793a;
   --ink: #8fb0ff; --note: #3a3413; --note-line: #6b5d1c; --note-fg: #f5eccb; --anno: #ff9b8f; --anno-line: #7a3a33; --c-red: #ff8a80; --c-black: #f2f2f2; --c-blue: #8ab4ff; --c-green: #7fd389; --c-purple: #c9a2f2; --c-orange: #ffb46b;
   --ok: #62d09a; --ok-bg: #173a2b; --bad: #f08a80; --bad-bg: #3d1a17;
   color-scheme: dark;
@@ -453,8 +454,81 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 .hdnav { display: flex; gap: 10px; padding: 12px 16px 16px; border-top: 1px solid var(--line); }
 .hdnav button { flex: 1; min-height: 44px; border-radius: 12px; font-size: 15px; }
 .hdnav button:disabled { opacity: .4; }
-:root[data-theme="dark"] .hdfig { background: linear-gradient(145deg, #1f262f 0%, #161b22 100%); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hdfig { background: linear-gradient(145deg, #1f262f 0%, #161b22 100%); } }
+:root[data-theme="dark"] .hdfig { background: linear-gradient(145deg, #30353b 0%, #25292e 100%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hdfig { background: linear-gradient(145deg, #30353b 0%, #25292e 100%); } }
+
+/* ---- v1.7 工具區：黏在上方的工具列＋選項列 ---- */
+.toolhead { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 7; background: var(--card); border-bottom: 1px solid var(--line); border-radius: 14px 14px 0 0; }
+.toolhead .toolbar { position: static; border: 0; border-radius: 0; background: transparent; }
+.workbox > .toolhead .toolbar { border: 0; }
+.toolbar button:disabled { opacity: .38; cursor: default; }
+.subbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 0 10px 8px; }
+.subbar:empty { display: none; }
+.subbar .stylebar { flex: 1 1 auto; flex-basis: auto; padding-top: 0; border-top: 0; }
+.subbar .stylebar .sb, .subbar .stylebar .sw { min-height: 36px; }
+.subbar .stylebar .sb { min-height: 36px; padding: 0 10px; font-size: 15px; }
+.subbar .stylebar .sw { width: 30px; height: 30px; min-height: 30px; }
+.toolopts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.toolopts[hidden], .stylebar[hidden], .viewbar[hidden] { display: none !important; }
+.toolopts .ol, .stylebar .sl { font-size: 13px; color: var(--muted); margin: 0 2px 0 6px; }
+.toolopts .ol:first-child { margin-left: 0; }
+.sw2 { position: relative; width: 30px; height: 30px; min-height: 30px; padding: 0; border-radius: 50%; background: var(--sw); border: 3px solid var(--card); box-shadow: 0 0 0 1px var(--line); flex: 0 0 auto; cursor: pointer; }
+.sw2[aria-pressed="true"], .sw2.on, .stylebar .sw.custom.on { box-shadow: 0 0 0 3px var(--accent); }
+.sw2.custom, .stylebar .sw.custom { background: conic-gradient(from 0deg, #ff5f5f, #ffd400, #4fd18b, #4fb3ff, #b07bff, #ff5fb0, #ff5f5f); display: inline-flex; align-items: center; justify-content: center; }
+.sw2.custom::after, .stylebar .sw.custom::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--sw); border: 2px solid var(--card); }
+.sw2.custom input, .stylebar .sw.custom input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+.stylebar .sw.custom { position: relative; width: 30px; height: 30px; min-height: 30px; padding: 0; border-radius: 50%; border: 3px solid var(--card); box-shadow: 0 0 0 1px var(--line); }
+.toolopts .ob { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; }
+.toolopts .ob[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 600; box-shadow: inset 0 0 0 1px var(--accent); }
+.toolopts .ob-full::before { content: ""; width: 16px; height: 12px; border-radius: 3px; background: var(--sw); opacity: .75; }
+.toolopts .ob-under::before { content: ""; width: 16px; height: 12px; border-bottom: 4px solid var(--sw); }
+.toolopts .odot { display: inline-block; border-radius: 50%; flex: 0 0 auto; }
+
+/* 自訂顏色的螢光筆、底線樣式 */
+#text mark.hl.hlc { background: var(--hlc); color: inherit; }
+#text mark.hl.hlu { background: linear-gradient(transparent 70%, var(--hlu, rgba(255, 200, 0, .85)) 70%); color: inherit; }
+#text.pdf mark.hl.hlc { background: var(--hlc); color: transparent; }
+#text.pdf mark.hl.hlu { background: linear-gradient(transparent 72%, var(--hlu, rgba(255, 200, 0, .85)) 72%); color: transparent; }
+#text mark.anno-custom { text-decoration-color: var(--ac); }
+
+/* ---- 顯示比例、翻頁 ---- */
+.viewbar { position: relative; margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.viewbar button { min-height: 34px; font-size: 14px; border-radius: 999px; padding: 0 12px; }
+.viewbar .vb-zoom { font-variant-numeric: tabular-nums; }
+.viewbar .vb-arrow { width: 34px; padding: 0; font-size: 20px; line-height: 1; }
+.viewbar .vb-page { min-width: 74px; font-variant-numeric: tabular-nums; border-color: transparent; background: transparent; }
+.viewbar .vb-sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; }
+.viewbar .vb-input { width: 74px; min-height: 34px; font-size: 16px; text-align: center; border-radius: 999px; border: 1px solid var(--accent); background: var(--bg); color: var(--fg); }
+.vb-menu { position: absolute; top: calc(100% + 6px); right: 0; z-index: 20; min-width: 200px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 6px; box-shadow: 0 12px 32px rgba(0, 0, 0, .18); display: flex; flex-direction: column; }
+.vb-menu .vm-h { font-size: 12px; color: var(--muted); padding: 8px 10px 4px; }
+.vb-menu button { min-height: 40px; border: 0; background: transparent; text-align: left; border-radius: 10px; padding: 0 10px 0 32px; position: relative; font-size: 15px; }
+.vb-menu button[aria-checked="true"] { color: var(--accent); font-weight: 600; }
+.vb-menu button[aria-checked="true"]::before { content: "✓"; position: absolute; left: 10px; }
+.vb-menu button:hover { background: var(--bg); }
+
+/* ---- 選取一段直接翻譯 ---- */
+.selpop { position: fixed; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 40; width: min(560px, calc(100% - 24px)); max-height: 60vh; overflow: auto; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px 16px 14px; box-shadow: 0 16px 40px rgba(0, 0, 0, .22); display: flex; flex-direction: column; gap: 8px; }
+.selpop[hidden] { display: none; }
+.selpop .sp-head { display: flex; align-items: center; justify-content: space-between; }
+.selpop .sp-k { font-size: 13px; color: var(--muted); }
+.selpop .sp-x { min-height: 36px; width: 36px; padding: 0; border-radius: 50%; font-size: 20px; }
+.selpop .sp-th { font-family: var(--thai); font-size: 19px; line-height: 1.6; }
+.selpop .sp-tr { font-size: 17px; line-height: 1.6; padding: 8px 12px; border-radius: 10px; background: var(--bg); }
+.selpop .sp-tr.loading { color: var(--muted); }
+.selpop .sp-tr.err { color: var(--muted); font-size: 15px; }
+.selpop .sp-btns { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.selpop .sp-btns button { min-height: 38px; font-size: 15px; border-radius: 999px; }
+.selpop .sp-btns .ext { margin-left: auto; font-size: 14px; }
+#text mark.tapsel.pv, #text mark.pv { border-radius: 2px; }
+#wrap { -webkit-user-select: none; user-select: none; }
+#wrap .note-text { -webkit-user-select: text; user-select: text; }
+
+.workbox > #wrap { width: auto; align-self: stretch; }
+/* ---- 文件資訊：不要外框，只留一行字＋圓形按鈕 ---- */
+#docsec { background: transparent; border: 0; box-shadow: none; padding: 0 4px; gap: 4px 12px; }
+#docsec #docpages { color: var(--muted); }
+#docsec #docpages li { border: 0; background: transparent; padding: 0; }
+#docsec .ocrbox { background: transparent; border: 0; padding: 0; }
 </style>
 </head>
 <body>
@@ -540,7 +614,8 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <button type="button" class="tool" data-mode="ink" aria-pressed="false">手寫</button>
     <button type="button" class="tool" data-mode="box" aria-pressed="false">文字框</button>
     <span class="sep" aria-hidden="true"></span>
-    <button type="button" id="undo">復原</button>
+    <button type="button" id="undo" aria-label="上一步" disabled>↶ 上一步</button>
+    <button type="button" id="redo" aria-label="下一步" disabled>↷ 下一步</button>
     <button type="button" id="clear">清除全部</button>
     <button type="button" class="toggle" id="pencil" aria-pressed="false">只用 Pencil 畫</button>
     <div class="stylebar" id="stylebar" role="toolbar" aria-label="文字樣式" hidden>
@@ -597,8 +672,12 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" id="openHelp">打開使用說明</button>
     </div>
     <div class="setrow">
-      <div class="setlabel">外觀<span class="sethelp">淺色是奶油白配綠色；深色是黑、灰、藍。「跟隨系統」會照 iPad 的設定自動切換。</span></div>
+      <div class="setlabel">外觀<span class="sethelp">淺色是奶油白配綠色；深色是鐵灰配淺藍。「跟隨系統」會照 iPad 的設定自動切換。</span></div>
       <div class="seg" role="radiogroup" aria-label="外觀" id="themeGroup"></div>
+    </div>
+    <div class="setrow">
+      <div class="setlabel">中文字體<span class="sethelp">按鈕、說明和查詞視窗的中文字。泰文字不受影響。</span></div>
+      <div class="seg" role="radiogroup" aria-label="中文字體" id="fontGroup"></div>
     </div>
     <div class="setrow">
       <div class="setlabel">我的程度<span class="sethelp">「這句的其他句型」只列出這個程度以下的句型。你點的詞一定會顯示說明，不受程度限制。</span></div>
@@ -648,7 +727,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.6.1</p>
+    <p class="label appver">ไทย Reader 正式版 v1.7.0</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -38696,13 +38775,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 
   var HINTS = {
     tap: '點一個詞，會用藍框框住它。手指可以正常捲動頁面。',
-    hl: '從一個詞劃到另一個詞，放開後變黃。點一下黃色的地方可以取消。',
+    hl: '從一個詞劃到另一個詞，放開就畫好。點一下畫過的地方可以取消。',
     ink: '直接在泰文上寫字或畫線。',
     box: '點一個泰文詞：在它正上方加註解。點空白處：放一段自由文字。點一下已有的註解，可以改上方的文字樣式，旁邊會出現 ⠿（拖曳移動）和 ×（刪除）。'
   };
 
   var $ = function (id) { return document.getElementById(id); };
-  var FONTS = { sans: 'var(--ui)', serif: '"Noto Serif TC", "Songti TC", "PMingLiU", serif', kai: '"LXGW WenKai TC", "Kaiti TC", "BiauKai", "DFKai-SB", serif' };
+  var FONTS = { sans: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif', serif: '"Noto Serif TC", "Songti TC", "PMingLiU", serif', kai: '"LXGW WenKai TC", "Kaiti TC", "BiauKai", "DFKai-SB", serif' };
   var SIZES = [12, 14, 16, 18, 20, 24, 28, 32, 40];
   var DEFAULT_STYLE = { size: 16, color: 'red', weight: 400, font: 'sans' };
   var state = { text: SAMPLE, src: null, hl: [], strokes: [], boxes: [], nextId: 1, style: Object.assign({}, DEFAULT_STYLE) };
@@ -38741,10 +38820,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 
   /* ---------- 文字與螢光筆 ---------- */
   function collectMarks(preview) {
-    var marks = state.hl.map(function (r) { return { s: r[0], e: r[1], c: 'hl' }; });
+    var marks = state.hl.map(function (r) { return { s: r[0], e: r[1], c: 'hl' + (r[2] ? ' hlc' : '') + (r[3] === 'u' ? ' hlu' : ''), bg: r[2] || null }; });
     if (preview) { marks.push({ s: preview[0], e: preview[1], c: 'pv' }); }
     if (tapSel) { marks.push({ s: tapSel[0], e: tapSel[1], c: 'tapsel' }); }
-    state.boxes.forEach(function (b) { if (b.a) { marks.push({ s: b.a[0], e: b.a[1], c: 'anno anno-' + ((b.s && b.s.color) || 'red') }); } });
+    state.boxes.forEach(function (b) { if (b.a) { var bc = (b.s && b.s.color) || 'red', cu = /^#/.test(bc); marks.push({ s: b.a[0], e: b.a[1], c: 'anno anno-' + (cu ? 'custom' : bc), ac: cu ? bc : null }); } });
     if (typeof showEnts !== 'undefined' && showEnts && typeof getEnts === 'function') { getEnts().forEach(function (en) { marks.push({ s: en.s, e: en.e, c: 'ent ent-' + en.type }); }); }
     return marks;
   }
@@ -38757,11 +38836,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     for (var k = 0; k < pts.length - 1; k++) {
       var a = pts[k], b = pts[k + 1];
       if (b <= a) { continue; }
-      var cls = [];
-      marks.forEach(function (m) { if (m.s - base <= a && m.e - base >= b && cls.indexOf(m.c) === -1) { cls.push(m.c); } });
+      var cls = [], mbg = null, mac = null;
+      marks.forEach(function (m) { if (m.s - base <= a && m.e - base >= b) { if (cls.indexOf(m.c) === -1) { cls.push(m.c); } if (m.bg) { mbg = m.bg; } if (m.ac) { mac = m.ac; } } });
       if (!cls.length) { el.appendChild(document.createTextNode(t.slice(a, b))); continue; }
       var mk = document.createElement('mark');
       mk.className = cls.join(' ');
+      if (mbg) { mk.style.setProperty('--hlc', hexA(mbg, 0.42)); mk.style.setProperty('--hlu', hexA(mbg, 0.9)); mk.setAttribute('data-c', mbg); }
+      if (mac) { mk.style.setProperty('--ac', mac); mk.setAttribute('data-ac', mac); }
       mk.textContent = t.slice(a, b);
       el.appendChild(mk);
     }
@@ -38773,7 +38854,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         if (sp.sep) { return; }
         var a = sp.o, b = sp.o + sp.t.length, mine = [];
         marks.forEach(function (m) { if (m.s < b && m.e > a) { mine.push(m); } });
-        var key = mine.map(function (m) { return m.s + ':' + m.e + ':' + m.c; }).join('|');
+        var key = mine.map(function (m) { return m.s + ':' + m.e + ':' + m.c + (m.bg || '') + (m.ac || ''); }).join('|');
         if (key === sp.k) { return; }
         sp.k = key;
         fillMarks(sp.el, sp.t, a, mine);
@@ -38874,12 +38955,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function layout() {
     var avail = $('wrap').clientWidth;
     if (!avail) { return; }
-    scale = avail / PAGE_W;
+    scale = viewPrefs ? computeScale(avail) : avail / PAGE_W;
     $('page').style.transform = 'scale(' + scale + ')';
     if (pdf) {
       pageH = pdf.totalH;
       $('page').style.height = pageH + 'px';
       $('wrap').style.height = Math.ceil(pageH * scale) + 'px';
+      if (viewPrefs) { viewAfterLayout(); }
       renderVisiblePages();
       renderReport();
       return;
@@ -38895,6 +38977,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     c.width = Math.max(1, Math.round(PAGE_W * k));
     c.height = Math.max(1, Math.round(pageH * k));
     redrawInk();
+    if (viewPrefs) { viewAfterLayout(); }
     renderReport();
   }
   function inkColor() { return getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#1f4fd1'; }
@@ -38905,11 +38988,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     g.lineJoin = 'round';
     g.strokeStyle = inkColor();
     g.fillStyle = inkColor();
+    g._inkDef = g.strokeStyle;
     return g;
   }
   function drawStroke(g, s) {
     var p = s.p;
     if (!p.length) { return; }
+    var col = s.c || g._inkDef;
+    if (col) { g.strokeStyle = col; g.fillStyle = col; }
     if (p.length === 1) { g.beginPath(); g.arc(p[0][0], p[0][1], s.w / 2, 0, Math.PI * 2); g.fill(); return; }
     g.lineWidth = s.w;
     g.beginPath();
@@ -38932,7 +39018,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function applyBoxStyle(ed, st) {
     var x = Object.assign({}, DEFAULT_STYLE, st || {});
     ed.style.fontSize = x.size + 'px';
-    ed.style.color = 'var(--c-' + x.color + ')';
+    ed.style.color = /^#/.test(x.color || '') ? x.color : 'var(--c-' + x.color + ')';
     ed.style.fontWeight = String(x.weight);
     ed.style.fontFamily = FONTS[x.font] || FONTS.sans;
   }
@@ -38946,6 +39032,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     Array.prototype.forEach.call(document.querySelectorAll('#stylebar [data-color]'), function (el) { el.setAttribute('aria-pressed', String(el.getAttribute('data-color') === st.color)); });
     Array.prototype.forEach.call(document.querySelectorAll('#stylebar [data-weight]'), function (el) { el.setAttribute('aria-pressed', String(Number(el.getAttribute('data-weight')) === st.weight)); });
     Array.prototype.forEach.call(document.querySelectorAll('#stylebar [data-font]'), function (el) { el.setAttribute('aria-pressed', String(el.getAttribute('data-font') === st.font)); });
+    if (typeof syncBoxCustom === 'function') { syncBoxCustom(); }
   }
   function setStyle(patch) {
     Object.assign(state.style, patch);
@@ -39904,7 +39991,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
             grip.removeEventListener('pointermove', mv);
             grip.removeEventListener('pointerup', up);
             grip.removeEventListener('pointercancel', up);
-            if (moved) { save(); } else { history.pop(); }
+            if (moved) { save(); } else { history.pop(); syncUndoButtons(); }
           }
           grip.addEventListener('pointermove', mv);
           grip.addEventListener('pointerup', up);
@@ -40202,7 +40289,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     g.setTransform(k, 0, 0, k, 0, -pg.top * k);
     g.lineCap = 'round'; g.lineJoin = 'round';
     var pc = getComputedStyle($('wrap')).getPropertyValue('--ink').trim() || '#1f4fd1';
-    g.strokeStyle = pc; g.fillStyle = pc;
+    g.strokeStyle = pc; g.fillStyle = pc; g._inkDef = pc;
     return g;
   }
   function strokeHits(s, pg) {
@@ -40243,7 +40330,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var same = op.map(function (r, k) { return oldT.slice(r[0], r[1]) === newT.slice(np[k][0], np[k][1]); });
     return function (r) {
       for (var k = 0; k < op.length; k++) {
-        if (r[0] >= op[k][0] && r[1] <= op[k][1]) { if (!same[k]) { return null; } var d = np[k][0] - op[k][0]; return [r[0] + d, r[1] + d]; }
+        if (r[0] >= op[k][0] && r[1] <= op[k][1]) { if (!same[k]) { return null; } var d = np[k][0] - op[k][0]; return [r[0] + d, r[1] + d].concat(r.slice(2)); }
       }
       return null;
     };
@@ -40309,7 +40396,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         nextId: keep ? (keep.nextId || 1) : 1, style: state.style
       };
       if (keep && !sameText) { state.boxes.forEach(function (b) { if (b.a) { var m = moveR ? moveR(b.a) : null; if (m) { b.a = m; } else { delete b.a; } } }); }
-      history = []; tapSel = null;
+      history = []; redoStack = []; tapSel = null;
       segs = segment(state.text);
       pdf.quality = pages.map(function (pg) { return pageQuality(pg, text); });
       $('wrap').classList.add('haspdf');
@@ -41097,7 +41184,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.6.1';
+  var APP_VER = '正式版 v1.7.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -41298,7 +41385,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     Array.prototype.forEach.call(document.querySelectorAll('#text ' + selector), function (m) {
       Array.prototype.forEach.call(m.getClientRects(), function (r) {
         if (r.width < 0.5) { return; }
-        out.push({ x: (r.left - pr.left) / scale, y: (r.top - pr.top) / scale, w: r.width / scale, h: r.height / scale, cls: m.className });
+        out.push({ x: (r.left - pr.left) / scale, y: (r.top - pr.top) / scale, w: r.width / scale, h: r.height / scale, cls: m.className, c: m.getAttribute('data-c'), ac: m.getAttribute('data-ac') });
       });
     });
     return out;
@@ -41440,19 +41527,20 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         var inPage = function (y) { return y >= pg.top - 2 && y <= pg.top + pg.h + 2; };
         hls.forEach(function (r) {
           if (!inPage(r.y + r.h / 2)) { return; }
-          P.drawRectangle({ x: X(r.x), y: Y(r.y + r.h), width: r.w / s, height: r.h / s, color: hexRgb(LIGHT.hl), opacity: 0.35 });
+          if (/\bhlu\b/.test(r.cls)) { P.drawRectangle({ x: X(r.x), y: Y(r.y + r.h), width: r.w / s, height: r.h * 0.3 / s, color: hexRgb(r.c || '#ffc800'), opacity: 0.85 }); }
+          else { P.drawRectangle({ x: X(r.x), y: Y(r.y + r.h), width: r.w / s, height: r.h / s, color: hexRgb(r.c || LIGHT.hl), opacity: 0.35 }); }
           notedPages[i] = 1;
         });
         annos.forEach(function (r) {
           if (!inPage(r.y + r.h / 2)) { return; }
-          var m = /anno-(\w+)/.exec(r.cls), col = hexRgb(LIGHT[m ? m[1] : 'red'] || LIGHT.red);
+          var m = /anno-(\w+)/.exec(r.cls), col = hexRgb(r.ac || LIGHT[m ? m[1] : 'red'] || LIGHT.red);
           P.drawLine({ start: { x: X(r.x), y: Y(r.y + r.h) + 0.6 }, end: { x: X(r.x + r.w), y: Y(r.y + r.h) + 0.6 }, thickness: 0.8, color: col, dashArray: [1.5, 1.5] });
         });
         state.strokes.forEach(function (st) {
           if (!st.p.some(function (q) { return inPage(q[1]); })) { return; }
           var d = st.p.map(function (q, n) { return (n ? 'L' : 'M') + q[0].toFixed(1) + ' ' + (q[1] - pg.top).toFixed(1); }).join(' ');
           if (st.p.length === 1) { d += ' L' + (st.p[0][0] + 0.1).toFixed(1) + ' ' + (st.p[0][1] - pg.top).toFixed(1); }
-          P.drawSvgPath(d, { x: cb.x, y: cb.y + cb.height, scale: 1 / s, borderColor: hexRgb(LIGHT.ink), borderWidth: st.w, borderLineCap: L.LineCapStyle.Round });
+          P.drawSvgPath(d, { x: cb.x, y: cb.y + cb.height, scale: 1 / s, borderColor: hexRgb(st.c || LIGHT.ink), borderWidth: st.w, borderLineCap: L.LineCapStyle.Round });
           notedPages[i] = 1;
         });
         for (var j = 0; j < imgs.length; j++) {
@@ -41503,7 +41591,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   });
   /* ---------- 手動備份：把設定、生字卡、所有文件的筆記和目前的 PDF 打包成一個檔案 ---------- */
   var BK_LAST = 'thai-last-backup', backupStatus = '還沒備份過', pendingRestore = null;
-  var SETTING_KEYS = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-welcome-v1', 'thai-theme', 'thai-my-names'];
+  var SETTING_KEYS = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-welcome-v1', 'thai-theme', 'thai-my-names', 'thai-font', 'thai-view', 'thai-tools', 'thai-progress'];
   function b64FromBytes(u8) {
     var s = '', CH = 0x8000;
     for (var i = 0; i < u8.length; i += CH) { s += String.fromCharCode.apply(null, u8.subarray(i, i + CH)); }
@@ -41593,7 +41681,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       }
       teardownPdf();
       state = { text: '', src: null, hl: [], strokes: [], boxes: [], nextId: 1, style: state.style };
-      segs = []; history = []; tapSel = null;
+      segs = []; history = []; redoStack = []; tapSel = null;
       var curId = o.current && o.current.src && o.current.src.id;
       if (curId && typeof docById === 'function' && docById(curId)) { openDoc(curId); }
       else { save(); if (typeof syncDocView === 'function') { syncDocView(); renderHome(); } }
@@ -41763,7 +41851,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (wasCur) {
       teardownPdf();
       state = { text: '', src: null, hl: [], strokes: [], boxes: [], nextId: 1, style: state.style };
-      segs = []; history = []; tapSel = null;
+      segs = []; history = []; redoStack = []; tapSel = null;
       save(); syncDocView();
     }
     renderHome();
@@ -41796,7 +41884,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var o = null;
     try { o = JSON.parse(localStorage.getItem(PDF_DOC_PREFIX + id) || 'null'); } catch (err) { o = null; }
     state = Object.assign({ text: '', hl: [], strokes: [], boxes: [], nextId: 1 }, o || {}, { src: { type: 'text', id: id, name: d.name }, style: state.style });
-    segs = segment(state.text); history = []; tapSel = null;
+    segs = segment(state.text); history = []; redoStack = []; tapSel = null;
     d.opened = Date.now(); saveLib();
     pdfInfo.status = '目前顯示：' + d.name + '（文字，' + state.text.length + ' 字）';
     setDocStatus('');
@@ -41870,7 +41958,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     /* iPad 最上方狀態列的底色跟著外觀 */
     Array.prototype.forEach.call(document.querySelectorAll('meta[name="theme-color"]'), function (m) {
       if (!m.dataset.orig) { m.dataset.orig = m.content; }
-      m.content = theme === 'light' ? '#f5eedf' : theme === 'dark' ? '#0d1015' : m.dataset.orig;
+      m.content = theme === 'light' ? '#f5eedf' : theme === 'dark' ? '#1e2125' : m.dataset.orig;
     });
     if (typeof redrawInk === 'function' && state && state.strokes) { try { redrawInk(); } catch (err) {} }
   }
@@ -41975,16 +42063,29 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '專有名詞', s: '淡色底的是人名、劇名、機構等，會顯示中文名', img: 'pop-name',
         d: ['App 內建約一萬五千個明星、政治人物、劇名、品牌的名單。', '點到名單裡的名字，會顯示中文名、英文名和說明。', '「朗讀」唸出全名，「Google」用 Google 搜尋這個名字。'] },
       { t: '名字被切錯', s: '按「這是名字或劇名？」，調好範圍存起來', img: 'name-edit',
-        d: ['點被切錯的名字，按查詞視窗下方的「這是名字或劇名？」。', '用「‹＋」「＋›」往前、往後多選一個字，「－」少選一個字，直到中間顯示完整的名字。', '選種類（人名、作品…），可以寫中文名，按「存到我的名單」。', '之後所有文件都會把它當成一個詞。設定頁的「我的專有名詞」可以刪除。'] }]],
+        d: ['點被切錯的名字，按查詞視窗下方的「這是名字或劇名？」。', '用「‹＋」「＋›」往前、往後多選一個字，「－」少選一個字，直到中間顯示完整的名字。', '選種類（人名、作品…），可以寫中文名，按「存到我的名單」。', '之後所有文件都會把它當成一個詞。設定頁的「我的專有名詞」可以刪除。'] },
+      { t: '翻譯一整段', s: '長按一個字，不放開，拖到最後一個字', img: 'sel-pop',
+        d: ['確認工具列選的是「點字」。', '手指長按第一個字（約半秒），不要放開，拖到最後一個字再放開。用 Pencil 可以直接拖。', '下方會跳出這段文字和中文翻譯。', '還可以「朗讀」「複製」「畫螢光筆」，或「在 Google 翻譯打開」。'],
+        tip: '直接翻譯需要網路。' }]],
+    ['閱讀', [
+      { t: '放大縮小', s: '兩指縮放，或按「符合螢幕 ▾」選比例', img: 'view-zoom',
+        d: ['兩根手指在文件上張開、捏合，就能放大縮小。用螢光筆、手寫時也可以。', '或按工具列右下的「符合螢幕 ▾」，選「符合螢幕」「符合寬度」或 125%、150%、200%。', '「符合螢幕」：一整頁剛好放進畫面（打開文件時的預設）。「符合寬度」：左右剛好塞滿。'],
+        tip: '放大後，文件可以左右滑動看兩邊。' },
+      { t: '捲動或翻頁', s: '在同一個選單選「上下捲動」或「左右翻頁」', img: 'view-menu',
+        d: ['「上下捲動」：所有頁面接在一起，往下滑就是下一頁。', '「左右翻頁」：一次看一頁，往左滑是下一頁、往右滑是上一頁，也可以按「‹」「›」。', '翻頁的滑動只在「點字」時有效；畫螢光筆、手寫時請按「‹」「›」。'] },
+      { t: '跳到某一頁', s: '點中間的頁碼，打數字', img: 'view-page',
+        d: ['點「1 / 12」這樣的頁碼。', '打要去的頁數，按鍵盤的「前往」或 Enter。'] },
+      { t: '接著上次讀', s: '不用做什麼，App 會記住', img: '',
+        d: ['每份文件會記住你讀到第幾頁、讀到頁面的哪裡。', '下次打開同一份文件，會自動回到那裡。'] }]],
     ['筆記', [
       { t: '畫重點', s: '選「螢光筆」，從一個字劃到另一個字', img: 'note-hl',
-        d: ['按「螢光筆」。', '手指或 Pencil 從第一個字劃到最後一個字，放開就變黃。', '想取消：點一下黃色的地方。'] },
-      { t: '手寫', s: '選「手寫」，用 Apple Pencil 寫', img: 'note-ink',
-        d: ['按「手寫」，直接在頁面上寫字或畫線。', '打開「只用 Pencil 畫」：只有 Pencil 會畫線，手指滑動是捲動頁面，比較不會誤畫。'] },
+        d: ['按「螢光筆」，下面會出現顏色和樣式。', '選顏色；最後一個彩色圓圈可以自訂任何顏色。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '想取消：點一下畫過的地方。'] },
+      { t: '手寫', s: '選「手寫」，選顏色和粗細再寫', img: 'note-ink',
+        d: ['按「手寫」，下面會出現顏色和「細／中／粗」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開「只用 Pencil 畫」：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
       { t: '寫註解', s: '選「文字框」，點字或點空白處', img: 'note-box',
-        d: ['按「文字框」。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改顏色、大小，或拖曳「⠿」移動。'] },
-      { t: '畫錯了', s: '按「復原」', img: 'note-undo',
-        d: ['「復原」：取消上一個動作，可以一直按。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪。'],
+        d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。彩色圓圈可以自訂顏色。'] },
+      { t: '畫錯了', s: '按「↶ 上一步」，反悔了按「↷ 下一步」', img: 'note-undo',
+        d: ['「↶ 上一步」：取消剛剛的動作，可以一直往回按。', '「↷ 下一步」：把剛剛取消的動作做回來。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪；刪了也可以按「↶ 上一步」救回來。'],
         tip: '筆記會自動儲存，不用按存檔。' },
       { t: '輸出', s: '右上角「匯出 PDF」', img: 'note-export',
         d: ['按右上角「匯出 PDF」。', '勾選要放進去的內容：原文頁（含筆記）、生字表、筆記整理，再按「產生 PDF」。', '在跳出的視窗選「儲存到檔案」，或直接分享。'] }]],
@@ -42008,6 +42109,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ['設定', [
       { t: '換顏色', s: '「外觀」選淺色或深色', img: 'set-theme',
         d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。'] },
+      { t: '換字體', s: '「中文字體」選喜歡的字', img: 'set-font',
+        d: ['「蘋方」：iPad 內建的黑體，最清楚（預設）。', '「思源黑體」：線條較均勻的黑體。', '「思源宋體」：像書本的明體。', '「霞鶩文楷」：像手寫的楷體，比較柔和。', '只改按鈕和說明的中文字，泰文字不變。'],
+        tip: '思源字體和文楷第一次要連網下載。' },
       { t: '備份', s: '按「匯出備份檔」，存到 iCloud Drive', img: 'set-backup',
         d: ['按「匯出備份檔」。', '在跳出的視窗選「儲存到檔案」，再選 iCloud Drive 或 Google Drive。', '要還原時按「從備份檔還原」，選那個檔案。'],
         tip: '換 iPad、刪掉 App 或清除瀏覽器資料前，一定要先備份！' },
@@ -42455,7 +42559,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function snapshot() {
     history.push(JSON.stringify({ hl: state.hl, strokes: state.strokes, boxes: state.boxes }));
-    if (history.length > 40) { history.shift(); }
+    if (history.length > 60) { history.shift(); }
+    redoStack = [];
+    if (typeof syncUndoButtons === 'function') { syncUndoButtons(); }
   }
   function renderAllNotes() { renderText(); layout(); renderBoxes(); }
 
@@ -42468,7 +42574,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     $('pencil').setAttribute('aria-pressed', String(pencilOnly));
     $('stylebar').hidden = mode !== 'box';
     syncStyleBar();
-    $('wrap').style.touchAction = drawingMode() ? (pencilOnly ? 'pan-x pan-y' : 'none') : 'manipulation';
+    $('wrap').style.touchAction = drawingMode() && !pencilOnly ? 'none' : 'pan-x pan-y';
+    if (typeof renderToolOpts === 'function') { renderToolOpts(); }
     $('wrap').style.cursor = mode === 'ink' ? 'crosshair' : (mode === 'box' ? 'copy' : 'pointer');
     $('hint').textContent = HINTS[mode] + (drawingMode() && pencilOnly ? ' 目前只有 Apple Pencil 會畫，手指用來捲動。' : '');
     renderReport();
@@ -42492,7 +42599,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (seen[e.pointerType] !== undefined) { seen[e.pointerType] += 1; }
     if (drawingMode() && pencilOnly && e.pointerType === 'touch') { return; }
     if (mode === 'ink') {
-      active = { id: e.pointerId, kind: 'ink', s: { w: 3, p: [toPage(e)] } };
+      active = { id: e.pointerId, kind: 'ink', s: { w: toolPrefs.inkW, p: [toPage(e)] } };
+      if (inkStrokeColor()) { active.s.c = inkStrokeColor(); }
       if (pdf) { var ipg = pageAtY(active.s.p[0][1]); active.g = ipg && ipg.ink.width ? pageInkCtx(ipg) : null; }
       try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
       e.preventDefault();
@@ -42515,7 +42623,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       if (!list || !list.length) { list = [e]; }
       var g = pdf ? active.g : ctx(), p = active.s.p;
       if (!g) { list.forEach(function (ev) { p.push(toPage(ev)); }); return; }
-      g.lineWidth = active.s.w;
+      g.lineWidth = active.s.w; g.strokeStyle = active.s.c || g._inkDef || g.strokeStyle;
       list.forEach(function (ev) {
         var q = toPage(ev), last = p[p.length - 1];
         g.beginPath(); g.moveTo(last[0], last[1]); g.lineTo(q[0], q[1]); g.stroke();
@@ -42539,12 +42647,12 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     } else if (a.kind === 'hl') {
       snapshot();
       var hit = hlAt(a.a);
-      if (!a.moved && hit >= 0) { state.hl.splice(hit, 1); } else { addRange(snapRange(a.a, a.b)); }
+      if (!a.moved && hit >= 0) { state.hl.splice(hit, 1); } else { addRangeColored(snapRange(a.a, a.b), toolPrefs.hlColor, toolPrefs.hlStyle); }
       renderText();
       save();
     } else {
       var moved = Math.abs(e.clientX - a.x) + Math.abs(e.clientY - a.y);
-      if (moved > 12) { return; }
+      if (moved > 12 || (typeof selGesture !== 'undefined' && selGesture)) { return; }
       if (a.kind === 'tap') {
         var i = indexByGeometry(e.clientX, e.clientY);
         var s = i >= 0 ? segAt(i) : null;
@@ -42596,12 +42704,519 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     });
   });
   $('pencil').addEventListener('click', function () { pencilOnly = !pencilOnly; applyMode(); });
-  $('undo').addEventListener('click', function () {
-    if (!history.length) { $('hint').textContent = '沒有可以復原的動作。'; return; }
-    var d = JSON.parse(history.pop());
+  /* ---------- 筆記工具的選項：螢光筆、手寫的顏色與粗細（可以自訂顏色），上一步／下一步 ---------- */
+  var TOOL_KEY = 'thai-tools';
+  var HL_COLORS = [['#ffd400', '黃'], ['#7ddc7d', '綠'], ['#ff9cc2', '粉紅'], ['#8cc8ff', '藍'], ['#ffb15c', '橘']];
+  var INK_COLORS = [['#1f4fd1', '藍'], ['#26332e', '黑'], ['#d63b3b', '紅'], ['#2f8f5b', '綠'], ['#e07a2f', '橘'], ['#7b4fd1', '紫']];
+  var INK_WIDTHS = [[2, '細'], [3.5, '中'], [6, '粗']];
+  var toolPrefs = { hlColor: '#ffd400', hlStyle: 'full', inkColor: '#1f4fd1', inkW: 3.5, hlCustom: '#c38bff', inkCustom: '#8a5a2b', boxCustom: '#0f8b8d' };
+  try { Object.assign(toolPrefs, JSON.parse(localStorage.getItem(TOOL_KEY) || '{}')); } catch (err) {}
+  function saveTools() { try { localStorage.setItem(TOOL_KEY, JSON.stringify(toolPrefs)); } catch (err) {} }
+  function hexA(hex, a) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    if (!m) { return hex; }
+    var n = parseInt(m[1], 16);
+    return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+  /* 螢光筆範圍：[開始, 結束, 顏色, 樣式]；新畫的會蓋過重疊的部分 */
+  function addRangeColored(r, color, style) {
+    var a = r[0], b = r[1], out = [];
+    state.hl.forEach(function (x) {
+      if (x[1] <= a || x[0] >= b) { out.push(x); return; }
+      if (x[0] < a) { out.push([x[0], a].concat(x.slice(2))); }
+      if (x[1] > b) { out.push([b, x[1]].concat(x.slice(2))); }
+    });
+    if (color === HL_COLORS[0][0]) { color = null; }
+    var nr = [a, b, color || null, style === 'under' ? 'u' : ''];
+    out.push(nr);
+    out.sort(function (x, y) { return x[0] - y[0]; });
+    /* 相鄰、同色同樣式的接起來 */
+    var merged = [];
+    out.forEach(function (x) {
+      var last = merged[merged.length - 1];
+      if (last && x[0] <= last[1] && (last[2] || null) === (x[2] || null) && (last[3] || '') === (x[3] || '')) { last[1] = Math.max(last[1], x[1]); }
+      else { merged.push(x.slice()); }
+    });
+    state.hl = merged;
+  }
+
+  /* 工具列下方的選項列（螢光筆、手寫）；文字框沿用原本的樣式列 */
+  var toolbarEl = document.querySelector('.workbox .toolbar') || document.querySelector('.toolbar');
+  var styleBarEl = $('stylebar');
+  var toolOpts = document.createElement('div');
+  toolOpts.className = 'toolopts'; toolOpts.id = 'toolopts'; toolOpts.hidden = true;
+  toolOpts.setAttribute('role', 'toolbar'); toolOpts.setAttribute('aria-label', '筆的顏色與粗細');
+  /* 工具列＋選項列＋顯示比例包成一個會黏在上方的區塊 */
+  var toolHead = document.createElement('div'); toolHead.className = 'toolhead'; toolHead.id = 'toolhead';
+  var subBar = document.createElement('div'); subBar.className = 'subbar'; subBar.id = 'subbar';
+  if (toolbarEl && toolbarEl.parentNode) {
+    toolbarEl.parentNode.insertBefore(toolHead, toolbarEl);
+    toolHead.appendChild(toolbarEl);
+    toolHead.appendChild(subBar);
+    subBar.appendChild(toolOpts);
+    if (styleBarEl) { subBar.appendChild(styleBarEl); }
+  }
+  function swatch(color, label, on, pick) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'sw2';
+    b.style.setProperty('--sw', color); b.setAttribute('aria-label', label); b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.addEventListener('click', function () { pick(color); });
+    return b;
+  }
+  function customSwatch(value, on, label, pick) {
+    var lab = document.createElement('label'); lab.className = 'sw2 custom' + (on ? ' on' : ''); lab.title = '自訂顏色';
+    lab.style.setProperty('--sw', value);
+    var inp = document.createElement('input'); inp.type = 'color'; inp.value = value; inp.setAttribute('aria-label', label);
+    inp.addEventListener('input', function () { lab.style.setProperty('--sw', inp.value); });
+    inp.addEventListener('change', function () { pick(inp.value); });
+    lab.appendChild(inp);
+    return lab;
+  }
+  function optLabel(t) { var s = document.createElement('span'); s.className = 'ol'; s.textContent = t; return s; }
+  function renderToolOpts() {
+    toolOpts.replaceChildren();
+    if (mode === 'hl') {
+      toolOpts.appendChild(optLabel('顏色'));
+      var builtin = HL_COLORS.some(function (c) { return c[0] === toolPrefs.hlColor; });
+      HL_COLORS.forEach(function (c) { toolOpts.appendChild(swatch(c[0], c[1], toolPrefs.hlColor === c[0], function (v) { toolPrefs.hlColor = v; saveTools(); renderToolOpts(); })); });
+      toolOpts.appendChild(customSwatch(builtin ? toolPrefs.hlCustom : toolPrefs.hlColor, !builtin, '自訂螢光筆顏色', function (v) { toolPrefs.hlColor = v; toolPrefs.hlCustom = v; saveTools(); renderToolOpts(); }));
+      toolOpts.appendChild(optLabel('樣式'));
+      [['full', '整塊'], ['under', '底線']].forEach(function (o) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'ob' + (o[0] === 'under' ? ' ob-under' : ' ob-full');
+        b.style.setProperty('--sw', toolPrefs.hlColor);
+        b.textContent = o[1]; b.setAttribute('aria-pressed', toolPrefs.hlStyle === o[0] ? 'true' : 'false');
+        b.addEventListener('click', function () { toolPrefs.hlStyle = o[0]; saveTools(); renderToolOpts(); });
+        toolOpts.appendChild(b);
+      });
+    } else if (mode === 'ink') {
+      toolOpts.appendChild(optLabel('顏色'));
+      var builtin2 = INK_COLORS.some(function (c) { return c[0] === toolPrefs.inkColor; });
+      INK_COLORS.forEach(function (c, k) { toolOpts.appendChild(swatch(k ? c[0] : 'var(--ink)', c[1], toolPrefs.inkColor === c[0], function () { toolPrefs.inkColor = c[0]; saveTools(); renderToolOpts(); })); });
+      toolOpts.appendChild(customSwatch(builtin2 ? toolPrefs.inkCustom : toolPrefs.inkColor, !builtin2, '自訂筆的顏色', function (v) { toolPrefs.inkColor = v; toolPrefs.inkCustom = v; saveTools(); renderToolOpts(); }));
+      toolOpts.appendChild(optLabel('粗細'));
+      INK_WIDTHS.forEach(function (w) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'ob ow';
+        var dot = document.createElement('span'); dot.className = 'odot'; dot.style.width = dot.style.height = Math.round(w[0] * 2.2 + 2) + 'px'; dot.style.background = toolPrefs.inkColor === INK_COLORS[0][0] ? 'var(--ink)' : toolPrefs.inkColor;
+        b.appendChild(dot); b.appendChild(document.createTextNode(w[1]));
+        b.setAttribute('aria-pressed', toolPrefs.inkW === w[0] ? 'true' : 'false');
+        b.addEventListener('click', function () { toolPrefs.inkW = w[0]; saveTools(); renderToolOpts(); });
+        toolOpts.appendChild(b);
+      });
+    }
+    toolOpts.hidden = !(mode === 'hl' || mode === 'ink');
+  }
+  function inkStrokeColor() { return toolPrefs.inkColor === INK_COLORS[0][0] ? null : toolPrefs.inkColor; }
+  /* 文字框的樣式列也加一個自訂顏色 */
+  (function () {
+    if (!styleBarEl) { return; }
+    var last = styleBarEl.querySelector('[data-color="orange"]');
+    if (!last) { return; }
+    var lab = document.createElement('label'); lab.className = 'sw custom'; lab.title = '自訂顏色';
+    var inp = document.createElement('input'); inp.type = 'color'; inp.value = toolPrefs.boxCustom; inp.setAttribute('aria-label', '自訂文字顏色');
+    lab.style.setProperty('--sw', toolPrefs.boxCustom);
+    inp.addEventListener('input', function () { lab.style.setProperty('--sw', inp.value); });
+    inp.addEventListener('change', function () { toolPrefs.boxCustom = inp.value; saveTools(); setStyle({ color: inp.value }); });
+    lab.appendChild(inp);
+    lab.id = 'boxCustom';
+    last.parentNode.insertBefore(lab, last.nextSibling);
+  })();
+  function syncBoxCustom() {
+    var lab = $('boxCustom'); if (!lab) { return; }
+    var c = currentStyle().color, on = /^#/.test(c || '');
+    lab.classList.toggle('on', on);
+    if (on) { lab.style.setProperty('--sw', c); lab.querySelector('input').value = c; }
+  }
+
+  /* ---------- 上一步／下一步（像 GoodNotes） ---------- */
+  var redoStack = [];
+  function notesNow() { return JSON.stringify({ hl: state.hl, strokes: state.strokes, boxes: state.boxes }); }
+  function applyNotes(json) {
+    var d = JSON.parse(json);
     state.hl = d.hl; state.strokes = d.strokes; state.boxes = d.boxes;
-    renderText(); redrawInk(); renderBoxes(); save();
+    renderText(); redrawInk(); renderBoxes(); save(); syncUndoButtons();
+  }
+  function syncUndoButtons() {
+    var u = $('undo'), r = $('redo');
+    if (u) { u.disabled = !history.length; }
+    if (r) { r.disabled = !redoStack.length; }
+  }
+
+  $('undo').addEventListener('click', function () {
+    if (!history.length) { $('hint').textContent = '已經沒有上一步了。'; return; }
+    redoStack.push(notesNow()); applyNotes(history.pop());
   });
+  $('redo').addEventListener('click', function () {
+    if (!redoStack.length) { $('hint').textContent = '已經沒有下一步了。'; return; }
+    history.push(notesNow()); applyNotes(redoStack.pop());
+  });
+  /* ---------- 文件的顯示：縮放（含兩指縮放）、上下捲動或左右翻頁、跳頁、記住讀到哪裡 ---------- */
+  var VIEW_KEY = 'thai-view', PROG_KEY = 'thai-progress';
+  var viewPrefs = { zoom: 'fit', paged: false };
+  try { Object.assign(viewPrefs, JSON.parse(localStorage.getItem(VIEW_KEY) || '{}')); } catch (err) {}
+  var viewCur = 0, lastDocId = null, pinch = null;
+  var ZOOM_OPTS = [['fit', '符合螢幕'], ['width', '符合寬度'], [1.25, '125%'], [1.5, '150%'], [2, '200%']];
+  function saveView() { try { localStorage.setItem(VIEW_KEY, JSON.stringify(viewPrefs)); } catch (err) {} }
+  function availH() { return Math.max(320, window.innerHeight - 120); }
+  function maxPageH() { var m = 0; if (pdf) { pdf.pages.forEach(function (pg) { m = Math.max(m, pg.h); }); } return m || 900; }
+  function effZoom() { return viewPrefs.zoom === 'fit' && !pdf ? 'width' : viewPrefs.zoom; }
+  function computeScale(avail) {
+    var wfit = avail / PAGE_W, z = effZoom();
+    if (z === 'fit') { return pdf ? Math.min(wfit, availH() / maxPageH()) : wfit; }
+    if (typeof z === 'number' && isFinite(z)) { return wfit * Math.max(0.5, Math.min(4, z)); }
+    return wfit;
+  }
+  function pagedOn() { return !!(viewPrefs.paged && pdf && pdf.pages && pdf.pages.length); }
+  function applyPageTransform() {
+    var w = $('wrap'), avail = w.clientWidth, x = Math.max(0, (avail - PAGE_W * scale) / 2), y = 0;
+    if (pagedOn()) {
+      viewCur = Math.max(0, Math.min(pdf.pages.length - 1, viewCur));
+      y = -pdf.pages[viewCur].top * scale;
+    }
+    $('page').style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + scale + ')';
+    w.style.overflowX = PAGE_W * scale > avail + 1 ? 'auto' : 'hidden';
+    w.style.overflowY = 'hidden';
+  }
+  /* layout() 每次排版完都會叫這個 */
+  function viewAfterLayout() {
+    var sid = state.src && state.src.id;
+    var fresh = !!sid && sid !== lastDocId && !$('view-doc').hidden && (state.src.type !== 'pdf' || !!(pdf && pdf.id === sid));
+    if (fresh) {
+      lastDocId = sid; viewCur = 0;
+      var sp0 = loadProg()[sid];
+      if (sp0 && typeof sp0.p === 'number' && pdf) { viewCur = Math.max(0, Math.min(pdf.pages.length - 1, sp0.p)); }
+    }
+    applyPageTransform();
+    if (pagedOn()) {
+      var pg = pdf.pages[viewCur];
+      $('wrap').style.height = Math.ceil(pg.h * scale) + 'px';
+      pdf.pages.forEach(function (p, i) { if (Math.abs(i - viewCur) <= 1) { p.visible = true; } else if (Math.abs(i - viewCur) > 2) { p.visible = false; } });
+    }
+    renderViewBar();
+    if (typeof syncUndoButtons === 'function') { syncUndoButtons(); }
+    if (fresh) { setTimeout(function () { if (state.src && state.src.id === sid) { restoreProgress(sid); } }, 80); }
+  }
+  function zoomLabel() {
+    var z = effZoom();
+    for (var i = 0; i < ZOOM_OPTS.length; i++) { if (ZOOM_OPTS[i][0] === z) { return ZOOM_OPTS[i][1]; } }
+    return Math.round((typeof z === 'number' ? z : 1) * 100) + '%';
+  }
+  function setZoom(z) { viewPrefs.zoom = z; saveView(); var keep = readingSpot(); layout(); if (keep) { goSpot(keep); } }
+
+  /* ---------- 讀到哪裡：第幾頁、頁內的位置 ---------- */
+  function wrapTopY() { return $('wrap').getBoundingClientRect().top + window.scrollY; }
+  function headOff() { var h = document.getElementById('toolhead'); return (h ? h.offsetHeight : 60) + 12; }
+  function readingSpot() {
+    if (!state.src || $('view-doc').hidden) { return null; }
+    if (pdf) {
+      if (pagedOn()) { return { p: viewCur, f: 0 }; }
+      var y = (window.scrollY + headOff() - wrapTopY()) / scale, pg = pageAtY(Math.max(0, y)) || pdf.pages[0];
+      return { p: pdf.pages.indexOf(pg), f: Math.max(0, Math.min(1, (y - pg.top) / pg.h)), top: y < 0 };
+    }
+    var h = $('wrap').offsetHeight || 1, yy = window.scrollY + headOff() - wrapTopY();
+    return { r: Math.max(0, Math.min(1, yy / h)), top: yy < 0 };
+  }
+  function goSpot(sp) {
+    if (!sp || (sp.top && !pagedOn())) { return; }
+    if (pdf && typeof sp.p === 'number') {
+      var pg = pdf.pages[Math.max(0, Math.min(pdf.pages.length - 1, sp.p))];
+      if (pagedOn()) { goPage(pdf.pages.indexOf(pg), true); return; }
+      window.scrollTo(0, Math.max(0, wrapTopY() + (pg.top + (sp.f || 0) * pg.h) * scale - headOff()));
+    } else if (typeof sp.r === 'number') {
+      window.scrollTo(0, Math.max(0, wrapTopY() + sp.r * $('wrap').offsetHeight - headOff()));
+    }
+  }
+  function loadProg() { try { return JSON.parse(localStorage.getItem(PROG_KEY) || '{}') || {}; } catch (err) { return {}; } }
+  var progTimer = null;
+  function saveProgress() {
+    clearTimeout(progTimer);
+    progTimer = setTimeout(function () {
+      var sp = readingSpot(); if (!sp || !state.src) { return; }
+      var all = loadProg(); sp.at = Date.now(); all[state.src.id] = sp;
+      var keys = Object.keys(all);
+      if (keys.length > 200) { keys.sort(function (a, b) { return (all[a].at || 0) - (all[b].at || 0); }).slice(0, keys.length - 200).forEach(function (k) { delete all[k]; }); }
+      try { localStorage.setItem(PROG_KEY, JSON.stringify(all)); } catch (err) {}
+    }, 500);
+  }
+  function restoreProgress(id) {
+    var sp = loadProg()[id];
+    if (sp && !(pagedOn() && sp.p === viewCur)) { goSpot(sp); }
+    else if (pagedOn()) { goPage(viewCur, true); }
+    renderViewBar();
+  }
+  window.addEventListener('scroll', function () { if (state.src && !$('view-doc').hidden) { saveProgress(); if (pdf && !pagedOn()) { renderViewBar(); } } }, { passive: true });
+
+  /* ---------- 翻頁、跳頁 ---------- */
+  function currentPageIndex() {
+    if (!pdf) { return 0; }
+    if (pagedOn()) { return viewCur; }
+    var sp = readingSpot(); return sp && typeof sp.p === 'number' ? sp.p : 0;
+  }
+  function goPage(i, quiet) {
+    if (!pdf) { return; }
+    i = Math.max(0, Math.min(pdf.pages.length - 1, i));
+    if (pagedOn()) {
+      viewCur = i; hidePop(); layout(); renderVisiblePages();
+      var top = wrapTopY();
+      if (!quiet && (window.scrollY > top - headOff() || window.scrollY + window.innerHeight < top + 60)) { window.scrollTo(0, Math.max(0, top - headOff())); }
+    } else {
+      window.scrollTo(0, Math.max(0, wrapTopY() + pdf.pages[i].top * scale - headOff()));
+    }
+    saveProgress(); renderViewBar();
+  }
+  function setPaged(on) {
+    var cur = currentPageIndex();
+    viewPrefs.paged = !!on; saveView();
+    viewCur = cur; layout();
+    if (pdf) { goPage(cur, true); }
+  }
+
+  /* ---------- 浮在文件下方的小工具列：顯示比例、翻頁方式、頁碼 ---------- */
+  var vbar = document.createElement('div'); vbar.className = 'viewbar'; vbar.id = 'viewbar'; vbar.hidden = true;
+  vbar.innerHTML = '<button type="button" class="vb-zoom" id="vbZoom" aria-haspopup="true" aria-expanded="false"></button>' +
+    '<span class="vb-sep" aria-hidden="true"></span>' +
+    '<button type="button" class="vb-arrow" id="vbPrev" aria-label="上一頁">‹</button>' +
+    '<button type="button" class="vb-page" id="vbPage" aria-label="跳到某一頁"></button>' +
+    '<input type="number" class="vb-input" id="vbInput" min="1" inputmode="numeric" aria-label="要跳到第幾頁" hidden>' +
+    '<button type="button" class="vb-arrow" id="vbNext" aria-label="下一頁">›</button>' +
+    '<div class="vb-menu" id="vbMenu" role="menu" hidden></div>';
+  (typeof subBar !== 'undefined' && subBar ? subBar : document.body).appendChild(vbar);
+  function renderViewBar() {
+    if (!vbar) { return; }
+    var onDoc = state.src && !$('view-doc').hidden;
+    vbar.hidden = !onDoc;
+    if (!onDoc) { return; }
+    $('vbZoom').textContent = zoomLabel() + (pdf ? (pagedOn() ? '・翻頁' : '・捲動') : '') + ' ▾';
+    var hasPages = !!(pdf && pdf.pages.length);
+    ['vbPrev', 'vbNext', 'vbPage'].forEach(function (k) { $(k).hidden = !hasPages; });
+    vbar.querySelector('.vb-sep').hidden = !hasPages;
+    if (hasPages && $('vbInput').hidden) {
+      var i = currentPageIndex();
+      $('vbPage').textContent = (i + 1) + ' / ' + pdf.pages.length;
+      $('vbPrev').disabled = i <= 0; $('vbNext').disabled = i >= pdf.pages.length - 1;
+    }
+  }
+  function renderViewMenu() {
+    var m = $('vbMenu'); m.replaceChildren();
+    function head(t) { var h = document.createElement('div'); h.className = 'vm-h'; h.textContent = t; m.appendChild(h); }
+    function item(label, on, fn) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'menuitemradio'); b.setAttribute('aria-checked', on ? 'true' : 'false');
+      b.textContent = label; b.addEventListener('click', function () { fn(); closeViewMenu(); });
+      m.appendChild(b);
+    }
+    head('顯示比例');
+    ZOOM_OPTS.forEach(function (o) { if (o[0] === 'fit' && !pdf) { return; } item(o[1], effZoom() === o[0], function () { setZoom(o[0]); }); });
+    if (pdf) {
+      head('翻頁方式');
+      item('上下捲動', !viewPrefs.paged, function () { setPaged(false); });
+      item('左右翻頁', !!viewPrefs.paged, function () { setPaged(true); });
+    }
+  }
+  function closeViewMenu() { $('vbMenu').hidden = true; $('vbZoom').setAttribute('aria-expanded', 'false'); }
+  $('vbZoom').addEventListener('click', function () {
+    var m = $('vbMenu');
+    if (!m.hidden) { closeViewMenu(); return; }
+    renderViewMenu(); m.hidden = false; $('vbZoom').setAttribute('aria-expanded', 'true');
+  });
+  document.addEventListener('pointerdown', function (e) { if (!$('vbMenu').hidden && !vbar.contains(e.target)) { closeViewMenu(); } });
+  $('vbPrev').addEventListener('click', function () { goPage(currentPageIndex() - 1); });
+  $('vbNext').addEventListener('click', function () { goPage(currentPageIndex() + 1); });
+  $('vbPage').addEventListener('click', function () {
+    var inp = $('vbInput'); inp.max = pdf ? pdf.pages.length : 1; inp.value = currentPageIndex() + 1;
+    $('vbPage').hidden = true; inp.hidden = false; inp.focus(); inp.select();
+  });
+  function finishJump(go) {
+    var inp = $('vbInput'); if (inp.hidden) { return; }
+    var n = parseInt(inp.value, 10); inp.hidden = true; $('vbPage').hidden = false;
+    if (go && n) { goPage(n - 1); } else { renderViewBar(); }
+  }
+  $('vbInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { finishJump(true); } else if (e.key === 'Escape') { finishJump(false); } });
+  $('vbInput').addEventListener('blur', function () { finishJump(true); });
+  document.addEventListener('keydown', function (e) {
+    if (!pagedOn() || $('view-doc').hidden || /input|textarea/i.test((e.target && e.target.tagName) || '') || (e.target && e.target.isContentEditable)) { return; }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { goPage(viewCur + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goPage(viewCur - 1); e.preventDefault(); }
+  });
+
+  /* ---------- 兩指縮放（任何工具都可以；手寫時第二根手指放下就取消這一筆） ---------- */
+  var wrapEl = $('wrap'), swipe = null;
+  function touchDist(t) { var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY; return Math.sqrt(dx * dx + dy * dy) || 1; }
+  function touchMid(t) { return { x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2 }; }
+  function cancelActiveStroke() {
+    if (!active) { return; }
+    var k = active.kind; active = null;
+    if (k === 'ink') { redrawInk(); } else if (k === 'hl') { renderText(); }
+  }
+  wrapEl.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 2) {
+      cancelActiveStroke(); cancelSelGesture();
+      var m = touchMid(e.touches), r = $('page').getBoundingClientRect();
+      pinch = { d0: touchDist(e.touches), s0: scale, s: scale, px: (m.x - r.left) / scale, py: (m.y - r.top) / scale, cx: m.x, cy: m.y, w0: wrapEl.getBoundingClientRect(), sl: wrapEl.scrollLeft, h0: wrapEl.offsetHeight };
+      e.preventDefault();
+    } else if (e.touches.length === 1 && pagedOn() && mode === 'tap') {
+      swipe = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() };
+    }
+  }, { passive: false });
+  wrapEl.addEventListener('touchmove', function (e) {
+    if (pinch && e.touches.length >= 2) {
+      e.preventDefault();
+      var m = touchMid(e.touches), avail = wrapEl.clientWidth, wfit = avail / PAGE_W;
+      pinch.s = Math.max(wfit * 0.5, Math.min(wfit * 4, pinch.s0 * touchDist(e.touches) / pinch.d0));
+      pinch.cx = m.x; pinch.cy = m.y;
+      var tx = m.x - pinch.w0.left - pinch.px * pinch.s + pinch.sl, ty = m.y - pinch.w0.top - pinch.py * pinch.s;
+      wrapEl.style.height = Math.max(pinch.h0, Math.ceil(pinch.h0 * pinch.s / pinch.s0)) + 'px';
+      $('page').style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + pinch.s + ')';
+    } else if (selGesture && selTouch) { e.preventDefault(); }
+  }, { passive: false });
+  function endPinch() {
+    var p = pinch; pinch = null;
+    var avail = wrapEl.clientWidth, wfit = avail / PAGE_W, z = p.s / wfit;
+    if (Math.abs(z - 1) < 0.04) { viewPrefs.zoom = 'width'; }
+    else if (pdf && Math.abs(p.s - Math.min(wfit, availH() / maxPageH())) < wfit * 0.03) { viewPrefs.zoom = 'fit'; }
+    else { viewPrefs.zoom = Math.round(z * 100) / 100; }
+    saveView();
+    layout();
+    var r = $('page').getBoundingClientRect(), ax = r.left + p.px * scale, ay = r.top + p.py * scale;
+    window.scrollBy(0, ay - p.cy);
+    wrapEl.scrollLeft += ax - p.cx;
+    if (pdf) { renderVisiblePages(); }
+    renderViewBar(); saveProgress();
+  }
+  wrapEl.addEventListener('touchend', function (e) {
+    if (pinch && e.touches.length < 2) { endPinch(); return; }
+    if (swipe && e.touches.length === 0 && e.changedTouches.length) {
+      var t = e.changedTouches[0], dx = t.clientX - swipe.x, dy = t.clientY - swipe.y, quick = Date.now() - swipe.t < 700;
+      var canScrollX = wrapEl.scrollWidth > wrapEl.clientWidth + 2;
+      var atLeft = wrapEl.scrollLeft <= 2, atRight = wrapEl.scrollLeft + wrapEl.clientWidth >= wrapEl.scrollWidth - 2;
+      swipe = null;
+      if (quick && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 2) {
+        if (dx < 0 && (!canScrollX || atRight)) { goPage(viewCur + 1); }
+        if (dx > 0 && (!canScrollX || atLeft)) { goPage(viewCur - 1); }
+      }
+    }
+  });
+  wrapEl.addEventListener('touchcancel', function () { if (pinch) { endPinch(); } swipe = null; });
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (n) { wrapEl.addEventListener(n, function (e) { e.preventDefault(); }, { passive: false }); });
+
+  /* ---------- 點字模式：長按再拖曳選一段，直接翻譯 ---------- */
+  var selGesture = false, selTouch = false, selTimer = null, selDown = null, selRange = null;
+  function cancelSelGesture() {
+    clearTimeout(selTimer); selTimer = null;
+    if (selGesture) { selGesture = false; selTouch = false; renderText(); }
+    selDown = null;
+  }
+  wrapEl.addEventListener('pointerdown', function (e) {
+    if (mode !== 'tap' || pinch || (e.target.closest && e.target.closest('.note'))) { return; }
+    var i = indexByGeometry(e.clientX, e.clientY);
+    if (i < 0) { return; }
+    selDown = { id: e.pointerId, x: e.clientX, y: e.clientY, a: i, b: i, pen: e.pointerType === 'pen' || e.pointerType === 'mouse' };
+    clearTimeout(selTimer);
+    if (!selDown.pen) {
+      selTimer = setTimeout(function () {
+        if (!selDown) { return; }
+        selGesture = true; selTouch = true;
+        renderText(snapRange(selDown.a, selDown.b));
+        if (navigator.vibrate) { try { navigator.vibrate(10); } catch (err) {} }
+      }, 450);
+    }
+  });
+  wrapEl.addEventListener('pointermove', function (e) {
+    if (!selDown || e.pointerId !== selDown.id) { return; }
+    var moved = Math.abs(e.clientX - selDown.x) + Math.abs(e.clientY - selDown.y);
+    if (!selGesture) {
+      if (selDown.pen && moved > 10) { selGesture = true; try { wrapEl.setPointerCapture(e.pointerId); } catch (err) {} }
+      else if (moved > 10) { clearTimeout(selTimer); selDown = null; return; }
+      else { return; }
+    }
+    var i = indexByGeometry(e.clientX, e.clientY);
+    if (i >= 0 && i !== selDown.b) { selDown.b = i; renderText(snapRange(selDown.a, selDown.b)); }
+  });
+  wrapEl.addEventListener('pointerup', function (e) {
+    if (!selDown || e.pointerId !== selDown.id) { return; }
+    clearTimeout(selTimer);
+    if (selGesture) {
+      var r = snapRange(selDown.a, selDown.b);
+      selDown = null;
+      setTimeout(function () { selGesture = false; selTouch = false; }, 0);
+      openSelection(r);
+      return;
+    }
+    selDown = null;
+  });
+  wrapEl.addEventListener('pointercancel', function () { cancelSelGesture(); });
+  wrapEl.addEventListener('contextmenu', function (e) { if (mode === 'tap') { e.preventDefault(); } });
+
+  var selPop = document.createElement('div'); selPop.className = 'selpop'; selPop.id = 'selpop'; selPop.hidden = true;
+  selPop.setAttribute('role', 'dialog'); selPop.setAttribute('aria-label', '選取的文字');
+  selPop.innerHTML = '<div class="sp-head"><span class="sp-k">選取的文字</span><button type="button" class="sp-x" id="spClose" aria-label="關閉">×</button></div>' +
+    '<div class="sp-th" id="spTh" lang="th"></div><div class="sp-tr" id="spTr" aria-live="polite"></div>' +
+    '<div class="sp-btns"><button type="button" id="spSay">朗讀</button><button type="button" id="spCopy">複製</button><button type="button" id="spHl">畫螢光筆</button><a class="ext" id="spGoogle" target="_blank" rel="noopener">在 Google 翻譯打開</a></div>';
+  document.body.appendChild(selPop);
+  function closeSelection() { selPop.hidden = true; selRange = null; tapSel = null; renderText(); }
+  $('spClose').addEventListener('click', closeSelection);
+  function translateText(t) {
+    var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=th&tl=zh-TW&dt=t&q=' + encodeURIComponent(t);
+    return fetch(url).then(function (r) { if (!r.ok) { throw new Error('HTTP ' + r.status); } return r.json(); }).then(function (j) {
+      return (j && j[0] || []).map(function (x) { return x && x[0] || ''; }).join('');
+    });
+  }
+  function openSelection(r) {
+    hidePop();
+    var t = state.text.slice(r[0], r[1]).replace(/\s+/g, ' ').trim();
+    if (!t) { renderText(); return; }
+    selRange = r; tapSel = r; renderText();
+    $('spTh').textContent = t.length > 400 ? t.slice(0, 400) + '…' : t;
+    $('spGoogle').href = 'https://translate.google.com/?sl=th&tl=zh-TW&op=translate&text=' + encodeURIComponent(t.slice(0, 4500));
+    var tr = $('spTr'); tr.className = 'sp-tr loading'; tr.textContent = '翻譯中…';
+    selPop.hidden = false;
+    translateText(t.slice(0, 4500)).then(function (z) {
+      if (selRange !== r) { return; }
+      tr.className = 'sp-tr'; tr.textContent = z || '沒有取得翻譯，可以按「在 Google 翻譯打開」。';
+    }, function () {
+      if (selRange !== r) { return; }
+      tr.className = 'sp-tr err'; tr.textContent = '現在無法直接翻譯（可能沒有網路），可以按「在 Google 翻譯打開」。';
+    });
+  }
+  $('spSay').addEventListener('click', function () { if (selRange) { speak(state.text.slice(selRange[0], selRange[1])); } });
+  $('spCopy').addEventListener('click', function () {
+    if (!selRange) { return; }
+    var t = state.text.slice(selRange[0], selRange[1]);
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { $('spCopy').textContent = '已複製'; setTimeout(function () { $('spCopy').textContent = '複製'; }, 1500); }, function () {});
+  });
+  $('spHl').addEventListener('click', function () {
+    if (!selRange) { return; }
+    snapshot(); addRangeColored(selRange, toolPrefs.hlColor, toolPrefs.hlStyle); save(); closeSelection();
+  });
+
+  /* ---------- 中文字體 ---------- */
+  var FONT_KEY = 'thai-font';
+  var UI_FONTS = [
+    ['system', '蘋方（系統預設）', '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif'],
+    ['notosans', '思源黑體', '"Noto Sans TC", "PingFang TC", system-ui, sans-serif'],
+    ['notoserif', '思源宋體', '"Noto Serif TC", "Songti TC", "PMingLiU", serif'],
+    ['wenkai', '霞鶩文楷', '"LXGW WenKai TC", "Kaiti TC", "BiauKai", serif']
+  ];
+  var uiFont = 'system';
+  try { uiFont = localStorage.getItem(FONT_KEY) || 'system'; } catch (err) {}
+  function applyUiFont() {
+    var f = UI_FONTS.filter(function (x) { return x[0] === uiFont; })[0] || UI_FONTS[0];
+    if (f[0] === 'system') { document.documentElement.style.removeProperty('--ui'); } else { document.documentElement.style.setProperty('--ui', f[2]); }
+    if (f[0] === 'notosans' && !document.getElementById('font-notosans')) {
+      var l = document.createElement('link'); l.id = 'font-notosans'; l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap';
+      document.head.appendChild(l);
+    }
+  }
+  function renderUiFont() {
+    var g = $('fontGroup'); if (!g) { return; }
+    segButtons(g, UI_FONTS.map(function (f) { return [f[0], f[1]]; }), uiFont, function (v) {
+      uiFont = v; try { localStorage.setItem(FONT_KEY, v); } catch (err) {} applyUiFont(); renderUiFont();
+    });
+    Array.prototype.forEach.call(g.querySelectorAll('button'), function (b, i) { b.style.fontFamily = UI_FONTS[i][2]; });
+  }
+  applyUiFont();
+  renderUiFont();
+
+  renderToolOpts(); syncUndoButtons();
+
 
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
@@ -42621,7 +43236,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   armed($('clear'), '清除全部', '再按一次確認清除', function () {
     snapshot();
     state.hl = []; state.strokes = []; state.boxes = [];
-    tapSel = null;
+    tapSel = null; syncUndoButtons();
     renderText(); redrawInk(); renderBoxes(); save();
   });
   function renderChecks() {
