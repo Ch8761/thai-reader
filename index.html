@@ -529,6 +529,52 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 #docsec #docpages { color: var(--muted); }
 #docsec #docpages li { border: 0; background: transparent; padding: 0; }
 #docsec .ocrbox { background: transparent; border: 0; padding: 0; }
+
+/* ---- v1.8 圖示按鈕 ---- */
+.iconbtn { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 50%; }
+.iconbtn svg { width: 22px; height: 22px; display: block; }
+.vh-acts { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.vh-acts .iconbtn { width: 40px; min-width: 40px; height: 40px; min-height: 40px; color: var(--accent); }
+.vh-acts .iconbtn[hidden] { display: none; }
+.toolbar .iconbtn { border-radius: 12px; width: 48px; min-width: 48px; }
+.toolbar .iconbtn svg { width: 24px; height: 24px; }
+
+/* ---- 朗讀列 ---- */
+.ttsbar { flex-wrap: nowrap; gap: 10px; }
+.ttsbar #slow { flex: 0 0 auto; }
+.ttsbar #translateAll { flex: 0 0 auto; margin-left: auto; }
+.ttsbar #ttsnote:empty { display: none; }
+.ttsbar #ttsnote { flex-basis: 100%; font-size: 13px; color: var(--muted); }
+.ttsbar:has(#ttsnote:not(:empty)) { flex-wrap: wrap; }
+.player { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
+.player .iconbtn { width: 38px; min-width: 38px; height: 38px; min-height: 38px; border: 0; background: transparent; color: var(--accent); }
+.player .iconbtn.play { background: var(--accent-fill); color: var(--accent-fill-fg); }
+.player .iconbtn:disabled { opacity: .35; }
+.player .iconbtn svg { width: 20px; height: 20px; }
+#ttsSeek { --p: 0%; flex: 1 1 auto; min-width: 60px; height: 28px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
+#ttsSeek::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--accent) var(--p), var(--line) var(--p)); }
+#ttsSeek::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--accent) var(--p), var(--line) var(--p)); }
+#ttsSeek::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -6px; border-radius: 50%; background: var(--accent); border: 3px solid var(--card); box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
+#ttsSeek::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--card); }
+
+/* ---- 我的顏色（文字框） ---- */
+.stylebar .sw.custom { background: conic-gradient(from 0deg, #ff5f5f, #ffd400, #4fd18b, #4fb3ff, #b07bff, #ff5fb0, #ff5f5f); }
+.stylebar .sw.custom[aria-expanded="true"] { box-shadow: 0 0 0 3px var(--accent); }
+.cpop { position: fixed; z-index: 45; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px 12px 10px; box-shadow: 0 14px 36px rgba(0, 0, 0, .2); display: flex; flex-direction: column; gap: 10px; }
+.cpop[hidden] { display: none; }
+.cpop .cp-head { display: flex; align-items: center; gap: 8px; }
+.cpop .cp-t { font-weight: 700; font-size: 15px; }
+.cpop .cp-n { font-size: 13px; color: var(--muted); flex: 1; font-variant-numeric: tabular-nums; }
+.cpop .cp-edit { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; }
+.cpop .cp-grid { display: grid; grid-template-columns: repeat(auto-fill, 36px); gap: 8px; max-height: 240px; overflow-y: auto; padding: 3px; }
+.cpop .cp-sw, .cpop .cp-add { position: relative; width: 36px; height: 36px; min-height: 36px; padding: 0; border-radius: 50%; border: 3px solid var(--card); box-shadow: 0 0 0 1px var(--line); background: var(--sw); cursor: pointer; }
+.cpop .cp-sw[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--accent); }
+.cpop.editing .cp-sw::after { content: "×"; position: absolute; top: -8px; right: -8px; width: 18px; height: 18px; border-radius: 50%; background: #d63b3b; color: #fff; font-size: 14px; line-height: 17px; text-align: center; font-weight: 700; }
+.cpop .cp-add { display: inline-flex; align-items: center; justify-content: center; background: var(--bg); box-shadow: 0 0 0 1px var(--line), inset 0 0 0 1px var(--line); color: var(--accent); font-size: 22px; font-weight: 600; }
+.cpop .cp-add::before { content: "+"; }
+.cpop .cp-add.full { opacity: .35; }
+.cpop .cp-add input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0; padding: 0; cursor: pointer; }
+.cpop .cp-note { font-size: 13px; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -560,7 +606,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <p id="homeEmpty" class="label" hidden></p>
   </section>
   <section id="view-doc" class="view" aria-labelledby="h-docv" hidden>
-    <header class="vhead"><button type="button" class="back" id="backHome">‹ 主頁</button><h1 id="h-docv">文件</h1><button type="button" id="openExport" aria-expanded="false" aria-controls="exportp">匯出 PDF</button></header>
+    <header class="vhead"><button type="button" class="back" id="backHome">‹ 主頁</button><h1 id="h-docv">文件</h1><span class="vh-acts"><button type="button" class="iconbtn" id="ocrRedo" aria-label="重新辨識" title="重新辨識（用文字辨識再讀一次）" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4.5V9h-4.5"/></svg></button><button type="button" id="openExport" aria-expanded="false" aria-controls="exportp">匯出 PDF</button></span></header>
     <div id="docempty" class="docempty" hidden><p>還沒有打開文件。</p><button type="button" class="primary" id="goHome">到主頁選一份文件</button></div>
     <div id="docbody" class="view">
   <section id="docsec" aria-labelledby="h-doc">
@@ -573,7 +619,6 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <div class="btns">
         <button type="button" class="primary" id="ocrGo">用文字辨識讀這些頁</button>
         <button type="button" id="ocrStop" hidden>停止</button>
-        <button type="button" id="ocrRedo" hidden>重新辨識</button>
       </div>
     </div>
   </section>
@@ -596,9 +641,12 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <div id="exStatus" class="label" aria-live="polite"></div>
   </section>
   <div class="ttsbar" role="toolbar" aria-label="朗讀與翻譯">
-    <button type="button" id="readAll">朗讀全文</button>
-    <button type="button" id="stopRead">停止</button>
     <button type="button" class="toggle" id="slow" aria-pressed="false">慢速</button>
+    <div class="player" id="player" role="group" aria-label="朗讀全文">
+      <button type="button" class="iconbtn play" id="readAll" aria-label="播放朗讀全文" title="播放"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l10.6-6.8a.8.8 0 0 0 0-1.4L9.2 4.5A.8.8 0 0 0 8 5.2z" fill="currentColor"/></svg></button>
+      <input type="range" id="ttsSeek" min="0" max="1000" step="1" value="0" aria-label="朗讀進度（可以拖曳）">
+      <button type="button" class="iconbtn" id="stopRead" aria-label="停止朗讀，回到開頭" title="停止" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.2" fill="currentColor"/></svg></button>
+    </div>
     <button type="button" id="translateAll" aria-expanded="false" aria-controls="trpanel">整篇翻譯</button>
     <span id="ttsnote" aria-live="polite"></span>
   </div>
@@ -614,8 +662,8 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
     <button type="button" class="tool" data-mode="ink" aria-pressed="false">手寫</button>
     <button type="button" class="tool" data-mode="box" aria-pressed="false">文字框</button>
     <span class="sep" aria-hidden="true"></span>
-    <button type="button" id="undo" aria-label="上一步" disabled>↶ 上一步</button>
-    <button type="button" id="redo" aria-label="下一步" disabled>↷ 下一步</button>
+    <button type="button" class="iconbtn" id="undo" aria-label="上一步" title="上一步" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+    <button type="button" class="iconbtn" id="redo" aria-label="下一步" title="下一步" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button>
     <button type="button" id="clear">清除全部</button>
     <button type="button" class="toggle" id="pencil" aria-pressed="false">只用 Pencil 畫</button>
     <div class="stylebar" id="stylebar" role="toolbar" aria-label="文字樣式" hidden>
@@ -627,9 +675,6 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="sw" data-color="red" aria-label="紅色" style="--sw: var(--c-red)"></button>
       <button type="button" class="sw" data-color="black" aria-label="黑色" style="--sw: var(--c-black)"></button>
       <button type="button" class="sw" data-color="blue" aria-label="藍色" style="--sw: var(--c-blue)"></button>
-      <button type="button" class="sw" data-color="green" aria-label="綠色" style="--sw: var(--c-green)"></button>
-      <button type="button" class="sw" data-color="purple" aria-label="紫色" style="--sw: var(--c-purple)"></button>
-      <button type="button" class="sw" data-color="orange" aria-label="橘色" style="--sw: var(--c-orange)"></button>
       <span class="sl">粗細</span>
       <button type="button" class="sb" data-weight="300" style="font-weight:300">細</button>
       <button type="button" class="sb" data-weight="400">中</button>
@@ -727,7 +772,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.7.0</p>
+    <p class="label appver">ไทย Reader 正式版 v1.8.0</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -39909,6 +39954,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (speakBtn) { speakBtn.classList.remove('speaking'); speakBtn.removeAttribute('aria-pressed'); speakBtn = null; }
   }
   function speak(text) {
+    if (typeof raHalt === 'function') { raHalt(); }
     if (!hasTTS) { $('ttsnote').textContent = '這個瀏覽器不支援朗讀。'; return; }
     window.speechSynthesis.cancel();
     markSpeaking(lastTapBtn && Date.now() - lastTapAt < 1500 && lastTapBtn.id !== 'stopRead' ? lastTapBtn : null);
@@ -39928,12 +39974,105 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     pickVoice();
     try { window.speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (err) { window.speechSynthesis.onvoiceschanged = pickVoice; }
   }
-  $('readAll').addEventListener('click', function () { speak(state.text); });
   $('stopRead').addEventListener('click', function () { if (hasTTS) { window.speechSynthesis.cancel(); } $('ttsnote').textContent = ''; stopSpeakingMark(); });
   $('slow').addEventListener('click', function () {
     ttsRate = ttsRate === 1 ? 0.7 : 1;
     $('slow').setAttribute('aria-pressed', String(ttsRate !== 1));
   });
+  /* ---------- 朗讀全文：播放／暫停、進度條（可以拖）、停止 ---------- */
+  var ra = { pos: 0, playing: false, gen: 0, poll: null, doc: null, drag: false };
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l10.6-6.8a.8.8 0 0 0 0-1.4L9.2 4.5A.8.8 0 0 0 8 5.2z" fill="currentColor"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>';
+  function raSegs(text, from) {
+    var out = [], re = /\S+\s*/g, m, cur = null;
+    re.lastIndex = from;
+    while ((m = re.exec(text))) {
+      if (!cur) { cur = { s: m.index, e: m.index }; }
+      if (m.index + m[0].length - cur.s > 200 && cur.e > cur.s) { out.push(cur); cur = { s: m.index, e: m.index }; }
+      cur.e = m.index + m[0].length;
+    }
+    if (cur && cur.e > cur.s) { out.push(cur); }
+    return out.map(function (c) { return { s: c.s, e: c.e, t: text.slice(c.s, c.e) }; });
+  }
+  function raUI() {
+    var b = $('readAll'), len = Math.max(1, (state.text || '').length);
+    if (!b) { return; }
+    b.innerHTML = ra.playing ? ICON_PAUSE : ICON_PLAY;
+    b.setAttribute('aria-label', ra.playing ? '暫停朗讀' : (ra.pos > 0 ? '繼續朗讀' : '播放朗讀全文'));
+    b.title = ra.playing ? '暫停' : '播放';
+    $('player').classList.toggle('playing', ra.playing);
+    var v = Math.round(ra.pos / len * 1000);
+    if (!ra.drag) { $('ttsSeek').value = v; }
+    $('ttsSeek').style.setProperty('--p', (ra.drag ? $('ttsSeek').value / 10 : v / 10) + '%');
+    $('stopRead').disabled = !ra.playing && ra.pos === 0;
+  }
+  function raHalt() {
+    if (!ra.playing) { return; }
+    ra.gen++; ra.playing = false;
+    if (ra.poll) { clearInterval(ra.poll); ra.poll = null; }
+    raUI();
+  }
+  function raReset() {
+    if (ra.playing && hasTTS) { window.speechSynthesis.cancel(); }
+    ra.gen++; ra.playing = false; ra.pos = 0;
+    if (ra.poll) { clearInterval(ra.poll); ra.poll = null; }
+    raUI();
+  }
+  function raStart() {
+    if (!hasTTS) { $('ttsnote').textContent = '這個瀏覽器不支援朗讀。'; return; }
+    var text = state.text || '';
+    if (!text.trim()) { return; }
+    if (ra.doc !== (state.src && state.src.id)) { ra.pos = 0; ra.doc = state.src && state.src.id; }
+    if (ra.pos >= text.length - 1) { ra.pos = 0; }
+    window.speechSynthesis.cancel(); stopSpeakingMark();
+    var g = ++ra.gen, t0 = Date.now(), segs = raSegs(text, ra.pos);
+    if (!segs.length) { ra.pos = 0; segs = raSegs(text, 0); }
+    ra.playing = true;
+    segs.forEach(function (c, i) {
+      var u = new SpeechSynthesisUtterance(c.t);
+      u.lang = 'th-TH';
+      if (thVoice) { u.voice = thVoice; }
+      u.rate = ttsRate;
+      u.onstart = function () { if (g === ra.gen) { ra.pos = c.s; raUI(); } };
+      u.onboundary = function (e) { if (g === ra.gen && e && typeof e.charIndex === 'number') { ra.pos = Math.min(c.e, c.s + e.charIndex); raUI(); } };
+      if (i === segs.length - 1) {
+        u.onend = function () {
+          if (g !== ra.gen) { return; }
+          ra.playing = false; ra.pos = 0; ra.gen++;
+          if (ra.poll) { clearInterval(ra.poll); ra.poll = null; }
+          $('ttsnote').textContent = ''; raUI();
+        };
+      }
+      u.onerror = function (e) {
+        if (g !== ra.gen || (e && /interrupted|canceled/.test(e.error || ''))) { return; }
+        $('ttsnote').textContent = '朗讀出錯：' + (e && e.error ? e.error : '未知原因');
+        raHalt();
+      };
+      window.speechSynthesis.speak(u);
+    });
+    if (ra.poll) { clearInterval(ra.poll); }
+    ra.poll = setInterval(function () {
+      if (g !== ra.gen) { clearInterval(ra.poll); ra.poll = null; return; }
+      var on = window.speechSynthesis.speaking || window.speechSynthesis.pending;
+      if (!on && Date.now() - t0 > 1500) { raHalt(); }
+    }, 400);
+    $('ttsnote').textContent = thVoice ? '' : '沒找到泰文語音，可能用其他語音唸。';
+    raUI();
+  }
+  function raPause() { if (hasTTS) { window.speechSynthesis.cancel(); } raHalt(); }
+  $('readAll').addEventListener('click', function () { if (ra.playing) { raPause(); } else { raStart(); } });
+  $('stopRead').addEventListener('click', function () { raReset(); });
+  $('slow').addEventListener('click', function () { if (ra.playing) { raStart(); } });
+  $('ttsSeek').addEventListener('input', function () {
+    ra.drag = true;
+    var text = state.text || '', p = Math.round($('ttsSeek').value / 1000 * text.length);
+    while (p > 0 && !/\s/.test(text[p - 1])) { p--; }
+    ra.pos = p; ra.doc = state.src && state.src.id;
+    raUI();
+  });
+  $('ttsSeek').addEventListener('change', function () { ra.drag = false; if (ra.playing) { raStart(); } else { raUI(); } });
+  raUI();
+
   function removeBox(id) { state.boxes = state.boxes.filter(function (x) { return x.id !== id; }); }
   function placeCaretEnd(el) {
     try { var r = document.createRange(); r.selectNodeContents(el); r.collapse(false); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); } catch (err) {}
@@ -39962,7 +40101,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         ed.addEventListener('input', function () { b.t = ed.innerText.replace(/\n+$/, ''); save(); });
         ed.addEventListener('blur', function () {
           if (focusedId === b.id) { focusedId = null; syncStyleBar(); }
-          if (rendering || b.t.trim()) { return; }
+          if (rendering || b.t.trim() || Date.now() < keepBoxUntil) { return; }
           removeBox(b.id); renderText(); renderBoxes(); save();
         });
         var grip = document.createElement('span');
@@ -41184,7 +41323,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.7.0';
+  var APP_VER = '正式版 v1.8.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -42068,6 +42207,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['確認工具列選的是「點字」。', '手指長按第一個字（約半秒），不要放開，拖到最後一個字再放開。用 Pencil 可以直接拖。', '下方會跳出這段文字和中文翻譯。', '還可以「朗讀」「複製」「畫螢光筆」，或「在 Google 翻譯打開」。'],
         tip: '直接翻譯需要網路。' }]],
     ['閱讀', [
+      { t: '聽整篇朗讀', s: '按播放鍵，進度條可以拖', img: 'tts-bar',
+        d: ['「▶」播放：從頭唸整篇；暫停過就從停下的地方接著唸。', '唸的時候按鈕變成「❚❚」，按一下暫停。', '拖動中間的進度條，可以跳到想聽的地方。', '「■」停止：停下來並回到開頭。', '最左邊的「慢速」：唸慢一點，播放中按也會馬上變慢。', '最右邊的「整篇翻譯」：把整篇分段打開 Google 翻譯。'],
+        tip: '唸到一半點了某個詞的朗讀，整篇朗讀會暫停；再按「▶」就接著唸。' },
       { t: '放大縮小', s: '兩指縮放，或按「符合螢幕 ▾」選比例', img: 'view-zoom',
         d: ['兩根手指在文件上張開、捏合，就能放大縮小。用螢光筆、手寫時也可以。', '或按工具列右下的「符合螢幕 ▾」，選「符合螢幕」「符合寬度」或 125%、150%、200%。', '「符合螢幕」：一整頁剛好放進畫面（打開文件時的預設）。「符合寬度」：左右剛好塞滿。'],
         tip: '放大後，文件可以左右滑動看兩邊。' },
@@ -42083,9 +42225,12 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '手寫', s: '選「手寫」，選顏色和粗細再寫', img: 'note-ink',
         d: ['按「手寫」，下面會出現顏色和「細／中／粗」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開「只用 Pencil 畫」：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
       { t: '寫註解', s: '選「文字框」，點字或點空白處', img: 'note-box',
-        d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。彩色圓圈可以自訂顏色。'] },
-      { t: '畫錯了', s: '按「↶ 上一步」，反悔了按「↷ 下一步」', img: 'note-undo',
-        d: ['「↶ 上一步」：取消剛剛的動作，可以一直往回按。', '「↷ 下一步」：把剛剛取消的動作做回來。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪；刪了也可以按「↶ 上一步」救回來。'],
+        d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。'] },
+      { t: '我的顏色', s: '文字框的彩色圓圈：存自己常用的顏色', img: 'note-colors',
+        d: ['文字框的顏色只放紅、黑、藍三個，彩色圓圈是「我的顏色」。', '按彩色圓圈，跳出你存的顏色，點一個就套用。', '按「＋」挑一個新顏色，它會留在這裡下次再用，最多存 50 種。', '按「編輯」，再點顏色就能刪掉；按「完成」結束。'],
+        tip: '先點一下要改的文字框，再選顏色，就會改那一個。' },
+      { t: '畫錯了', s: '按「↶」回到上一步，按「↷」做回來', img: 'note-undo',
+        d: ['「↶」是上一步：取消剛剛的動作，可以一直往回按。', '「↷」是下一步：把剛剛取消的動作做回來。', '按鈕變淡，代表已經沒有可以退回或做回來的動作。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪；刪了也可以按「↶」救回來。'],
         tip: '筆記會自動儲存，不用按存檔。' },
       { t: '輸出', s: '右上角「匯出 PDF」', img: 'note-export',
         d: ['按右上角「匯出 PDF」。', '勾選要放進去的內容：原文頁（含筆記）、生字表、筆記整理，再按「產生 PDF」。', '在跳出的視窗選「儲存到檔案」，或直接分享。'] }]],
@@ -42095,8 +42240,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         tip: '每頁約 5–20 秒；第一次要先下載約 8 MB 的工具。' },
       { t: '可能有錯字', s: '尤其是聲調符號，查詞時對照原圖', img: '',
         d: ['辨識最常認錯泰文上方的小符號（聲調、母音）。', 'App 會用字典和名單自動補回常見的錯字，但不是全部都補得回來。', '名字常認錯：把它加進「我的專有名詞」，之後辨識會自動補對。'] },
-      { t: '想再認一次', s: '按「重新辨識」', img: 'ocr-redo',
-        d: ['App 更新了辨識功能後，按「重新辨識」用新版再認一次。', '沒被改到的頁面上的筆記會保留。'] }]],
+      { t: '想再認一次', s: '按右上角的「↻」', img: 'ocr-redo',
+        d: ['「↻」就是重新辨識，在右上角「匯出 PDF」的左邊。', '只有用文字辨識讀過的文件才會出現這個按鈕。', 'App 更新了辨識功能，或覺得錯字太多時，按「↻」再認一次。', '沒被改到的頁面上的筆記會保留。'] }]],
     ['生字卡', [
       { t: '收藏單字', s: '查詞視窗按「＋ 生字卡」', img: 'card-add',
         d: ['點一個字，在查詞視窗右上角按「＋ 生字卡」。', '變成「✓ 已在生字卡」就加好了，會連同那一句一起存。'] },
@@ -42414,7 +42559,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function renderOcrBox() {
     var box = $('ocrbox');
     if (!box) { return; }
-    if (!pdf) { box.hidden = true; if (typeof syncDocSec === 'function') { syncDocSec(); } return; }
+    if (!pdf) { box.hidden = true; $('ocrRedo').hidden = true; if (typeof syncDocSec === 'function') { syncDocSec(); } return; }
     if (ocr.msgId && ocr.msgId !== pdf.id && !ocr.busy) { ocr.msg = ''; ocr.msgId = ''; }
     var need = ocrNeed(), have = ocrHave();
     box.hidden = !need.length && !have && !ocr.busy && !ocr.msg;
@@ -42803,28 +42948,102 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       });
     }
     toolOpts.hidden = !(mode === 'hl' || mode === 'ink');
+    if (mode !== 'box' && typeof closeCpop === 'function') { closeCpop(); }
   }
   function inkStrokeColor() { return toolPrefs.inkColor === INK_COLORS[0][0] ? null : toolPrefs.inkColor; }
-  /* 文字框的樣式列也加一個自訂顏色 */
+  /* ---------- 文字框顏色：只放三色，其他放在「我的顏色」（最多 50 種） ---------- */
+  var BOX_MAX = 50, BOX_LEGACY = { green: '#2e7d32', purple: '#7b3fb0', orange: '#c25a06' };
+  if (!Array.isArray(toolPrefs.boxColors)) { toolPrefs.boxColors = [BOX_LEGACY.green, BOX_LEGACY.purple, BOX_LEGACY.orange]; }
+  var keepBoxUntil = 0, cpTarget = null, cpEditing = false;
+  function keepEditorFocus(el) {
+    el.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    el.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
+  }
+  function onTap(el, fn) {
+    keepEditorFocus(el);
+    el.addEventListener('pointerup', function (e) { fn(e); });
+    el.addEventListener('click', function (e) { if (e.detail === 0) { fn(e); } });
+  }
+  var boxCustomBtn = null;
   (function () {
     if (!styleBarEl) { return; }
-    var last = styleBarEl.querySelector('[data-color="orange"]');
-    if (!last) { return; }
-    var lab = document.createElement('label'); lab.className = 'sw custom'; lab.title = '自訂顏色';
-    var inp = document.createElement('input'); inp.type = 'color'; inp.value = toolPrefs.boxCustom; inp.setAttribute('aria-label', '自訂文字顏色');
-    lab.style.setProperty('--sw', toolPrefs.boxCustom);
-    inp.addEventListener('input', function () { lab.style.setProperty('--sw', inp.value); });
-    inp.addEventListener('change', function () { toolPrefs.boxCustom = inp.value; saveTools(); setStyle({ color: inp.value }); });
-    lab.appendChild(inp);
-    lab.id = 'boxCustom';
-    last.parentNode.insertBefore(lab, last.nextSibling);
+    var after = styleBarEl.querySelector('[data-color="blue"]');
+    if (!after) { return; }
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'sw custom'; b.id = 'boxCustom';
+    b.title = '我的顏色'; b.setAttribute('aria-label', '我的顏色（自訂）'); b.setAttribute('aria-haspopup', 'dialog'); b.setAttribute('aria-expanded', 'false');
+    b.style.setProperty('--sw', 'transparent');
+    after.parentNode.insertBefore(b, after.nextSibling);
+    boxCustomBtn = b;
+    onTap(b, function () { if (cpop.hidden) { openCpop(); } else { closeCpop(); } });
   })();
+  function boxColorHex(c) { return /^#/.test(c || '') ? c.toLowerCase() : (BOX_LEGACY[c] || null); }
   function syncBoxCustom() {
-    var lab = $('boxCustom'); if (!lab) { return; }
-    var c = currentStyle().color, on = /^#/.test(c || '');
-    lab.classList.toggle('on', on);
-    if (on) { lab.style.setProperty('--sw', c); lab.querySelector('input').value = c; }
+    if (!boxCustomBtn) { return; }
+    var c = currentStyle().color, hex = boxColorHex(c), on = !!hex && ['red', 'black', 'blue'].indexOf(c) < 0;
+    boxCustomBtn.classList.toggle('on', on);
+    boxCustomBtn.style.setProperty('--sw', on ? (/^#/.test(c) ? c : 'var(--c-' + c + ')') : 'transparent');
+    if (cpop && !cpop.hidden) { renderCpop(); }
   }
+  var cpop = document.createElement('div'); cpop.className = 'cpop'; cpop.id = 'cpop'; cpop.hidden = true;
+  cpop.setAttribute('role', 'dialog'); cpop.setAttribute('aria-label', '我的顏色');
+  cpop.innerHTML = '<div class="cp-head"><span class="cp-t">我的顏色</span><span class="cp-n" id="cpCount"></span><button type="button" class="cp-edit" id="cpEdit">編輯</button></div>' +
+    '<div class="cp-grid" id="cpGrid"></div><div class="cp-note" id="cpNote"></div>';
+  document.body.appendChild(cpop);
+  onTap($('cpEdit'), function () { cpEditing = !cpEditing; renderCpop(); });
+  function applyBoxColor(hex) {
+    if (cpTarget !== null && state.boxes.some(function (x) { return x.id === cpTarget; })) { focusedId = cpTarget; }
+    setStyle({ color: hex });
+    var ed = cpTarget !== null ? document.querySelector('.note-text[data-id="' + cpTarget + '"]') : null;
+    if (ed && document.activeElement !== ed) { try { ed.focus({ preventScroll: true }); } catch (err) { ed.focus(); } }
+  }
+  function renderCpop() {
+    var g = $('cpGrid'), list = toolPrefs.boxColors, cur = boxColorHex(currentStyle().color);
+    g.replaceChildren();
+    $('cpCount').textContent = list.length + ' / ' + BOX_MAX;
+    $('cpEdit').textContent = cpEditing ? '完成' : '編輯';
+    $('cpEdit').hidden = !list.length;
+    cpop.classList.toggle('editing', cpEditing);
+    list.forEach(function (hex, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'cp-sw';
+      b.style.setProperty('--sw', hex);
+      b.setAttribute('aria-label', (cpEditing ? '刪除顏色 ' : '顏色 ') + hex);
+      b.setAttribute('aria-pressed', String(!cpEditing && cur === hex.toLowerCase()));
+      onTap(b, function () {
+        if (cpEditing) { toolPrefs.boxColors.splice(i, 1); saveTools(); if (!toolPrefs.boxColors.length) { cpEditing = false; } renderCpop(); return; }
+        applyBoxColor(hex); renderCpop();
+      });
+      g.appendChild(b);
+    });
+    if (!cpEditing) {
+      var lab = document.createElement('label'); lab.className = 'cp-add'; lab.title = '新增顏色';
+      var full = list.length >= BOX_MAX;
+      lab.classList.toggle('full', full);
+      var inp = document.createElement('input'); inp.type = 'color'; inp.value = toolPrefs.boxCustom || '#0f8b8d'; inp.setAttribute('aria-label', '新增一個顏色');
+      inp.disabled = full;
+      lab.addEventListener('pointerdown', function () { keepBoxUntil = Date.now() + 2500; });
+      inp.addEventListener('change', function () {
+        var hex = inp.value.toLowerCase();
+        toolPrefs.boxCustom = hex;
+        if (toolPrefs.boxColors.map(function (x) { return x.toLowerCase(); }).indexOf(hex) < 0) { toolPrefs.boxColors.push(hex); }
+        saveTools(); applyBoxColor(hex); renderCpop();
+      });
+      lab.appendChild(inp);
+      g.appendChild(lab);
+    }
+    $('cpNote').textContent = cpEditing ? '點一個顏色就會刪掉它。' : (list.length >= BOX_MAX ? '已經存滿 50 種，按「編輯」刪掉一些才能再加。' : (list.length ? '點顏色套用；按「＋」新增常用的顏色。' : '按「＋」挑一個顏色，它會留在這裡下次再用。'));
+  }
+  function placeCpop() {
+    if (!boxCustomBtn) { return; }
+    var r = boxCustomBtn.getBoundingClientRect(), w = Math.min(320, window.innerWidth - 16);
+    cpop.style.width = w + 'px';
+    cpop.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px';
+    cpop.style.top = Math.round(r.bottom + 10) + 'px';
+  }
+  function openCpop() { cpTarget = focusedId; cpEditing = false; renderCpop(); cpop.hidden = false; placeCpop(); boxCustomBtn.setAttribute('aria-expanded', 'true'); }
+  function closeCpop() { if (!cpop || cpop.hidden) { return; } cpop.hidden = true; cpEditing = false; if (boxCustomBtn) { boxCustomBtn.setAttribute('aria-expanded', 'false'); } }
+  document.addEventListener('pointerdown', function (e) { if (!cpop.hidden && !cpop.contains(e.target) && e.target !== boxCustomBtn) { closeCpop(); } }, true);
+  window.addEventListener('scroll', function () { if (!cpop.hidden) { placeCpop(); } }, { passive: true });
+  window.addEventListener('resize', function () { if (!cpop.hidden) { placeCpop(); } });
 
   /* ---------- 上一步／下一步（像 GoodNotes） ---------- */
   var redoStack = [];
@@ -42881,6 +43100,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var fresh = !!sid && sid !== lastDocId && !$('view-doc').hidden && (state.src.type !== 'pdf' || !!(pdf && pdf.id === sid));
     if (fresh) {
       lastDocId = sid; viewCur = 0;
+      if (typeof raReset === 'function') { raReset(); }
       var sp0 = loadProg()[sid];
       if (sp0 && typeof sp0.p === 'number' && pdf) { viewCur = Math.max(0, Math.min(pdf.pages.length - 1, sp0.p)); }
     }
