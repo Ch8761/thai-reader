@@ -575,6 +575,24 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 .cpop .cp-add.full { opacity: .35; }
 .cpop .cp-add input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0; padding: 0; cursor: pointer; }
 .cpop .cp-note { font-size: 13px; color: var(--muted); }
+
+/* ---- v1.9 工具框：上排（比例｜上一步、下一步、清除）、工具列（Pencil 靠右） ---- */
+.toprow { display: flex; align-items: center; gap: 8px; padding: 8px 10px 0; min-height: 42px; }
+.toprow .viewbar { margin-left: 0; }
+.toprow .vb-menu { left: 0; right: auto; }
+.histbtns { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.histbtns .iconbtn { width: 34px; min-width: 34px; height: 34px; min-height: 34px; border-radius: 50%; }
+.histbtns .iconbtn svg { width: 18px; height: 18px; }
+.histbtns #clear { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; margin-left: 4px; }
+.workbox .toolbar #pencil { margin-left: auto; }
+.subbar:not(:has(> :not([hidden]))) { display: none; }
+.subbar { padding-top: 0; }
+/* 朗讀進度條：不要外框 */
+.player { border: 0; background: transparent; padding: 0; min-height: 44px; gap: 8px; }
+.player .iconbtn:not(.play) { color: var(--muted); }
+#ttsSeek::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; }
+#ttsSeek::-webkit-slider-thumb { margin-top: -7px; }
+.sw2.custom.picked::after { background: var(--sw); }
 </style>
 </head>
 <body>
@@ -772,7 +790,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.8.0</p>
+    <p class="label appver">ไทย Reader 正式版 v1.9.0</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -41323,7 +41341,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.8.0';
+  var APP_VER = '正式版 v1.9.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -42211,7 +42229,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['「▶」播放：從頭唸整篇；暫停過就從停下的地方接著唸。', '唸的時候按鈕變成「❚❚」，按一下暫停。', '拖動中間的進度條，可以跳到想聽的地方。', '「■」停止：停下來並回到開頭。', '最左邊的「慢速」：唸慢一點，播放中按也會馬上變慢。', '最右邊的「整篇翻譯」：把整篇分段打開 Google 翻譯。'],
         tip: '唸到一半點了某個詞的朗讀，整篇朗讀會暫停；再按「▶」就接著唸。' },
       { t: '放大縮小', s: '兩指縮放，或按「符合螢幕 ▾」選比例', img: 'view-zoom',
-        d: ['兩根手指在文件上張開、捏合，就能放大縮小。用螢光筆、手寫時也可以。', '或按工具列右下的「符合螢幕 ▾」，選「符合螢幕」「符合寬度」或 125%、150%、200%。', '「符合螢幕」：一整頁剛好放進畫面（打開文件時的預設）。「符合寬度」：左右剛好塞滿。'],
+        d: ['兩根手指在文件上張開、捏合，就能放大縮小。用螢光筆、手寫時也可以。', '或按工具框左上角的「符合螢幕 ▾」，選「符合螢幕」「符合寬度」或 125%、150%、200%。', '「符合螢幕」：一整頁剛好放進畫面（打開文件時的預設）。「符合寬度」：左右剛好塞滿。'],
         tip: '放大後，文件可以左右滑動看兩邊。' },
       { t: '捲動或翻頁', s: '在同一個選單選「上下捲動」或「左右翻頁」', img: 'view-menu',
         d: ['「上下捲動」：所有頁面接在一起，往下滑就是下一頁。', '「左右翻頁」：一次看一頁，往左滑是下一頁、往右滑是上一頁，也可以按「‹」「›」。', '翻頁的滑動只在「點字」時有效；畫螢光筆、手寫時請按「‹」「›」。'] },
@@ -42221,16 +42239,16 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['每份文件會記住你讀到第幾頁、讀到頁面的哪裡。', '下次打開同一份文件，會自動回到那裡。'] }]],
     ['筆記', [
       { t: '畫重點', s: '選「螢光筆」，從一個字劃到另一個字', img: 'note-hl',
-        d: ['按「螢光筆」，下面會出現顏色和樣式。', '選顏色；最後一個彩色圓圈可以自訂任何顏色。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '想取消：點一下畫過的地方。'] },
+        d: ['按「螢光筆」，下面會出現顏色和樣式。', '選顏色；彩色圓圈是「我的顏色」，可以存自己常用的顏色。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '想取消：點一下畫過的地方。'] },
       { t: '手寫', s: '選「手寫」，選顏色和粗細再寫', img: 'note-ink',
-        d: ['按「手寫」，下面會出現顏色和「細／中／粗」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開「只用 Pencil 畫」：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
+        d: ['按「手寫」，下面會出現顏色和「細／中／粗」；彩色圓圈是「我的顏色」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
       { t: '寫註解', s: '選「文字框」，點字或點空白處', img: 'note-box',
         d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。'] },
-      { t: '我的顏色', s: '文字框的彩色圓圈：存自己常用的顏色', img: 'note-colors',
-        d: ['文字框的顏色只放紅、黑、藍三個，彩色圓圈是「我的顏色」。', '按彩色圓圈，跳出你存的顏色，點一個就套用。', '按「＋」挑一個新顏色，它會留在這裡下次再用，最多存 50 種。', '按「編輯」，再點顏色就能刪掉；按「完成」結束。'],
+      { t: '我的顏色', s: '彩色圓圈：存自己常用的顏色', img: 'note-colors',
+        d: ['螢光筆、手寫、文字框都只放三個顏色，旁邊的彩色圓圈是「我的顏色」，三種工具各存各的。', '按彩色圓圈，跳出你存的顏色，點一個就套用。', '按「＋」挑一個新顏色，它會留在這裡下次再用，最多存 50 種。', '按「編輯」，再點顏色就能刪掉；按「完成」結束。'],
         tip: '先點一下要改的文字框，再選顏色，就會改那一個。' },
       { t: '畫錯了', s: '按「↶」回到上一步，按「↷」做回來', img: 'note-undo',
-        d: ['「↶」是上一步：取消剛剛的動作，可以一直往回按。', '「↷」是下一步：把剛剛取消的動作做回來。', '按鈕變淡，代表已經沒有可以退回或做回來的動作。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪；刪了也可以按「↶」救回來。'],
+        d: ['「↶」「↷」和「清除全部」在工具框的右上角。', '「↶」是上一步：取消剛剛的動作，可以一直往回按。', '「↷」是下一步：把剛剛取消的動作做回來。', '按鈕變淡，代表已經沒有可以退回或做回來的動作。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪；刪了也可以按「↶」救回來。'],
         tip: '筆記會自動儲存，不用按存檔。' },
       { t: '輸出', s: '右上角「匯出 PDF」', img: 'note-export',
         d: ['按右上角「匯出 PDF」。', '勾選要放進去的內容：原文頁（含筆記）、生字表、筆記整理，再按「產生 PDF」。', '在跳出的視窗選「儲存到檔案」，或直接分享。'] }]],
@@ -42851,8 +42869,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   $('pencil').addEventListener('click', function () { pencilOnly = !pencilOnly; applyMode(); });
   /* ---------- 筆記工具的選項：螢光筆、手寫的顏色與粗細（可以自訂顏色），上一步／下一步 ---------- */
   var TOOL_KEY = 'thai-tools';
-  var HL_COLORS = [['#ffd400', '黃'], ['#7ddc7d', '綠'], ['#ff9cc2', '粉紅'], ['#8cc8ff', '藍'], ['#ffb15c', '橘']];
-  var INK_COLORS = [['#1f4fd1', '藍'], ['#26332e', '黑'], ['#d63b3b', '紅'], ['#2f8f5b', '綠'], ['#e07a2f', '橘'], ['#7b4fd1', '紫']];
+  var HL_COLORS = [['#ffd400', '黃'], ['#7ddc7d', '綠'], ['#ff9cc2', '粉紅']];
+  var INK_COLORS = [['#1f4fd1', '藍（預設）'], ['#26332e', '黑'], ['#d63b3b', '紅']];
   var INK_WIDTHS = [[2, '細'], [3.5, '中'], [6, '粗']];
   var toolPrefs = { hlColor: '#ffd400', hlStyle: 'full', inkColor: '#1f4fd1', inkW: 3.5, hlCustom: '#c38bff', inkCustom: '#8a5a2b', boxCustom: '#0f8b8d' };
   try { Object.assign(toolPrefs, JSON.parse(localStorage.getItem(TOOL_KEY) || '{}')); } catch (err) {}
@@ -42907,23 +42925,24 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     b.addEventListener('click', function () { pick(color); });
     return b;
   }
-  function customSwatch(value, on, label, pick) {
-    var lab = document.createElement('label'); lab.className = 'sw2 custom' + (on ? ' on' : ''); lab.title = '自訂顏色';
-    lab.style.setProperty('--sw', value);
-    var inp = document.createElement('input'); inp.type = 'color'; inp.value = value; inp.setAttribute('aria-label', label);
-    inp.addEventListener('input', function () { lab.style.setProperty('--sw', inp.value); });
-    inp.addEventListener('change', function () { pick(inp.value); });
-    lab.appendChild(inp);
-    return lab;
-  }
   function optLabel(t) { var s = document.createElement('span'); s.className = 'ol'; s.textContent = t; return s; }
+  /* 「我的顏色」按鈕（彩色圓圈）：三種工具共用同一種小視窗，各自存自己的顏色 */
+  function myColorBtn(kind, id, label, cur, presets) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'sw2 custom'; b.id = id;
+    var on = !!cur && presets.indexOf(cur) < 0;
+    b.classList.toggle('on', on);
+    b.style.setProperty('--sw', on ? cur : 'transparent');
+    b.title = '我的顏色'; b.setAttribute('aria-label', label); b.setAttribute('aria-haspopup', 'dialog');
+    b.setAttribute('aria-expanded', String(!!(cpop && !cpop.hidden && cpKind === kind)));
+    b.addEventListener('click', function () { if (cpop.hidden || cpKind !== kind) { openCpop(kind); } else { closeCpop(); } });
+    return b;
+  }
   function renderToolOpts() {
     toolOpts.replaceChildren();
     if (mode === 'hl') {
       toolOpts.appendChild(optLabel('顏色'));
-      var builtin = HL_COLORS.some(function (c) { return c[0] === toolPrefs.hlColor; });
       HL_COLORS.forEach(function (c) { toolOpts.appendChild(swatch(c[0], c[1], toolPrefs.hlColor === c[0], function (v) { toolPrefs.hlColor = v; saveTools(); renderToolOpts(); })); });
-      toolOpts.appendChild(customSwatch(builtin ? toolPrefs.hlCustom : toolPrefs.hlColor, !builtin, '自訂螢光筆顏色', function (v) { toolPrefs.hlColor = v; toolPrefs.hlCustom = v; saveTools(); renderToolOpts(); }));
+      toolOpts.appendChild(myColorBtn('hl', 'hlCustom', '螢光筆：我的顏色', toolPrefs.hlColor, HL_COLORS.map(function (c) { return c[0]; })));
       toolOpts.appendChild(optLabel('樣式'));
       [['full', '整塊'], ['under', '底線']].forEach(function (o) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'ob' + (o[0] === 'under' ? ' ob-under' : ' ob-full');
@@ -42934,9 +42953,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       });
     } else if (mode === 'ink') {
       toolOpts.appendChild(optLabel('顏色'));
-      var builtin2 = INK_COLORS.some(function (c) { return c[0] === toolPrefs.inkColor; });
       INK_COLORS.forEach(function (c, k) { toolOpts.appendChild(swatch(k ? c[0] : 'var(--ink)', c[1], toolPrefs.inkColor === c[0], function () { toolPrefs.inkColor = c[0]; saveTools(); renderToolOpts(); })); });
-      toolOpts.appendChild(customSwatch(builtin2 ? toolPrefs.inkCustom : toolPrefs.inkColor, !builtin2, '自訂筆的顏色', function (v) { toolPrefs.inkColor = v; toolPrefs.inkCustom = v; saveTools(); renderToolOpts(); }));
+      toolOpts.appendChild(myColorBtn('ink', 'inkCustom', '手寫：我的顏色', toolPrefs.inkColor, INK_COLORS.map(function (c) { return c[0]; })));
       toolOpts.appendChild(optLabel('粗細'));
       INK_WIDTHS.forEach(function (w) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'ob ow';
@@ -42948,13 +42966,22 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       });
     }
     toolOpts.hidden = !(mode === 'hl' || mode === 'ink');
-    if (mode !== 'box' && typeof closeCpop === 'function') { closeCpop(); }
+    if (typeof closeCpop === 'function' && cpop && !cpop.hidden && cpKind !== mode) { closeCpop(); }
+    else if (cpop && !cpop.hidden) { placeCpop(); }
   }
   function inkStrokeColor() { return toolPrefs.inkColor === INK_COLORS[0][0] ? null : toolPrefs.inkColor; }
-  /* ---------- 文字框顏色：只放三色，其他放在「我的顏色」（最多 50 種） ---------- */
+
+  /* ---------- 我的顏色（最多 50 種）：文字框、螢光筆、手寫各自一組 ---------- */
   var BOX_MAX = 50, BOX_LEGACY = { green: '#2e7d32', purple: '#7b3fb0', orange: '#c25a06' };
   if (!Array.isArray(toolPrefs.boxColors)) { toolPrefs.boxColors = [BOX_LEGACY.green, BOX_LEGACY.purple, BOX_LEGACY.orange]; }
-  var keepBoxUntil = 0, cpTarget = null, cpEditing = false;
+  if (!Array.isArray(toolPrefs.hlColors)) { toolPrefs.hlColors = ['#8cc8ff', '#ffb15c', '#c38bff']; }
+  if (!Array.isArray(toolPrefs.inkColors)) { toolPrefs.inkColors = ['#2f8f5b', '#e07a2f', '#7b4fd1']; }
+  var CP = {
+    box: { list: 'boxColors', btn: 'boxCustom', last: 'boxCustom' },
+    hl: { list: 'hlColors', btn: 'hlCustom', last: 'hlCustom' },
+    ink: { list: 'inkColors', btn: 'inkCustom', last: 'inkCustom' }
+  };
+  var keepBoxUntil = 0, cpTarget = null, cpEditing = false, cpKind = 'box', cpPicking = false, cpPending = null;
   function keepEditorFocus(el) {
     el.addEventListener('mousedown', function (e) { e.preventDefault(); });
     el.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
@@ -42970,11 +42997,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var after = styleBarEl.querySelector('[data-color="blue"]');
     if (!after) { return; }
     var b = document.createElement('button'); b.type = 'button'; b.className = 'sw custom'; b.id = 'boxCustom';
-    b.title = '我的顏色'; b.setAttribute('aria-label', '我的顏色（自訂）'); b.setAttribute('aria-haspopup', 'dialog'); b.setAttribute('aria-expanded', 'false');
+    b.title = '我的顏色'; b.setAttribute('aria-label', '文字框：我的顏色'); b.setAttribute('aria-haspopup', 'dialog'); b.setAttribute('aria-expanded', 'false');
     b.style.setProperty('--sw', 'transparent');
     after.parentNode.insertBefore(b, after.nextSibling);
     boxCustomBtn = b;
-    onTap(b, function () { if (cpop.hidden) { openCpop(); } else { closeCpop(); } });
+    onTap(b, function () { if (cpop.hidden || cpKind !== 'box') { openCpop('box'); } else { closeCpop(); } });
   })();
   function boxColorHex(c) { return /^#/.test(c || '') ? c.toLowerCase() : (BOX_LEGACY[c] || null); }
   function syncBoxCustom() {
@@ -42982,22 +43009,39 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var c = currentStyle().color, hex = boxColorHex(c), on = !!hex && ['red', 'black', 'blue'].indexOf(c) < 0;
     boxCustomBtn.classList.toggle('on', on);
     boxCustomBtn.style.setProperty('--sw', on ? (/^#/.test(c) ? c : 'var(--c-' + c + ')') : 'transparent');
-    if (cpop && !cpop.hidden) { renderCpop(); }
+    if (cpop && !cpop.hidden && !cpPicking && cpKind === 'box') { renderCpop(); }
   }
   var cpop = document.createElement('div'); cpop.className = 'cpop'; cpop.id = 'cpop'; cpop.hidden = true;
   cpop.setAttribute('role', 'dialog'); cpop.setAttribute('aria-label', '我的顏色');
   cpop.innerHTML = '<div class="cp-head"><span class="cp-t">我的顏色</span><span class="cp-n" id="cpCount"></span><button type="button" class="cp-edit" id="cpEdit">編輯</button></div>' +
     '<div class="cp-grid" id="cpGrid"></div><div class="cp-note" id="cpNote"></div>';
   document.body.appendChild(cpop);
-  onTap($('cpEdit'), function () { cpEditing = !cpEditing; renderCpop(); });
-  function applyBoxColor(hex) {
-    if (cpTarget !== null && state.boxes.some(function (x) { return x.id === cpTarget; })) { focusedId = cpTarget; }
-    setStyle({ color: hex });
-    var ed = cpTarget !== null ? document.querySelector('.note-text[data-id="' + cpTarget + '"]') : null;
-    if (ed && document.activeElement !== ed) { try { ed.focus({ preventScroll: true }); } catch (err) { ed.focus(); } }
+  onTap($('cpEdit'), function () { commitPending(); cpEditing = !cpEditing; renderCpop(); });
+  function cpCurrent() {
+    if (cpKind === 'box') { return boxColorHex(currentStyle().color); }
+    return ((cpKind === 'hl' ? toolPrefs.hlColor : toolPrefs.inkColor) || '').toLowerCase();
+  }
+  function cpApply(hex) {
+    if (cpKind === 'box') {
+      if (cpTarget !== null && state.boxes.some(function (x) { return x.id === cpTarget; })) { focusedId = cpTarget; }
+      setStyle({ color: hex });
+      var ed = cpTarget !== null ? document.querySelector('.note-text[data-id="' + cpTarget + '"]') : null;
+      if (ed && document.activeElement !== ed && !cpPicking) { try { ed.focus({ preventScroll: true }); } catch (err) { ed.focus(); } }
+      return;
+    }
+    if (cpKind === 'hl') { toolPrefs.hlColor = hex; } else { toolPrefs.inkColor = hex; }
+    saveTools(); renderToolOpts();
+  }
+  function commitPending() {
+    if (!cpPending) { return; }
+    var k = cpPending.kind, hex = cpPending.hex, list = toolPrefs[CP[k].list];
+    cpPending = null; cpPicking = false;
+    toolPrefs[CP[k].last] = hex;
+    if (list.length < BOX_MAX && list.map(function (x) { return x.toLowerCase(); }).indexOf(hex) < 0) { list.push(hex); }
+    saveTools();
   }
   function renderCpop() {
-    var g = $('cpGrid'), list = toolPrefs.boxColors, cur = boxColorHex(currentStyle().color);
+    var g = $('cpGrid'), list = toolPrefs[CP[cpKind].list], cur = cpCurrent();
     g.replaceChildren();
     $('cpCount').textContent = list.length + ' / ' + BOX_MAX;
     $('cpEdit').textContent = cpEditing ? '完成' : '編輯';
@@ -43009,39 +43053,61 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       b.setAttribute('aria-label', (cpEditing ? '刪除顏色 ' : '顏色 ') + hex);
       b.setAttribute('aria-pressed', String(!cpEditing && cur === hex.toLowerCase()));
       onTap(b, function () {
-        if (cpEditing) { toolPrefs.boxColors.splice(i, 1); saveTools(); if (!toolPrefs.boxColors.length) { cpEditing = false; } renderCpop(); return; }
-        applyBoxColor(hex); renderCpop();
+        if (cpEditing) { list.splice(i, 1); saveTools(); if (!list.length) { cpEditing = false; } renderCpop(); return; }
+        cpApply(hex); renderCpop();
       });
       g.appendChild(b);
     });
     if (!cpEditing) {
-      var lab = document.createElement('label'); lab.className = 'cp-add'; lab.title = '新增顏色';
+      var kind = cpKind, lab = document.createElement('label'); lab.className = 'cp-add'; lab.title = '新增顏色';
       var full = list.length >= BOX_MAX;
       lab.classList.toggle('full', full);
-      var inp = document.createElement('input'); inp.type = 'color'; inp.value = toolPrefs.boxCustom || '#0f8b8d'; inp.setAttribute('aria-label', '新增一個顏色');
+      var inp = document.createElement('input'); inp.type = 'color'; inp.setAttribute('aria-label', '新增一個顏色');
+      inp.value = /^#[0-9a-f]{6}$/i.test(toolPrefs[CP[kind].last] || '') ? toolPrefs[CP[kind].last] : '#0f8b8d';
       inp.disabled = full;
-      lab.addEventListener('pointerdown', function () { keepBoxUntil = Date.now() + 2500; });
+      lab.addEventListener('pointerdown', function () { keepBoxUntil = Date.now() + 4000; });
+      /* iPad 的選色器有時只送 input、不送 change：選色當下就先套用，關掉小視窗時再存進清單 */
+      inp.addEventListener('input', function () {
+        var hex = inp.value.toLowerCase();
+        cpPicking = true; cpPending = { kind: kind, hex: hex }; keepBoxUntil = Date.now() + 4000;
+        lab.style.setProperty('--sw', hex); lab.classList.add('picked');
+        cpApply(hex);
+      });
       inp.addEventListener('change', function () {
         var hex = inp.value.toLowerCase();
-        toolPrefs.boxCustom = hex;
-        if (toolPrefs.boxColors.map(function (x) { return x.toLowerCase(); }).indexOf(hex) < 0) { toolPrefs.boxColors.push(hex); }
-        saveTools(); applyBoxColor(hex); renderCpop();
+        cpPending = { kind: kind, hex: hex };
+        cpApply(hex); commitPending(); renderCpop();
       });
       lab.appendChild(inp);
       g.appendChild(lab);
     }
     $('cpNote').textContent = cpEditing ? '點一個顏色就會刪掉它。' : (list.length >= BOX_MAX ? '已經存滿 50 種，按「編輯」刪掉一些才能再加。' : (list.length ? '點顏色套用；按「＋」新增常用的顏色。' : '按「＋」挑一個顏色，它會留在這裡下次再用。'));
   }
+  function cpAnchor() { return document.getElementById(CP[cpKind].btn); }
   function placeCpop() {
-    if (!boxCustomBtn) { return; }
-    var r = boxCustomBtn.getBoundingClientRect(), w = Math.min(320, window.innerWidth - 16);
+    var a = cpAnchor(); if (!a) { return; }
+    var r = a.getBoundingClientRect(), w = Math.min(320, window.innerWidth - 16);
     cpop.style.width = w + 'px';
     cpop.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px';
     cpop.style.top = Math.round(r.bottom + 10) + 'px';
   }
-  function openCpop() { cpTarget = focusedId; cpEditing = false; renderCpop(); cpop.hidden = false; placeCpop(); boxCustomBtn.setAttribute('aria-expanded', 'true'); }
-  function closeCpop() { if (!cpop || cpop.hidden) { return; } cpop.hidden = true; cpEditing = false; if (boxCustomBtn) { boxCustomBtn.setAttribute('aria-expanded', 'false'); } }
-  document.addEventListener('pointerdown', function (e) { if (!cpop.hidden && !cpop.contains(e.target) && e.target !== boxCustomBtn) { closeCpop(); } }, true);
+  function openCpop(kind) {
+    commitPending();
+    cpKind = kind || 'box'; cpTarget = cpKind === 'box' ? focusedId : null; cpEditing = false;
+    renderCpop(); cpop.hidden = false; placeCpop();
+    ['boxCustom', 'hlCustom', 'inkCustom'].forEach(function (id) { var el = document.getElementById(id); if (el) { el.setAttribute('aria-expanded', String(id === CP[cpKind].btn)); } });
+  }
+  function closeCpop() {
+    if (!cpop || cpop.hidden) { return; }
+    commitPending();
+    cpop.hidden = true; cpEditing = false;
+    ['boxCustom', 'hlCustom', 'inkCustom'].forEach(function (id) { var el = document.getElementById(id); if (el) { el.setAttribute('aria-expanded', 'false'); } });
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (cpop.hidden || cpop.contains(e.target)) { return; }
+    var a = cpAnchor(); if (a && (e.target === a || a.contains(e.target))) { return; }
+    closeCpop();
+  }, true);
   window.addEventListener('scroll', function () { if (!cpop.hidden) { placeCpop(); } }, { passive: true });
   window.addEventListener('resize', function () { if (!cpop.hidden) { placeCpop(); } });
 
@@ -43435,6 +43501,16 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   applyUiFont();
   renderUiFont();
 
+  (function () {
+    var head = $('toolhead'); if (!head) { return; }
+    var top = document.createElement('div'); top.className = 'toprow'; top.id = 'toprow';
+    var hist = document.createElement('div'); hist.className = 'histbtns'; hist.setAttribute('role', 'group'); hist.setAttribute('aria-label', '上一步、下一步、清除全部');
+    ['undo', 'redo', 'clear'].forEach(function (id) { var el = $(id); if (el) { hist.appendChild(el); } });
+    if ($('viewbar')) { top.appendChild($('viewbar')); }
+    top.appendChild(hist);
+    head.insertBefore(top, head.firstChild);
+    var sep = head.querySelector('.toolbar .sep'); if (sep) { sep.remove(); }
+  })();
   renderToolOpts(); syncUndoButtons();
 
 
