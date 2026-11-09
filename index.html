@@ -593,6 +593,88 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 #ttsSeek::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; }
 #ttsSeek::-webkit-slider-thumb { margin-top: -7px; }
 .sw2.custom.picked::after { background: var(--sw); }
+
+/* ---- v1.10 工具框：少框線、分段按鈕 ---- */
+.toprow { padding: 6px 8px 0; gap: 4px; }
+.toprow .viewbar button, .histbtns button { border-color: transparent; background: transparent; }
+.toprow .viewbar button:hover, .histbtns button:hover:not(:disabled) { background: var(--bg); }
+.toprow .vb-zoom { font-weight: 600; padding: 0 10px; color: var(--fg); }
+.toprow .vbz-mode { color: var(--muted); font-weight: 500; }
+.toprow .vbz-c { margin-left: 4px; color: var(--muted); font-size: 12px; }
+.toprow .vb-arrow { color: var(--accent); }
+.toprow .vb-page { min-width: 58px; color: var(--muted); }
+.toprow .vb-sep { display: none; }
+.histbtns { gap: 2px; }
+.histbtns .iconbtn { color: var(--fg); }
+.histbtns #clear { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-weight: 500; padding: 0 10px; }
+.histbtns #clear svg { width: 17px; height: 17px; }
+.toolseg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--bg); flex: 0 0 auto; }
+.workbox .toolbar .toolseg .tool { border: 0; background: transparent; min-height: 38px; padding: 0 16px; border-radius: 9px; font-size: 15px; color: var(--muted); }
+.workbox .toolbar .toolseg .tool[aria-pressed="true"] { background: var(--card); color: var(--fg); font-weight: 700; box-shadow: 0 1px 3px rgba(0, 0, 0, .14), 0 0 0 1px var(--line); }
+.workbox .toolbar { padding: 6px 8px 8px; gap: 10px; align-items: center; }
+.workbox .toolbar #pencil { border: 0; background: transparent; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); font-weight: 500; padding: 0 4px; min-height: 38px; }
+.workbox .toolbar #pencil::after { content: ""; flex: 0 0 auto; width: 38px; height: 22px; border-radius: 11px; background: var(--line) radial-gradient(circle at 11px 50%, #fff 8px, transparent 8.6px); transition: background .15s; }
+.workbox .toolbar #pencil[aria-pressed="true"] { color: var(--fg); }
+.workbox .toolbar #pencil[aria-pressed="true"]::after { background: var(--accent-fill) radial-gradient(circle at 27px 50%, #fff 8px, transparent 8.6px); }
+.toolopts .ob, .subbar .stylebar .sb { border-color: transparent; background: var(--bg); }
+.toolopts .ob[aria-pressed="true"], .subbar .stylebar .sb[aria-pressed="true"] { background: var(--card); box-shadow: 0 0 0 1.5px var(--accent); color: var(--accent); }
+.subbar .stylebar .sb { min-height: 34px; border-radius: 999px; }
+.toolopts .ob { min-height: 34px; }
+/* 朗讀：播放鍵小一點 */
+.player .iconbtn.play { width: 32px; min-width: 32px; height: 32px; min-height: 32px; }
+.player .iconbtn.play svg { width: 16px; height: 16px; }
+.player .iconbtn:not(.play) { width: 32px; min-width: 32px; height: 32px; min-height: 32px; }
+.player .iconbtn:not(.play) svg { width: 15px; height: 15px; }
+/* 我的顏色：外面三格 */
+.cpop .cp-sec { font-size: 13px; font-weight: 600; color: var(--muted); }
+.cpop .cp-favs { display: flex; gap: 12px; padding: 2px 3px 8px; border-bottom: 1px solid var(--line); }
+.cpop .cp-slot { position: relative; width: 40px; height: 40px; min-height: 40px; padding: 0; border-radius: 50%; background: var(--sw); border: 3px solid var(--card); box-shadow: 0 0 0 1px var(--line); }
+.cpop .cp-slot.sel { box-shadow: 0 0 0 3px var(--accent); }
+.cpop .cp-slotn { position: absolute; right: -7px; bottom: -7px; width: 18px; height: 18px; border-radius: 50%; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 16px; text-align: center; font-weight: 600; }
+.cpop.slotting .cp-grid .cp-sw { box-shadow: 0 0 0 1px var(--line), 0 0 0 4px rgba(115, 148, 136, .18); }
+/* 字面意思、翻譯 */
+.compose { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; margin-top: 8px; font-size: 15px; }
+.compose .cmp-l, .mtrow .mt-l { flex: 0 0 auto; font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 8px; line-height: 20px; }
+.compose .cmp-part { display: inline-flex; align-items: baseline; gap: 4px; }
+.compose .cmp-th { font-family: var(--thai); font-size: 16px; }
+.compose .cmp-zh { color: var(--muted); }
+.compose .cmp-plus { color: var(--muted); font-size: 13px; }
+.mtrow { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; font-size: 16px; font-weight: 600; }
+.mtrow.loading .mt-v { color: var(--muted); font-weight: 400; font-size: 14px; }
+.mtrow[hidden] { display: none; }
+
+/* ---- 手機：按鈕跟著畫面縮小，不要掉到第二行 ---- */
+@media (max-width: 600px) {
+  button { font-size: 15px; padding: 0 12px; }
+  .homeadd { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .homeadd > * { justify-content: center; padding: 0 6px; font-size: 14px; white-space: nowrap; min-width: 0; }
+  .vhead #openExport { padding: 0 10px; font-size: 14px; }
+  .vh-acts { gap: 4px; }
+  .ttsbar { gap: 6px; }
+  .ttsbar #slow, .ttsbar #translateAll { padding: 0 10px; font-size: 14px; min-height: 40px; }
+  .toprow .vbz-mode { display: none; }
+  .toprow .vb-page { min-width: 48px; padding: 0 4px; }
+  .toprow .vb-arrow { width: 30px; }
+  .histbtns #clear .cl-t { display: none; }
+  .histbtns #clear { width: 34px; padding: 0; justify-content: center; }
+  .workbox .toolbar #pencil { display: none; }
+  .workbox .toolbar .toolseg { flex: 1 1 auto; }
+  .workbox .toolbar .toolseg .tool { flex: 1 1 0; padding: 0 6px; font-size: 14px; }
+  .seg button { padding: 0 11px; font-size: 13.5px; }
+  .subbar { gap: 6px 10px; }
+  .toolopts .ob { padding: 0 10px; }
+  .subbar { flex-wrap: nowrap; padding-left: 8px; padding-right: 8px; }
+  .subbar .stylebar, .subbar .toolopts { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 3px 2px 4px; }
+  .subbar .stylebar::-webkit-scrollbar, .subbar .toolopts::-webkit-scrollbar { display: none; }
+  .subbar .stylebar > *, .subbar .toolopts > * { flex: 0 0 auto; }
+  .subbar .stylebar, .subbar .toolopts { -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+  #fontGroup { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 380px) {
+  .homeadd > * { font-size: 13px; }
+  .ttsbar #slow, .ttsbar #translateAll { padding: 0 8px; font-size: 13px; }
+}
+.appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
 <body>
@@ -790,7 +872,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.9.0</p>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.10.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -38274,7 +38356,1901 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 ไฮเปอร์|org||樂團|Hyper
 ไฮแจ็ค|org||樂團|Hijack
 ไฮโดรเท็ค|org||企業|Hydrotek
-ไฮไลต์|org|Highlight|樂團|Highlight</script>
+ไฮไลต์|org|Highlight|樂團|Highlight
+กจช.|org|泰國國家檔案館|泰國政府機關|National Archives of Thailand
+กรมการขนส่งทางราง|org|鐵路運輸部|泰國政府機關|Department of Rail Transport
+กรมการบินพลเรือน|org|民航局|泰國政府機關|Department of Civil Aviation
+กรมการแพทย์|org|泰國醫療服務部|泰國政府機關|Department of Medical Services
+กรมควบคุมโรค|org|疾病控制局|泰國政府機關|Department of Disease Control
+กรมตรวจเงินแผ่นดิน|org|泰國國家審計署|泰國政府機關|State Audit Office of Thailand
+กรมตำรวจไทย|org|泰國皇家警察|泰國政府機關|Royal Thai Police
+กรมท่าอากาศยาน|org|機場局|泰國政府機關|Department of Airports
+กรมป่าไม้|org|皇家森林局|泰國政府機關|Royal Forest Department
+กรมราชทัณฑ์|org|泰國獄政廳|泰國政府機關|Department of Corrections (Thailand)
+กรมราชทัณฑ์ กระทรวงยุติธรรม|org|泰國獄政廳|泰國政府機關|Department of Corrections (Thailand)
+กรมวิทยาศาสตร์การแพทย์|org|泰國醫學科學部|泰國政府機關|Department of Medical Sciences
+กรมศิลปากร|org|泰國藝術廳|泰國政府機關|Fine Arts Department
+กรมสอบสวนคดีพิเศษ|org|特別調查局|泰國政府機關|Department of Special Investigation
+กรมอนามัย|org|泰國衛生部|泰國政府機關|Department of Health
+กรมอุตุนิยมวิทยา|org|泰國氣象局|泰國政府機關|Thai Meteorological Department
+กรมอุทยานแห่งชาติ สัตว์ป่า และพันธุ์พืช|org|泰國國家公園，野生動物和植物保護部|泰國政府機關|Department of National Parks, Wildlife and Plant Conservatio
+กรมแผนที่ทหาร|org|泰國皇家測量部門|泰國政府機關|Royal Thai Survey Department
+กรรมการสิทธิมนุษยชนแห่งชาติ|org|國家人權委|泰國政府機關|National Human Rights Commission
+กระทรวงกลาโหม|org|泰國國防部|泰國政府機關|Ministry of Defence of Thailand
+กระทรวงกลาโหมของไทย|org|泰國國防部|泰國政府機關|Ministry of Defence of Thailand
+กระทรวงการคลัง|org|泰國財政部|泰國政府機關|Ministry of Finance
+กระทรวงการต่างประเทศ|org|泰國外交部|泰國政府機關|Ministry of Foreign Affairs of Thailand
+กระทรวงการท่องเที่ยวและกีฬา|org|泰國旅遊與體育部|泰國政府機關|Ministry of Tourism and Sports (Thailand)
+กระทรวงการท่องเที่ยวและกีฬาของไทย|org|泰國旅遊與體育部|泰國政府機關|Ministry of Tourism and Sports (Thailand)
+กระทรวงการพัฒนาสังคมและความมั่นคงของมนุษย์|org|社會發展與人類安全部|泰國政府機關|Ministry of Social Development and Human Security
+กระทรวงการสาธารณสุข|org|泰國公共衛生部|泰國政府機關|Ministry of Public Health
+กระทรวงการเศรษฐกิจ|org|泰國商務部|泰國政府機關|Ministry of Commerce
+กระทรวงคมนาคม|org|泰國交通部|泰國政府機關|Ministry of Transport
+กระทรวงคมนาคมของไทย|org|泰國交通部|泰國政府機關|Ministry of Transport
+กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม|org|資訊和通訊技術部|泰國政府機關|Ministry of Digital Economy and Society
+กระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม|org|自然資源與環境部|泰國政府機關|Ministry of Natural Resources and Environment
+กระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อมของไทย|org|自然資源與環境部|泰國政府機關|Ministry of Natural Resources and Environment
+กระทรวงทรัพย์ฯ|org|自然資源與環境部|泰國政府機關|Ministry of Natural Resources and Environment
+กระทรวงธรรมการ|org|泰國教育部|泰國政府機關|Ministry of Education of Thailand
+กระทรวงพระคลัง|org|泰國財政部|泰國政府機關|Ministry of Finance
+กระทรวงพระคลังมหาสมบัติ|org|泰國財政部|泰國政府機關|Ministry of Finance
+กระทรวงพลังงาน|org|能源部|泰國政府機關|Ministry of Energy
+กระทรวงพาณิชย์|org|泰國商務部|泰國政府機關|Ministry of Commerce
+กระทรวงพาณิชย์ของไทย|org|泰國商務部|泰國政府機關|Ministry of Commerce
+กระทรวงพานิชย์|org|泰國商務部|泰國政府機關|Ministry of Commerce
+กระทรวงมหาดไทย|org|內政部 (泰國)|泰國政府機關|Ministry of Interior of Thailand
+กระทรวงยุติธรรม|org|泰國司法部|泰國政府機關|Ministry of Justice of Thailand
+กระทรวงวัฒนธรรม|org|泰國的宗教事務局|泰國政府機關|Ministry of Culture
+กระทรวงวัฒนธรรมของไทย|org|泰國的宗教事務局|泰國政府機關|Ministry of Culture
+กระทรวงศึกษาธิการไทย|org|泰國教育部|泰國政府機關|Ministry of Education of Thailand
+กระทรวงสาธารณสุข|org|泰國公共衛生部|泰國政府機關|Ministry of Public Health
+กระทรวงสาธารณสุขไทย|org|泰國公共衛生部|泰國政府機關|Ministry of Public Health
+กระทรวงอุตสาหกรรม|org|泰國工業部|泰國政府機關|Ministry of Industry
+กระทรวงอุตสาหกรรมของไทย|org|泰國工業部|泰國政府機關|Ministry of Industry
+กระทรวงเทคโนโลยีสารสนเทศและการสื่อสาร|org|資訊和通訊技術部|泰國政府機關|Ministry of Digital Economy and Society
+กระทรวงเทคโนโลยีสารสนเทศและการสื่อสารของไทย|org|資訊和通訊技術部|泰國政府機關|Ministry of Digital Economy and Society
+กระทรวงเศรษฐการ|org|泰國商務部|泰國政府機關|Ministry of Commerce
+กระทรวงเศรษฐกิจ|org|泰國商務部|泰國政府機關|Ministry of Commerce
+กระทรวงไอซีที|org|資訊和通訊技術部|泰國政府機關|Ministry of Digital Economy and Society
+กรานาดา|place|格拉纳达（城市）|首都|Granada (City)
+กรุงจีน|place|中華人民共和國|國家|People's Republic of China
+กรุงเก่า|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+กลุ่ม 14|org|G-14|國際組織|G-14
+กลุ่ม 20|org|二十國集團|國際組織|G20
+กลุ่ม 7|org|七大工業國組織|國際組織|G7
+กลุ่ม 77|org|七十七國集團|國際組織|Group of 77
+กลุ่มตลาดร่วมอเมริกาใต้ตอนล่าง|org|南錐共同體|國際組織|
+กลุ่มวิแชกราด|org|維謝格拉德集團|國際組織|Visegrád Group
+กสทช.|org|電視業務和國家電信廣播委員會|泰國政府機關|National Broadcasting and Telecommunications Commission
+กอ รมน.|org|國內安全行動指揮部|泰國政府機關|Internal Security Operations Command
+กอ.รมน.|org|國內安全行動指揮部|泰國政府機關|Internal Security Operations Command
+กอ.รส.|org|維持和平與秩序指揮部|泰國政府機關|Peace and Order Maintaining Command
+กองจดหมายเหตุแห่งชาติ|org|泰國國家檔案館|泰國政府機關|National Archives of Thailand
+กองบังคับการตํารวจน้ำ|org|泰國皇家水警|泰國政府機關|Royal Thai Marine Police Division
+กองบัญชาการตำรวจตระเวนชายแดน|org|泰國邊境巡邏警察|泰國政府機關|Border Patrol Police
+กองอำนวยการรักษาความมั่นคงภายใน|org|國內安全行動指揮部|泰國政府機關|Internal Security Operations Command
+กองอำนวยการรักษาความมั่นคงภายในราชอาณาจักร|org|國內安全行動指揮部|泰國政府機關|Internal Security Operations Command
+กองอำนวยการรักษาความสงบเรียบร้อย|org|維持和平與秩序指揮部|泰國政府機關|Peace and Order Maintaining Command
+กอร์เรียจ|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+กัมปานา|place|安帕納|首都|Ampana
+กัมปูเจีย|place|柬埔寨|國家|Cambodia
+กัวดาลาฮารา|place|瓜達拉哈拉|首都|Guadalajara
+กัวเตมาลาซิตี|place|瓜地馬拉市|首都|Guatemala City
+กางาร์|place|加央|首都|Kangar
+การท่องเที่ยวแห่งประเทศไทย|org|泰國政府旅遊局|泰國政府機關|Tourism Authority of Thailand
+การท่องเที่ยวแห่งประเทศไทย, ททท.|org|泰國政府旅遊局|泰國政府機關|Tourism Authority of Thailand
+การรถไฟฟ้าขนส่งมวลชนแห่งประเทศไทย|org|泰國地鐵局|泰國政府機關|Mass Rapid Transit Authority of Thailand
+การรักษาสันติภาพของสหประชาชาติ|org|聯合國維持和平部隊|國際組織|United Nations peacekeeping
+การอเว|place|加洛威|首都|Garowe
+การากัส|place|加拉加斯|首都|Caracas
+การาจี|place|喀拉蚩|首都|Karachi
+การ์โลวีวารี|place|卡羅維瓦利|首都|Karlovy Vary
+กาวี|org|全球疫苗與免疫聯盟|國際組織|GAVI
+กินชาซา|place|金夏沙|首都|Kinshasa
+ขบวนการไม่ฝักใฝ่ฝ่ายใด|org|不結盟運動|國際組織|Non-Aligned Movement
+ขรแกน|place|孔敬府|泰國的府|Khon Kaen
+ขรแก่น|place|孔敬府|泰國的府|Khon Kaen
+ขอรแก่น|place|孔敬府|泰國的府|Khon Kaen
+ขามแก่น|place|孔敬府|泰國的府|Khon Kaen
+ข้าหลวงใหญ่ผู้ลี้ภัยแห่งสหประชาชาติ|org|聯合國難民署|國際組織|Office of the United Nations High Commissioner for Refugees
+คณะกรรมการกลางอิสลามแห่งประเทศไทย|org|泰國中央伊斯蘭委員會|泰國政府機關|Central Islamic Council of Thailand
+คณะกรรมการการบินระหว่างรัฐ|org|國際航空委員會|國際組織|Interstate Aviation Committee
+คณะกรรมการการเลือกตั้ง|org|泰國選舉委員會|泰國政府機關|Election Commission of Thailand
+คณะกรรมการกิจการกระจายเสียง กิจการโทรทัศน์ และกิจการโทรคมนาคมแห่งชาติ|org|電視業務和國家電信廣播委員會|泰國政府機關|National Broadcasting and Telecommunications Commission
+คณะกรรมการกิจการโทรคมนาคมแห่งชาติ|org|電視業務和國家電信廣播委員會|泰國政府機關|National Broadcasting and Telecommunications Commission
+คณะกรรมการตรวจเงินแผ่นดิน|org|審計委員會|泰國政府機關|State Audit Commission of Thailand
+คณะกรรมการป้องกันปรามปรามทุจริตแห่งชาติ|org|反貪委員會|泰國政府機關|National Anti-Corruption Commission (Thailand)
+คณะกรรมการป้องกันและปราบปรามการทุจริตและประพฤติมิชอบในวงราชการ|org|反貪委員會|泰國政府機關|National Anti-Corruption Commission (Thailand)
+คณะกรรมการป้องกันและปราบปรามการทุจริตแห่งชาติ|org|反貪委員會|泰國政府機關|National Anti-Corruption Commission (Thailand)
+คณะกรรมการระหว่างรัฐบาลว่าด้วยการเปลี่ยนแปลงสภาพภูมิอากาศ|org|政府間氣候變化專門委員會|國際組織|Intergovernmental Panel on Climate Change
+คณะกรรมการราษฎร|org|暹羅人民委員會|泰國政府機關|People's Committee of Siam
+คณะกรรมการสันติภาพ|org|和平理事會|國際組織|
+คณะกรรมการสิทธิมนุษยชนแห่งชาติ|org|國家人權委|泰國政府機關|National Human Rights Commission
+คณะกรรมการเศรษฐกิจและสังคมแห่งเอเชียและแปซิฟิก|org|聯合國亞洲及太平洋經濟社會委員會|國際組織|United Nations Economic and Social Commission for Asia and t
+คณะกรรมการโอลิมปิกสากล|org|國際奧林匹克委員會|國際組織|International Olympic Committee
+คณะปฏิรูปการปกครองแผ่นดิน|org|國家行政改革委員會|泰國政府機關|National Administrative Reform Council
+คณะพระคาร์ดินัล|org|樞機團|國際組織|College of Cardinals
+คณะพลศึกษา มหาวิทยาลัยศรีนครินทรวิโรฒ|org|詩納卡寧威洛大學體育學院|泰國大學|Faculty of Physical Education, Srinakharinwirot University
+คณะมนตรีความมั่นคงแห่งชาติ|org|泰國國家管理改革委員會|泰國政府機關|Council for National Security
+คณะมนตรีนอร์ดิก|org|北歐理事會|國際組織|Nordic Council
+คณะมนตรีไตรภาคี|org|三邊委員會|國際組織|Trilateral Commission
+คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยขอนแก่น|org|孔敬大學人文與社會科學學院|泰國大學|
+คณะรักษาความสงบแห่งชาติ|org|全國維持和平秩序委員會|泰國政府機關|National Council for Peace and Order
+คณะรัฐมนตรีคณะที่ 2|org|第二次瑪奴巴功內閣|泰國政府機關|2nd Cabinet of Siam
+คณะรัฐมนตรีคณะที่ 2 ของไทย|org|第二次瑪奴巴功內閣|泰國政府機關|2nd Cabinet of Siam
+คณะรัฐมนตรีคณะที่ 40 ของไทย|org|第40屆泰國內閣|泰國政府機關|40th cabinet of Thailand
+คณะรัฐมนตรีคณะที่ 59 ของไทย|org|阿披實內閣|泰國政府機關|59th Cabinet of Thailand
+คณะรัฐมนตรีคณะที่ 60 ของไทย|org|盈拉·欽那瓦內閣|泰國政府機關|60th Cabinet of Thailand
+คณะรัฐมนตรีประยุทธ์ 2|org|第二次帕拉育內閣|泰國政府機關|62nd Cabinet of Thailand
+คณะรัฐมนตรีสยาม คณะที่ 1|org|暹羅人民委員會|泰國政府機關|People's Committee of Siam
+คณะรัฐมนตรีสยาม คณะที่ 2|org|第二次瑪奴巴功內閣|泰國政府機關|2nd Cabinet of Siam
+คณะรัฐมนตรีสยาม คณะที่ 3|org|第三次瑪奴巴功內閣|泰國政府機關|3rd Cabinet of Siam
+คณะรัฐมนตรีไทย|org|泰國內閣|泰國政府機關|Cabinet of Thailand
+คณะรัฐมนตรีไทย คณะที่ 2|org|第二次瑪奴巴功內閣|泰國政府機關|2nd Cabinet of Siam
+คณะรัฐมนตรีไทย คณะที่ 40|org|第40屆泰國內閣|泰國政府機關|40th cabinet of Thailand
+คณะรัฐมนตรีไทย คณะที่ 59|org|阿披實內閣|泰國政府機關|59th Cabinet of Thailand
+คณะรัฐมนตรีไทย คณะที่ 60|org|盈拉·欽那瓦內閣|泰國政府機關|60th Cabinet of Thailand
+คณะรัฐมนตรีไทย คณะที่ 61|org|第一次帕拉育內閣|泰國政府機關|61st Cabinet of Thailand
+คณะรัฐมนตรีไทย คณะที่ 62|org|第二次帕拉育內閣|泰國政府機關|62nd Cabinet of Thailand
+คณะสถาปัตยกรรมศาสตร์ มหาวิทยาลัยเกษมบัณฑิต|org|伯樂大學|泰國大學|Kasem Bundit University
+คณะสถาปัตยกรรมศาสตร์ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย|org|朱拉隆功大學文學院|泰國大學|Faculty of Arts, Chulalongkorn University
+คณะอักษรฯ จุฬาฯ|org|朱拉隆功大學文學院|泰國大學|Faculty of Arts, Chulalongkorn University
+คณะเกษตรศาสตร์บางพระ|org|東方皇家理工大學|泰國大學|Rajamangala University of Technology Tawan-ok
+คณะเทคโนโลยีสถาปัตยกรรม มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน|org|東北皇家理工大學|泰國大學|Rajamangala University of Technology Isan
+คณะเศรษฐศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย|org|朱拉隆功大學經濟學院|泰國大學|Faculty of Economics, Chulalongkorn University
+คตง.|org|審計委員會|泰國政府機關|State Audit Commission of Thailand
+คนงานอุตสาหกรรมแห่งโลก|org|世界產業工人|國際組織|Industrial Workers of the World
+คปก.|org|國家行政改革委員會|泰國政府機關|National Administrative Reform Council
+คมช.|org|泰國國家管理改革委員會|泰國政府機關|Council for National Security
+ครม. ประยุทธ์ 1|org|第一次帕拉育內閣|泰國政府機關|61st Cabinet of Thailand
+ครม. ประยุทธ์ 2|org|第二次帕拉育內閣|泰國政府機關|62nd Cabinet of Thailand
+ครม. ยิ่งลักษณ์|org|盈拉·欽那瓦內閣|泰國政府機關|60th Cabinet of Thailand
+ครม.59|org|阿披實內閣|泰國政府機關|59th Cabinet of Thailand
+ครม.60|org|盈拉·欽那瓦內閣|泰國政府機關|60th Cabinet of Thailand
+ครม.62|org|第二次帕拉育內閣|泰國政府機關|62nd Cabinet of Thailand
+ครม.อภิสิทธิ์1|org|阿披實內閣|泰國政府機關|59th Cabinet of Thailand
+คราสโนดาร์|place|克拉斯諾達爾|首都|Krasnodar
+ความตกลงทั่วไปว่าด้วยภาษีศุลกากรและการค้า|org|關稅暨貿易總協定|國際組織|General Agreement on Tariffs and Trade
+ความร่วมมือทางเศรษฐกิจเอเชีย-แปซิฟิก|org|亞太經濟合作會議|國際組織|Asia-Pacific Economic Cooperation
+คสช.|org|全國維持和平秩序委員會|泰國政府機關|National Council for Peace and Order
+คองคอร์ด|place|康科德|首都|Concord
+คอนราช|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+คิกาลี|place|吉佳利|首都|Kigali
+คิวคูตอน|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+คูนิเกียว|place|恭仁京|首都|Kuni-kyō
+จ. พิจิตร|place|披集府|泰國的府|Phichit
+จ. พิษณุโลก|place|彭世洛府|泰國的府|Phitsanulok
+จ. สิงห์บุรี|place|信武里府|泰國的府|Sing Buri
+จ.กระบี่|place|喀比府|泰國的府|Krabi
+จ.กาญจนบุรี|place|北碧府|泰國的府|Kanchanaburi
+จ.กาฬสินธุ์|place|加拉信府|泰國的府|Kalasin
+จ.กำแพงเพชร|place|甘烹碧府|泰國的府|Kamphaeng Phet
+จ.ขอนแก่น|place|孔敬府|泰國的府|Khon Kaen
+จ.จันทบุรี|place|莊他武里府|泰國的府|Chanthaburi
+จ.ฉะเชิงเทรา|place|差春騷府|泰國的府|Chachoengsao
+จ.ชลบุรี|place|春武里府|泰國的府|Chon Buri
+จ.ชัยนาท|place|猜納府|泰國的府|Chai Nat
+จ.ชัยภูมิ|place|猜也蓬府|泰國的府|Chaiyaphum
+จ.ชุมพร|place|春蓬府|泰國的府|Chumphon
+จ.ตรัง|place|董里府|泰國的府|Trang
+จ.ตราด|place|達叻府|泰國的府|Trat
+จ.ตาก|place|達府|泰國的府|Tak
+จ.นครนายก|place|那空那育府|泰國的府|Nakhon Nayok
+จ.นครปฐม|place|佛統府|泰國的府|Nakhon Pathom
+จ.นครพนม|place|那空拍儂府|泰國的府|Nakhon Phanom
+จ.นครราชสีมา|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+จ.นครศรีธรรมราช|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+จ.นครสวรรค์|place|那空沙旺府|泰國的府|Nakhon Sawan
+จ.นนทบุรี|place|暖武里府|泰國的府|Nonthaburi
+จ.นราธิวาส|place|那拉提瓦府|泰國的府|Narathiwat
+จ.น่าน|place|難府|泰國的府|Nan
+จ.บึงกาฬ|place|汶干府|泰國的府|Bueng Kan
+จ.บุรีรัมย์|place|武里南府|泰國的府|Buriram
+จ.ปทุมธานี|place|巴吞他尼府|泰國的府|Pathum Thani
+จ.ประจวบคีรีขันธ์|place|巴蜀府|泰國的府|Prachuap Khiri Khan
+จ.ปราจีนบุรี|place|巴真府|泰國的府|Prachin Buri
+จ.ปัตตานี|place|北大年府|泰國的府|Pattani
+จ.พระนครศรีอยุธยา|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+จ.พะเยา|place|帕堯府|泰國的府|Phayao
+จ.พังงา|place|攀牙府|泰國的府|Phang Nga
+จ.พัทลุง|place|博他侖府|泰國的府|Phatthalung
+จ.พิจิตร|place|披集府|泰國的府|Phichit
+จ.พิษณุโลก|place|彭世洛府|泰國的府|Phitsanulok
+จ.ภูเก็ต|place|普吉府|泰國的府|Phuket
+จ.มหาสารคาม|place|馬哈沙拉堪府|泰國的府|Maha Sarakham
+จ.มุกดาหาร|place|穆達漢府|泰國的府|Mukdahan
+จ.ยะลา|place|耶拉府|泰國的府|Yala
+จ.ยโสธร|place|益梭通府|泰國的府|Yasothon
+จ.ระนอง|place|拉廊府|泰國的府|Ranong
+จ.ระยอง|place|羅勇府|泰國的府|Rayong
+จ.ราชบุรี|place|叻武里府|泰國的府|Ratchaburi
+จ.ร้อยเอ็ด|place|黎逸府|泰國的府|Roi Et
+จ.ลพบุรี|place|華富里府|泰國的府|Lopburi
+จ.ลำปาง|place|南邦府|泰國的府|Lampang
+จ.ลำพูน|place|南奔府|泰國的府|Lamphun
+จ.ศรีสะเกษ|place|四色菊府|泰國的府|Si Sa Ket
+จ.สกลนคร|place|沙功那空府|泰國的府|Sakon Nakhon
+จ.สงขลา|place|宋卡府|泰國的府|Songkhla
+จ.สตูล|place|沙敦府|泰國的府|Satun
+จ.สมุทรปราการ|place|沙沒巴干府|泰國的府|Samut Prakan
+จ.สมุทรสงคราม|place|沙沒頌堪府|泰國的府|Samut Songkhram
+จ.สระบุรี|place|北標府|泰國的府|Saraburi
+จ.สระแก้ว|place|沙繳府|泰國的府|Sa Kaeo
+จ.สิงห์บุรี|place|信武里府|泰國的府|Sing Buri
+จ.สุพรรณบุรี|place|素攀府|泰國的府|Suphan Buri
+จ.สุราษฎร์ธานี|place|素叻府|泰國的府|Surat Thani
+จ.สุรินทร์|place|素林府|泰國的府|Surin
+จ.สุโขทัย|place|素可泰府|泰國的府|Sukhothai
+จ.หนองคาย|place|廊開府|泰國的府|Nong Khai
+จ.หนองบัวลำภู|place|農磨蘭普府|泰國的府|Nong Bua Lamphu
+จ.อยุธยา|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+จ.อำนาจเจริญ|place|安納乍倫府|泰國的府|Amnat Charoen
+จ.อุดรธานี|place|烏隆府|泰國的府|Udon Thani
+จ.อุตรดิตถ์|place|程逸府|泰國的府|Uttaradit
+จ.อุทัยธานี|place|烏泰他尼府|泰國的府|Uthai Thani
+จ.อุบลราชธานี|place|烏汶府|泰國的府|Ubon Ratchathani
+จ.อ่างทอง|place|紅統府|泰國的府|Ang Thong
+จ.เชียงราย|place|清萊府|泰國的府|Chiang Rai
+จ.เชียงใหม่|place|清邁府|泰國的府|Chiang Mai
+จ.เพชรบุรี|place|佛丕府|泰國的府|Phetchaburi
+จ.เพชรบูรณ์|place|碧差汶府|泰國的府|Phetchabun
+จ.แพร่|place|帕府|泰國的府|Phrae
+จ.แม่ฮ่องสอน|place|夜豐頌府|泰國的府|Mae Hong Son
+จงกว๋อ|place|中華人民共和國|國家|People's Republic of China
+จงกั๋ว|place|中華人民共和國|國家|People's Republic of China
+จงกั๋วหมินกั๋ว|place|中華民國|國家|Taiwan
+จงหัว|place|中華人民共和國|國家|People's Republic of China
+จงฮวา|place|中華人民共和國|國家|People's Republic of China
+จังซีลอน|place|普吉府|泰國的府|Phuket
+จังหวัดกระบี่|place|喀比府|泰國的府|Krabi
+จังหวัดกาญจนบุรี|place|北碧府|泰國的府|Kanchanaburi
+จังหวัดกาฬสินธุ์|place|加拉信府|泰國的府|Kalasin
+จังหวัดกำแพงเพชร|place|甘烹碧府|泰國的府|Kamphaeng Phet
+จังหวัดขอนแก่น|place|孔敬府|泰國的府|Khon Kaen
+จังหวัดจันทบุรี|place|莊他武里府|泰國的府|Chanthaburi
+จังหวัดฉะเชิงเทรา|place|差春騷府|泰國的府|Chachoengsao
+จังหวัดชลบุรี|place|春武里府|泰國的府|Chon Buri
+จังหวัดชัยนาท|place|猜納府|泰國的府|Chai Nat
+จังหวัดชัยภูมิ|place|猜也蓬府|泰國的府|Chaiyaphum
+จังหวัดชุมพร|place|春蓬府|泰國的府|Chumphon
+จังหวัดตรัง|place|董里府|泰國的府|Trang
+จังหวัดตราด|place|達叻府|泰國的府|Trat
+จังหวัดตาก|place|達府|泰國的府|Tak
+จังหวัดธนบุรี|place|吞武裡|泰國的府|Thonburi Province
+จังหวัดนครนายก|place|那空那育府|泰國的府|Nakhon Nayok
+จังหวัดนครปฐม|place|佛統府|泰國的府|Nakhon Pathom
+จังหวัดนครพนม|place|那空拍儂府|泰國的府|Nakhon Phanom
+จังหวัดนครราชสีมา|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+จังหวัดนครศรีธรรมราช|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+จังหวัดนครสวรรค์|place|那空沙旺府|泰國的府|Nakhon Sawan
+จังหวัดนนทบุรี|place|暖武里府|泰國的府|Nonthaburi
+จังหวัดนราธิวาส|place|那拉提瓦府|泰國的府|Narathiwat
+จังหวัดน่าน|place|難府|泰國的府|Nan
+จังหวัดบึงกาฬ|place|汶干府|泰國的府|Bueng Kan
+จังหวัดบุรีรัมย์|place|武里南府|泰國的府|Buriram
+จังหวัดปทุมธานี|place|巴吞他尼府|泰國的府|Pathum Thani
+จังหวัดประจวบคีรีขันธ์|place|巴蜀府|泰國的府|Prachuap Khiri Khan
+จังหวัดปราจีนบุรี|place|巴真府|泰國的府|Prachin Buri
+จังหวัดปัตตานี|place|北大年府|泰國的府|Pattani
+จังหวัดพระนครศรีอยุธยา|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+จังหวัดพะเยา|place|帕堯府|泰國的府|Phayao
+จังหวัดพังงา|place|攀牙府|泰國的府|Phang Nga
+จังหวัดพัทลุง|place|博他侖府|泰國的府|Phatthalung
+จังหวัดพิจิตร|place|披集府|泰國的府|Phichit
+จังหวัดพิษณุโลก|place|彭世洛府|泰國的府|Phitsanulok
+จังหวัดภูเก็ต|place|普吉府|泰國的府|Phuket
+จังหวัดมหาสารคาม|place|馬哈沙拉堪府|泰國的府|Maha Sarakham
+จังหวัดมุกดาหาร|place|穆達漢府|泰國的府|Mukdahan
+จังหวัดยะลา|place|耶拉府|泰國的府|Yala
+จังหวัดยโสธร|place|益梭通府|泰國的府|Yasothon
+จังหวัดระนอง|place|拉廊府|泰國的府|Ranong
+จังหวัดระยอง|place|羅勇府|泰國的府|Rayong
+จังหวัดราชบุรี|place|叻武里府|泰國的府|Ratchaburi
+จังหวัดร้อยเอ็ด|place|黎逸府|泰國的府|Roi Et
+จังหวัดลพบุรี|place|華富里府|泰國的府|Lopburi
+จังหวัดลำปาง|place|南邦府|泰國的府|Lampang
+จังหวัดลำพูน|place|南奔府|泰國的府|Lamphun
+จังหวัดศรีสะเกษ|place|四色菊府|泰國的府|Si Sa Ket
+จังหวัดสกลนคร|place|沙功那空府|泰國的府|Sakon Nakhon
+จังหวัดสงขลา|place|宋卡府|泰國的府|Songkhla
+จังหวัดสตูล|place|沙敦府|泰國的府|Satun
+จังหวัดสมุทรปราการ|place|沙沒巴干府|泰國的府|Samut Prakan
+จังหวัดสมุทรสงคราม|place|沙沒頌堪府|泰國的府|Samut Songkhram
+จังหวัดสมุทรสาคร|place|沙沒沙空府|泰國的府|Samut Sakhon
+จังหวัดสระบุรี|place|北標府|泰國的府|Saraburi
+จังหวัดสระแก้ว|place|沙繳府|泰國的府|Sa Kaeo
+จังหวัดสิงห์บุรี|place|信武里府|泰國的府|Sing Buri
+จังหวัดสุพรรณบุรี|place|素攀府|泰國的府|Suphan Buri
+จังหวัดสุราษฎร์ธานี|place|素叻府|泰國的府|Surat Thani
+จังหวัดสุราษฏร์ธานี|place|素叻府|泰國的府|Surat Thani
+จังหวัดสุรินทร์|place|素林府|泰國的府|Surin
+จังหวัดสุโขทัย|place|素可泰府|泰國的府|Sukhothai
+จังหวัดหนองคาย|place|廊開府|泰國的府|Nong Khai
+จังหวัดหนองบัวลำภู|place|農磨蘭普府|泰國的府|Nong Bua Lamphu
+จังหวัดอยุธยา|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+จังหวัดอำนาจเจริญ|place|安納乍倫府|泰國的府|Amnat Charoen
+จังหวัดอุดรธานี|place|烏隆府|泰國的府|Udon Thani
+จังหวัดอุตรดิตถ์|place|程逸府|泰國的府|Uttaradit
+จังหวัดอุทัยธานี|place|烏泰他尼府|泰國的府|Uthai Thani
+จังหวัดอุบลราชธานี|place|烏汶府|泰國的府|Ubon Ratchathani
+จังหวัดอ่างทอง|place|紅統府|泰國的府|Ang Thong
+จังหวัดเชียงราย|place|清萊府|泰國的府|Chiang Rai
+จังหวัดเชียงใหม่|place|清邁府|泰國的府|Chiang Mai
+จังหวัดเพชรบุรี|place|佛丕府|泰國的府|Phetchaburi
+จังหวัดเพชรบูรณ์|place|碧差汶府|泰國的府|Phetchabun
+จังหวัดเลย|place|黎府|泰國的府|Loei
+จังหวัดแพร่|place|帕府|泰國的府|Phrae
+จังหวัดแม่ฮ่องสอน|place|夜豐頌府|泰國的府|Mae Hong Son
+จันทรบุรี|place|彭世洛府|泰國的府|Phitsanulok
+จีนคณะชาติ|place|中華民國|國家|Taiwan
+จีนเสรี|place|中華民國|國家|Taiwan
+จีนไทเป|place|中華民國|國家|Taiwan
+จียามิซ|place|恰米斯|首都|
+จุลาลงกรน์มหาวิทยาลัย|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+จุฬาลงกรณมหาวิทยาลัย|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+จุฬาลงกรณ์|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+จุฬาลงกรณ์ มหาวิทยาลัย|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+จุฬาลงกรณ์มหาวิทยาลัย|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+จุฬาฯ|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+ชตุทการ์ท|place|司徒加特|首都|Stuttgart
+ชัยปุระ|place|齋浦爾|首都|Jaipur
+ชาร์ลสตัน|place|查爾斯頓|首都|Charleston
+ชิซูโอกะ|place|靜岡市|首都|Shizuoka
+ชีววิทยาโอลิมปิก|org|國際生物奧林匹亞|國際組織|International Biology Olympiad
+ชุลา|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+ชูล่า|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+ชเวรีน|place|詩威林|首都|Schwerin
+ซลีน|place|茲林|首都|Zlín
+ซะเพน|place|西班牙|國家|Spain
+ซางะ|place|佐賀市|首都|Saga
+ซาน การ์ลอส|place|聖卡洛斯（城市）|首都|San Carlos (City)
+ซานอันเดรส|place|聖安德烈斯|首都|San Andrés
+ซาร์บรึคเคิน|place|薩爾布魯根|首都|Saarbrücken
+ซิวดัดเดลาปัซ|place|拉巴斯城|首都|Ciudad de la Paz
+ซีงาราจา|place|新加拉惹|首都|Singaraja
+ซียู|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+ซีอาน|place|西安市|首都|Xi'an
+ซูโอมิ|place|芬蘭|國家|Finland
+ซเวเดน|place|瑞典|國家|Sweden
+ดมปู|place|冬坡|首都|Dompu
+ดรุกยุล|place|不丹|國家|Bhutan
+ดอนมดแดง|place|烏汶府|泰國的府|Ubon Ratchathani
+ดาร์-เอส-ซาลาม|place|三蘭港|首都|Dar es Salaam
+ดีเอสไอ|org|特別調查局|泰國政府機關|Department of Special Investigation
+ดึสเซิลดอร์ฟ|place|杜塞道夫|首都|Düsseldorf
+ด็อยทช์ลันท์|place|德國|國家|Germany
+ตชด.|org|泰國邊境巡邏警察|泰國政府機關|Border Patrol Police
+ตะกั่วถลาง|place|普吉府|泰國的府|Phuket
+ตันจุงเซอโลร์|place|丹戎施樂|首都|Tanjung Selor
+ตันหม่าลิ่ง|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+ตันเหมยลิง|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+ตามพรลิงก์|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+ตำรวจชายแดน|org|泰國邊境巡邏警察|泰國政府機關|Border Patrol Police
+ตำรวจตระเวนชายแดน|org|泰國邊境巡邏警察|泰國政府機關|Border Patrol Police
+ตำรวจป่า|org|泰國邊境巡邏警察|泰國政府機關|Border Patrol Police
+ติมิกา|place|蒂米卡|首都|Timika
+ติรุวนันตปุรัม|place|特里凡得瑯|首都|Thiruvananthapuram
+ทตโตริ|place|鳥取市|首都|Tottori
+ที่ทำการปกครองจังหวัดกระบี่|org|甲米府 省行政辦公室|泰國政府機關|Krabi Provincial Administration Office
+ที่ทำการปกครองจังหวัดกาญจนบุรี|org|北碧府 省行政辦公室|泰國政府機關|Kanchanaburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดกาฬสินธุ์|org|加拉信府 省行政辦公室|泰國政府機關|Kalasin Provincial Administration Office
+ที่ทำการปกครองจังหวัดกำแพงเพชร|org|甘烹碧府 省行政辦公室|泰國政府機關|Kamphaeng Phet Provincial Administration Office
+ที่ทำการปกครองจังหวัดขอนแก่น|org|孔敬府 省行政辦公室|泰國政府機關|Khon Kaen Provincial Administration Office
+ที่ทำการปกครองจังหวัดจันทบุรี|org|莊他武裡府 省行政辦公室|泰國政府機關|Chanthaburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดฉะเชิงเทรา|org|差春騷府 省行政辦公室|泰國政府機關|Chachoengsao Provincial Administration Office
+ที่ทำการปกครองจังหวัดชลบุรี|org|春武里府 省行政辦公室|泰國政府機關|Chon Buri Provincial Administration Office
+ที่ทำการปกครองจังหวัดชัยนาท|org|猜納府 省行政辦公室|泰國政府機關|Chai Nat Provincial Administration Office
+ที่ทำการปกครองจังหวัดชัยภูมิ|org|猜也蓬府 省行政辦公室|泰國政府機關|Chaiyaphum Provincial Administration Office
+ที่ทำการปกครองจังหวัดชุมพร|org|春蓬府 省行政辦公室|泰國政府機關|Chumphon Provincial Administration Office
+ที่ทำการปกครองจังหวัดตรัง|org|董里府 省行政辦公室|泰國政府機關|Trang Provincial Administration Office
+ที่ทำการปกครองจังหวัดตราด|org|達叻府 省行政辦公室|泰國政府機關|Trat Provincial Administration Office
+ที่ทำการปกครองจังหวัดตาก|org|達府 省行政辦公室|泰國政府機關|Tak Provincial Administration Office
+ที่ทำการปกครองจังหวัดนครนายก|org|那空那育府 省行政辦公室|泰國政府機關|Nakhon Nayok Provincial Administration Office
+ที่ทำการปกครองจังหวัดนครปฐม|org|佛統府 省行政辦公室|泰國政府機關|Nakhon Pathom Provincial Administration Office
+ที่ทำการปกครองจังหวัดนครพนม|org|那空拍儂府 省行政辦公室|泰國政府機關|Nakhon Phanom Provincial Administration Office
+ที่ทำการปกครองจังหวัดนครราชสีมา|org|那空叻差是瑪府 省行政辦公室|泰國政府機關|Nakhon Ratchasima Provincial Administration Office
+ที่ทำการปกครองจังหวัดนครศรีธรรมราช|org|那空是貪瑪叻府 省行政辦公室|泰國政府機關|Nakhon Si Thammarat Provincial Administration Office
+ที่ทำการปกครองจังหวัดนครสวรรค์|org|那空沙旺府 省行政辦公室|泰國政府機關|Nakhon Sawan Provincial Administration Office
+ที่ทำการปกครองจังหวัดนนทบุรี|org|暖武裡府 省行政辦公室|泰國政府機關|Nonthaburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดนราธิวาส|org|那拉提瓦府 省行政辦公室|泰國政府機關|Narathiwat Provincial Administration Office
+ที่ทำการปกครองจังหวัดน่าน|org|難府 省行政辦公室|泰國政府機關|Nan Provincial Administration Office
+ที่ทำการปกครองจังหวัดบึงกาฬ|org|汶幹府 省行政辦公室|泰國政府機關|Bueng Kan Provincial Administration Office
+ที่ทำการปกครองจังหวัดบุรีรัมย์|org|武裡南府 省行政辦公室|泰國政府機關|Buri Ram Provincial Administration Office
+ที่ทำการปกครองจังหวัดปทุมธานี|org|巴吞他尼府 省行政辦公室|泰國政府機關|Pathum Thani Provincial Administration Office
+ที่ทำการปกครองจังหวัดประจวบคีรีขันธ์|org|巴蜀府 省行政辦公室|泰國政府機關|Prachuap Khiri Khan Provincial Administration Office
+ที่ทำการปกครองจังหวัดปราจีนบุรี|org|巴真府 省行政辦公室|泰國政府機關|Prachin Buri Provincial Administration Office
+ที่ทำการปกครองจังหวัดปัตตานี|org|北大年府 省行政辦公室|泰國政府機關|Pattani Provincial Administration Office
+ที่ทำการปกครองจังหวัดพระนครศรีอยุธยา|org|大城府 省行政辦公室|泰國政府機關|Phra Nakhon Si Ayutthaya Provincial Administration Office
+ที่ทำการปกครองจังหวัดพะเยา|org|帕堯府 省行政辦公室|泰國政府機關|Phayao Provincial Administration Office
+ที่ทำการปกครองจังหวัดพังงา|org|攀牙府 省行政辦公室|泰國政府機關|Phang Nga Provincial Administration Office
+ที่ทำการปกครองจังหวัดพัทลุง|org|博他侖府 省行政辦公室|泰國政府機關|Phatthalung Provincial Administration Office
+ที่ทำการปกครองจังหวัดพิจิตร|org|披集府 省行政辦公室|泰國政府機關|Phichit Provincial Administration Office
+ที่ทำการปกครองจังหวัดพิษณุโลก|org|彭世洛府 省行政辦公室|泰國政府機關|Phitsanulok Provincial Administration Office
+ที่ทำการปกครองจังหวัดภูเก็ต|org|普吉府 省行政辦公室|泰國政府機關|Phuket Provincial Administration Office
+ที่ทำการปกครองจังหวัดมหาสารคาม|org|馬哈沙拉堪府 省行政辦公室|泰國政府機關|Maha Sarakham Provincial Administration Office
+ที่ทำการปกครองจังหวัดมุกดาหาร|org|穆達漢府 省行政辦公室|泰國政府機關|Mukdahan Provincial Administration Office
+ที่ทำการปกครองจังหวัดยะลา|org|也拉府 省行政辦公室|泰國政府機關|Yala Provincial Administration Office
+ที่ทำการปกครองจังหวัดยโสธร|org|益梭通府 省行政辦公室|泰國政府機關|Yasothon Provincial Administration Office
+ที่ทำการปกครองจังหวัดระนอง|org|拉廊府 省行政辦公室|泰國政府機關|Ranong Provincial Administration Office
+ที่ทำการปกครองจังหวัดระยอง|org|羅勇府 省行政辦公室|泰國政府機關|Rayong Provincial Administration Office
+ที่ทำการปกครองจังหวัดราชบุรี|org|叻武裡府 省行政辦公室|泰國政府機關|Ratchaburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดร้อยเอ็ด|org|黎逸府 省行政辦公室|泰國政府機關|Roi Et Provincial Administration Office
+ที่ทำการปกครองจังหวัดลพบุรี|org|華富里府 省行政辦公室|泰國政府機關|Lopburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดลำปาง|org|南邦府 省行政辦公室|泰國政府機關|Lampang Provincial Administration Office
+ที่ทำการปกครองจังหวัดลำพูน|org|南奔府 省行政辦公室|泰國政府機關|Lamphun Provincial Administration Office
+ที่ทำการปกครองจังหวัดศรีสะเกษ|org|四色菊府 省行政辦公室|泰國政府機關|Si Sa Ket Provincial Administration Office
+ที่ทำการปกครองจังหวัดสกลนคร|org|沙功那空府 省行政辦公室|泰國政府機關|Sakon Nakhon Provincial Administration Office
+ที่ทำการปกครองจังหวัดสงขลา|org|宋卡府 省行政辦公室|泰國政府機關|Songkhla Provincial Administration Office
+ที่ทำการปกครองจังหวัดสตูล|org|沙敦府 省行政辦公室|泰國政府機關|Satun Provincial Administration Office
+ที่ทำการปกครองจังหวัดสมุทรปราการ|org|沙沒巴幹府 省行政辦公室|泰國政府機關|Samut Prakan Provincial Administration Office
+ที่ทำการปกครองจังหวัดสมุทรสงคราม|org|沙沒頌堪府 省行政辦公室|泰國政府機關|Samut Songkhram Provincial Administration Office
+ที่ทำการปกครองจังหวัดสมุทรสาคร|org|沙沒沙空府 省行政辦公室|泰國政府機關|Samut Sakhon Provincial Administration Office
+ที่ทำการปกครองจังหวัดสระบุรี|org|沙拉武裡府 省行政辦公室|泰國政府機關|Saraburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดสระแก้ว|org|沙繳府 省行政辦公室|泰國政府機關|Sa Kaeo Provincial Administration Office
+ที่ทำการปกครองจังหวัดสิงห์บุรี|org|信武裡府 省行政辦公室|泰國政府機關|Sing Buri Provincial Administration Office
+ที่ทำการปกครองจังหวัดสุพรรณบุรี|org|素攀府 省行政辦公室|泰國政府機關|Suphan Buri Provincial Administration Office
+ที่ทำการปกครองจังหวัดสุราษฎร์ธานี|org|素叻他尼府 省行政辦公室|泰國政府機關|Surat Thani Provincial Administration Office
+ที่ทำการปกครองจังหวัดสุรินทร์|org|素林府 省行政辦公室|泰國政府機關|Surin Provincial Administration Office
+ที่ทำการปกครองจังหวัดสุโขทัย|org|素可泰府 省行政辦公室|泰國政府機關|Sukhothai Provincial Administration Office
+ที่ทำการปกครองจังหวัดหนองคาย|org|廊開府 省行政辦公室|泰國政府機關|Nong Khai Provincial Administration Office
+ที่ทำการปกครองจังหวัดหนองบัวลำภู|org|農磨蘭普府 省行政辦公室|泰國政府機關|Nong Bua Lamphu Provincial Administration Office
+ที่ทำการปกครองจังหวัดอำนาจเจริญ|org|安納乍倫府 省行政辦公室|泰國政府機關|Amnat Charoen Provincial Administration Office
+ที่ทำการปกครองจังหวัดอุดรธานี|org|烏隆府 省行政辦公室|泰國政府機關|Udon Thani Provincial Administration Office
+ที่ทำการปกครองจังหวัดอุตรดิตถ์|org|程逸府 省行政辦公室|泰國政府機關|Uttaradit Provincial Administration Office
+ที่ทำการปกครองจังหวัดอุทัยธานี|org|烏泰他尼府 省行政辦公室|泰國政府機關|Uthai Thani Provincial Administration Office
+ที่ทำการปกครองจังหวัดอุบลราชธานี|org|烏汶府 省行政辦公室|泰國政府機關|Ubon Ratchathani Provincial Administration Office
+ที่ทำการปกครองจังหวัดอ่างทอง|org|紅統府 省行政辦公室|泰國政府機關|Ang Thong Provincial Administration Office
+ที่ทำการปกครองจังหวัดเชียงราย|org|清萊府 省行政辦公室|泰國政府機關|Chiang Rai Provincial Administration Office
+ที่ทำการปกครองจังหวัดเชียงใหม่|org|清邁府 省行政辦公室|泰國政府機關|Chiang Mai Provincial Administration Office
+ที่ทำการปกครองจังหวัดเพชรบุรี|org|碧武裡府 省行政辦公室|泰國政府機關|Phetchaburi Provincial Administration Office
+ที่ทำการปกครองจังหวัดเพชรบูรณ์|org|碧差汶府 省行政辦公室|泰國政府機關|Phetchabun Provincial Administration Office
+ที่ทำการปกครองจังหวัดเลย|org|黎府 省行政辦公室|泰國政府機關|Loei Provincial Administration Office
+ที่ทำการปกครองจังหวัดแพร่|org|帕府 省行政辦公室|泰國政府機關|Phrae Provincial Administration Office
+ที่ทำการปกครองจังหวัดแม่ฮ่องสอน|org|夜豐頌府 省行政辦公室|泰國政府機關|Mae Hong Son Provincial Administration Office
+ที่ประชุมว่าด้วยธรรมาภิบาลด้านอินเทอร์เน็ต|org|網際網路治理論壇|國際組織|Internet Governance Forum
+ที่ประชุมแห่งกรุงเฮกว่าด้วยกฎหมายระหว่างประเทศแผนกคดีบุคคล|org|海牙國際私法會議|國際組織|Hague Conference on Private International Law
+ที่ประชุมใหญ่ว่าด้วยการชั่งตวงวัด|org|國際度量衡大會|國際組織|General Conference on Weights and Measure
+ธนาคารเพื่อการชำระบัญชีระหว่างประเทศ|org|國際結算銀行|國際組織|Bank for International Settlements
+ธนาคารแห่งประเทศไทย|org|泰國銀行|泰國政府機關|Bank of Thailand
+ธปท.|org|泰國銀行|泰國政府機關|Bank of Thailand
+นครบรัสเซลส์|place|布魯塞爾|首都|Brussels
+นครพิงค์|place|清邁府|泰國的府|Chiang Mai
+นครรัฐวาติกัน|place|梵蒂岡|國家|Vatican City
+นครราช|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+นครราชสีห์มา|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+นครศรี|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+นครเชียงใหม่|place|清邁府|泰國的府|Chiang Mai
+นครโตเกียว|place|東京市|首都|Tokyo City
+นตท.|org|泰國軍官預備學校|泰國大學|Armed Forces Academies Preparatory School
+นนทบุรีศรีมหาสมุทร|place|暖武里府|泰國的府|Nonthaburi
+นนทบุรีศรีมหาอุทยาน|place|暖武里府|泰國的府|Nonthaburi
+นนทบุรีศรีเกษตราราม|place|暖武里府|泰國的府|Nonthaburi
+นพบุรีศรีนครพิงค์เชียงใหม่|place|清邁府|泰國的府|Chiang Mai
+นอร์ก|place|挪威|國家|Norway
+นอร์เทิร์นไซปรัส|place|北賽普勒斯土耳其共和國|國家|Northern Cyprus
+นอเว|place|挪威|國家|Norway
+นักเรียนนายร้อย|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+นักเรียนเตรียมทหาร|org|泰國軍官預備學校|泰國大學|Armed Forces Academies Preparatory School
+นางาโนะ|place|長野市|首都|Nagano
+นาระ|place|奈良市|首都|Nara
+นาฮะ|place|那霸市|首都|Naha
+นิปปง|place|日本|國家|Japan
+นิปปอน|place|日本|國家|Japan
+นิฮง|place|日本|國家|Japan
+นีงาตะ|place|新潟市|首都|Niigata
+นูซันตารา|place|努山塔拉|首都|Nusantara
+บก.รน|org|泰國皇家水警|泰國政府機關|Royal Thai Marine Police Division
+บช.ตชด.|org|泰國邊境巡邏警察|泰國政府機關|Border Patrol Police
+บราซิเลีย|place|巴西利亞|首都|Brasília
+บริกส์|org|金磚國家|國際組織|BRICS
+บริติชเคาน์ซิล|org|英國文化協會|國際組織|British Council
+บริสเบน|place|布里斯本|首都|Brisbane
+บลูมฟอนเทน|place|布隆方丹|首都|Bloemfontein
+บอยซี|place|波夕|首都|Boise
+บอสเนีย-เฮอร์เซโกวีนา|place|波士尼亞與赫塞哥維納|國家|Bosnia and Herzegovina
+บังคาลอร์|place|邦加羅爾|首都|Bengaluru
+บันไทยสมอ|place|素叻府|泰國的府|Surat Thani
+บางเจ้าพระยา|place|沙沒巴干府|泰國的府|Samut Prakan
+บาจาวา|place|巴賈瓦|首都|Bajawa
+บาสแตร์|place|巴斯特爾|首都|Basseterre
+บิมสเทค|org|環孟加拉灣多領域技術暨經濟合作倡議|國際組織|Bay of Bengal Initiative for Multi-Sectoral Technical and Ec
+บุลแกเรีย|place|保加利亞|國家|Bulgaria
+บูกิต|place|普吉府|泰國的府|Phuket
+บูทาเลจา|place|荷屬聖馬丁|國家|Sint Maarten
+บ้านดอน|place|素叻府|泰國的府|Surat Thani
+บ้านตลาดขวัญ|place|暖武里府|泰國的府|Nonthaburi
+บ้านสมเด็จเจ้าพระยา|org|班頌德昭帕亞皇家大學|泰國大學|Bansomdejchaopraya Rajabhat University
+ประชาคมการเมืองยุโรป|org|歐洲政治共同體|國際組織|European Political Community
+ประชาคมแอนดีส|org|安第斯共同體|國際組織|Andean Community
+ประชาคมแอฟริกาตะวันออก|org|東非共同體|國際組織|East African Community
+ประเทศกรีซ|place|希臘|國家|Greece
+ประเทศกรีเนดา|place|格瑞那達|國家|Grenada
+ประเทศกัมพูชา|place|柬埔寨|國家|Cambodia
+ประเทศกัวเตมาลา|place|瓜地馬拉|國家|Guatemala
+ประเทศกาตาร์|place|卡達|國家|Qatar
+ประเทศกานา|place|迦納|國家|Ghana
+ประเทศกาบอง|place|加彭|國家|Gabon
+ประเทศกาบูเวร์ดี|place|維德角|國家|Cape Verde
+ประเทศกายอานา|place|蓋亞那|國家|Guyana
+ประเทศกินี|place|幾內亞|國家|Guinea
+ประเทศกินี-บิสเซา|place|幾內亞比索|國家|Guinea-Bissau
+ประเทศคอซอวอ|place|科索沃|國家|Kosovo
+ประเทศคอสตาริกา|place|哥斯大黎加|國家|Costa Rica
+ประเทศคอโมโรส|place|葛摩|國家|Comoros
+ประเทศคาซัคสถาน|place|哈薩克|國家|Kazakhstan
+ประเทศคิริบาส|place|吉里巴斯|國家|Kiribati
+ประเทศคิวบา|place|古巴|國家|Cuba
+ประเทศคีร์กีซสถาน|place|吉爾吉斯|國家|Kyrgyzstan
+ประเทศคูเวต|place|科威特|國家|Kuwait
+ประเทศจอร์เจีย|place|喬治亞|國家|Georgia
+ประเทศจอร์แดน|place|約旦|國家|Jordan
+ประเทศจาเมกา|place|牙買加|國家|Jamaica
+ประเทศจิบูตี|place|吉布地|國家|Djibouti
+ประเทศจีน|place|中華人民共和國|國家|People's Republic of China
+ประเทศชาด|place|查德|國家|Chad
+ประเทศชิลี|place|智利|國家|Chile
+ประเทศซานมารีโน|place|聖馬利諾|國家|San Marino
+ประเทศซามัว|place|薩摩亞|國家|Samoa
+ประเทศซาอุดีอาระเบีย|place|沙烏地阿拉伯|國家|Saudi Arabia
+ประเทศซิมบับเว|place|辛巴威|國家|Zimbabwe
+ประเทศซีเรีย|place|敘利亞|國家|Syria
+ประเทศซูดาน|place|蘇丹|國家|Sudan
+ประเทศซูรินาม|place|蘇利南|國家|Suriname
+ประเทศซูรินาเม|place|蘇利南|國家|Suriname
+ประเทศญี่ปุ่น|place|日本|國家|Japan
+ประเทศดอมินีกา|place|多米尼克|國家|Dominica
+ประเทศตรินิแดดและโตเบโก|place|千里達及托巴哥|國家|Trinidad and Tobago
+ประเทศตองกา|place|東加|國家|Tonga
+ประเทศตองงา|place|東加|國家|Tonga
+ประเทศติมอร์-เลสเต|place|東帝汶|國家|Timor-Leste
+ประเทศตุรกี|place|土耳其|國家|Turkey
+ประเทศตูนิเซีย|place|突尼西亞|國家|Tunisia
+ประเทศตูวาลู|place|吐瓦魯|國家|Tuvalu
+ประเทศทาจิกิสถาน|place|塔吉克|國家|Tajikistan
+ประเทศนอร์ทมาซิโดเนีย|place|北馬其頓|國家|North Macedonia
+ประเทศนอร์เวย์|place|挪威|國家|Norway
+ประเทศนามิเบีย|place|納米比亞|國家|Namibia
+ประเทศนาอูรู|place|諾魯|國家|Nauru
+ประเทศนิการากัว|place|尼加拉瓜|國家|Nicaragua
+ประเทศนิวซีแลนด์|place|紐西蘭|國家|New Zealand
+ประเทศนีวเว|place|紐埃|國家|Niue
+ประเทศบราซิล|place|巴西|國家|Brazil
+ประเทศบรูไน|place|汶萊|國家|Brunei
+ประเทศบอตสวานา|place|波札那|國家|Botswana
+ประเทศบอสเนียและเฮอร์เซโกวีนา|place|波士尼亞與赫塞哥維納|國家|Bosnia and Herzegovina
+ประเทศบังกลาเทศ|place|孟加拉|國家|Bangladesh
+ประเทศบัลกาเรีย|place|保加利亞|國家|Bulgaria
+ประเทศบัลเกเรีย|place|保加利亞|國家|Bulgaria
+ประเทศบัลแกเรีย|place|保加利亞|國家|Bulgaria
+ประเทศบาร์เบโดส|place|巴貝多|國家|Barbados
+ประเทศบาห์เรน|place|巴林|國家|Bahrain
+ประเทศบาฮามาส|place|巴哈馬|國家|The Bahamas
+ประเทศบุรุนดี|place|蒲隆地|國家|Burundi
+ประเทศบูร์กินาฟาโซ|place|布吉納法索|國家|Burkina Faso
+ประเทศปากีสถาน|place|巴基斯坦|國家|Pakistan
+ประเทศปานามา|place|巴拿馬|國家|Panama
+ประเทศปาปัวนิวกินี|place|巴布亞紐幾內亞|國家|Papua New Guinea
+ประเทศปารากวัย|place|巴拉圭|國家|Paraguay
+ประเทศปาเลสไตน์|place|巴勒斯坦|國家|Palestine
+ประเทศปาเลา|place|帛琉|國家|Palau
+ประเทศฝรั่งเศส|place|法國|國家|France
+ประเทศพม่า|place|緬甸|國家|Myanmar
+ประเทศฟิจิ|place|斐濟|國家|Fiji
+ประเทศฟินแลนด์|place|芬蘭|國家|Finland
+ประเทศฟิลิปปินส์|place|菲律賓|國家|Philippines
+ประเทศฟีจี|place|斐濟|國家|Fiji
+ประเทศภูฏาน|place|不丹|國家|Bhutan
+ประเทศมองโกเลีย|place|蒙古國|國家|Mongolia
+ประเทศมอนเตเนโกร|place|蒙特內哥羅|國家|Montenegro
+ประเทศมอริเชียส|place|模里西斯|國家|Mauritius
+ประเทศมอริเตเนีย|place|茅利塔尼亞|國家|Mauritania
+ประเทศมอลตา|place|馬爾他|國家|Malta
+ประเทศมอลโดวา|place|摩爾多瓦|國家|Moldova
+ประเทศมัลดีฟส์|place|馬爾地夫|國家|Maldives
+ประเทศมาซิโดเนีย|place|北馬其頓|國家|North Macedonia
+ประเทศมาซิโดเนียเหนือ|place|北馬其頓|國家|North Macedonia
+ประเทศมาดากัสการ์|place|馬達加斯加|國家|Madagascar
+ประเทศมาลาวี|place|馬拉威|國家|Malawi
+ประเทศมาลี|place|馬利|國家|Mali
+ประเทศมาเลเซีย|place|馬來西亞|國家|Malaysia
+ประเทศยูกันดา|place|烏干達|國家|Uganda
+ประเทศยูเครน|place|烏克蘭|國家|Ukraine
+ประเทศรวันดา|place|盧安達|國家|Rwanda
+ประเทศรัสเซีย|place|俄羅斯|國家|Russia
+ประเทศลักเซมเบิร์ก|place|盧森堡|國家|Luxembourg
+ประเทศลัตเวีย|place|拉脫維亞|國家|Latvia
+ประเทศลาว|place|寮國|國家|Laos
+ประเทศลิกเตนสไตน์|place|列支敦斯登|國家|Liechtenstein
+ประเทศลิทัวเนีย|place|立陶宛|國家|Lithuania
+ประเทศลิธัวเนีย|place|立陶宛|國家|Lithuania
+ประเทศลิเบีย|place|利比亞|國家|Libya
+ประเทศวานูวาตู|place|萬那杜|國家|Vanuatu
+ประเทศศรีลังกา|place|斯里蘭卡|國家|Sri Lanka
+ประเทศสยาม|place|泰國|國家|Thailand
+ประเทศสวิตเซอร์แลนด์|place|瑞士|國家|Switzerland
+ประเทศสวีเดน|place|瑞典|國家|Sweden
+ประเทศสาธารณรัฐไอร์แลนด์|place|愛爾蘭|國家|Ireland
+ประเทศสิงคโปร์|place|新加坡|國家|Singapore
+ประเทศสเปน|place|西班牙|國家|Spain
+ประเทศสโลวาเกีย|place|斯洛伐克|國家|Slovakia
+ประเทศสโลวีเนีย|place|斯洛維尼亞|國家|Slovenia
+ประเทศออสเตรีย|place|奧地利|國家|Austria
+ประเทศออสเตรเลีย|place|澳洲|國家|Australia
+ประเทศอันดอร์รา|place|安道爾|國家|Andorra
+ประเทศอัฟกานิสถาน|place|阿富汗|國家|Afghanistan
+ประเทศอาร์มีเนีย|place|亞美尼亞|國家|Armenia
+ประเทศอาร์เจนตินา|place|阿根廷|國家|Argentina
+ประเทศอาเซอร์ไบจาน|place|亞塞拜然|國家|Azerbaijan
+ประเทศอิตาลี|place|義大利|國家|Italy
+ประเทศอินเดีย|place|印度|國家|India
+ประเทศอินโดนีเซีย|place|印度尼西亞|國家|Indonesia
+ประเทศอิรัก|place|伊拉克|國家|Iraq
+ประเทศอิสราเอล|place|以色列|國家|Israel
+ประเทศอิหร่าน|place|伊朗|國家|Iran
+ประเทศอิเควทอเรียลกินี|place|赤道幾內亞|國家|Equatorial Guinea
+ประเทศอียิปต์|place|埃及|國家|Egypt
+ประเทศอุซเบกิสถาน|place|烏茲別克|國家|Uzbekistan
+ประเทศอุรุกวัย|place|烏拉圭|國家|Uruguay
+ประเทศฮอนดูรัส|place|宏都拉斯|國家|Honduras
+ประเทศฮอลันดา|place|荷蘭|國家|Netherlands
+ประเทศฮอลแลนด์|place|荷蘭|國家|Netherlands
+ประเทศฮังการี|place|匈牙利|國家|Hungary
+ประเทศเกรเนดา|place|格瑞那達|國家|Grenada
+ประเทศเกาหลีเหนือ|place|朝鮮民主主義人民共和國|國家|North Korea
+ประเทศเกาหลีใต้|place|大韓民國|國家|South Korea
+ประเทศเขมร|place|柬埔寨|國家|Cambodia
+ประเทศเคนยา|place|肯亞|國家|Kenya
+ประเทศเคปเวิร์ด|place|維德角|國家|Cape Verde
+ประเทศเช็กเกีย|place|捷克|國家|Czech Republic
+ประเทศเซนต์คิตส์และเนวิส|place|聖克里斯多福及尼維斯|國家|Saint Kitts and Nevis
+ประเทศเซนต์ลูเชีย|place|聖露西亞|國家|Saint Lucia
+ประเทศเซนต์วินเซนต์และเกรนาดีนส์|place|聖文森及格瑞那丁|國家|Saint Vincent and the Grenadines
+ประเทศเซอร์เบีย|place|塞爾維亞|國家|Serbia
+ประเทศเซาตูแมอีปริงซีป|place|聖多美普林西比|國家|São Tomé and Príncipe
+ประเทศเซาท์ซูดาน|place|南蘇丹|國家|South Sudan
+ประเทศเซียร์ราลีโอน|place|獅子山|國家|Sierra Leone
+ประเทศเซเชลส์|place|塞席爾|國家|Seychelles
+ประเทศเซเนกัล|place|塞內加爾|國家|Senegal
+ประเทศเดนมาร์ก|place|丹麥|國家|Denmark
+ประเทศเติร์กเมนิสถาน|place|土庫曼|國家|Turkmenistan
+ประเทศเนปาล|place|尼泊爾|國家|Nepal
+ประเทศเนาเอโร|place|諾魯|國家|Nauru
+ประเทศเนเธอร์แลนด์|place|荷蘭|國家|Netherlands
+ประเทศเบนิน|place|貝南|國家|Benin
+ประเทศเบลารุส|place|白俄羅斯|國家|Belarus
+ประเทศเบลีซ|place|貝里斯|國家|Belize
+ประเทศเบลเยียม|place|比利時|國家|Belgium
+ประเทศเบลเยี่ยม|place|比利時|國家|Belgium
+ประเทศเปรู|place|秘魯|國家|Peru
+ประเทศเมียนมา|place|緬甸|國家|Myanmar
+ประเทศเม็กซิโก|place|墨西哥|國家|Mexico
+ประเทศเยอรมนี|place|德國|國家|Germany
+ประเทศเยเมน|place|葉門|國家|Yemen
+ประเทศเลบานอน|place|黎巴嫩|國家|Lebanon
+ประเทศเลโซโท|place|賴索托|國家|Lesotho
+ประเทศเวียดนาม|place|越南|國家|Vietnam
+ประเทศเวเนซุเอลา|place|委內瑞拉|國家|Venezuela
+ประเทศเอกวาดอร์|place|厄瓜多|國家|Ecuador
+ประเทศเอธิโอเปีย|place|衣索比亞|國家|Ethiopia
+ประเทศเอริเทรีย|place|厄利垂亞|國家|Eritrea
+ประเทศเอลซัลวาดอร์|place|薩爾瓦多|國家|El Salvador
+ประเทศเอสวาตีนี|place|史瓦帝尼|國家|Eswatini
+ประเทศเอสโตเนีย|place|愛沙尼亞|國家|Estonia
+ประเทศเฮติ|place|海地|國家|Haiti
+ประเทศแกมเบีย|place|甘比亞|國家|The Gambia
+ประเทศแคนาดา|place|加拿大|國家|Canada
+ประเทศแคเมอรูน|place|喀麥隆|國家|Cameroon
+ประเทศแซมเบีย|place|尚比亞|國家|Zambia
+ประเทศแทนซาเนีย|place|坦尚尼亞|國家|Tanzania
+ประเทศแองโกลา|place|安哥拉|國家|Angola
+ประเทศแอนทีกาและบาร์บิวดา|place|安地卡及巴布達|國家|Antigua and Barbuda
+ประเทศแอฟริกาใต้|place|南非|國家|South Africa
+ประเทศแอลจีเรีย|place|阿爾及利亞|國家|Algeria
+ประเทศแอลเบเนีย|place|阿爾巴尼亞|國家|Albania
+ประเทศโกตดิวัวร์|place|象牙海岸|國家|Ivory Coast
+ประเทศโครเอเชีย|place|克羅埃西亞|國家|Croatia
+ประเทศโคลอมเบีย|place|哥倫比亞|國家|Colombia
+ประเทศโซมาลิแลนด์|place|索馬利蘭|國家|Somaliland
+ประเทศโซมาเลีย|place|索馬利亞|國家|Somalia
+ประเทศโตโก|place|多哥|國家|Togo
+ประเทศโบลิเวีย|place|玻利維亞|國家|Bolivia
+ประเทศโปรตุเกส|place|葡萄牙|國家|Portugal
+ประเทศโปแลนด์|place|波蘭|國家|Poland
+ประเทศโมซัมบิก|place|莫三比克|國家|Mozambique
+ประเทศโมนาโก|place|摩納哥|國家|Monaco
+ประเทศโมร็อกโก|place|摩洛哥|國家|Morocco
+ประเทศโรดีเซีย|place|辛巴威|國家|Zimbabwe
+ประเทศโรมาเนีย|place|羅馬尼亞|國家|Romania
+ประเทศโอมาน|place|阿曼|國家|Oman
+ประเทศไซปรัส|place|賽普勒斯|國家|Cyprus
+ประเทศไต้หวัน|place|中華民國|國家|Taiwan
+ประเทศไทย|place|泰國|國家|Thailand
+ประเทศไนจีเรีย|place|奈及利亞|國家|Nigeria
+ประเทศไนเจอร์|place|尼日|國家|Niger
+ประเทศไมโครนีเชีย|place|密克羅尼西亞聯邦|國家|Federated States of Micronesia
+ประเทศไลบีเรีย|place|賴比瑞亞|國家|Liberia
+ประเทศไอซ์แลนด์|place|冰島|國家|Iceland
+ประเทศไอร์แลนด์|place|愛爾蘭|國家|Ireland
+ปะเทดลาว|place|寮國|國家|Laos
+ปัฏนา|place|巴特那|首都|Patna
+ปากลัด|place|沙沒巴干府|泰國的府|Samut Prakan
+ปาตานี|place|北大年府|泰國的府|Pattani
+ปาร์ดูบิตแซ|place|帕爾杜比采|首都|Pardubice
+ปูตราจายา|place|布城|首都|Putrajaya
+ปูร์โวเคอร์โต|place|普禾加多|首都|Purwokerto
+ผู้นำการสร้างมืออาชีพ|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+พระจอมเกล้าธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+พระจอมเกล้าบางมด|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+พระจอมเกล้าพระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+พระจอมเกล้าเจ้าคุณทหารลาดกระบัง|org|先皇技術學院|泰國大學|King Mongkut's Institute of Technology Ladkrabang
+พระพิษณุโลกสองแคว|place|彭世洛府|泰國的府|Phitsanulok
+พระราชอาณาจักรกัมพูชา|place|柬埔寨|國家|Cambodia
+พรินซิพาลิตีอันดอร์รา|place|安道爾|國家|Andorra
+พริบพรี|place|佛丕府|泰國的府|Phetchaburi
+พลนคร|place|帕府|泰國的府|Phrae
+พอร์ตวิลา|place|維拉港|首都|Port Vila
+พันธมิตรโบลิบาร์เพื่อประชาชนอเมริกาของเรา|org|美洲玻利瓦聯盟|國際組織|ALBA
+พิศณุโลก|place|彭世洛府|泰國的府|Phitsanulok
+พ็อทซ์ดัม|place|波茨坦|首都|Potsdam
+ฟอร์ลิ|place|弗利|首都|Forlì
+ฟอร์โมซา|place|中華民國|國家|Taiwan
+ฟูกูฮาระเกียว|place|福原京|首都|Fukuhara-kyō
+ภารตวรรษ|place|印度|國家|India
+ภารตะ|place|印度|國家|India
+ภารัต|place|印度|國家|India
+ภูเก็จ|place|普吉府|泰國的府|Phuket
+ม.ช.|org|清邁大學|泰國大學|Chiang Mai University
+ม.ทักษิณ|org|他信大學|泰國大學|Thaksin University
+ม.ธ.ก.|org|泰國國立法政大學|泰國大學|Thammasat University
+ม.ธรรมศาสตร์|org|泰國國立法政大學|泰國大學|Thammasat University
+ม.ธุรกิจบัณฑิต|org|博仁大學|泰國大學|Dhurakij Pundit University
+ม.ธุรกิจบัณฑิตย์|org|博仁大學|泰國大學|Dhurakij Pundit University
+ม.นครพนม|org|那空帕儂大學|泰國大學|Nakhon Phanom University
+ม.บูรพา|org|東方大學|泰國大學|Burapha University
+ม.มหิดล|org|瑪希敦大學|泰國大學|Mahidol University
+ม.ราม|org|藍康恆大學|泰國大學|Ramkhamhaeng University
+ม.ศิลปากร|org|泰國藝術大學|泰國大學|Silpakorn University
+ม.สงขลา|org|宋卡王子大學|泰國大學|Prince of Songkla University
+ม.สุโขทัยธรรมาธิราช|org|素可泰開放大學|泰國大學|Sukhothai Thammathirat Open University
+ม.อ.|org|宋卡王子大學|泰國大學|Prince of Songkla University
+ม.อัสสัมชัญ|org|易三倉大學|泰國大學|Assumption University
+ม.อุบลราชธานี|org|烏汶叻差他尼大學|泰國大學|Ubon Ratchathani University
+ม.เกษตร|org|泰國農業大學|泰國大學|Kasetsart University
+ม.เกษมบัณฑิต|org|伯樂大學|泰國大學|Kasem Bundit University
+ม.เชียงใหม่|org|清邁大學|泰國大學|Chiang Mai University
+ม.เทคโนโลยีพระจอมเกล้าธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+ม.เทคโนโลยีพระจอมเกล้าพระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+ม.เทคโนโลยีราชมงคลรัตนโกสินทร์ ศาลายา|org|蘭塔納功欣皇家理工大學|泰國大學|Rajamangala University of Technology Rattanakosin
+ม.เทคโนโลยีราชมงคลล้านนา|org|蘭納皇家理工大學|泰國大學|Rajamangala University of Technology Lanna
+ม.แม่โจ้|org|梅州大學|泰國大學|Maejo University
+มกค.|org|泰國商會大學|泰國大學|University of the Thai Chamber of Commerce
+มกท.|org|曼谷大學|泰國大學|Bangkok University
+มจธ.|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+มจพ.|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+มจร.|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มณิครัม|place|普吉府|泰國的府|Phuket
+มทร.พระนคร|org|帕納空皇家理工大學|泰國大學|Rajamangala University of Technology Phra Nakhon
+มทร.สุวรรณภูมิ|org|素萬那蓬皇家理工大學|泰國大學|Rajamangala University of Technology Suvarnabhumi
+มทร.อีสาน|org|東北皇家理工大學|泰國大學|Rajamangala University of Technology Isan
+มนิกกิมัม|place|普吉府|泰國的府|Phuket
+มบส.|org|班頌德昭帕亞皇家大學|泰國大學|Bansomdejchaopraya Rajabhat University
+มฟล.|org|皇太后大學|泰國大學|Mae Fah Luang University
+มรธ.|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+มรภ.กาฬสินธุ์|org|加拉信皇家大學|泰國大學|Kalasin Rajabhat University
+มรภ.ชัยภูมิ|org|猜也奔皇家大學|泰國大學|Chaiyaphum Rajabhat University
+มรภ.บุรีรัมย์|org|武里南皇家大學|泰國大學|Buriram Rajabhat University
+มรภ.ภูเก็ต|org|普吉皇家大學|泰國大學|Phuket Rajabhat University
+มรภ.ร้อยเอ็ด|org|黎逸皇家大學|泰國大學|Roi Et Rajabhat University
+มรภ.สวนดุสิต|org|川登喜皇家大學|泰國大學|Suan Dusit University
+มรภ.สุราษฎร์ธานี|org|素叻他尼皇家大學|泰國大學|Suratthani Rajabhat University
+มรภ.สุรินทร์|org|素林皇家大學|泰國大學|Surindra Rajabhat University
+มรภ.อุบลราชธานี|org|烏汶叻差他尼皇家大學|泰國大學|Ubon Ratchathani Rajabhat University
+มรภ.เลย|org|黎府皇家大學|泰國大學|Loei Rajabhat University
+มศก.|org|泰國藝術大學|泰國大學|Silpakorn University
+มสธ.|org|素可泰開放大學|泰國大學|Sukhothai Thammathirat Open University
+มหาจุฬา|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มหาจุฬาลงกรณราชวิทยาลัย|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มหาจุฬาลงกรณ์ราชวิทยาลัย|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มหามกุฏราชวิทยาลัย|org|摩訶馬古德大學|泰國大學|Mahamakut Buddhist University
+มหาวชิราวุธ|org|瑪希敦大學|泰國大學|Mahidol University
+มหาวิทยาลัยกรุงเทพ|org|曼谷大學|泰國大學|Bangkok University
+มหาวิทยาลัยกรุงเทพธนบุรี|org|曼谷吞武里大學|泰國大學|Bangkokthonburi University
+มหาวิทยาลัยกรุงเทพธนบุรี วิทยาเขตจอมทอง|org|曼谷吞武里大學|泰國大學|Bangkokthonburi University
+มหาวิทยาลัยกาฬสินธุ์|org|加拉信大學|泰國大學|Kalasin University
+มหาวิทยาลัยขอนแก่น|org|孔敬大學|泰國大學|Khon Kaen University
+มหาวิทยาลัยจุฬาลงกรณ์|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+มหาวิทยาลัยจุฬาลงกรณ์ราชวิทยาลัย|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มหาวิทยาลัยชินวัตร|org|泰國經貿大學|泰國大學|Shinawatra University
+มหาวิทยาลัยตาปี|org|塔彼學院|泰國大學|Tapee University
+มหาวิทยาลัยทักษิณ|org|他信大學|泰國大學|Thaksin University
+มหาวิทยาลัยธรรมศาสตร์|org|泰國國立法政大學|泰國大學|Thammasat University
+มหาวิทยาลัยธรรมศาสตร์และการเมือง|org|泰國國立法政大學|泰國大學|Thammasat University
+มหาวิทยาลัยธุรกิจบัณฑิต|org|博仁大學|泰國大學|Dhurakij Pundit University
+มหาวิทยาลัยธุรกิจบัณฑิตย์|org|博仁大學|泰國大學|Dhurakij Pundit University
+มหาวิทยาลัยนครพนม|org|那空帕儂大學|泰國大學|Nakhon Phanom University
+มหาวิทยาลัยนราธิวาสราชนครินทร์|org|娜拉媞瓦公主大學|泰國大學|Princess of Naradhiwas University
+มหาวิทยาลัยนอร์ท-เชียงใหม่|org|北清邁大學|泰國大學|North Chiang Mai University
+มหาวิทยาลัยนอร์ทกรุงเทพ|org|曼谷北部大學|泰國大學|North Bangkok University
+มหาวิทยาลัยนานาชาติสแตมฟอร์ด|org|斯坦福國際大學|泰國大學|Stamford International University
+มหาวิทยาลัยนานาชาติแสตมฟอร์ด|org|斯坦福國際大學|泰國大學|Stamford International University
+มหาวิทยาลัยนเรศวร|org|納黎萱大學|泰國大學|Naresuan University
+มหาวิทยาลัยนเรศวร พะเยา|org|帕堯大學|泰國大學|University of Phayao
+มหาวิทยาลัยบางมด|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+มหาวิทยาลัยบูรพา|org|東方大學|泰國大學|Burapha University
+มหาวิทยาลัยปทุมธานี|org|巴吞他尼大學|泰國大學|Pathumthani University
+มหาวิทยาลัยพะเยา|org|帕堯大學|泰國大學|University of Phayao
+มหาวิทยาลัยพายัพ|org|西北大學|泰國大學|Payap University
+มหาวิทยาลัยภาคใต้|org|宋卡王子大學|泰國大學|Prince of Songkla University
+มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มหาวิทยาลัยมหาจุฬาลงกรณ์ราชวิทยาลัย|org|瑪哈朱拉隆功佛教大學|泰國大學|Mahachulalongkornrajavidyalaya University
+มหาวิทยาลัยมหานคร|org|馬哈那空科技大學|泰國大學|Mahanakorn University of Technology
+มหาวิทยาลัยมหามกุฎราชวิทยาลัย|org|摩訶馬古德大學|泰國大學|Mahamakut Buddhist University
+มหาวิทยาลัยมหามกุฏราชวิทยาลัย|org|摩訶馬古德大學|泰國大學|Mahamakut Buddhist University
+มหาวิทยาลัยมหาสารคาม|org|瑪哈沙拉堪大學|泰國大學|Mahasarakham University
+มหาวิทยาลัยมหิดล|org|瑪希敦大學|泰國大學|Mahidol University
+มหาวิทยาลัยรังสิต|org|蘭實大學|泰國大學|Rangsit University
+มหาวิทยาลัยราชภัฎสวนสุนันทา|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+มหาวิทยาลัยราชภัฎสุราษฎร์ธานี|org|素叻他尼皇家大學|泰國大學|Suratthani Rajabhat University
+มหาวิทยาลัยราชภัฎสุรินทร์|org|素林皇家大學|泰國大學|Surindra Rajabhat University
+มหาวิทยาลัยราชภัฎเพชรบูรณ์|org|碧差汶皇家大學|泰國大學|Phetchabun Rajabhat University
+มหาวิทยาลัยราชภัฏกาญจนบุรี|org|北碧皇家大學|泰國大學|Kanchanaburi Rajabhat University
+มหาวิทยาลัยราชภัฏกาฬสินธุ์|org|加拉信皇家大學|泰國大學|Kalasin Rajabhat University
+มหาวิทยาลัยราชภัฏกำแพงเพชร|org|甘烹碧皇家大學|泰國大學|Kamphaeng Phet Rajabhat University
+มหาวิทยาลัยราชภัฏจันทรเกษม|org|佔塔拉卡什皇家大學|泰國大學|Chandrakasem Rajabhat University
+มหาวิทยาลัยราชภัฏชัยภูมิ|org|猜也奔皇家大學|泰國大學|Chaiyaphum Rajabhat University
+มหาวิทยาลัยราชภัฏธนบุรี|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+มหาวิทยาลัยราชภัฏนครปฐม|org|佛統皇家大學|泰國大學|Nakhon Pathom Rajabhat University
+มหาวิทยาลัยราชภัฏนครพนม|org|那空帕儂大學|泰國大學|Nakhon Phanom University
+มหาวิทยาลัยราชภัฏนครราชสีมา|org|呵叻皇家大學|泰國大學|Nakhon Ratchasima Rajabhat University
+มหาวิทยาลัยราชภัฏนครศรีธรรมราช|org|洛坤皇家大學|泰國大學|Nakhon Si Thammarat Rajabhat University
+มหาวิทยาลัยราชภัฏนครสวรรค์|org|那空沙旺皇家大學|泰國大學|Nakhon Sawan Rajabhat University
+มหาวิทยาลัยราชภัฏบุรีรัมย์|org|武里南皇家大學|泰國大學|Buriram Rajabhat University
+มหาวิทยาลัยราชภัฏบ้านสมเด็จเจ้าพระยา|org|班頌德昭帕亞皇家大學|泰國大學|Bansomdejchaopraya Rajabhat University
+มหาวิทยาลัยราชภัฏพระนคร|org|帕那空皇家大學|泰國大學|Phranakhon Rajabhat University
+มหาวิทยาลัยราชภัฏพระนครศรีอยุธยา|org|大城皇家大學|泰國大學|Phranakhon Si Ayutthaya Rajabhat University
+มหาวิทยาลัยราชภัฏพิบูลสงคราม|org|披汶頌堪皇家大學|泰國大學|Pibulsongkram Rajabhat University
+มหาวิทยาลัยราชภัฏภูเก็ต|org|普吉皇家大學|泰國大學|Phuket Rajabhat University
+มหาวิทยาลัยราชภัฏราชนครินทร์|org|拉差那卡琳皇家大學|泰國大學|Rajabhat Rajanagarindra University
+มหาวิทยาลัยราชภัฏรำไพพรรณี|org|蘭帕巴尼皇家大學|泰國大學|Rambhai Barni Rajabhat University
+มหาวิทยาลัยราชภัฏร้อยเอ็ด|org|黎逸皇家大學|泰國大學|Roi Et Rajabhat University
+มหาวิทยาลัยราชภัฏลำปาง|org|南邦皇家大學|泰國大學|Lampang Rajabhat University
+มหาวิทยาลัยราชภัฏวไลยอลงกรณ์|org|瓦拉雅阿隆空皇家大學|泰國大學|Valaya Alongkorn Rajabhat University
+มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์|org|瓦拉雅阿隆空皇家大學|泰國大學|Valaya Alongkorn Rajabhat University
+มหาวิทยาลัยราชภัฏศรีสะเกษ|org|四色菊皇家大學|泰國大學|Sisaket Rajabhat University
+มหาวิทยาลัยราชภัฏสกลนคร|org|沙功那空皇家大學|泰國大學|Sakon Nakhon Rajabhat University
+มหาวิทยาลัยราชภัฏสงขลา|org|宋卡皇家大學|泰國大學|Songkhla Rajabhat University
+มหาวิทยาลัยราชภัฏสวนสุนันทา|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+มหาวิทยาลัยราชภัฏสุราษฎร์ธานี|org|素叻他尼皇家大學|泰國大學|Suratthani Rajabhat University
+มหาวิทยาลัยราชภัฏสุราษฏร์ธานี|org|素叻他尼皇家大學|泰國大學|Suratthani Rajabhat University
+มหาวิทยาลัยราชภัฏสุรินทร์|org|素林皇家大學|泰國大學|Surindra Rajabhat University
+มหาวิทยาลัยราชภัฏหมู่บ้านจอมบึง|org|莊棚皇家大學|泰國大學|Muban Chombueng Rajabhat University
+มหาวิทยาลัยราชภัฏอุดรธานี|org|烏隆他尼皇家大學|泰國大學|Udon Thani Rajabhat University
+มหาวิทยาลัยราชภัฏอุตรดิตถ์|org|程逸皇家大學|泰國大學|Uttaradit Rajabhat University
+มหาวิทยาลัยราชภัฏอุตรดิตภ์|org|程逸皇家大學|泰國大學|Uttaradit Rajabhat University
+มหาวิทยาลัยราชภัฏอุบลราชธานี|org|烏汶叻差他尼皇家大學|泰國大學|Ubon Ratchathani Rajabhat University
+มหาวิทยาลัยราชภัฏเชียงราย|org|清萊皇家大學|泰國大學|Chiang Rai Rajabhat University
+มหาวิทยาลัยราชภัฏเชียงราย วิทยาเขตจอมทอง|org|清萊皇家大學|泰國大學|Chiang Rai Rajabhat University
+มหาวิทยาลัยราชภัฏเชียงใหม่|org|清邁皇家大學|泰國大學|Chiang Mai Rajabhat University
+มหาวิทยาลัยราชภัฏเพชรบุรี|org|碧武里皇家大學|泰國大學|Phetchaburi Rajabhat University
+มหาวิทยาลัยราชภัฏเพชรบูรณ์|org|碧差汶皇家大學|泰國大學|Phetchabun Rajabhat University
+มหาวิทยาลัยราชภัฏเลย|org|黎府皇家大學|泰國大學|Loei Rajabhat University
+มหาวิทยาลัยรามคำแหง|org|藍康恆大學|泰國大學|Ramkhamhaeng University
+มหาวิทยาลัยวลัยลักษณ์|org|瓦萊臘大學|泰國大學|Walailak University
+มหาวิทยาลัยวิชชาธรรมศาสตร์และการเมือง|org|泰國國立法政大學|泰國大學|Thammasat University
+มหาวิทยาลัยวิชาธรรมศาสตร์และการเมือง|org|泰國國立法政大學|泰國大學|Thammasat University
+มหาวิทยาลัยวิทยาศาสตร์และเทคโนโลยีแห่งเอเชีย|org|亞洲大學|泰國大學|Asian University
+มหาวิทยาลัยศรีนครินทรวิโรฒ|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+มหาวิทยาลัยศรีนครินทรวิโรฒ วิทยาเขตบางแสน|org|東方大學|泰國大學|Burapha University
+มหาวิทยาลัยศรีนครินทรวิโรฒ วิทยาเขตมหาสารคาม|org|瑪哈沙拉堪大學|泰國大學|Mahasarakham University
+มหาวิทยาลัยศรีนครินทรวิโรฒ สงขลา|org|他信大學|泰國大學|Thaksin University
+มหาวิทยาลัยศรีนครินทรวิโรฒ องครักษ์|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+มหาวิทยาลัยศรีนครินทร์วิโรฒ ประสานมิตร|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+มหาวิทยาลัยศรีปทุม|org|斯巴頓大學|泰國大學|Sripatum University
+มหาวิทยาลัยศิลปากร|org|泰國藝術大學|泰國大學|Silpakorn University
+มหาวิทยาลัยศิลปากร วังท่าพระ|org|泰國藝術大學|泰國大學|Silpakorn University
+มหาวิทยาลัยสงขลานครินทร์|org|宋卡王子大學|泰國大學|Prince of Songkla University
+มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่|org|宋卡王子大學|泰國大學|Prince of Songkla University
+มหาวิทยาลัยสง่าพระนคร|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+มหาวิทยาลัยสยาม|org|暹羅大學|泰國大學|Siam University
+มหาวิทยาลัยสวนดุสิต|org|川登喜皇家大學|泰國大學|Suan Dusit University
+มหาวิทยาลัยสุโขทัยธรรมาธิราช|org|素可泰開放大學|泰國大學|Sukhothai Thammathirat Open University
+มหาวิทยาลัยหอการค้าไทย|org|泰國商會大學|泰國大學|University of the Thai Chamber of Commerce
+มหาวิทยาลัยหัวเฉียวเฉลิมพระเกียรติ|org|華僑崇聖大學|泰國大學|Huachiew Chalermprakiet University
+มหาวิทยาลัยหาดใหญ่|org|合艾大學|泰國大學|Hatyai University
+มหาวิทยาลัยอัสสัมชัญ|org|易三倉大學|泰國大學|Assumption University
+มหาวิทยาลัยอีสเทิร์นเอเชีย|org|東亞大學|泰國大學|Eastern Asia University
+มหาวิทยาลัยอุบลราชธานี|org|烏汶叻差他尼大學|泰國大學|Ubon Ratchathani University
+มหาวิทยาลัยเกริก|org|格樂大學|泰國大學|Krirk University
+มหาวิทยาลัยเกษตรศาสตร์|org|泰國農業大學|泰國大學|Kasetsart University
+มหาวิทยาลัยเกษตรศาสตร์ บางเขน|org|泰國農業大學|泰國大學|Kasetsart University
+มหาวิทยาลัยเกษมบัณฑิต|org|伯樂大學|泰國大學|Kasem Bundit University
+มหาวิทยาลัยเชียงใหม่|org|清邁大學|泰國大學|Chiang Mai University
+มหาวิทยาลัยเทคโนโลยีพระจอมเกล้า พระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+มหาวิทยาลัยเทคโนโลยีมหานคร|org|馬哈那空科技大學|泰國大學|Mahanakorn University of Technology
+มหาวิทยาลัยเทคโนโลยีราชมงคล|org|曼谷皇家理工大學|泰國大學|Rajamangala University of Technology
+มหาวิทยาลัยเทคโนโลยีราชมงคลกรุงเทพ|org|曼谷皇家理工大學|泰國大學|Rajamangala University of Technology Krungthep
+มหาวิทยาลัยเทคโนโลยีราชมงคลกรุงเทพ วิทยาเขตเทคนิคกรุงเทพฯ|org|曼谷皇家理工大學|泰國大學|Rajamangala University of Technology Krungthep
+มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก|org|東方皇家理工大學|泰國大學|Rajamangala University of Technology Tawan-ok
+มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตบางพระ|org|東方皇家理工大學|泰國大學|Rajamangala University of Technology Tawan-ok
+มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี|org|塔亞武里皇家理工大學|泰國大學|Rajamangala University of Technology Thanyaburi
+มหาวิทยาลัยเทคโนโลยีราชมงคลพระนคร|org|帕納空皇家理工大學|泰國大學|Rajamangala University of Technology Phra Nakhon
+มหาวิทยาลัยเทคโนโลยีราชมงคลรัตนโกสินทร์|org|蘭塔納功欣皇家理工大學|泰國大學|Rajamangala University of Technology Rattanakosin
+มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา|org|蘭納皇家理工大學|泰國大學|Rajamangala University of Technology Lanna
+มหาวิทยาลัยเทคโนโลยีราชมงคลศรีวิชัย|org|是威差亞皇家理工大學|泰國大學|Rajamangala University of Technology Srivijaya
+มหาวิทยาลัยเทคโนโลยีราชมงคลสุวรรณภูมิ|org|素萬那蓬皇家理工大學|泰國大學|Rajamangala University of Technology Suvarnabhumi
+มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน|org|東北皇家理工大學|泰國大學|Rajamangala University of Technology Isan
+มหาวิทยาลัยเทคโนโลยีสุรนารี|org|素羅娜麗科技大學|泰國大學|Suranaree University of Technology
+มหาวิทยาลัยเอเชียน|org|亞洲大學|泰國大學|Asian University
+มหาวิทยาลัยแพทยศาสตร์|org|瑪希敦大學|泰國大學|Mahidol University
+มหาวิทยาลัยแม่ฟ้าหลวง|org|皇太后大學|泰國大學|Mae Fah Luang University
+มหาวิทยาลัยแม่โจ้|org|梅州大學|泰國大學|Maejo University
+มหาวิทยาลัยแห่งเอเชีย|org|亞洲大學|泰國大學|Asian University
+มหาวิทยาลัยแห่งแรกของประเทศไทย|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+มอกรุงเทพ|org|曼谷大學|泰國大學|Bangkok University
+มอนต์กอเมอรี|place|蒙哥馬利|首都|Montgomery
+มอนเตวิเดโอ|place|蒙特維多|首都|Montevideo
+มัคเดอบวร์ค|place|馬德堡|首都|Magdeburg
+มัตสึเอะ|place|松江市|首都|Matsue
+มัทลิงกัม|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+มาซายา|place|馬薩亞|首都|Masaya
+มาตา-อูตู|place|馬塔烏圖|首都|Mata-Utu
+มาตากัลปา|place|馬塔加爾帕|首都|Matagalpa
+มานากัว|place|馬那瓜|首都|Managua
+มามูจู|place|馬穆朱|首都|Mamuju
+มาโนกูวารี|place|曼諾瓦里|首都|Manokwari
+มิยาซากิ|place|宮崎市|首都|Miyazaki
+มูลนิธิสถิติฟุตบอล|org|RSSSF|國際組織|Rec.Sport.Soccer Statistics Foundation
+ยามางาตะ|place|山形市|首都|Yamagata
+ยามางูจิ|place|山口市|首都|Yamaguchi
+ยาเรน|place|亞倫區|首都|Yaren District
+ยิฮลาวา|place|伊赫拉瓦|首都|Jihlava
+ยูราตอม|org|歐洲原子能共同體|國際組織|European Atomic Energy Community
+รฟม.|org|泰國地鐵局|泰國政府機關|Mass Rapid Transit Authority of Thailand
+รร.จปร.|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+รร.ตท.|org|泰國軍官預備學校|泰國大學|Armed Forces Academies Preparatory School
+รอมัลลอฮ์|place|拉馬拉|首都|Ramallah
+รอสซียา|place|俄羅斯|國家|Russia
+ระบบคลังข้อมูลความหลากหลายทางชีวภาพทั่วโลก|org|全球生物多樣性資訊機構|國際組織|Global Biodiversity Information Facility
+รัฐกาตาร์|place|卡達|國家|Qatar
+รัฐจักรวรรดิอิหร่าน|place|伊朗王國|國家|Pahlavi Iran
+รัฐบรูไนดารุสซาลาม|place|汶萊|國家|Brunei
+รัฐบาลประยุทธ์ 2|org|第二次帕拉育內閣|泰國政府機關|62nd Cabinet of Thailand
+รัฐปาเลสไตน์|place|巴勒斯坦|國家|Palestine
+รัฐพหุชนชาติโบลิเวีย|place|玻利維亞|國家|Bolivia
+รัฐยิว|place|以色列|國家|Israel
+รัฐสหภาพรัสเซียและเบลารุส|org|俄白聯盟國|國際組織|Union State
+รัฐไซออนนิสต์|place|以色列|國家|Israel
+รัตตนติงสาอภินวปุรี|place|清邁府|泰國的府|Chiang Mai
+รั้วจามจุรี|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+รั้วสีชมพู|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+ราชธานีเก่า|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+ราชบัณฑิตยสถาน|org|泰國皇家學院|泰國政府機關|Royal Society of Thailand
+ราชบัณฑิตยสภา|org|泰國皇家學院|泰國政府機關|Royal Society of Thailand
+ราชภัฏอุตรดิตถ์|org|程逸皇家大學|泰國大學|Uttaradit Rajabhat University
+ราชรัฐลักเซมเบิร์ก|place|盧森堡|國家|Luxembourg
+ราชรัฐวัลเด็ค|place|瓦爾德克統治者列表|國家|Principality of Waldeck
+ราชรัฐวัลเด็คและเพือร์ม็อนท์|place|瓦爾德克統治者列表|國家|Principality of Waldeck
+ราชรัฐอันดอร์รา|place|安道爾|國家|Andorra
+ราชสีมา|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+ราชอาณาจักรกัมพูชา|place|柬埔寨|國家|Cambodia
+ราชอาณาจักรซาอุดีอาระเบีย|place|沙烏地阿拉伯|國家|Saudi Arabia
+ราชอาณาจักรนอร์เวย์|place|挪威|國家|Norway
+ราชอาณาจักรภูฏาน|place|不丹|國家|Bhutan
+ราชอาณาจักรรูมาเนีย|place|羅馬尼亞王國|國家|Kingdom of Romania
+ราชอาณาจักรสยาม|place|泰國|國家|Thailand
+ราชอาณาจักรสวีเดน|place|瑞典|國家|Sweden
+ราชอาณาจักรสเปน|place|西班牙|國家|Spain
+ราชอาณาจักรเดนมาร์ก|place|丹麥王國|國家|Kingdom of Denmark
+ราชอาณาจักรเนเธอร์แลนด์|place|荷蘭王國|國家|Kingdom of the Netherlands
+ราชอาณาจักรเบลเยียม|place|比利時|國家|Belgium
+ราชอาณาจักรเบลเยี่ยม|place|比利時|國家|Belgium
+ราชอาณาจักรเอสวาตีนี|place|史瓦帝尼|國家|Eswatini
+ราชอาณาจักรโรมาเนีย|place|羅馬尼亞王國|國家|Kingdom of Romania
+รานชี|place|蘭契|首都|Ranchi
+รามคำแหง|org|藍康恆大學|泰國大學|Ramkhamhaeng University
+ราเวนนา|place|拉溫納|首都|Ravenna
+ริไจนา|place|雷吉納|首都|Regina
+รีมีนี|place|里米尼|首都|Rimini
+ลัคเนา|place|勒克瑙|首都|Lucknow
+ลาปลาตา|place|拉普拉塔|首都|La Plata
+ลาวส์|place|寮國|國家|Laos
+ลาฮอร์|place|拉合爾|首都|Lahore
+ลิกอร์|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+ลิงคอล์น|place|林肯|首都|Lincoln
+ลิตเทิลร็อก|place|小石城|首都|Little Rock
+ลิธัวเนีย|place|立陶宛|國家|Lithuania
+ลิแบแร็ตส์|place|利貝雷茨|首都|Liberec
+ลูซากา|place|路沙卡|首都|Lusaka
+ลูวัค|place|盧武克|首都|Luwuk
+ลูอันดา|place|魯安達|首都|Luanda
+วปอ.|org|泰國國防學院|泰國大學|National Defence College of Thailand
+วังกลางทุ่ง|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+วัลเด็ค|place|瓦爾德克統治者列表|國家|Principality of Waldeck
+วากายามะ|place|和歌山市|首都|Wakayama
+วายเอ็มซีเอ|org|基督教青年會|國際組織|World Alliance of YMCAs
+วิกิลีกส์|org|維基解密|國際組織|WikiLeaks
+วิทยาลัยกรุงเทพธนบุรี|org|曼谷吞武里大學|泰國大學|Bangkokthonburi University
+วิทยาลัยครูกาญจนบุรี|org|北碧皇家大學|泰國大學|Kanchanaburi Rajabhat University
+วิทยาลัยครูจันทบุรี|org|蘭帕巴尼皇家大學|泰國大學|Rambhai Barni Rajabhat University
+วิทยาลัยครูจันทรเกษม|org|佔塔拉卡什皇家大學|泰國大學|Chandrakasem Rajabhat University
+วิทยาลัยครูฉะเชิงเทรา|org|拉差那卡琳皇家大學|泰國大學|Rajabhat Rajanagarindra University
+วิทยาลัยครูธนบุรี|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+วิทยาลัยครูบ้านสมเด็จเจ้าพระยา|org|班頌德昭帕亞皇家大學|泰國大學|Bansomdejchaopraya Rajabhat University
+วิทยาลัยครูพระนคร|org|帕那空皇家大學|泰國大學|Phranakhon Rajabhat University
+วิทยาลัยครูภูเก็ต|org|普吉皇家大學|泰國大學|Phuket Rajabhat University
+วิทยาลัยครูสวนดุสิต|org|川登喜皇家大學|泰國大學|Suan Dusit University
+วิทยาลัยครูสวนสุนันทา|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+วิทยาลัยครูสุรินทร์|org|素林皇家大學|泰國大學|Surindra Rajabhat University
+วิทยาลัยครูอุตรดิตถ์|org|程逸皇家大學|泰國大學|Uttaradit Rajabhat University
+วิทยาลัยครูเพชรบุรีวิทยาลงกรณ์|org|瓦拉雅阿隆空皇家大學|泰國大學|Valaya Alongkorn Rajabhat University
+วิทยาลัยตาปี|org|塔彼學院|泰國大學|Tapee University
+วิทยาลัยธุรกิจบัณฑิตย์|org|博仁大學|泰國大學|Dhurakij Pundit University
+วิทยาลัยนอร์ทกรุงเทพ|org|曼谷北部大學|泰國大學|North Bangkok University
+วิทยาลัยป้องกันราชอาณาจักร|org|泰國國防學院|泰國大學|National Defence College of Thailand
+วิทยาลัยพยาบาลบรมราชชนนี นครพนม|org|那空帕儂大學|泰國大學|Nakhon Phanom University
+วิทยาลัยวิชาการศึกษา|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+วิทยาลัยวิชาการศึกษาบางแสน|org|東方大學|泰國大學|Burapha University
+วิทยาลัยวิชาการศึกษาประสานมิตร|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+วิทยาลัยวิชาการศึกษามหาสารคาม|org|瑪哈沙拉堪大學|泰國大學|Mahasarakham University
+วิทยาลัยศิลปศาสตร์และวิทยาศาสตร์|org|宋卡王子大學|泰國大學|Prince of Songkla University
+วิทยาลัยเกริก|org|格樂大學|泰國大學|Krirk University
+วิทยาลัยเกษตรศาสตร์|org|泰國農業大學|泰國大學|Kasetsart University
+วิทยาลัยเทคนิคกรุงเทพ|org|曼谷皇家理工大學|泰國大學|Rajamangala University of Technology Krungthep
+วิทยาลัยเทคนิคธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+วิทยาลัยเทคนิคพระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+วินโดว์ร็อก|place|溫多羅克|首都|Window Rock
+วิลนีอัส|place|維爾紐斯|首都|Vilnius
+วิเศษชัยชาญ|place|紅統府|泰國的府|Ang Thong
+วุฒิสภาแห่งราชอาณาจักรไทย|org|泰國上議院|泰國政府機關|Senate of Thailand
+วุฒิสภาไทย|org|泰國上議院|泰國政府機關|Senate of Thailand
+ศรีชัยวัชรบุรี|place|佛丕府|泰國的府|Phetchaburi
+ศรีชัยวัชรปุระ|place|佛丕府|泰國的府|Phetchaburi
+ศรีธรรมราช|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+ศรีนคร|place|斯利那加|首都|Srinagar
+ศรีนครินทรวิโรฒ|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+ศาลรัฐธรรมนูญไทย|org|泰國憲法法院|泰國政府機關|Constitutional Court of Thailand
+ศาลอนุญาโตตุลาการถาวร|org|常設仲裁法院|國際組織|Permanent Court of Arbitration
+ศาลเขมรแดง|org|柬埔寨法院特別法庭|國際組織|Khmer Rouge Tribunal
+ศิลปากร|org|泰國藝術大學|泰國大學|Silpakorn University
+ศูนย์พัฒนาการประมงแห่งเอเชียตะวันออกเฉียงใต้|org|東南亞漁業發展中心|國際組織|Southeast Asian Fisheries Development Center
+ศูนย์พันธุวิศวกรรมและเทคโนโลยีชีวภาพแห่งชาติ|org|泰國國家基因工程及生物科技中心|泰國政府機關|BIOTEC
+สกอเปีย|place|史高比耶|首都|Skopje
+สงขลานครินทร์|org|宋卡王子大學|泰國大學|Prince of Songkla University
+สจช.|org|泰國國家檔案館|泰國政府機關|National Archives of Thailand
+สจล.|org|先皇技術學院|泰國大學|King Mongkut's Institute of Technology Ladkrabang
+สตง.|org|泰國國家審計署|泰國政府機關|State Audit Office of Thailand
+สถานกงสุลใหญ่ญี่ปุ่น ณ นครเชียงใหม่|org|日本駐清邁總領事館|泰國政府機關|Consulate-General of Japan, Chiang Mai
+สถานทูตจีน|org|中國駐泰國大使館|泰國政府機關|Embassy of the People's Republic of China, Bangkok
+สถานทูตญี่ปุ่น|org|日本駐泰國大使館|泰國政府機關|Embassy of Japan, Bangkok
+สถานทูตฝรั่งเศส|org|法國駐泰國大使館|泰國政府機關|Embassy of France, Bangkok
+สถานทูตรัสเซียประจำประเทศไทย|org|俄羅斯駐泰國大使館|泰國政府機關|embassy of Russia in Thailand
+สถานทูตสหพันธรัฐรัสเซีย|org|俄羅斯駐泰國大使館|泰國政府機關|embassy of Russia in Thailand
+สถานทูตอังกฤษ|org|英國駐泰國大使館|泰國政府機關|Embassy of the United Kingdom, Bangkok
+สถานทูตอังกฤษประจำประเทศไทย|org|英國駐泰國大使館|泰國政府機關|Embassy of the United Kingdom, Bangkok
+สถานทูตอเมริกา|org|美國駐泰國大使館|泰國政府機關|Embassy of the United States, Bangkok
+สถานทูตเยอรมัน|org|德國駐泰國大使館|泰國政府機關|Embassy of Germany, Bangkok
+สถานเอกอัครราชทูต สวีเดน ประจำประเทศไทย|org|瑞典駐泰國大使館|泰國政府機關|Embassy of Sweden, Bangkok
+สถานเอกอัครราชทูตซาอุดีอาระเบีย ณ กรุงเทพมหานคร|org|沙烏地阿拉伯駐泰國大使館|泰國政府機關|Embassy of Saudi Arabia, Bangkok
+สถานเอกอัครราชทูตญี่ปุ่นประจำประเทศไทย|org|日本駐泰國大使館|泰國政府機關|Embassy of Japan, Bangkok
+สถานเอกอัครราชทูตตุรกีประจำประเทศไทย|org|土耳其駐泰國大使館|泰國政府機關|Embassy of Turkey in Bangkok
+สถานเอกอัครราชทูตนอร์เวย์ประเทศไทย|org|挪威駐泰國大使館|泰國政府機關|Embassy of Norway, Bangkok
+สถานเอกอัครราชทูตประเทศซาอุดีอาระเบียประจำประเทศไทย|org|沙烏地阿拉伯駐泰國大使館|泰國政府機關|Embassy of Saudi Arabia, Bangkok
+สถานเอกอัครราชทูตประเทศสเปน ประจำประเทศไทย|org|西班牙駐泰國大使館|泰國政府機關|Embassy of Spain, Bangkok
+สถานเอกอัครราชทูตประเทศสเปนประจำประเทศไทย|org|西班牙駐泰國大使館|泰國政府機關|Embassy of Spain, Bangkok
+สถานเอกอัครราชทูตประเทศโปแลนด์ประจำประเทศไทย|org|波蘭駐泰國大使館|泰國政府機關|Embassy of Poland, Bangkok
+สถานเอกอัครราชทูตยูเครนประจำประเทศไทย|org|烏克蘭駐泰國大使館|泰國政府機關|Embassy of Ukraine, Bangkok
+สถานเอกอัครราชทูตสวีเดนประจำประเทศไทย|org|瑞典駐泰國大使館|泰國政府機關|Embassy of Sweden, Bangkok
+สถานเอกอัครราชทูตสหพันธรัฐรัสเซียประจำประเทศไทย|org|俄羅斯駐泰國大使館|泰國政府機關|embassy of Russia in Thailand
+สถานเอกอัครราชทูตสหพันธ์สาธารณรัฐเยอรมนีประจำประเทศไทย|org|德國駐泰國大使館|泰國政府機關|Embassy of Germany, Bangkok
+สถานเอกอัครราชทูตสหรัฐอเมริกาประจำประเทศไทย|org|美國駐泰國大使館|泰國政府機關|Embassy of the United States, Bangkok
+สถานเอกอัครราชทูตสหราชอาณาจักรประจำประเทศไทย|org|英國駐泰國大使館|泰國政府機關|Embassy of the United Kingdom, Bangkok
+สถานเอกอัครราชทูตสาธารณรัฐประชาชนจีนประจำประเทศไทย|org|中國駐泰國大使館|泰國政府機關|Embassy of the People's Republic of China, Bangkok
+สถานเอกอัครราชทูตสาธารณรัฐฝรั่งเศสประจำประเทศไทย|org|法國駐泰國大使館|泰國政府機關|Embassy of France, Bangkok
+สถานเอกอัครราชทูตสาธารณรัฐสิงคโปร์ประจำประเทศไทย|org|新加坡駐泰國大使館|泰國政府機關|Embassy of Singapore, Bangkok
+สถานเอกอัครราชทูตสาธารณรัฐเกาหลีประจำประเทศไทย|org|韓國駐泰國大使館|泰國政府機關|Embassy of South Korea, Bangkok
+สถานเอกอัครราชทูตสาธารณรัฐเวียดนามประจำประเทศไทย|org|越南共和國駐泰國大使館|泰國政府機關|Embassy of South Vietnam, Bangkok
+สถานเอกอัครราชทูตสาธารณรัฐโปรตุเกสประจำประเทศไทย|org|葡萄牙駐泰國大使館|泰國政府機關|Embassy of Portugal, Bangkok
+สถานเอกอัครราชทูตอินโดนีเซียประจำประเทศไทย|org|印度尼西亞駐泰國大使館|泰國政府機關|embassy of Indonesia, Bangkok
+สถานเอกอัครราชทูตอิสราเอลประจำประเทศไทย|org|以色列駐泰國大使館|泰國政府機關|Embassy of Israel, Bangkok
+สถานเอกอัครราชทูตโปรตุเกสประจำประเทศไทย|org|葡萄牙駐泰國大使館|泰國政府機關|Embassy of Portugal, Bangkok
+สถาบันพระปกเกล้า|org|泰國拉瑪七世國王學院|泰國大學|King Prajadhipok's Institute
+สถาบันราชภัฎจันทรเกษม|org|佔塔拉卡什皇家大學|泰國大學|Chandrakasem Rajabhat University
+สถาบันราชภัฎเชียงราย|org|清萊皇家大學|泰國大學|Chiang Rai Rajabhat University
+สถาบันราชภัฏกาฬสินธุ์|org|加拉信皇家大學|泰國大學|Kalasin Rajabhat University
+สถาบันราชภัฏจันทรเกษม|org|佔塔拉卡什皇家大學|泰國大學|Chandrakasem Rajabhat University
+สถาบันราชภัฏฉะเชิงเทรา|org|拉差那卡琳皇家大學|泰國大學|Rajabhat Rajanagarindra University
+สถาบันราชภัฏชัยภูมิ|org|猜也奔皇家大學|泰國大學|Chaiyaphum Rajabhat University
+สถาบันราชภัฏธนบุรี|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+สถาบันราชภัฏนครพนม|org|那空帕儂大學|泰國大學|Nakhon Phanom University
+สถาบันราชภัฏบ้านสมเด็จเจ้าพระยา|org|班頌德昭帕亞皇家大學|泰國大學|Bansomdejchaopraya Rajabhat University
+สถาบันราชภัฏพระนคร|org|帕那空皇家大學|泰國大學|Phranakhon Rajabhat University
+สถาบันราชภัฏพิบูลสงคราม|org|披汶頌堪皇家大學|泰國大學|Pibulsongkram Rajabhat University
+สถาบันราชภัฏร้อยเอ็ด|org|黎逸皇家大學|泰國大學|Roi Et Rajabhat University
+สถาบันราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์|org|瓦拉雅阿隆空皇家大學|泰國大學|Valaya Alongkorn Rajabhat University
+สถาบันราชภัฏสวนดุสิต|org|川登喜皇家大學|泰國大學|Suan Dusit University
+สถาบันราชภัฏสวนสุนันทา|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+สถาบันราชภัฏสุราษฎร์ธานี|org|素叻他尼皇家大學|泰國大學|Suratthani Rajabhat University
+สถาบันราชภัฏสุรินทร์|org|素林皇家大學|泰國大學|Surindra Rajabhat University
+สถาบันราชภัฏอุตรดิตถ์|org|程逸皇家大學|泰國大學|Uttaradit Rajabhat University
+สถาบันราชภัฏอุบลราชธานี|org|烏汶叻差他尼皇家大學|泰國大學|Ubon Ratchathani Rajabhat University
+สถาบันราชภัฏเพชรบุรีวิทยาลงกรณ์ ในพระบรมราชูปถัมภ์|org|瓦拉雅阿隆空皇家大學|泰國大學|Valaya Alongkorn Rajabhat University
+สถาบันอุดมศึกษาแห่งแรกของประเทศไทย|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+สถาบันเกอเธ่|org|歌德學院|國際組織|Goethe-Institut
+สถาบันเทคโนโลยีการเกษตรแม่โจ้|org|梅州大學|泰國大學|Maejo University
+สถาบันเทคโนโลยีนานาชาติสิรินธร มหาวิทยาลัยธรรมศาสตร์|org|詩琳通國際理工學院|泰國大學|Sirindhorn International Institute of Technology
+สถาบันเทคโนโลยีพระจอมเกล้า วิทยาเขตธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+สถาบันเทคโนโลยีพระจอมเกล้า วิทยาเขตพระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+สถาบันเทคโนโลยีพระจอมเกล้า วิทยาเขตลาดกระบัง|org|先皇技術學院|泰國大學|King Mongkut's Institute of Technology Ladkrabang
+สถาบันเทคโนโลยีพระจอมเกล้า เจ้าคุณทหารลาดกระบัง|org|先皇技術學院|泰國大學|King Mongkut's Institute of Technology Ladkrabang
+สถาบันเทคโนโลยีพระจอมเกล้าธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+สถาบันเทคโนโลยีพระจอมเกล้าพระนครเหนือ|org|北曼谷夢固國王科技大學|泰國大學|King Mongkut's University of Technology North Bangkok
+สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง|org|先皇技術學院|泰國大學|King Mongkut's Institute of Technology Ladkrabang
+สถาบันเทคโนโลยีพระจอมเกล้าเจ้าธนบุรี|org|吞武里蒙固國王科技大學|泰國大學|King Mongkut's University of Technology Thonburi
+สถาบันเทคโนโลยีเกษตรแม่โจ้|org|梅州大學|泰國大學|Maejo University
+สถาบันเทคโนโลยีเจ้าคุณทหารลาดกระบัง|org|先皇技術學院|泰國大學|King Mongkut's Institute of Technology Ladkrabang
+สถาบันเทคโนโลยีแห่งเอเชีย|org|亞洲理工學院|泰國大學|Asian Institute of Technology
+สถาบันเทคโนโลยีแห่งเอเซีย|org|亞洲理工學院|泰國大學|Asian Institute of Technology
+สทอภ|org|地理資訊與空間技術開發局|泰國政府機關|Geo-Informatics and Space Technology Development Agency
+สนธิสัญญาวอร์ซอ|org|華沙條約組織|國際組織|Warsaw Pact
+สปป.ลาว|place|寮國|國家|Laos
+สปป.แอลจีเรีย|place|阿爾及利亞|國家|Algeria
+สปริงฟีลด์|place|春田市|首都|Springfield
+สปอร์ตแอคคอร์ด|org|國際單項運動總會聯合會|國際組織|Global Association of International Sports Federations
+สภาควบคุมฝ่ายสัมพันธมิตร|org|盟國管制理事會|國際組織|Allied Control Council
+สภาที่ปรึกษาของนายกรัฐมนตรี|org|國家行政改革委員會|泰國政府機關|National Administrative Reform Council
+สภายุโรป|org|歐洲理事會|國際組織|Council of Europe
+สภาองค์การบริหารส่วนจังหวัดกระบี่|org|甲米府 省行政組織議會|泰國政府機關|Krabi PAO Council
+สภาองค์การบริหารส่วนจังหวัดกาญจนบุรี|org|北碧府 省行政組織議會|泰國政府機關|Kanchanaburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดกาฬสินธุ์|org|加拉信府 省行政組織議會|泰國政府機關|Kalasin PAO Council
+สภาองค์การบริหารส่วนจังหวัดกำแพงเพชร|org|甘烹碧府 省行政組織議會|泰國政府機關|Kamphaeng Phet PAO Council
+สภาองค์การบริหารส่วนจังหวัดขอนแก่น|org|孔敬府 省行政組織議會|泰國政府機關|Khon Kaen PAO Council
+สภาองค์การบริหารส่วนจังหวัดจันทบุรี|org|莊他武裡府 省行政組織議會|泰國政府機關|Chanthaburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดฉะเชิงเทรา|org|差春騷府 省行政組織議會|泰國政府機關|Chachoengsao PAO Council
+สภาองค์การบริหารส่วนจังหวัดชลบุรี|org|春武里府 省行政組織議會|泰國政府機關|Chon Buri PAO Council
+สภาองค์การบริหารส่วนจังหวัดชัยนาท|org|猜納府 省行政組織議會|泰國政府機關|Chai Nat PAO Council
+สภาองค์การบริหารส่วนจังหวัดชัยภูมิ|org|猜也蓬府 省行政組織議會|泰國政府機關|Chaiyaphum PAO Council
+สภาองค์การบริหารส่วนจังหวัดชุมพร|org|春蓬府 省行政組織議會|泰國政府機關|Chumphon PAO Council
+สภาองค์การบริหารส่วนจังหวัดตรัง|org|董里府 省行政組織議會|泰國政府機關|Trang PAO Council
+สภาองค์การบริหารส่วนจังหวัดตราด|org|達叻府 省行政組織議會|泰國政府機關|Trat PAO Council
+สภาองค์การบริหารส่วนจังหวัดตาก|org|達府 省行政組織議會|泰國政府機關|Tak PAO Council
+สภาองค์การบริหารส่วนจังหวัดนครนายก|org|那空那育府 省行政組織議會|泰國政府機關|Nakhon Nayok PAO Council
+สภาองค์การบริหารส่วนจังหวัดนครปฐม|org|佛統府 省行政組織議會|泰國政府機關|Nakhon Pathom PAO Council
+สภาองค์การบริหารส่วนจังหวัดนครพนม|org|那空拍儂府 省行政組織議會|泰國政府機關|Nakhon Phanom PAO Council
+สภาองค์การบริหารส่วนจังหวัดนครราชสีมา|org|那空叻差是瑪府 省行政組織議會|泰國政府機關|Nakhon Ratchasima PAO Council
+สภาองค์การบริหารส่วนจังหวัดนครศรีธรรมราช|org|那空是貪瑪叻府 省行政組織議會|泰國政府機關|Nakhon Si Thammarat PAO Council
+สภาองค์การบริหารส่วนจังหวัดนครสวรรค์|org|那空沙旺府 省行政組織議會|泰國政府機關|Nakhon Sawan PAO Council
+สภาองค์การบริหารส่วนจังหวัดนนทบุรี|org|暖武裡府 省行政組織議會|泰國政府機關|Nonthaburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดนราธิวาส|org|那拉提瓦府 省行政組織議會|泰國政府機關|Narathiwat PAO Council
+สภาองค์การบริหารส่วนจังหวัดน่าน|org|難府 省行政組織議會|泰國政府機關|Nan PAO Council
+สภาองค์การบริหารส่วนจังหวัดบึงกาฬ|org|汶幹府 省行政組織議會|泰國政府機關|Bueng Kan PAO Council
+สภาองค์การบริหารส่วนจังหวัดบุรีรัมย์|org|武裡南府 省行政組織議會|泰國政府機關|Buri Ram PAO Council
+สภาองค์การบริหารส่วนจังหวัดปทุมธานี|org|巴吞他尼府 省行政組織議會|泰國政府機關|Pathum Thani PAO Council
+สภาองค์การบริหารส่วนจังหวัดประจวบคีรีขันธ์|org|巴蜀府 省行政組織議會|泰國政府機關|Prachuap Khiri Khan PAO Council
+สภาองค์การบริหารส่วนจังหวัดปราจีนบุรี|org|巴真府 省行政組織議會|泰國政府機關|Prachin Buri PAO Council
+สภาองค์การบริหารส่วนจังหวัดปัตตานี|org|北大年府 省行政組織議會|泰國政府機關|Pattani PAO Council
+สภาองค์การบริหารส่วนจังหวัดพระนครศรีอยุธยา|org|大城府 省行政組織議會|泰國政府機關|Phra Nakhon Si Ayutthaya PAO Council
+สภาองค์การบริหารส่วนจังหวัดพะเยา|org|帕堯府 省行政組織議會|泰國政府機關|Phayao PAO Council
+สภาองค์การบริหารส่วนจังหวัดพังงา|org|攀牙府 省行政組織議會|泰國政府機關|Phang Nga PAO Council
+สภาองค์การบริหารส่วนจังหวัดพัทลุง|org|博他侖府 省行政組織議會|泰國政府機關|Phatthalung PAO Council
+สภาองค์การบริหารส่วนจังหวัดพิจิตร|org|披集府 省行政組織議會|泰國政府機關|Phichit PAO Council
+สภาองค์การบริหารส่วนจังหวัดพิษณุโลก|org|彭世洛府 省行政組織議會|泰國政府機關|Phitsanulok PAO Council
+สภาองค์การบริหารส่วนจังหวัดภูเก็ต|org|普吉府 省行政組織議會|泰國政府機關|Phuket PAO Council
+สภาองค์การบริหารส่วนจังหวัดมหาสารคาม|org|馬哈沙拉堪府 省行政組織議會|泰國政府機關|Maha Sarakham PAO Council
+สภาองค์การบริหารส่วนจังหวัดมุกดาหาร|org|穆達漢府 省行政組織議會|泰國政府機關|Mukdahan PAO Council
+สภาองค์การบริหารส่วนจังหวัดยะลา|org|也拉府 省行政組織議會|泰國政府機關|Yala PAO Council
+สภาองค์การบริหารส่วนจังหวัดยโสธร|org|益梭通府 省行政組織議會|泰國政府機關|Yasothon PAO Council
+สภาองค์การบริหารส่วนจังหวัดระนอง|org|拉廊府 省行政組織議會|泰國政府機關|Ranong PAO Council
+สภาองค์การบริหารส่วนจังหวัดระยอง|org|羅勇府 省行政組織議會|泰國政府機關|Rayong PAO Council
+สภาองค์การบริหารส่วนจังหวัดราชบุรี|org|叻武裡府 省行政組織議會|泰國政府機關|Ratchaburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดร้อยเอ็ด|org|黎逸府 省行政組織議會|泰國政府機關|Roi Et PAO Council
+สภาองค์การบริหารส่วนจังหวัดลพบุรี|org|華富里府 省行政組織議會|泰國政府機關|Lopburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดลำปาง|org|南邦府 省行政組織議會|泰國政府機關|Lampang PAO Council
+สภาองค์การบริหารส่วนจังหวัดลำพูน|org|南奔府 省行政組織議會|泰國政府機關|Lamphun PAO Council
+สภาองค์การบริหารส่วนจังหวัดศรีสะเกษ|org|四色菊府 省行政組織議會|泰國政府機關|Si Sa Ket PAO Council
+สภาองค์การบริหารส่วนจังหวัดสกลนคร|org|沙功那空府 省行政組織議會|泰國政府機關|Sakon Nakhon PAO Council
+สภาองค์การบริหารส่วนจังหวัดสงขลา|org|宋卡府 省行政組織議會|泰國政府機關|Songkhla PAO Council
+สภาองค์การบริหารส่วนจังหวัดสตูล|org|沙敦府 省行政組織議會|泰國政府機關|Satun PAO Council
+สภาองค์การบริหารส่วนจังหวัดสมุทรปราการ|org|沙沒巴幹府 省行政組織議會|泰國政府機關|Samut Prakan PAO Council
+สภาองค์การบริหารส่วนจังหวัดสมุทรสงคราม|org|沙沒頌堪府 省行政組織議會|泰國政府機關|Samut Songkhram PAO Council
+สภาองค์การบริหารส่วนจังหวัดสมุทรสาคร|org|沙沒沙空府 省行政組織議會|泰國政府機關|Samut Sakhon PAO Council
+สภาองค์การบริหารส่วนจังหวัดสระบุรี|org|沙拉武裡府 省行政組織議會|泰國政府機關|Saraburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดสระแก้ว|org|沙繳府 省行政組織議會|泰國政府機關|Sa Kaeo PAO Council
+สภาองค์การบริหารส่วนจังหวัดสิงห์บุรี|org|信武裡府 省行政組織議會|泰國政府機關|Sing Buri PAO Council
+สภาองค์การบริหารส่วนจังหวัดสุพรรณบุรี|org|素攀府 省行政組織議會|泰國政府機關|Suphan Buri PAO Council
+สภาองค์การบริหารส่วนจังหวัดสุราษฎร์ธานี|org|素叻他尼府 省行政組織議會|泰國政府機關|Surat Thani PAO Council
+สภาองค์การบริหารส่วนจังหวัดสุรินทร์|org|素林府 省行政組織議會|泰國政府機關|Surin PAO Council
+สภาองค์การบริหารส่วนจังหวัดสุโขทัย|org|素可泰府 省行政組織議會|泰國政府機關|Sukhothai PAO Council
+สภาองค์การบริหารส่วนจังหวัดหนองคาย|org|廊開府 省行政組織議會|泰國政府機關|Nong Khai PAO Council
+สภาองค์การบริหารส่วนจังหวัดหนองบัวลำภู|org|農磨蘭普府 省行政組織議會|泰國政府機關|Nong Bua Lamphu PAO Council
+สภาองค์การบริหารส่วนจังหวัดอำนาจเจริญ|org|安納乍倫府 省行政組織議會|泰國政府機關|Amnat Charoen PAO Council
+สภาองค์การบริหารส่วนจังหวัดอุดรธานี|org|烏隆府 省行政組織議會|泰國政府機關|Udon Thani PAO Council
+สภาองค์การบริหารส่วนจังหวัดอุตรดิตถ์|org|程逸府 省行政組織議會|泰國政府機關|Uttaradit PAO Council
+สภาองค์การบริหารส่วนจังหวัดอุทัยธานี|org|烏泰他尼府 省行政組織議會|泰國政府機關|Uthai Thani PAO Council
+สภาองค์การบริหารส่วนจังหวัดอุบลราชธานี|org|烏汶府 省行政組織議會|泰國政府機關|Ubon Ratchathani PAO Council
+สภาองค์การบริหารส่วนจังหวัดอ่างทอง|org|紅統府 省行政組織議會|泰國政府機關|Ang Thong PAO Council
+สภาองค์การบริหารส่วนจังหวัดเชียงราย|org|清萊府 省行政組織議會|泰國政府機關|Chiang Rai PAO Council
+สภาองค์การบริหารส่วนจังหวัดเชียงใหม่|org|清邁府 省行政組織議會|泰國政府機關|Chiang Mai PAO Council
+สภาองค์การบริหารส่วนจังหวัดเพชรบุรี|org|碧武裡府 省行政組織議會|泰國政府機關|Phetchaburi PAO Council
+สภาองค์การบริหารส่วนจังหวัดเพชรบูรณ์|org|碧差汶府 省行政組織議會|泰國政府機關|Phetchabun PAO Council
+สภาองค์การบริหารส่วนจังหวัดเลย|org|黎府 省行政組織議會|泰國政府機關|Loei PAO Council
+สภาองค์การบริหารส่วนจังหวัดแพร่|org|帕府 省行政組織議會|泰國政府機關|Phrae PAO Council
+สภาองค์การบริหารส่วนจังหวัดแม่ฮ่องสอน|org|夜豐頌府 省行政組織議會|泰國政府機關|Mae Hong Son PAO Council
+สภาเพื่อความช่วยเหลือซึ่งกันและกันทางเศรษฐกิจ|org|經濟互助委員會|國際組織|COMECON
+สมาคมกฤษณภาวนามฤตนานาชาติ|org|國際奎師那知覺協會|國際組織|International Society for Krishna Consciousness
+สมาคมการค้าเสรียุโรป|org|歐洲自由貿易聯盟|國際組織|European Free Trade Association
+สมาคมคณะกรรมการโอลิมปิกแห่งชาติ|org|國家奧委會協會|國際組織|Association of National Olympic Committees
+สมาคมบูรณาการลาตินอเมริกา|org|拉丁美洲一體化協會|國際組織|Latin American Integration Association
+สมาคมประชาชาติแห่งเอเชียตะวันออกเฉียงใต้|org|東南亞國家協會|國際組織|ASEAN
+สมาคมประภาคารและเครื่องหมายทางเรือระหว่างประเทศ|org|國際航標組織|國際組織|International Organization for Marine Aids to Navigation
+สมาคมพืชสวนระหว่างประเทศ|org|國際園藝生產者協會|國際組織|International Association of Horticultural Producers
+สมาคมสร้างคุณค่าสากล|org|國際創價學會|國際組織|Soka Gakkai International
+สมาคมสหพันธ์กีฬานานาชาติโอลิมปิกฤดูร้อน|org|夏季奧運單項運動總會聯合會|國際組織|Association of Summer Olympic International Federations
+สมาคมเพื่อความก้าวหน้าทางวิทยาศาสตร์อเมริกัน|org|美國科學促進會|國際組織|American Association for the Advancement of Science
+สมาคมเอเชียใต้เพื่อความร่วมมือระดับภูมิภาค|org|南亞區域合作聯盟|國際組織|South Asian Association for Regional Cooperation
+สมาชิกอิสระของสมาคมสหพันธ์กีฬานานาชาติ|org|獨立認可運動會員聯盟|國際組織|Alliance of Independent Recognized Members of Sport
+สรลวงสองแคว|place|彭世洛府|泰國的府|Phitsanulok
+สวนนัน|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+สวนมิสกวัน|org|國內安全行動指揮部|泰國政府機關|Internal Security Operations Command
+สวนสุนันทา|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+สหพันธรัฐมาเลเซีย|place|馬來西亞|國家|Malaysia
+สหพันธ์ดาราศาสตร์สากล|org|國際天文學聯合會|國際組織|International Astronomical Union
+สหพันธ์สาธารณรัฐบราซิล|place|巴西|國家|Brazil
+สหพันธ์สาธารณรัฐออสเตรีย|place|奧地利|國家|Austria
+สหพันธ์เขมรกัมปูเจียกรอม|org|下柬埔寨高棉人聯合會|國際組織|Khmers Kampuchea-Krom Federation
+สหภาพนานาชาติเพื่อคุ้มครองพันธุ์พืชใหม่|org|國際植物新品種保護聯盟|國際組織|International Union for the Protection of New Varieties of P
+สหภาพประชาชาติอเมริกาใต้|org|南美洲國家聯盟|國際組織|Union of South American Nations
+สหภาพฟิสิกส์บริสุทธิ์และประยุกต์ระหว่างประเทศ|org|國際純粹與應用物理學聯合會|國際組織|International Union of Pure and Applied Physics
+สหภาพรัฐสภา|org|各國議會聯盟|國際組織|Interparliamentary Union
+สหภาพวิทยุสมัครเล่นนานาชาติ|org|國際業餘無線電聯盟|國際組織|International Amateur Radio Union
+สหภาพเศรษฐกิจยูเรเชีย|org|歐亞聯盟|國際組織|Eurasian Union
+สหภาพแอฟริกา|org|非洲聯盟|國際組織|African Union
+สหสาธารณรัฐแทนซาเนีย|place|坦尚尼亞|國家|Tanzania
+สองคญี|place|彭世洛府|泰國的府|Phitsanulok
+สันนิบาตอาหรับ|org|阿拉伯國家聯盟|國際組織|Arab League
+สาครบุรี|place|沙沒沙空府|泰國的府|Samut Sakhon
+สาธารณรัฐซิมบับเว|place|辛巴威|國家|Zimbabwe
+สาธารณรัฐตุรกี|place|土耳其|國家|Turkey
+สาธารณรัฐตุรกีแห่งนอร์เทิร์นไซปรัส|place|北賽普勒斯土耳其共和國|國家|Northern Cyprus
+สาธารณรัฐตุรกีแห่งไซปรัสเหนือ|place|北賽普勒斯土耳其共和國|國家|Northern Cyprus
+สาธารณรัฐบอตสวานา|place|波札那|國家|Botswana
+สาธารณรัฐบัลแกเรีย|place|保加利亞|國家|Bulgaria
+สาธารณรัฐบุรุนดี|place|蒲隆地|國家|Burundi
+สาธารณรัฐประชาชนจีน|place|中華人民共和國|國家|People's Republic of China
+สาธารณรัฐประชาชนบังกลาเทศ|place|孟加拉|國家|Bangladesh
+สาธารณรัฐประชาธิปไตยประชาชนลาว|place|寮國|國家|Laos
+สาธารณรัฐประชาธิปไตยประชาชนแอลจีเรีย|place|阿爾及利亞|國家|Algeria
+สาธารณรัฐปารากวัย|place|巴拉圭|國家|Paraguay
+สาธารณรัฐฟินแลนด์|place|芬蘭|國家|Finland
+สาธารณรัฐฟิลิปปินส์|place|菲律賓|國家|Philippines
+สาธารณรัฐมาซิโดเนีย|place|北馬其頓|國家|North Macedonia
+สาธารณรัฐมาซิโดเนียเหนือ|place|北馬其頓|國家|North Macedonia
+สาธารณรัฐมาดากัสการ์|place|馬達加斯加|國家|Madagascar
+สาธารณรัฐลิทัวเนีย|place|立陶宛|國家|Lithuania
+สาธารณรัฐวานูวาตู|place|萬那杜|國家|Vanuatu
+สาธารณรัฐสังคมนิยมประชาธิปไตยศรีลังกา|place|斯里蘭卡|國家|Sri Lanka
+สาธารณรัฐสังคมนิยมเวียดนาม|place|越南|國家|Vietnam
+สาธารณรัฐหมู่เกาะมาร์แชลล์|place|馬紹爾群島|國家|Marshall Islands
+สาธารณรัฐออสเตรีย|place|奧地利|國家|Austria
+สาธารณรัฐอาร์มีเนีย|place|亞美尼亞|國家|Armenia
+สาธารณรัฐอาร์เจนตินา|place|阿根廷|國家|Argentina
+สาธารณรัฐอาเซอร์ไบจาน|place|亞塞拜然|國家|Azerbaijan
+สาธารณรัฐอิตาลี|place|義大利|國家|Italy
+สาธารณรัฐอินเดีย|place|印度|國家|India
+สาธารณรัฐอินโดนีเซีย|place|印度尼西亞|國家|Indonesia
+สาธารณรัฐอิสลามปากีสถาน|place|巴基斯坦|國家|Pakistan
+สาธารณรัฐอิสลามอิหร่าน|place|伊朗|國家|Iran
+สาธารณรัฐฮังการี|place|匈牙利|國家|Hungary
+สาธารณรัฐเกาหลี|place|大韓民國|國家|South Korea
+สาธารณรัฐเซอร์เบีย|place|塞爾維亞|國家|Serbia
+สาธารณรัฐเปรู|place|秘魯|國家|Peru
+สาธารณรัฐเอกวาดอร์|place|厄瓜多|國家|Ecuador
+สาธารณรัฐเอสโตเนีย|place|愛沙尼亞|國家|Estonia
+สาธารณรัฐเฮลเลนิก|place|希臘|國家|Greece
+สาธารณรัฐแห่งทั้งสองชาติ|place|波蘭立陶宛聯邦|國家|Polish–Lithuanian Commonwealth
+สาธารณรัฐแห่งสหภาพพม่า|place|緬甸|國家|Myanmar
+สาธารณรัฐแห่งสหภาพเมียนมา|place|緬甸|國家|Myanmar
+สาธารณรัฐแองโกลา|place|安哥拉|國家|Angola
+สาธารณรัฐแอลเบเนีย|place|阿爾巴尼亞|國家|Albania
+สาธารณรัฐโซมาลีแลนด์|place|索馬利蘭|國家|Somaliland
+สาธารณรัฐโปรตุเกส|place|葡萄牙|國家|Portugal
+สาธารณรัฐโปแลนด์|place|波蘭|國家|Poland
+สาธารณรัฐไอร์แลนด์|place|愛爾蘭|國家|Ireland
+สามย่าน|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+สำนักข่าวกรองแห่งชาติ|org|國家情報局|泰國政府機關|National Intelligence Agency
+สำนักคณะรัฐมนตรี|org|泰國首相府|泰國政府機關|Office of the Prime Minister
+สำนักงาน กสทช.|org|電視業務和國家電信廣播委員會|泰國政府機關|National Broadcasting and Telecommunications Commission
+สำนักงานการตรวจเงินแผ่นดิน|org|泰國國家審計署|泰國政府機關|State Audit Office of Thailand
+สำนักงานการบินพลเรือนแห่งประเทศไทย|org|泰國民航局|泰國政府機關|The Civil Aviation Authority of Thailand
+สำนักงานคณะกรรมการกิจการกระจายเสียง กิจการโทรทัศน์ และกิจการโทรคมนาคมแห่งชาติ|org|電視業務和國家電信廣播委員會|泰國政府機關|National Broadcasting and Telecommunications Commission
+สำนักงานคณะกรรมการตรวจเงินแผ่นดิน|org|泰國國家審計署|泰國政府機關|State Audit Office of Thailand
+สำนักงานคณะกรรมการป้องกันและปราบปรามการทุจริตและประพฤติมิชอบในวงราชการ|org|反貪委員會|泰國政府機關|National Anti-Corruption Commission (Thailand)
+สำนักงานคณะกรรมการสิทธิมนุษยชนแห่งชาติ|org|國家人權委|泰國政府機關|National Human Rights Commission
+สำนักงานคณะกรรมการส่งเสริมการลงทุน|org|泰國投資促進委員會|泰國政府機關|Thailand Board of Investment
+สำนักงานชั่งตวงวัดระหว่างประเทศ|org|國際度量衡局|國際組織|International Bureau of Weights and Measures
+สำนักงานตรวจเงินแผ่นดิน|org|泰國國家審計署|泰國政府機關|State Audit Office of Thailand
+สำนักงานตำรวจแห่งชาติ|org|泰國皇家警察|泰國政府機關|Royal Thai Police
+สำนักงานนโยบายและแผนการขนส่งและจราจร|org|交通及運輸政策規劃辦公室|泰國政府機關|Office of Transport and Traffic Policy and Planning
+สำนักงานพระพุทธศาสนาแห่งชาติ|org|泰國佛統府|泰國政府機關|National Office of Buddhism
+สำนักงานพัฒนาเทคโนโลยีอวกาศและภูมิสารสนเทศ|org|地理資訊與空間技術開發局|泰國政府機關|Geo-Informatics and Space Technology Development Agency
+สำนักงานราชบัณฑิตยสภา|org|泰國皇家學院|泰國政府機關|Royal Society of Thailand
+สำนักงานศึกษาธิการกรุงเทพมหานคร|org|曼谷 省教育局|泰國政府機關|Bangkok Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดกระบี่|org|甲米府 省教育局|泰國政府機關|Krabi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดกาญจนบุรี|org|北碧府 省教育局|泰國政府機關|Kanchanaburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดกาฬสินธุ์|org|加拉信府 省教育局|泰國政府機關|Kalasin Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดกำแพงเพชร|org|甘烹碧府 省教育局|泰國政府機關|Kamphaeng Phet Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดขอนแก่น|org|孔敬府 省教育局|泰國政府機關|Khon Kaen Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดจันทบุรี|org|莊他武裡府 省教育局|泰國政府機關|Chanthaburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดฉะเชิงเทรา|org|差春騷府 省教育局|泰國政府機關|Chachoengsao Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดชลบุรี|org|春武里府 省教育局|泰國政府機關|Chon Buri Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดชัยนาท|org|猜納府 省教育局|泰國政府機關|Chai Nat Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดชัยภูมิ|org|猜也蓬府 省教育局|泰國政府機關|Chaiyaphum Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดชุมพร|org|春蓬府 省教育局|泰國政府機關|Chumphon Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดตรัง|org|董里府 省教育局|泰國政府機關|Trang Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดตราด|org|達叻府 省教育局|泰國政府機關|Trat Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดตาก|org|達府 省教育局|泰國政府機關|Tak Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนครนายก|org|那空那育府 省教育局|泰國政府機關|Nakhon Nayok Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนครปฐม|org|佛統府 省教育局|泰國政府機關|Nakhon Pathom Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนครพนม|org|那空拍儂府 省教育局|泰國政府機關|Nakhon Phanom Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนครราชสีมา|org|那空叻差是瑪府 省教育局|泰國政府機關|Nakhon Ratchasima Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนครศรีธรรมราช|org|那空是貪瑪叻府 省教育局|泰國政府機關|Nakhon Si Thammarat Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนครสวรรค์|org|那空沙旺府 省教育局|泰國政府機關|Nakhon Sawan Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนนทบุรี|org|暖武裡府 省教育局|泰國政府機關|Nonthaburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดนราธิวาส|org|那拉提瓦府 省教育局|泰國政府機關|Narathiwat Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดน่าน|org|難府 省教育局|泰國政府機關|Nan Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดบึงกาฬ|org|汶幹府 省教育局|泰國政府機關|Bueng Kan Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดบุรีรัมย์|org|武裡南府 省教育局|泰國政府機關|Buri Ram Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดปทุมธานี|org|巴吞他尼府 省教育局|泰國政府機關|Pathum Thani Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดประจวบคีรีขันธ์|org|巴蜀府 省教育局|泰國政府機關|Prachuap Khiri Khan Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดปราจีนบุรี|org|巴真府 省教育局|泰國政府機關|Prachin Buri Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดปัตตานี|org|北大年府 省教育局|泰國政府機關|Pattani Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดพระนครศรีอยุธยา|org|大城府 省教育局|泰國政府機關|Phra Nakhon Si Ayutthaya Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดพะเยา|org|帕堯府 省教育局|泰國政府機關|Phayao Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดพังงา|org|攀牙府 省教育局|泰國政府機關|Phang Nga Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดพัทลุง|org|博他侖府 省教育局|泰國政府機關|Phatthalung Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดพิจิตร|org|披集府 省教育局|泰國政府機關|Phichit Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดพิษณุโลก|org|彭世洛府 省教育局|泰國政府機關|Phitsanulok Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดภูเก็ต|org|普吉府 省教育局|泰國政府機關|Phuket Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดมหาสารคาม|org|馬哈沙拉堪府 省教育局|泰國政府機關|Maha Sarakham Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดมุกดาหาร|org|穆達漢府 省教育局|泰國政府機關|Mukdahan Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดยะลา|org|也拉府 省教育局|泰國政府機關|Yala Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดยโสธร|org|益梭通府 省教育局|泰國政府機關|Yasothon Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดระนอง|org|拉廊府 省教育局|泰國政府機關|Ranong Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดระยอง|org|羅勇府 省教育局|泰國政府機關|Rayong Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดราชบุรี|org|叻武裡府 省教育局|泰國政府機關|Ratchaburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดร้อยเอ็ด|org|黎逸府 省教育局|泰國政府機關|Roi Et Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดลพบุรี|org|華富里府 省教育局|泰國政府機關|Lopburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดลำปาง|org|南邦府 省教育局|泰國政府機關|Lampang Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดลำพูน|org|南奔府 省教育局|泰國政府機關|Lamphun Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดศรีสะเกษ|org|四色菊府 省教育局|泰國政府機關|Si Sa Ket Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสกลนคร|org|沙功那空府 省教育局|泰國政府機關|Sakon Nakhon Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสงขลา|org|宋卡府 省教育局|泰國政府機關|Songkhla Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสตูล|org|沙敦府 省教育局|泰國政府機關|Satun Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสมุทรปราการ|org|沙沒巴幹府 省教育局|泰國政府機關|Samut Prakan Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสมุทรสงคราม|org|沙沒頌堪府 省教育局|泰國政府機關|Samut Songkhram Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสมุทรสาคร|org|沙沒沙空府 省教育局|泰國政府機關|Samut Sakhon Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสระบุรี|org|沙拉武裡府 省教育局|泰國政府機關|Saraburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสระแก้ว|org|沙繳府 省教育局|泰國政府機關|Sa Kaeo Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสิงห์บุรี|org|信武裡府 省教育局|泰國政府機關|Sing Buri Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสุพรรณบุรี|org|素攀府 省教育局|泰國政府機關|Suphan Buri Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสุราษฎร์ธานี|org|素叻他尼府 省教育局|泰國政府機關|Surat Thani Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสุรินทร์|org|素林府 省教育局|泰國政府機關|Surin Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดสุโขทัย|org|素可泰府 省教育局|泰國政府機關|Sukhothai Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดหนองคาย|org|廊開府 省教育局|泰國政府機關|Nong Khai Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดหนองบัวลำภู|org|農磨蘭普府 省教育局|泰國政府機關|Nong Bua Lamphu Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดอำนาจเจริญ|org|安納乍倫府 省教育局|泰國政府機關|Amnat Charoen Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดอุดรธานี|org|烏隆府 省教育局|泰國政府機關|Udon Thani Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดอุตรดิตถ์|org|程逸府 省教育局|泰國政府機關|Uttaradit Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดอุทัยธานี|org|烏泰他尼府 省教育局|泰國政府機關|Uthai Thani Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดอุบลราชธานี|org|烏汶府 省教育局|泰國政府機關|Ubon Ratchathani Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดอ่างทอง|org|紅統府 省教育局|泰國政府機關|Ang Thong Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดเชียงราย|org|清萊府 省教育局|泰國政府機關|Chiang Rai Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดเชียงใหม่|org|清邁府 省教育局|泰國政府機關|Chiang Mai Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดเพชรบุรี|org|碧武裡府 省教育局|泰國政府機關|Phetchaburi Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดเพชรบูรณ์|org|碧差汶府 省教育局|泰國政府機關|Phetchabun Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดเลย|org|黎府 省教育局|泰國政府機關|Loei Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดแพร่|org|帕府 省教育局|泰國政府機關|Phrae Provincial Education Office
+สำนักงานศึกษาธิการจังหวัดแม่ฮ่องสอน|org|夜豐頌府 省教育局|泰國政府機關|Mae Hong Son Provincial Education Office
+สำนักงานสถิติแห่งชาติ|org|國家統計局|泰國政府機關|National Statistical Office
+สำนักงานสภาพัฒนาการเศรษฐกิจเเละสังคมเเห่งชาติ|org|國家經濟與社會發展委員會|泰國政府機關|National Economic and Social Development Council
+สำนักงานสภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ|org|國家經濟與社會發展委員會|泰國政府機關|National Economic and Social Development Council
+สำนักงานสาธารณสุขกรุงเทพมหานคร|org|曼谷 省公共衛生局|泰國政府機關|Bangkok Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดกระบี่|org|甲米府 省公共衛生局|泰國政府機關|Krabi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดกาญจนบุรี|org|北碧府 省公共衛生局|泰國政府機關|Kanchanaburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดกาฬสินธุ์|org|加拉信府 省公共衛生局|泰國政府機關|Kalasin Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดกำแพงเพชร|org|甘烹碧府 省公共衛生局|泰國政府機關|Kamphaeng Phet Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดขอนแก่น|org|孔敬府 省公共衛生局|泰國政府機關|Khon Kaen Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดจันทบุรี|org|莊他武裡府 省公共衛生局|泰國政府機關|Chanthaburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดฉะเชิงเทรา|org|差春騷府 省公共衛生局|泰國政府機關|Chachoengsao Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดชลบุรี|org|春武里府 省公共衛生局|泰國政府機關|Chon Buri Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดชัยนาท|org|猜納府 省公共衛生局|泰國政府機關|Chai Nat Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดชัยภูมิ|org|猜也蓬府 省公共衛生局|泰國政府機關|Chaiyaphum Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดชุมพร|org|春蓬府 省公共衛生局|泰國政府機關|Chumphon Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดตรัง|org|董里府 省公共衛生局|泰國政府機關|Trang Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดตราด|org|達叻府 省公共衛生局|泰國政府機關|Trat Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดตาก|org|達府 省公共衛生局|泰國政府機關|Tak Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนครนายก|org|那空那育府 省公共衛生局|泰國政府機關|Nakhon Nayok Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนครปฐม|org|佛統府 省公共衛生局|泰國政府機關|Nakhon Pathom Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนครพนม|org|那空拍儂府 省公共衛生局|泰國政府機關|Nakhon Phanom Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนครราชสีมา|org|那空叻差是瑪府 省公共衛生局|泰國政府機關|Nakhon Ratchasima Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนครศรีธรรมราช|org|那空是貪瑪叻府 省公共衛生局|泰國政府機關|Nakhon Si Thammarat Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนครสวรรค์|org|那空沙旺府 省公共衛生局|泰國政府機關|Nakhon Sawan Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนนทบุรี|org|暖武裡府 省公共衛生局|泰國政府機關|Nonthaburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดนราธิวาส|org|那拉提瓦府 省公共衛生局|泰國政府機關|Narathiwat Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดน่าน|org|難府 省公共衛生局|泰國政府機關|Nan Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดบึงกาฬ|org|汶幹府 省公共衛生局|泰國政府機關|Bueng Kan Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดบุรีรัมย์|org|武裡南府 省公共衛生局|泰國政府機關|Buri Ram Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดปทุมธานี|org|巴吞他尼府 省公共衛生局|泰國政府機關|Pathum Thani Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดประจวบคีรีขันธ์|org|巴蜀府 省公共衛生局|泰國政府機關|Prachuap Khiri Khan Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดปราจีนบุรี|org|巴真府 省公共衛生局|泰國政府機關|Prachin Buri Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดปัตตานี|org|北大年府 省公共衛生局|泰國政府機關|Pattani Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดพระนครศรีอยุธยา|org|大城府 省公共衛生局|泰國政府機關|Phra Nakhon Si Ayutthaya Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดพะเยา|org|帕堯府 省公共衛生局|泰國政府機關|Phayao Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดพังงา|org|攀牙府 省公共衛生局|泰國政府機關|Phang Nga Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดพัทลุง|org|博他侖府 省公共衛生局|泰國政府機關|Phatthalung Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดพิจิตร|org|披集府 省公共衛生局|泰國政府機關|Phichit Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดพิษณุโลก|org|彭世洛府 省公共衛生局|泰國政府機關|Phitsanulok Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดภูเก็ต|org|普吉府 省公共衛生局|泰國政府機關|Phuket Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดมหาสารคาม|org|馬哈沙拉堪府 省公共衛生局|泰國政府機關|Maha Sarakham Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดมุกดาหาร|org|穆達漢府 省公共衛生局|泰國政府機關|Mukdahan Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดยะลา|org|也拉府 省公共衛生局|泰國政府機關|Yala Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดยโสธร|org|益梭通府 省公共衛生局|泰國政府機關|Yasothon Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดระนอง|org|拉廊府 省公共衛生局|泰國政府機關|Ranong Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดระยอง|org|羅勇府 省公共衛生局|泰國政府機關|Rayong Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดราชบุรี|org|叻武裡府 省公共衛生局|泰國政府機關|Ratchaburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดร้อยเอ็ด|org|黎逸府 省公共衛生局|泰國政府機關|Roi Et Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดลพบุรี|org|華富里府 省公共衛生局|泰國政府機關|Lopburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดลำปาง|org|南邦府 省公共衛生局|泰國政府機關|Lampang Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดลำพูน|org|南奔府 省公共衛生局|泰國政府機關|Lamphun Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดศรีสะเกษ|org|四色菊府 省公共衛生局|泰國政府機關|Si Sa Ket Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสกลนคร|org|沙功那空府 省公共衛生局|泰國政府機關|Sakon Nakhon Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสงขลา|org|宋卡府 省公共衛生局|泰國政府機關|Songkhla Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสตูล|org|沙敦府 省公共衛生局|泰國政府機關|Satun Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสมุทรปราการ|org|沙沒巴幹府 省公共衛生局|泰國政府機關|Samut Prakan Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสมุทรสงคราม|org|沙沒頌堪府 省公共衛生局|泰國政府機關|Samut Songkhram Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสมุทรสาคร|org|沙沒沙空府 省公共衛生局|泰國政府機關|Samut Sakhon Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสระบุรี|org|沙拉武裡府 省公共衛生局|泰國政府機關|Saraburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสระแก้ว|org|沙繳府 省公共衛生局|泰國政府機關|Sa Kaeo Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสิงห์บุรี|org|信武裡府 省公共衛生局|泰國政府機關|Sing Buri Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสุพรรณบุรี|org|素攀府 省公共衛生局|泰國政府機關|Suphan Buri Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสุราษฎร์ธานี|org|素叻他尼府 省公共衛生局|泰國政府機關|Surat Thani Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสุรินทร์|org|素林府 省公共衛生局|泰國政府機關|Surin Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดสุโขทัย|org|素可泰府 省公共衛生局|泰國政府機關|Sukhothai Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดหนองคาย|org|廊開府 省公共衛生局|泰國政府機關|Nong Khai Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดหนองบัวลำภู|org|農磨蘭普府 省公共衛生局|泰國政府機關|Nong Bua Lamphu Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดอำนาจเจริญ|org|安納乍倫府 省公共衛生局|泰國政府機關|Amnat Charoen Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดอุดรธานี|org|烏隆府 省公共衛生局|泰國政府機關|Udon Thani Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดอุตรดิตถ์|org|程逸府 省公共衛生局|泰國政府機關|Uttaradit Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดอุทัยธานี|org|烏泰他尼府 省公共衛生局|泰國政府機關|Uthai Thani Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดอุบลราชธานี|org|烏汶府 省公共衛生局|泰國政府機關|Ubon Ratchathani Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดอ่างทอง|org|紅統府 省公共衛生局|泰國政府機關|Ang Thong Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดเชียงราย|org|清萊府 省公共衛生局|泰國政府機關|Chiang Rai Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดเชียงใหม่|org|清邁府 省公共衛生局|泰國政府機關|Chiang Mai Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดเพชรบุรี|org|碧武裡府 省公共衛生局|泰國政府機關|Phetchaburi Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดเพชรบูรณ์|org|碧差汶府 省公共衛生局|泰國政府機關|Phetchabun Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดเลย|org|黎府 省公共衛生局|泰國政府機關|Loei Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดแพร่|org|帕府 省公共衛生局|泰國政府機關|Phrae Provincial Public Health Office
+สำนักงานสาธารณสุขจังหวัดแม่ฮ่องสอน|org|夜豐頌府 省公共衛生局|泰國政府機關|Mae Hong Son Provincial Public Health Office
+สำนักงานเกษตรกรุงเทพมหานคร|org|曼谷 省農業局|泰國政府機關|Bangkok Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดกระบี่|org|甲米府 省農業局|泰國政府機關|Krabi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดกาญจนบุรี|org|北碧府 省農業局|泰國政府機關|Kanchanaburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดกาฬสินธุ์|org|加拉信府 省農業局|泰國政府機關|Kalasin Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดกำแพงเพชร|org|甘烹碧府 省農業局|泰國政府機關|Kamphaeng Phet Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดขอนแก่น|org|孔敬府 省農業局|泰國政府機關|Khon Kaen Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดจันทบุรี|org|莊他武裡府 省農業局|泰國政府機關|Chanthaburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดฉะเชิงเทรา|org|差春騷府 省農業局|泰國政府機關|Chachoengsao Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดชลบุรี|org|春武里府 省農業局|泰國政府機關|Chon Buri Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดชัยนาท|org|猜納府 省農業局|泰國政府機關|Chai Nat Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดชัยภูมิ|org|猜也蓬府 省農業局|泰國政府機關|Chaiyaphum Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดชุมพร|org|春蓬府 省農業局|泰國政府機關|Chumphon Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดตรัง|org|董里府 省農業局|泰國政府機關|Trang Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดตราด|org|達叻府 省農業局|泰國政府機關|Trat Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดตาก|org|達府 省農業局|泰國政府機關|Tak Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนครนายก|org|那空那育府 省農業局|泰國政府機關|Nakhon Nayok Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนครปฐม|org|佛統府 省農業局|泰國政府機關|Nakhon Pathom Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนครพนม|org|那空拍儂府 省農業局|泰國政府機關|Nakhon Phanom Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนครราชสีมา|org|那空叻差是瑪府 省農業局|泰國政府機關|Nakhon Ratchasima Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนครศรีธรรมราช|org|那空是貪瑪叻府 省農業局|泰國政府機關|Nakhon Si Thammarat Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนครสวรรค์|org|那空沙旺府 省農業局|泰國政府機關|Nakhon Sawan Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนนทบุรี|org|暖武裡府 省農業局|泰國政府機關|Nonthaburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดนราธิวาส|org|那拉提瓦府 省農業局|泰國政府機關|Narathiwat Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดน่าน|org|難府 省農業局|泰國政府機關|Nan Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดบึงกาฬ|org|汶幹府 省農業局|泰國政府機關|Bueng Kan Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดบุรีรัมย์|org|武裡南府 省農業局|泰國政府機關|Buri Ram Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดปทุมธานี|org|巴吞他尼府 省農業局|泰國政府機關|Pathum Thani Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดประจวบคีรีขันธ์|org|巴蜀府 省農業局|泰國政府機關|Prachuap Khiri Khan Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดปราจีนบุรี|org|巴真府 省農業局|泰國政府機關|Prachin Buri Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดปัตตานี|org|北大年府 省農業局|泰國政府機關|Pattani Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดพระนครศรีอยุธยา|org|大城府 省農業局|泰國政府機關|Phra Nakhon Si Ayutthaya Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดพะเยา|org|帕堯府 省農業局|泰國政府機關|Phayao Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดพังงา|org|攀牙府 省農業局|泰國政府機關|Phang Nga Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดพัทลุง|org|博他侖府 省農業局|泰國政府機關|Phatthalung Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดพิจิตร|org|披集府 省農業局|泰國政府機關|Phichit Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดพิษณุโลก|org|彭世洛府 省農業局|泰國政府機關|Phitsanulok Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดมหาสารคาม|org|馬哈沙拉堪府 省農業局|泰國政府機關|Maha Sarakham Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดมุกดาหาร|org|穆達漢府 省農業局|泰國政府機關|Mukdahan Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดยะลา|org|也拉府 省農業局|泰國政府機關|Yala Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดยโสธร|org|益梭通府 省農業局|泰國政府機關|Yasothon Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดระนอง|org|拉廊府 省農業局|泰國政府機關|Ranong Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดระยอง|org|羅勇府 省農業局|泰國政府機關|Rayong Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดราชบุรี|org|叻武裡府 省農業局|泰國政府機關|Ratchaburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดร้อยเอ็ด|org|黎逸府 省農業局|泰國政府機關|Roi Et Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดลพบุรี|org|華富里府 省農業局|泰國政府機關|Lopburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดลำปาง|org|南邦府 省農業局|泰國政府機關|Lampang Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดลำพูน|org|南奔府 省農業局|泰國政府機關|Lamphun Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดศรีสะเกษ|org|四色菊府 省農業局|泰國政府機關|Si Sa Ket Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสกลนคร|org|沙功那空府 省農業局|泰國政府機關|Sakon Nakhon Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสงขลา|org|宋卡府 省農業局|泰國政府機關|Songkhla Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสตูล|org|沙敦府 省農業局|泰國政府機關|Satun Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสมุทรปราการ|org|沙沒巴幹府 省農業局|泰國政府機關|Samut Prakan Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสมุทรสงคราม|org|沙沒頌堪府 省農業局|泰國政府機關|Samut Songkhram Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสมุทรสาคร|org|沙沒沙空府 省農業局|泰國政府機關|Samut Sakhon Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสระบุรี|org|沙拉武裡府 省農業局|泰國政府機關|Saraburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสระแก้ว|org|沙繳府 省農業局|泰國政府機關|Sa Kaeo Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสิงห์บุรี|org|信武裡府 省農業局|泰國政府機關|Sing Buri Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสุพรรณบุรี|org|素攀府 省農業局|泰國政府機關|Suphan Buri Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสุราษฎร์ธานี|org|素叻他尼府 省農業局|泰國政府機關|Surat Thani Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสุรินทร์|org|素林府 省農業局|泰國政府機關|Surin Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดสุโขทัย|org|素可泰府 省農業局|泰國政府機關|Sukhothai Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดหนองคาย|org|廊開府 省農業局|泰國政府機關|Nong Khai Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดหนองบัวลำภู|org|農磨蘭普府 省農業局|泰國政府機關|Nong Bua Lamphu Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดอำนาจเจริญ|org|安納乍倫府 省農業局|泰國政府機關|Amnat Charoen Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดอุดรธานี|org|烏隆府 省農業局|泰國政府機關|Udon Thani Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดอุตรดิตถ์|org|程逸府 省農業局|泰國政府機關|Uttaradit Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดอุทัยธานี|org|烏泰他尼府 省農業局|泰國政府機關|Uthai Thani Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดอุบลราชธานี|org|烏汶府 省農業局|泰國政府機關|Ubon Ratchathani Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดอ่างทอง|org|紅統府 省農業局|泰國政府機關|Ang Thong Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดเชียงราย|org|清萊府 省農業局|泰國政府機關|Chiang Rai Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดเชียงใหม่|org|清邁府 省農業局|泰國政府機關|Chiang Mai Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดเพชรบุรี|org|碧武裡府 省農業局|泰國政府機關|Phetchaburi Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดเพชรบูรณ์|org|碧差汶府 省農業局|泰國政府機關|Phetchabun Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดเลย|org|黎府 省農業局|泰國政府機關|Loei Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดแพร่|org|帕府 省農業局|泰國政府機關|Phrae Provincial Agriculture Office
+สำนักงานเกษตรจังหวัดแม่ฮ่องสอน|org|夜豐頌府 省農業局|泰國政府機關|Mae Hong Son Provincial Agriculture Office
+สำนักงานเศรษฐกิจและวัฒนธรรมไทเปประจำประเทศไทย|org|駐泰國台北經濟文化辦事處|泰國政府機關|Taipei Economic and Cultural Office in Thailand
+สำนักงานโยธาธิการและผังเมืองกรุงเทพมหานคร|org|曼谷 省公共工程與城鄉規劃局|泰國政府機關|Bangkok Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดกระบี่|org|甲米府 省公共工程與城鄉規劃局|泰國政府機關|Krabi Provincial Office of Public Works and Town & Country P
+สำนักงานโยธาธิการและผังเมืองจังหวัดกาญจนบุรี|org|北碧府 省公共工程與城鄉規劃局|泰國政府機關|Kanchanaburi Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดกาฬสินธุ์|org|加拉信府 省公共工程與城鄉規劃局|泰國政府機關|Kalasin Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดกำแพงเพชร|org|甘烹碧府 省公共工程與城鄉規劃局|泰國政府機關|Kamphaeng Phet Provincial Office of Public Works and Town & 
+สำนักงานโยธาธิการและผังเมืองจังหวัดขอนแก่น|org|孔敬府 省公共工程與城鄉規劃局|泰國政府機關|Khon Kaen Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดจันทบุรี|org|莊他武裡府 省公共工程與城鄉規劃局|泰國政府機關|Chanthaburi Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดฉะเชิงเทรา|org|差春騷府 省公共工程與城鄉規劃局|泰國政府機關|Chachoengsao Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดชลบุรี|org|春武里府 省公共工程與城鄉規劃局|泰國政府機關|Chon Buri Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดชัยนาท|org|猜納府 省公共工程與城鄉規劃局|泰國政府機關|Chai Nat Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดชัยภูมิ|org|猜也蓬府 省公共工程與城鄉規劃局|泰國政府機關|Chaiyaphum Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดชุมพร|org|春蓬府 省公共工程與城鄉規劃局|泰國政府機關|Chumphon Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดตรัง|org|董里府 省公共工程與城鄉規劃局|泰國政府機關|Trang Provincial Office of Public Works and Town & Country P
+สำนักงานโยธาธิการและผังเมืองจังหวัดตราด|org|達叻府 省公共工程與城鄉規劃局|泰國政府機關|Trat Provincial Office of Public Works and Town & Country Pl
+สำนักงานโยธาธิการและผังเมืองจังหวัดตาก|org|達府 省公共工程與城鄉規劃局|泰國政府機關|Tak Provincial Office of Public Works and Town & Country Pla
+สำนักงานโยธาธิการและผังเมืองจังหวัดนครนายก|org|那空那育府 省公共工程與城鄉規劃局|泰國政府機關|Nakhon Nayok Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดนครปฐม|org|佛統府 省公共工程與城鄉規劃局|泰國政府機關|Nakhon Pathom Provincial Office of Public Works and Town & C
+สำนักงานโยธาธิการและผังเมืองจังหวัดนครพนม|org|那空拍儂府 省公共工程與城鄉規劃局|泰國政府機關|Nakhon Phanom Provincial Office of Public Works and Town & C
+สำนักงานโยธาธิการและผังเมืองจังหวัดนครราชสีมา|org|那空叻差是瑪府 省公共工程與城鄉規劃局|泰國政府機關|Nakhon Ratchasima Provincial Office of Public Works and Town
+สำนักงานโยธาธิการและผังเมืองจังหวัดนครศรีธรรมราช|org|那空是貪瑪叻府 省公共工程與城鄉規劃局|泰國政府機關|Nakhon Si Thammarat Provincial Office of Public Works and To
+สำนักงานโยธาธิการและผังเมืองจังหวัดนครสวรรค์|org|那空沙旺府 省公共工程與城鄉規劃局|泰國政府機關|Nakhon Sawan Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดนนทบุรี|org|暖武裡府 省公共工程與城鄉規劃局|泰國政府機關|Nonthaburi Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดนราธิวาส|org|那拉提瓦府 省公共工程與城鄉規劃局|泰國政府機關|Narathiwat Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดน่าน|org|難府 省公共工程與城鄉規劃局|泰國政府機關|Nan Provincial Office of Public Works and Town & Country Pla
+สำนักงานโยธาธิการและผังเมืองจังหวัดบึงกาฬ|org|汶幹府 省公共工程與城鄉規劃局|泰國政府機關|Bueng Kan Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดบุรีรัมย์|org|武裡南府 省公共工程與城鄉規劃局|泰國政府機關|Buri Ram Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดปทุมธานี|org|巴吞他尼府 省公共工程與城鄉規劃局|泰國政府機關|Pathum Thani Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดประจวบคีรีขันธ์|org|巴蜀府 省公共工程與城鄉規劃局|泰國政府機關|Prachuap Khiri Khan Provincial Office of Public Works and To
+สำนักงานโยธาธิการและผังเมืองจังหวัดปราจีนบุรี|org|巴真府 省公共工程與城鄉規劃局|泰國政府機關|Prachin Buri Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดปัตตานี|org|北大年府 省公共工程與城鄉規劃局|泰國政府機關|Pattani Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดพระนครศรีอยุธยา|org|大城府 省公共工程與城鄉規劃局|泰國政府機關|Phra Nakhon Si Ayutthaya Provincial Office of Public Works a
+สำนักงานโยธาธิการและผังเมืองจังหวัดพะเยา|org|帕堯府 省公共工程與城鄉規劃局|泰國政府機關|Phayao Provincial Office of Public Works and Town & Country 
+สำนักงานโยธาธิการและผังเมืองจังหวัดพังงา|org|攀牙府 省公共工程與城鄉規劃局|泰國政府機關|Phang Nga Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดพัทลุง|org|博他侖府 省公共工程與城鄉規劃局|泰國政府機關|Phatthalung Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดพิจิตร|org|披集府 省公共工程與城鄉規劃局|泰國政府機關|Phichit Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดพิษณุโลก|org|彭世洛府 省公共工程與城鄉規劃局|泰國政府機關|Phitsanulok Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดภูเก็ต|org|普吉府 省公共工程與城鄉規劃局|泰國政府機關|Phuket Provincial Office of Public Works and Town & Country 
+สำนักงานโยธาธิการและผังเมืองจังหวัดมหาสารคาม|org|馬哈沙拉堪府 省公共工程與城鄉規劃局|泰國政府機關|Maha Sarakham Provincial Office of Public Works and Town & C
+สำนักงานโยธาธิการและผังเมืองจังหวัดมุกดาหาร|org|穆達漢府 省公共工程與城鄉規劃局|泰國政府機關|Mukdahan Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดยะลา|org|也拉府 省公共工程與城鄉規劃局|泰國政府機關|Yala Provincial Office of Public Works and Town & Country Pl
+สำนักงานโยธาธิการและผังเมืองจังหวัดยโสธร|org|益梭通府 省公共工程與城鄉規劃局|泰國政府機關|Yasothon Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดระนอง|org|拉廊府 省公共工程與城鄉規劃局|泰國政府機關|Ranong Provincial Office of Public Works and Town & Country 
+สำนักงานโยธาธิการและผังเมืองจังหวัดระยอง|org|羅勇府 省公共工程與城鄉規劃局|泰國政府機關|Rayong Provincial Office of Public Works and Town & Country 
+สำนักงานโยธาธิการและผังเมืองจังหวัดราชบุรี|org|叻武裡府 省公共工程與城鄉規劃局|泰國政府機關|Ratchaburi Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดร้อยเอ็ด|org|黎逸府 省公共工程與城鄉規劃局|泰國政府機關|Roi Et Provincial Office of Public Works and Town & Country 
+สำนักงานโยธาธิการและผังเมืองจังหวัดลพบุรี|org|華富里府 省公共工程與城鄉規劃局|泰國政府機關|Lopburi Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดลำปาง|org|南邦府 省公共工程與城鄉規劃局|泰國政府機關|Lampang Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดลำพูน|org|南奔府 省公共工程與城鄉規劃局|泰國政府機關|Lamphun Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดศรีสะเกษ|org|四色菊府 省公共工程與城鄉規劃局|泰國政府機關|Si Sa Ket Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดสกลนคร|org|沙功那空府 省公共工程與城鄉規劃局|泰國政府機關|Sakon Nakhon Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดสงขลา|org|宋卡府 省公共工程與城鄉規劃局|泰國政府機關|Songkhla Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดสตูล|org|沙敦府 省公共工程與城鄉規劃局|泰國政府機關|Satun Provincial Office of Public Works and Town & Country P
+สำนักงานโยธาธิการและผังเมืองจังหวัดสมุทรปราการ|org|沙沒巴幹府 省公共工程與城鄉規劃局|泰國政府機關|Samut Prakan Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดสมุทรสงคราม|org|沙沒頌堪府 省公共工程與城鄉規劃局|泰國政府機關|Samut Songkhram Provincial Office of Public Works and Town &
+สำนักงานโยธาธิการและผังเมืองจังหวัดสมุทรสาคร|org|沙沒沙空府 省公共工程與城鄉規劃局|泰國政府機關|Samut Sakhon Provincial Office of Public Works and Town & Co
+สำนักงานโยธาธิการและผังเมืองจังหวัดสระบุรี|org|沙拉武裡府 省公共工程與城鄉規劃局|泰國政府機關|Saraburi Provincial Office of Public Works and Town & Countr
+สำนักงานโยธาธิการและผังเมืองจังหวัดสระแก้ว|org|沙繳府 省公共工程與城鄉規劃局|泰國政府機關|Sa Kaeo Provincial Office of Public Works and Town & Country
+สำนักงานโยธาธิการและผังเมืองจังหวัดสิงห์บุรี|org|信武裡府 省公共工程與城鄉規劃局|泰國政府機關|Sing Buri Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดสุพรรณบุรี|org|素攀府 省公共工程與城鄉規劃局|泰國政府機關|Suphan Buri Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดสุราษฎร์ธานี|org|素叻他尼府 省公共工程與城鄉規劃局|泰國政府機關|Surat Thani Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดสุรินทร์|org|素林府 省公共工程與城鄉規劃局|泰國政府機關|Surin Provincial Office of Public Works and Town & Country P
+สำนักงานโยธาธิการและผังเมืองจังหวัดสุโขทัย|org|素可泰府 省公共工程與城鄉規劃局|泰國政府機關|Sukhothai Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดหนองคาย|org|廊開府 省公共工程與城鄉規劃局|泰國政府機關|Nong Khai Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดหนองบัวลำภู|org|農磨蘭普府 省公共工程與城鄉規劃局|泰國政府機關|Nong Bua Lamphu Provincial Office of Public Works and Town &
+สำนักงานโยธาธิการและผังเมืองจังหวัดอำนาจเจริญ|org|安納乍倫府 省公共工程與城鄉規劃局|泰國政府機關|Amnat Charoen Provincial Office of Public Works and Town & C
+สำนักงานโยธาธิการและผังเมืองจังหวัดอุดรธานี|org|烏隆府 省公共工程與城鄉規劃局|泰國政府機關|Udon Thani Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดอุตรดิตถ์|org|程逸府 省公共工程與城鄉規劃局|泰國政府機關|Uttaradit Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดอุทัยธานี|org|烏泰他尼府 省公共工程與城鄉規劃局|泰國政府機關|Uthai Thani Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดอุบลราชธานี|org|烏汶府 省公共工程與城鄉規劃局|泰國政府機關|Ubon Ratchathani Provincial Office of Public Works and Town 
+สำนักงานโยธาธิการและผังเมืองจังหวัดอ่างทอง|org|紅統府 省公共工程與城鄉規劃局|泰國政府機關|Ang Thong Provincial Office of Public Works and Town & Count
+สำนักงานโยธาธิการและผังเมืองจังหวัดเชียงราย|org|清萊府 省公共工程與城鄉規劃局|泰國政府機關|Chiang Rai Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดเชียงใหม่|org|清邁府 省公共工程與城鄉規劃局|泰國政府機關|Chiang Mai Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดเพชรบุรี|org|碧武裡府 省公共工程與城鄉規劃局|泰國政府機關|Phetchaburi Provincial Office of Public Works and Town & Cou
+สำนักงานโยธาธิการและผังเมืองจังหวัดเพชรบูรณ์|org|碧差汶府 省公共工程與城鄉規劃局|泰國政府機關|Phetchabun Provincial Office of Public Works and Town & Coun
+สำนักงานโยธาธิการและผังเมืองจังหวัดเลย|org|黎府 省公共工程與城鄉規劃局|泰國政府機關|Loei Provincial Office of Public Works and Town & Country Pl
+สำนักงานโยธาธิการและผังเมืองจังหวัดแพร่|org|帕府 省公共工程與城鄉規劃局|泰國政府機關|Phrae Provincial Office of Public Works and Town & Country P
+สำนักงานโยธาธิการและผังเมืองจังหวัดแม่ฮ่องสอน|org|夜豐頌府 省公共工程與城鄉規劃局|泰國政府機關|Mae Hong Son Provincial Office of Public Works and Town & Co
+สำนักนายกรัฐมนตรี|org|泰國首相府|泰國政府機關|Office of the Prime Minister
+สำนักนายกรัฐมนตรีไทย|org|泰國首相府|泰國政府機關|Office of the Prime Minister
+สำนักนิทรรศการระหว่างประเทศ|org|國際展覽局|國際組織|Bureau of International Expositions
+สำนักฝึกหัดวิชาข้าราชการฝ่ายพลเรือน|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+สำนักพระราชวัง|org|王室事務局|泰國政府機關|Bureau of the Royal Household
+สำนักสามย่าน|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+สำนักหอจดหมายเหตุแห่งชาติ|org|泰國國家檔案館|泰國政府機關|National Archives of Thailand
+สำนักหอสมุด มหาวิทยาลัยทักษิณ|org|他信大學|泰國大學|Thaksin University
+สำนักหอสมุดแห่งชาติ|org|泰國國家圖書館|泰國政府機關|National Library of Thailand
+สุนัขนาม|place|普吉府|泰國的府|Phuket
+สุนันทา|org|宣素那他皇家大學|泰國大學|Suan Sunandha Rajabhat University
+สุราษฎร์|place|素叻府|泰國的府|Surat Thani
+สุเมอดัง|place|雙木丹|首都|Sumedang
+สุไหง เลียต|place|烈港|首都|Sungailiat
+สเวียเรีย|place|瑞典|國家|Sweden
+สแตนลีย์|place|史坦利|首都|Stanley
+หจช.|org|泰國國家檔案館|泰國政府機關|National Archives of Thailand
+หนานจิง|place|南京市|首都|Nanjing
+หมู่เกาะคุก|place|庫克群島|國家|Cook Islands
+หมู่เกาะมลายู|place|印度尼西亞|國家|Indonesia
+หมู่เกาะอินเดีย|place|印度尼西亞|國家|Indonesia
+หลักเฉลิมพระนครแห่งกรุงสยาม|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+หลานโจว|place|蘭州市|首都|Lanzhou
+หอจดหมายเหตุแห่งชาติ|org|泰國國家檔案館|泰國政府機關|National Archives of Thailand
+หอดูดาวท้องฟ้าซีกใต้แห่งยุโรป|org|歐洲南天天文台|國際組織|European Southern Observatory
+หอสมุดแห่งชาติ|org|泰國國家圖書館|泰國政府機關|National Library of Thailand
+หุ้นส่วนเพื่อสันติภาพ|org|和平夥伴關係計劃|國際組織|Partnership for Peace
+องค์กรตามรัฐธรรมนูญแห่งราชอาณาจักรไทย|org|憲法機構|泰國政府機關|constitutional organization of Thailand
+องค์กรอิสระตามรัฐธรรมนูญแห่งราชอาณาจักรไทย|org|憲法機構|泰國政府機關|constitutional organization of Thailand
+องค์กรเพื่อความปลอดภัยและความร่วมมือในยุโรป|org|歐洲安全與合作組織|國際組織|Organization for Security and Co-operation in Europe
+องค์กรแห่งชาติและประชาชนที่ไม่เป็นที่รู้จัก|org|無代表國家和民族組織|國際組織|Unrepresented Nations and Peoples Organization
+องค์การการค้าโลก|org|世界貿易組織|國際組織|World Trade Organization
+องค์การการศึกษา วิทยาศาสตร์ และวัฒนธรรมแห่งสหประชาชาติ|org|聯合國教育、科學及文化組織|國際組織|UNESCO
+องค์การกีฬาอเมริกาใต้|org|南美洲體育組織|國際組織|ODESUR
+องค์การความร่วมมืออิสลาม|org|伊斯蘭合作組織|國際組織|Organisation of Islamic Cooperation
+องค์การความร่วมมือเซี่ยงไฮ้|org|上海合作組織|國際組織|Shanghai Cooperation Organisation
+องค์การดาวเทียมเคลื่อนที่ระหว่างประเทศ|org|國際移動衛星組織|國際組織|International Mobile Satellite Organization
+องค์การตำรวจอาชญากรรมระหว่างประเทศ|org|國際刑警組織|國際組織|Interpol
+องค์การนานารัฐอเมริกา|org|美洲國家組織|國際組織|Organization of American States
+องค์การบริหารส่วนจังหวัดชลบุรี|org|春武里府 省行政組織|泰國政府機關|Chon Buri Provincial Administrative Organization
+องค์การรถไฟฟ้ามหานคร|org|泰國地鐵局|泰國政府機關|Mass Rapid Transit Authority of Thailand
+องค์การระหว่างประเทศของกลุ่มประเทศที่ใช้ภาษาฝรั่งเศส|org|法語國家及地區國際組織|國際組織|Organisation internationale de la Francophonie
+องค์การระหว่างประเทศเพื่อการโยกย้ายถิ่นฐาน|org|國際移民組織|國際組織|International Organization for Migration
+องค์การวิจัยนิวเคลียร์ยุโรป|org|歐洲核子研究組織|國際組織|CERN
+องค์การสนธิสัญญาความมั่นคงร่วมกัน|org|集體安全條約組織|國際組織|Collective Security Treaty Organization
+องค์การสนธิสัญญาป้องกันภูมิภาคเอเชียตะวันออกเฉียงใต้|org|東南亞條約組織|國際組織|Southeast Asia Treaty Organization
+องค์การสนธิสัญญาแอตแลนติกเหนือ|org|北大西洋公約組織|國際組織|NATO
+องค์การสวนพฤกษศาสตร์|org|植物園組織|泰國政府機關|The Botanical Garden Organization, Thailand
+องค์การห้ามอาวุธเคมี|org|禁止化學武器組織|國際組織|Organisation for the Prohibition of Chemical Weapons
+องค์การอนามัยโลก|org|世界衛生組織|國際組織|World Health Organization
+องค์การอวกาศยุโรป|org|歐洲太空總署|國際組織|European Space Agency
+องค์การอุตุนิยมวิทยาโลก|org|世界氣象組織|國際組織|World Meteorological Organization
+องค์การอุทกศาสตร์สากล|org|國際海道測量組織|國際組織|International Hydrographic Organization
+องค์การเพื่อความร่วมมือทางเศรษฐกิจและการพัฒนา|org|經濟合作暨發展組織|國際組織|Organization for Economic Cooperation and Development
+องค์การแรงงานระหว่างประเทศ|org|國際勞工組織|國際組織|International Labour Organization
+อดีตสาธารณรัฐยูโกสลาฟมาซิโดเนีย|place|北馬其頓|國家|North Macedonia
+อมราวตี|place|阿默拉沃蒂|首都|Amaravati
+ออคัส|org|AUKUS|國際組織|AUKUS
+อักกรา|place|阿克拉|首都|Accra
+อังกอร์เรียจ|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+อังโกลา|place|安哥拉|國家|Angola
+อัลจีเรีย|place|阿爾及利亞|國家|Algeria
+อัลเบเนีย|place|阿爾巴尼亞|國家|Albania
+อาณาจักรแกรนด์ดยุคแห่งลักเซมเบิร์ก|place|盧森堡|國家|Luxembourg
+อาร์เมเนีย|place|亞美尼亞|國家|Armenia
+อำเภอพะเยา|place|帕堯府|泰國的府|Phayao
+อำเภอมุกดาหาร|place|穆達漢府|泰國的府|Mukdahan
+อิควานัลมุสลิมีน|org|穆斯林兄弟會|國際組織|Muslim Brotherhood
+อิตาลี่|place|義大利|國家|Italy
+อิตาเลีย|place|義大利|國家|Italy
+อินทรามายู|place|南安由|首都|Indramayu
+อินโด|place|印度尼西亞|國家|Indonesia
+อิศบันหยอด|place|西班牙|國家|Spain
+อิหร่านปาห์ลาวี|place|伊朗王國|國家|Pahlavi Iran
+อุตสึโนมิยะ|place|宇都宮市|首都|Utsunomiya
+อุบลราชธานีศรีวะนาไลประเทษราช|place|烏汶府|泰國的府|Ubon Ratchathani
+อุยังซาลอน|place|普吉府|泰國的府|Phuket
+อุรุนดี|place|蒲隆地|國家|Burundi
+อูกรายีนา|place|烏克蘭|國家|Ukraine
+อูว์นีดรัว|org|國際統一私法協會|國際組織|UNIDROIT
+อูสจีนัดลาแบ็ม|place|拉貝河畔烏斯季|首都|Ústí nad Labem
+อโยธยา|place|大城府|泰國的府|Phra Nakhon Si Ayutthaya
+ฮราแด็ตส์กราโลแว|place|赫拉德茨-克拉洛韋|首都|Hradec Králové
+ฮันกุก|place|大韓民國|國家|South Korea
+ฮันโนเฟอร์|place|漢諾威|首都|Hanover
+ฮายาสตาน|place|亞美尼亞|國家|Armenia
+ฮายาสถาน|place|亞美尼亞|國家|Armenia
+ฮาร์ตเฟิร์ด|place|哈特福|首都|Hartford
+ฮินดูสถาน|place|印度|國家|India
+เกาะภูเก็ต|place|普吉府|泰國的府|Phuket
+เขตเศรษฐกิจยุโรป|org|歐洲經濟區|國際組織|European Economic Area
+เขตเสรีแห่งสาธารณรัฐจีน|place|中華民國|國家|Taiwan
+เคปทาวน์|place|開普敦|首都|Cape Town
+เครือจักรภพโปแลนด์|place|波蘭立陶宛聯邦|國家|Polish–Lithuanian Commonwealth
+เครือจักรภพโปแลนด์-ลิทัวเนีย|place|波蘭立陶宛聯邦|國家|Polish–Lithuanian Commonwealth
+เครือจักรภพโปแลนด์–ลิทัวเนีย|place|波蘭立陶宛聯邦|國家|Polish–Lithuanian Commonwealth
+เครือรัฐดอมินีกา|place|多米尼克|國家|Dominica
+เครือรัฐออสเตรเลีย|place|澳洲|國家|Australia
+เครือรัฐเอกราช|org|獨立國家國協|國際組織|Commonwealth of Independent States
+เคาน์ตีวัลเด็ค|place|瓦爾德克統治者列表|國家|Principality of Waldeck
+เจนไน|place|清奈|首都|Chennai
+เจฟเฟอร์สันซิตี|place|傑佛遜城|首都|Jefferson City
+เจียงใหม่|place|清邁府|泰國的府|Chiang Mai
+เจแปน|place|日本|國家|Japan
+เฉิงตู|place|成都市|首都|Chengdu
+เชียนเจอร์|place|展玉|首都|Cianjur
+เชเซนา|place|切塞納|首都|Cesena
+เซจง|place|世宗特別自治市|首都|Sejong
+เซนต์ปีเตอส์เบิร์ก|place|聖彼得堡|首都|Saint Petersburg
+เซนต์พอล|place|聖保羅|首都|Saint Paul
+เซาท์โคเรีย|place|大韓民國|國家|South Korea
+เซเลม|place|撒冷|首都|Salem
+เซ็นได|place|仙台市|首都|Sendai
+เดนมาร์ค|place|丹麥|國家|Denmark
+เดราดูน|place|德拉敦|首都|Dehradun
+เตรียมทหาร|org|泰國軍官預備學校|泰國大學|Armed Forces Academies Preparatory School
+เนอการาบรูไนดารุสซาลาม|place|汶萊|國家|Brunei
+เบลเยี่ยม|place|比利時|國家|Belgium
+เบอร์ลินตะวันออก|place|東柏林|首都|East Berlin
+เบอร์โน|place|布爾諾|首都|Brno
+เบเล็ง|place|貝倫|首都|Belém
+เปิลแซ็ญ|place|皮爾森|首都|Plzeň
+เพียร์|place|皮爾|首都|Pierre
+เฟรดริกตัน|place|弗雷德里克頓|首都|
+เมจาเลงคา|place|瑪查冷卡|首都|Majalengka
+เมืองคนดี|place|素叻府|泰國的府|Surat Thani
+เมืองคอน|place|那空是貪瑪叻府|泰國的府|Nakhon Si Thammarat
+เมืองจันทบูร|place|莊他武里府|泰國的府|Chanthaburi
+เมืองชล|place|春武里府|泰國的府|Chon Buri
+เมืองชากังราว|place|甘烹碧府|泰國的府|Kamphaeng Phet
+เมืองชุมพร|place|春蓬府|泰國的府|Chumphon
+เมืองนครปฐม|place|佛統府|泰國的府|Nakhon Pathom
+เมืองนครลำปาง|place|南邦府|泰國的府|Lampang
+เมืองนนท์|place|暖武里府|泰國的府|Nonthaburi
+เมืองน่าน|place|難府|泰國的府|Nan
+เมืองประจวบคีรีขันธ์|place|巴蜀府|泰國的府|Prachuap Khiri Khan
+เมืองพระบาง|place|那空沙旺府|泰國的府|Nakhon Sawan
+เมืองพังงา|place|攀牙府|泰國的府|Phang Nga
+เมืองพัทลุง|place|博他侖府|泰國的府|Phatthalung
+เมืองพิษณุโลก|place|彭世洛府|泰國的府|Phitsanulok
+เมืองร้อยเกาะ|place|素叻府|泰國的府|Surat Thani
+เมืองลพบุรี|place|華富里府|泰國的府|Lopburi
+เมืองลาว|place|寮國|國家|Laos
+เมืองวิเศษชัยชาญ|place|紅統府|泰國的府|Ang Thong
+เมืองสกลทวาปี|place|沙功那空府|泰國的府|Sakon Nakhon
+เมืองสงขลา|place|宋卡府|泰國的府|Songkhla
+เมืองสองแคว|place|彭世洛府|泰國的府|Phitsanulok
+เมืองอุทัยธานี|place|烏泰他尼府|泰國的府|Uthai Thani
+เมืองเพชร|place|佛丕府|泰國的府|Phetchaburi
+เมืองเพชรบุรี|place|佛丕府|泰國的府|Phetchaburi
+เมืองแปะ|place|武里南府|泰國的府|Buriram
+เมืองแพร่|place|帕府|泰國的府|Phrae
+เมืองโพนโฮง|place|蓬洪|首都|Phōnhōng
+เลห์|place|萊鎮|首都|Leh
+เลออน|place|萊昂|首都|León
+เวียงพิงค์|place|清邁府|泰國的府|Chiang Mai
+เวียงโกศัย|place|帕府|泰國的府|Phrae
+เวียด|place|越南|國家|Vietnam
+เสปน|place|西班牙|國家|Spain
+เสาหลักของแผ่นดิน|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+เหวียดนาม|place|越南|國家|Vietnam
+เหวียตนาม|place|越南|國家|Vietnam
+เองการ์นาซิออน|place|恩卡納西翁|首都|Encarnación
+เอดมันตัน|place|愛德蒙頓|首都|Edmonton
+เอนเด|place|英德 (東努沙登加拉省)|首都|Ende
+เอมิเรตอิสลามอัฟกานิสถาน|place|阿富汗|國家|Afghanistan
+เอสปันญา|place|西班牙|國家|Spain
+เอสเตลี|place|埃斯特利|首都|Estelí
+เอิสเทอร์ไรช์|place|奧地利|國家|Austria
+เอแบค|org|易三倉大學|泰國大學|Assumption University
+เอโดะ|place|江戶|首都|Edo
+เอไอที|org|亞洲理工學院|泰國大學|Asian Institute of Technology
+เฮลเลนิก|place|希臘|國家|Greece
+เฮอังเกียว|place|平安京|首都|Heian-kyō
+เฮโจเกียว|place|平城京|首都|Heijō-kyō
+แจแพน|place|日本|國家|Japan
+แช็สแกบูแยโยวิตแซ|place|捷克布傑約維采|首都|České Budějovice
+แนสซอ|place|拿騷|首都|Nassau
+แบงก์ชาติ|org|泰國銀行|泰國政府機關|Bank of Thailand
+แบตันรูช|place|巴頓魯治|首都|Baton Rouge
+แปดริ้ว|place|差春騷府|泰國的府|Chachoengsao
+แผนการโคลัมโบ|org|科倫坡計畫|國際組織|Colombo Plan
+แพร่รีส|place|帕府|泰國的府|Phrae
+แมดิสัน|place|麥迪遜|首都|Madison
+แลนซิง|place|蘭辛|首都|Lansing
+แหล่งแซนาดู|place|元上都|首都|Xanadu
+แอดิเลด|place|阿得雷德|首都|Adelaide
+แอนซัส|org|太平洋安全保障條約|國際組織|ANZUS
+แอนทีกา|place|安地卡及巴布達|國家|Antigua and Barbuda
+แอนทีกาและบาร์บิวดา|place|安地卡及巴布達|國家|Antigua and Barbuda
+แอนทีกาแอนด์บาร์บิวดา|place|安地卡及巴布達|國家|Antigua and Barbuda
+แอนแนโพลิส|place|安納波利斯|首都|Annapolis
+แอร์ฟวร์ท|place|艾福特|首都|Erfurt
+แอลเจียร์|place|阿爾及爾|首都|Algiers
+โกลกาตา|place|加爾各答|首都|Kolkata
+โคตา เวียนกาปู|place|威英嘉浦|首都|Kota Waingapu
+โคฟุ|place|甲府市|首都|Kofu
+โคราฆะ|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+โคราฆะปุระ|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+โคราชสีมา|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+โคราชเสมา|place|那空叻差是瑪府|泰國的府|Nakhon Ratchasima
+โคแวกซ์|org|COVAX|國際組織|COVAX
+โจฮันเนสเบิร์ก|place|約翰尼斯堡|首都|Johannesburg
+โซมาลิแลนด์|place|索馬利蘭|國家|Somaliland
+โซมาลีแลนด์|place|索馬利蘭|國家|Somaliland
+โดมินิกัน|place|多明尼加|國家|Dominican Republic
+โดเวอร์|place|多佛|首都|Dover
+โทกูชิมะ|place|德島市|首都|Tokushima
+โทยามะ|place|富山市|首都|Toyama
+โบอาโก|place|博阿科|首都|Boaco
+โปแลนด์-ลิทัวเนีย|place|波蘭立陶宛聯邦|國家|Polish–Lithuanian Commonwealth
+โปโซ|place|波索|首都|Poso
+โมโรนี|place|莫洛尼|首都|Moroni
+โรงเรียนการเรือนพระนคร|org|川登喜皇家大學|泰國大學|Suan Dusit University
+โรงเรียนข้าราชการพลเรือน|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+โรงเรียนข้าราชการพลเรือนของพระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+โรงเรียนข้าราชการพลเรือนฯ|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+โรงเรียนช่างไหม|org|泰國農業大學|泰國大學|Kasetsart University
+โรงเรียนนายร้อย|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+โรงเรียนนายร้อย จปร.|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+โรงเรียนนายร้อยทหารบก|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+โรงเรียนนายร้อยพระจุลจอมเกล้า|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+โรงเรียนประณีตศิลปกรรม|org|泰國藝術大學|泰國大學|Silpakorn University
+โรงเรียนฝึกหัดครูชั้นสูง|org|詩納卡寧威洛大學|泰國大學|Srinakharinwirot University
+โรงเรียนฝึกหัดครูธนบุรี|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+โรงเรียนฝึกหัดครูประถมกสิกรรม|org|泰國農業大學|泰國大學|Kasetsart University
+โรงเรียนฝึกหัดครูประถมกสิกรรม แม่โจ้|org|梅州大學|泰國大學|Maejo University
+โรงเรียนฝึกหัดครูสตรีอาชีวศึกษา|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+โรงเรียนฝึกหัดครูอาชีวศึกษา|org|吞武裡皇家大學|泰國大學|Dhonburi Rajabhat University
+โรงเรียนฝึกหัดครูเพชรบุรีวิทยาลงกรณ์|org|瓦拉雅阿隆空皇家大學|泰國大學|Valaya Alongkorn Rajabhat University
+โรงเรียนมหาดเล็ก|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+โรงเรียนมัธยมบ้านสมเด็จเจ้าพระยา|org|班頌德昭帕亞皇家大學|泰國大學|Bansomdejchaopraya Rajabhat University
+โรงเรียนมัธยมวิสามัญเกษตรกรรม|org|泰國農業大學|泰國大學|Kasetsart University
+โรงเรียนราชแพทยาลัย|org|瑪希敦大學|泰國大學|Mahidol University
+โรงเรียนวิชาการเพาะปลูก|org|泰國農業大學|泰國大學|Kasetsart University
+โรงเรียนศิลปากร|org|泰國藝術大學|泰國大學|Silpakorn University
+โรงเรียนสำหรับฝึกหัดวิชาข้าราชการฝ่ายพลเรือน|org|朱拉隆功大學|泰國大學|Chulalongkorn University
+โรงเรียนเกษตราธิการ|org|泰國農業大學|泰國大學|Kasetsart University
+โรงเรียนเตรียมทหาร|org|泰國軍官預備學校|泰國大學|Armed Forces Academies Preparatory School
+โรงเรียนเทคนิคทหารบก|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+โรงเรียนเท็ฆนิคทหารบก|org|朱拉春高皇家軍事學院|泰國大學|Chulachomklao Royal Military Academy
+โรงเรียนแพทยากร|org|瑪希敦大學|泰國大學|Mahidol University
+โรดีเซีย|place|辛巴威|國家|Zimbabwe
+โอกายามะ|place|岡山市|首都|Okayama
+โอฆะบุรี|place|彭世洛府|泰國的府|Phitsanulok
+โอตสึ|place|大津市|首都|Otsu
+โอลิมเปีย|place|奧林匹亞|首都|Olympia
+โอสตราวา|place|奧斯特拉瓦|首都|Ostrava
+โออิตะ|place|大分市|首都|Ōita-shi
+โอเปก|org|石油輸出國組織|國際組織|Organization of the Petroleum Exporting Countries
+โอโคตัล|place|奧科塔爾 (城市)|首都|Ocotal
+โอโลโมตส์|place|奧洛穆茨|首都|Olomouc
+โฮบาร์ต|place|荷巴特|首都|Hobart
+ไชนา|place|中華人民共和國|國家|People's Republic of China
+ไชน่า|place|中華人民共和國|國家|People's Republic of China
+ไชเอนน์|place|夏延|首都|Cheyenne
+ไซตามะ|place|埼玉市|首都|Saitama
+ไซปรัสเหนือ|place|北賽普勒斯土耳其共和國|國家|Northern Cyprus
+ไถวาน|place|中華民國|國家|Taiwan
+ไทรบุรี|place|榕市府|泰國的府|Syburi
+ไทวาน|place|中華民國|國家|Taiwan
+ไฟรบวร์คอิมไบรส์เกา|place|弗萊堡|首都|Freiburg im Breisgau
+ไวต์ฮอร์ส|place|白馬市|首都|Whitehorse
+ไฮเดอราบาด|place|海德拉巴|首都|Hyderabad</script>
 <script type="text/plain" id="slangdata"># 網路用語、口語、可愛說法：泰文|拼音|中文|英文
 งับ|ngáp|「ครับ」的可愛說法（句尾禮貌語氣詞，男女都會用）|cute form of khráp
 ค้าบ|kháap|「ครับ」的可愛說法|cute form of khráp
@@ -38855,6 +40831,111 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var storeStatus = '這次開頁後還沒有新變動', restored = false, checks = {};
 
   /* ---------- 斷詞 ---------- */
+  /* ---------- 詞義補強：被切開的複合詞接回去、專有名詞的字面意思、機器翻譯 ---------- */
+  function zhOfEntry(w) {
+    var es = DICT && DICT[w];
+    if (!es) { return ''; }
+    var fallback = '';
+    for (var i = 0; i < es.length; i++) {
+      var z = es[i][4] && es[i][4][0], en = String((es[i][3] && es[i][3][0]) || '');
+      if (!z) { continue; }
+      z = String(z).split(/[；;、，,]/)[0].trim();
+      if (/^(alternative|obsolete|archaic|abbreviation|misspelling)/i.test(en) || /^同 /.test(z) || /（同 /.test(z)) { if (!fallback) { fallback = z; } continue; }
+      return z;
+    }
+    return fallback;
+  }
+  /* 組成機構名、地名常用的字：字典第一個意思常常不是這個用法，這裡直接給 */
+  var NAME_PARTS = {
+    'กรม': '廳；局', 'กระทรวง': '部（政府）', 'สำนักงาน': '辦公室；署', 'สำนัก': '署；辦公室', 'ไทย': '泰國', 'การค้า': '貿易', 'ประเทศ': '國家',
+    'จังหวัด': '府（省）', 'อำเภอ': '縣', 'ตำบล': '鄉', 'มหาวิทยาลัย': '大學', 'บริษัท': '公司', 'ธนาคาร': '銀行', 'โรงเรียน': '學校', 'โรงพยาบาล': '醫院',
+    'สมาคม': '協會', 'องค์การ': '組織', 'องค์กร': '組織', 'คณะ': '學院；團', 'กรุง': '首都', 'เมือง': '城市', 'ถนน': '路', 'ซอย': '巷', 'สถาบัน': '機構；學院',
+    'ศูนย์': '中心', 'สภา': '議會', 'ศาล': '法院', 'การท่องเที่ยว': '觀光', 'แห่ง': '…的', 'ระหว่างประเทศ': '國際', 'แห่งชาติ': '國家（的）', 'พาณิชย์': '商業',
+    'การต่างประเทศ': '外交', 'ต่างประเทศ': '外國', 'เกษตร': '農業', 'ส่งเสริม': '促進', 'พัฒนา': '發展', 'วัฒนธรรม': '文化', 'อุตสาหกรรม': '工業', 'ส่งออก': '出口',
+    'นำเข้า': '進口', 'ภาษี': '稅', 'ศุลกากร': '海關', 'ตำรวจ': '警察', 'ทหาร': '軍', 'สาธารณสุข': '公共衛生', 'ศึกษาธิการ': '教育', 'คมนาคม': '交通',
+    'มหาดไทย': '內政', 'การคลัง': '財政', 'กลาโหม': '國防', 'ยุติธรรม': '司法', 'แรงงาน': '勞工', 'พลังงาน': '能源', 'ดิจิทัล': '數位', 'สิ่งแวดล้อม': '環境',
+    'ทรัพยากร': '資源', 'ธรรมชาติ': '自然', 'วิทยาศาสตร์': '科學', 'เทคโนโลยี': '科技', 'การศึกษา': '教育', 'กีฬา': '體育', 'สื่อ': '媒體', 'บันเทิง': '娛樂',
+    'เศรษฐกิจ': '經濟', 'การเงิน': '金融', 'การลงทุน': '投資', 'คณะกรรมการ': '委員會', 'กรรมการ': '委員', 'มูลนิธิ': '基金會', 'พรรค': '黨', 'สถานี': '站',
+    'สนามบิน': '機場', 'ตลาด': '市場', 'วัด': '寺', 'พระราชวัง': '王宮', 'อุทยาน': '公園', 'แม่น้ำ': '河', 'เกาะ': '島', 'ภูเขา': '山', 'ทะเล': '海', 'อ่าว': '灣'
+  };
+  function shortMeaning(w) {
+    if (NAME_PARTS[w]) { return NAME_PARTS[w]; }
+    var z = zhOfEntry(w);
+    if (z && glossLang !== 'en') { return z; }
+    var es = DICT && DICT[w];
+    if (!es) { return ''; }
+    var en = es[0][3] && es[0][3][0];
+    var ab = /abstract noun of (\S+)/.exec(String(en || ''));
+    if (ab && ab[1] !== w && DICT[ab[1]]) { var zb = shortMeaning(ab[1]); if (zb) { return zb; } }
+    return en ? String(en).replace(/\(.*?\)/g, '').split(/[;,]/)[0].trim() : z;
+  }
+  /* 瀏覽器的斷詞有時把字典裡有的複合詞切開（ส่ง＋ออก）：接回字典裡的那個詞 */
+  var DM_MAX = 4;
+  function dictMerge(out) {
+    if (!DICT) { return out; }
+    var res = [];
+    for (var i = 0; i < out.length; i++) {
+      var g = out[i], done = false;
+      if (g.w && !g.gz && /^[ก-๎]+$/.test(g.t)) {
+        for (var L = Math.min(DM_MAX, out.length - i); L >= 2 && !done; L--) {
+          var ok = true, t = '';
+          for (var k = 0; k < L; k++) {
+            var x = out[i + k];
+            if (!x.w || x.gz || !/^[ก-๎]+$/.test(x.t) || (k && x.i !== out[i + k - 1].i + out[i + k - 1].n)) { ok = false; break; }
+            t += x.t;
+          }
+          if (!ok || t.length < 3 || t.length > 24 || !zhOfEntry(t)) { continue; }
+          res.push({ i: g.i, n: t.length, w: true, t: t });
+          i += L - 1; done = true;
+        }
+      }
+      if (!done) { res.push(g); }
+    }
+    return res;
+  }
+  /* 把一串泰文拆成字典裡的詞（最長的先比），用來說明專有名詞的字面意思 */
+  function splitToWords(t) {
+    var s = t.replace(/\s+/g, ''), out = [], i = 0;
+    while (i < s.length) {
+      var hit = null;
+      for (var L = Math.min(20, s.length - i); L >= 2; L--) {
+        var w = s.slice(i, i + L);
+        if (DICT && DICT[w] && shortMeaning(w)) { hit = w; break; }
+      }
+      if (!hit) { var last = out[out.length - 1]; if (last && !last.g) { last.t += s[i]; } else { out.push({ t: s[i], g: '' }); } i++; continue; }
+      out.push({ t: hit, g: shortMeaning(hit) }); i += hit.length;
+    }
+    return out;
+  }
+  function buildComposeRow(t) {
+    if (!DICT) { return null; }
+    var parts = splitToWords(t);
+    if (parts.length < 2 || !parts.some(function (p) { return p.g; })) { return null; }
+    var row = document.createElement('div'); row.className = 'compose';
+    var lab = document.createElement('span'); lab.className = 'cmp-l'; lab.textContent = '字面'; row.appendChild(lab);
+    parts.forEach(function (p, k) {
+      if (k) { var plus = document.createElement('span'); plus.className = 'cmp-plus'; plus.textContent = '＋'; row.appendChild(plus); }
+      var c = document.createElement('span'); c.className = 'cmp-part';
+      var th = document.createElement('span'); th.lang = 'th'; th.className = 'cmp-th'; th.textContent = p.t; c.appendChild(th);
+      if (p.g) { var z = document.createElement('span'); z.className = 'cmp-zh'; z.textContent = p.g; c.appendChild(z); }
+      row.appendChild(c);
+    });
+    return row;
+  }
+  /* 機器翻譯（要網路）：查不到的詞、專有名詞，直接給一個中文意思 */
+  var MT_CACHE = {};
+  function mtRow(t, label) {
+    var row = document.createElement('div'); row.className = 'mtrow';
+    var lab = document.createElement('span'); lab.className = 'mt-l'; lab.textContent = label || '翻譯'; row.appendChild(lab);
+    var val = document.createElement('span'); val.className = 'mt-v'; row.appendChild(val);
+    var key = t.replace(/\s+/g, ' ').trim();
+    function show(v) { if (v) { val.textContent = v; row.classList.remove('loading'); } else { row.hidden = true; } }
+    if (MT_CACHE[key] !== undefined) { show(MT_CACHE[key]); return row; }
+    val.textContent = '翻譯中…'; row.classList.add('loading');
+    if (typeof translateText !== 'function' || navigator.onLine === false) { row.hidden = true; return row; }
+    translateText(key).then(function (z) { z = (z || '').trim(); MT_CACHE[key] = z; show(z); }, function () { row.hidden = true; });
+    return row;
+  }
   function segment(str) {
     var out = [];
     if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
@@ -38865,6 +40946,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     }
     if (typeof gazMerge === 'function') { out = gazMerge(str, out); }
     out = mergeElong(out);
+    out = dictMerge(out);
     return out;
   }
   function segAt(i) {
@@ -39818,7 +41900,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var sp4 = document.createElement('span'); sp4.lang = 'th'; sp4.textContent = bw; lab3.appendChild(sp4);
       wrapD.appendChild(lab3); wrapD.appendChild(entryBlock(bw, DICT[bw])); hits = true;
     }
-    else { var no = document.createElement('div'); no.textContent = '內建字典裡沒有這個詞，可以用下面的按鈕查。'; wrapD.appendChild(no); }
+    else {
+      var no = document.createElement('div'); no.textContent = '內建字典裡沒有這個詞。'; wrapD.appendChild(no);
+      if (/[\u0E01-\u0E2E]/.test(key0)) {
+        var cmp0 = buildComposeRow(key0); if (cmp0) { wrapD.appendChild(cmp0); }
+        if (!entityAt(seg.i)) { wrapD.appendChild(mtRow(key0, '翻譯')); }
+      }
+    }
     /* 斷詞可能把複合詞切開：試著和前後的詞合起來查 */
     var k = segs.indexOf(seg), combos = [];
     function tryCombo(a, b) {
@@ -40904,6 +42992,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           a = k2; continue;
         }
         var e1 = cutEnd(r, r.segs[k2]), nAfter = 0;
+        if (e1 === r.e && (type === 'org' || type === 'plan')) {
+          var nxr = runAfter(r);
+          if (nxr) { var lsg = segs[r.segs[r.segs.length - 1]], fsg = segs[nxr.segs[0]]; if (zhOfEntry(lsg.t + fsg.t)) { e1 = cutEnd(nxr, nxr.segs[0]); } }
+        }
         r.segs.forEach(function (k) { if (segs[k].i >= hEnd && segs[k].i < e1) { nAfter++; } });
         if (type === 'plan' && hit !== 'โครงการ' && hit !== 'พ.ร.บ.' && hit !== 'พระราชบัญญัติ' && nAfter < 2) { continue; }
         if (type === 'place' && (hit === 'เมือง' || hit === 'ประเทศ' || hit === 'รัฐ' || hit === 'เกาะ') && !PLACES[t.slice(hEnd, e1)] && known(t.slice(hEnd, e1))) { continue; }
@@ -40983,7 +43075,12 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var a = document.createElement('a'); a.className = 'ext small'; a.href = L[1]; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = L[0];
       row.appendChild(a);
     });
-    sec.appendChild(top); sec.appendChild(help); sec.appendChild(row);
+    sec.appendChild(top); sec.appendChild(help);
+    if (!(en.info && en.info.zh)) {
+      var cmp = buildComposeRow(en.t); if (cmp) { sec.appendChild(cmp); }
+      sec.appendChild(mtRow(en.t, '翻譯'));
+    }
+    sec.appendChild(row);
     return sec;
   }
 
@@ -41341,7 +43438,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.9.0';
+  var APP_VER = '正式版 v1.10.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -42221,6 +44318,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['App 內建約一萬五千個明星、政治人物、劇名、品牌的名單。', '點到名單裡的名字，會顯示中文名、英文名和說明。', '「朗讀」唸出全名，「Google」用 Google 搜尋這個名字。'] },
       { t: '名字被切錯', s: '按「這是名字或劇名？」，調好範圍存起來', img: 'name-edit',
         d: ['點被切錯的名字，按查詞視窗下方的「這是名字或劇名？」。', '用「‹＋」「＋›」往前、往後多選一個字，「－」少選一個字，直到中間顯示完整的名字。', '選種類（人名、作品…），可以寫中文名，按「存到我的名單」。', '之後所有文件都會把它當成一個詞。設定頁的「我的專有名詞」可以刪除。'] },
+      { t: '地名、機關的意思', s: '點專有名詞，看中文名或「字面」意思', img: 'ent-mean',
+        d: ['內建名單裡的國家、泰國各府、政府機關、大學，會直接顯示中文名。', '不在名單裡的，會拆成字典裡的詞，顯示「字面」意思，例如 กรม（廳）＋ส่งเสริม（促進）＋การค้า（貿易）。', '有網路時還會顯示「翻譯」：機器翻譯的中文意思，僅供參考。'] },
       { t: '翻譯一整段', s: '長按一個字，不放開，拖到最後一個字', img: 'sel-pop',
         d: ['確認工具列選的是「點字」。', '手指長按第一個字（約半秒），不要放開，拖到最後一個字再放開。用 Pencil 可以直接拖。', '下方會跳出這段文字和中文翻譯。', '還可以「朗讀」「複製」「畫螢光筆」，或「在 Google 翻譯打開」。'],
         tip: '直接翻譯需要網路。' }]],
@@ -42241,11 +44340,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '畫重點', s: '選「螢光筆」，從一個字劃到另一個字', img: 'note-hl',
         d: ['按「螢光筆」，下面會出現顏色和樣式。', '選顏色；彩色圓圈是「我的顏色」，可以存自己常用的顏色。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '想取消：點一下畫過的地方。'] },
       { t: '手寫', s: '選「手寫」，選顏色和粗細再寫', img: 'note-ink',
-        d: ['按「手寫」，下面會出現顏色和「細／中／粗」；彩色圓圈是「我的顏色」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
+        d: ['按「手寫」，下面會出現顏色和「細／中／粗」；彩色圓圈是「我的顏色」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」開關：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
       { t: '寫註解', s: '選「文字框」，點字或點空白處', img: 'note-box',
         d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。'] },
       { t: '我的顏色', s: '彩色圓圈：存自己常用的顏色', img: 'note-colors',
-        d: ['螢光筆、手寫、文字框都只放三個顏色，旁邊的彩色圓圈是「我的顏色」，三種工具各存各的。', '按彩色圓圈，跳出你存的顏色，點一個就套用。', '按「＋」挑一個新顏色，它會留在這裡下次再用，最多存 50 種。', '按「編輯」，再點顏色就能刪掉；按「完成」結束。'],
+        d: ['螢光筆、手寫、文字框都只放三個顏色，旁邊的彩色圓圈是「我的顏色」，三種工具各存各的。', '按彩色圓圈，跳出你存的顏色，點一個就套用。', '按「＋」挑一個新顏色，它會留在這裡下次再用，最多存 50 種。', '想換外面那三個顏色：先點上面「外面顯示的三個顏色」的一格，再點下面的顏色（或按「＋」挑新的）。換下來的顏色會收進「我的顏色」。', '按「編輯」，再點顏色就能刪掉；按「完成」結束。'],
         tip: '先點一下要改的文字框，再選顏色，就會改那一個。' },
       { t: '畫錯了', s: '按「↶」回到上一步，按「↷」做回來', img: 'note-undo',
         d: ['「↶」「↷」和「清除全部」在工具框的右上角。', '「↶」是上一步：取消剛剛的動作，可以一直往回按。', '「↷」是下一步：把剛剛取消的動作做回來。', '按鈕變淡，代表已經沒有可以退回或做回來的動作。', '「清除全部」：刪掉這份文件所有的筆記，要按兩次才會刪；刪了也可以按「↶」救回來。'],
@@ -42270,6 +44369,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '寫自己的意思', s: '在「全部清單」裡寫', img: 'cards-list',
         d: ['按「全部清單」。', '在卡片的「我的意思或筆記」打字，會自動存。', '也可以把卡片搬到別的資料夾，或按「複製成 Anki 格式」。'] }]],
     ['設定', [
+      { t: '更新 App', s: '設定頁最下面按「檢查更新」', img: '',
+        d: ['App 平常會自己更新；想馬上拿到新版時，到設定頁最下面按「檢查更新」。', '有新版會自動下載並重新整理；沒有的話會顯示「已經是最新版了」。', '版本號就寫在按鈕左邊。'] },
       { t: '換顏色', s: '「外觀」選淺色或深色', img: 'set-theme',
         d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。'] },
       { t: '換字體', s: '「中文字體」選喜歡的字', img: 'set-font',
@@ -42874,6 +44975,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var INK_WIDTHS = [[2, '細'], [3.5, '中'], [6, '粗']];
   var toolPrefs = { hlColor: '#ffd400', hlStyle: 'full', inkColor: '#1f4fd1', inkW: 3.5, hlCustom: '#c38bff', inkCustom: '#8a5a2b', boxCustom: '#0f8b8d' };
   try { Object.assign(toolPrefs, JSON.parse(localStorage.getItem(TOOL_KEY) || '{}')); } catch (err) {}
+  if (!Array.isArray(toolPrefs.hlFav) || toolPrefs.hlFav.length !== 3) { toolPrefs.hlFav = HL_COLORS.map(function (c) { return c[0]; }); }
+  if (!Array.isArray(toolPrefs.inkFav) || toolPrefs.inkFav.length !== 3) { toolPrefs.inkFav = INK_COLORS.map(function (c) { return c[0]; }); }
+  if (!Array.isArray(toolPrefs.boxFav) || toolPrefs.boxFav.length !== 3) { toolPrefs.boxFav = ['red', 'black', 'blue']; }
+  var COLOR_NAMES = { '#ffd400': '黃', '#7ddc7d': '綠', '#ff9cc2': '粉紅', '#1f4fd1': '藍（預設）', '#26332e': '黑', '#d63b3b': '紅', red: '紅', black: '黑', blue: '藍', green: '綠', purple: '紫', orange: '橘' };
+  function colorCss(c) { return c === INK_COLORS[0][0] ? 'var(--ink)' : (/^#/.test(c) ? c : 'var(--c-' + c + ')'); }
   function saveTools() { try { localStorage.setItem(TOOL_KEY, JSON.stringify(toolPrefs)); } catch (err) {} }
   function hexA(hex, a) {
     var m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
@@ -42931,7 +45037,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var b = document.createElement('button'); b.type = 'button'; b.className = 'sw2 custom'; b.id = id;
     var on = !!cur && presets.indexOf(cur) < 0;
     b.classList.toggle('on', on);
-    b.style.setProperty('--sw', on ? cur : 'transparent');
+    b.style.setProperty('--sw', on ? colorCss(cur) : 'transparent');
     b.title = '我的顏色'; b.setAttribute('aria-label', label); b.setAttribute('aria-haspopup', 'dialog');
     b.setAttribute('aria-expanded', String(!!(cpop && !cpop.hidden && cpKind === kind)));
     b.addEventListener('click', function () { if (cpop.hidden || cpKind !== kind) { openCpop(kind); } else { closeCpop(); } });
@@ -42941,8 +45047,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     toolOpts.replaceChildren();
     if (mode === 'hl') {
       toolOpts.appendChild(optLabel('顏色'));
-      HL_COLORS.forEach(function (c) { toolOpts.appendChild(swatch(c[0], c[1], toolPrefs.hlColor === c[0], function (v) { toolPrefs.hlColor = v; saveTools(); renderToolOpts(); })); });
-      toolOpts.appendChild(myColorBtn('hl', 'hlCustom', '螢光筆：我的顏色', toolPrefs.hlColor, HL_COLORS.map(function (c) { return c[0]; })));
+      toolPrefs.hlFav.forEach(function (c) { toolOpts.appendChild(swatch(c, COLOR_NAMES[c] || c, toolPrefs.hlColor === c, function (v) { toolPrefs.hlColor = v; saveTools(); renderToolOpts(); })); });
+      toolOpts.appendChild(myColorBtn('hl', 'hlCustom', '螢光筆：我的顏色', toolPrefs.hlColor, toolPrefs.hlFav));
       toolOpts.appendChild(optLabel('樣式'));
       [['full', '整塊'], ['under', '底線']].forEach(function (o) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'ob' + (o[0] === 'under' ? ' ob-under' : ' ob-full');
@@ -42953,8 +45059,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       });
     } else if (mode === 'ink') {
       toolOpts.appendChild(optLabel('顏色'));
-      INK_COLORS.forEach(function (c, k) { toolOpts.appendChild(swatch(k ? c[0] : 'var(--ink)', c[1], toolPrefs.inkColor === c[0], function () { toolPrefs.inkColor = c[0]; saveTools(); renderToolOpts(); })); });
-      toolOpts.appendChild(myColorBtn('ink', 'inkCustom', '手寫：我的顏色', toolPrefs.inkColor, INK_COLORS.map(function (c) { return c[0]; })));
+      toolPrefs.inkFav.forEach(function (c) { var b = swatch(colorCss(c), COLOR_NAMES[c] || c, toolPrefs.inkColor === c, function () { toolPrefs.inkColor = c; saveTools(); renderToolOpts(); }); toolOpts.appendChild(b); });
+      toolOpts.appendChild(myColorBtn('ink', 'inkCustom', '手寫：我的顏色', toolPrefs.inkColor, toolPrefs.inkFav));
       toolOpts.appendChild(optLabel('粗細'));
       INK_WIDTHS.forEach(function (w) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'ob ow';
@@ -42977,11 +45083,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   if (!Array.isArray(toolPrefs.hlColors)) { toolPrefs.hlColors = ['#8cc8ff', '#ffb15c', '#c38bff']; }
   if (!Array.isArray(toolPrefs.inkColors)) { toolPrefs.inkColors = ['#2f8f5b', '#e07a2f', '#7b4fd1']; }
   var CP = {
-    box: { list: 'boxColors', btn: 'boxCustom', last: 'boxCustom' },
-    hl: { list: 'hlColors', btn: 'hlCustom', last: 'hlCustom' },
-    ink: { list: 'inkColors', btn: 'inkCustom', last: 'inkCustom' }
+    box: { list: 'boxColors', btn: 'boxCustom', last: 'boxCustom', fav: 'boxFav' },
+    hl: { list: 'hlColors', btn: 'hlCustom', last: 'hlCustom', fav: 'hlFav' },
+    ink: { list: 'inkColors', btn: 'inkCustom', last: 'inkCustom', fav: 'inkFav' }
   };
-  var keepBoxUntil = 0, cpTarget = null, cpEditing = false, cpKind = 'box', cpPicking = false, cpPending = null;
+  var keepBoxUntil = 0, cpTarget = null, cpEditing = false, cpKind = 'box', cpPicking = false, cpPending = null, cpSlot = null;
   function keepEditorFocus(el) {
     el.addEventListener('mousedown', function (e) { e.preventDefault(); });
     el.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
@@ -43003,22 +45109,41 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     boxCustomBtn = b;
     onTap(b, function () { if (cpop.hidden || cpKind !== 'box') { openCpop('box'); } else { closeCpop(); } });
   })();
+  function renderBoxFavs() {
+    if (!styleBarEl) { return; }
+    var bs = styleBarEl.querySelectorAll('.sw[data-color]');
+    toolPrefs.boxFav.forEach(function (c, i) {
+      var b = bs[i]; if (!b) { return; }
+      b.setAttribute('data-color', c); b.style.setProperty('--sw', colorCss(c)); b.setAttribute('aria-label', COLOR_NAMES[c] || c);
+    });
+  }
+  renderBoxFavs();
   function boxColorHex(c) { return /^#/.test(c || '') ? c.toLowerCase() : (BOX_LEGACY[c] || null); }
   function syncBoxCustom() {
     if (!boxCustomBtn) { return; }
-    var c = currentStyle().color, hex = boxColorHex(c), on = !!hex && ['red', 'black', 'blue'].indexOf(c) < 0;
+    var c = currentStyle().color, on = !!c && toolPrefs.boxFav.indexOf(c) < 0;
     boxCustomBtn.classList.toggle('on', on);
-    boxCustomBtn.style.setProperty('--sw', on ? (/^#/.test(c) ? c : 'var(--c-' + c + ')') : 'transparent');
+    boxCustomBtn.style.setProperty('--sw', on ? colorCss(c) : 'transparent');
     if (cpop && !cpop.hidden && !cpPicking && cpKind === 'box') { renderCpop(); }
   }
   var cpop = document.createElement('div'); cpop.className = 'cpop'; cpop.id = 'cpop'; cpop.hidden = true;
   cpop.setAttribute('role', 'dialog'); cpop.setAttribute('aria-label', '我的顏色');
-  cpop.innerHTML = '<div class="cp-head"><span class="cp-t">我的顏色</span><span class="cp-n" id="cpCount"></span><button type="button" class="cp-edit" id="cpEdit">編輯</button></div>' +
+  cpop.innerHTML = '<div class="cp-sec">外面顯示的三個顏色</div><div class="cp-favs" id="cpFavs"></div>' +
+    '<div class="cp-head"><span class="cp-t">我的顏色</span><span class="cp-n" id="cpCount"></span><button type="button" class="cp-edit" id="cpEdit">編輯</button></div>' +
     '<div class="cp-grid" id="cpGrid"></div><div class="cp-note" id="cpNote"></div>';
   document.body.appendChild(cpop);
-  onTap($('cpEdit'), function () { commitPending(); cpEditing = !cpEditing; renderCpop(); });
+  onTap($('cpEdit'), function () { commitPending(); cpEditing = !cpEditing; cpSlot = null; renderCpop(); });
+  /* 把某個顏色放進外面的第 i 格；換下來的顏色收進「我的顏色」，不會不見 */
+  function setFav(i, c) {
+    var favs = toolPrefs[CP[cpKind].fav], list = toolPrefs[CP[cpKind].list], old = favs[i];
+    if (favs.indexOf(c) >= 0 && favs.indexOf(c) !== i) { favs[favs.indexOf(c)] = old; }
+    else if (old && list.indexOf(old) < 0 && list.length < BOX_MAX) { list.push(old); }
+    favs[i] = c;
+    saveTools();
+    if (cpKind === 'box') { renderBoxFavs(); syncStyleBar(); } else { renderToolOpts(); }
+  }
   function cpCurrent() {
-    if (cpKind === 'box') { return boxColorHex(currentStyle().color); }
+    if (cpKind === 'box') { var bc = currentStyle().color; return /^#/.test(bc || '') ? bc.toLowerCase() : bc; }
     return ((cpKind === 'hl' ? toolPrefs.hlColor : toolPrefs.inkColor) || '').toLowerCase();
   }
   function cpApply(hex) {
@@ -43039,21 +45164,34 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     toolPrefs[CP[k].last] = hex;
     if (list.length < BOX_MAX && list.map(function (x) { return x.toLowerCase(); }).indexOf(hex) < 0) { list.push(hex); }
     saveTools();
+    if (cpSlot !== null && k === cpKind) { var sl = cpSlot; cpSlot = null; setFav(sl, hex); }
   }
   function renderCpop() {
-    var g = $('cpGrid'), list = toolPrefs[CP[cpKind].list], cur = cpCurrent();
+    var g = $('cpGrid'), list = toolPrefs[CP[cpKind].list], cur = cpCurrent(), favs = toolPrefs[CP[cpKind].fav];
     g.replaceChildren();
+    var fv = $('cpFavs'); fv.replaceChildren();
+    favs.forEach(function (c, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'cp-slot' + (cpSlot === i ? ' sel' : '');
+      b.style.setProperty('--sw', colorCss(c));
+      b.setAttribute('aria-label', '外面第 ' + (i + 1) + ' 格：' + (COLOR_NAMES[c] || c) + (cpSlot === i ? '（選取中）' : '，點一下來更換'));
+      b.setAttribute('aria-pressed', String(cpSlot === i));
+      var n = document.createElement('span'); n.className = 'cp-slotn'; n.textContent = i + 1; b.appendChild(n);
+      onTap(b, function () { cpEditing = false; cpSlot = cpSlot === i ? null : i; renderCpop(); });
+      fv.appendChild(b);
+    });
+    cpop.classList.toggle('slotting', cpSlot !== null);
     $('cpCount').textContent = list.length + ' / ' + BOX_MAX;
     $('cpEdit').textContent = cpEditing ? '完成' : '編輯';
     $('cpEdit').hidden = !list.length;
     cpop.classList.toggle('editing', cpEditing);
     list.forEach(function (hex, i) {
       var b = document.createElement('button'); b.type = 'button'; b.className = 'cp-sw';
-      b.style.setProperty('--sw', hex);
-      b.setAttribute('aria-label', (cpEditing ? '刪除顏色 ' : '顏色 ') + hex);
-      b.setAttribute('aria-pressed', String(!cpEditing && cur === hex.toLowerCase()));
+      b.style.setProperty('--sw', colorCss(hex));
+      b.setAttribute('aria-label', (cpEditing ? '刪除顏色 ' : (cpSlot !== null ? '放進外面第 ' + (cpSlot + 1) + ' 格：' : '顏色 ')) + (COLOR_NAMES[hex] || hex));
+      b.setAttribute('aria-pressed', String(!cpEditing && cpSlot === null && cur === String(hex).toLowerCase()));
       onTap(b, function () {
         if (cpEditing) { list.splice(i, 1); saveTools(); if (!list.length) { cpEditing = false; } renderCpop(); return; }
+        if (cpSlot !== null) { var sl = cpSlot; cpSlot = null; setFav(sl, hex); renderCpop(); return; }
         cpApply(hex); renderCpop();
       });
       g.appendChild(b);
@@ -43081,7 +45219,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       lab.appendChild(inp);
       g.appendChild(lab);
     }
-    $('cpNote').textContent = cpEditing ? '點一個顏色就會刪掉它。' : (list.length >= BOX_MAX ? '已經存滿 50 種，按「編輯」刪掉一些才能再加。' : (list.length ? '點顏色套用；按「＋」新增常用的顏色。' : '按「＋」挑一個顏色，它會留在這裡下次再用。'));
+    $('cpNote').textContent = cpSlot !== null ? '現在點下面一個顏色（或按「＋」挑新的），放進外面第 ' + (cpSlot + 1) + ' 格。' : cpEditing ? '點一個顏色就會刪掉它。' : (list.length >= BOX_MAX ? '已經存滿 50 種，按「編輯」刪掉一些才能再加。' : (list.length ? '點顏色套用。想換外面的顏色：先點上面的格子，再點下面的顏色。' : '按「＋」挑一個顏色，它會留在這裡下次再用。'));
   }
   function cpAnchor() { return document.getElementById(CP[cpKind].btn); }
   function placeCpop() {
@@ -43093,14 +45231,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function openCpop(kind) {
     commitPending();
-    cpKind = kind || 'box'; cpTarget = cpKind === 'box' ? focusedId : null; cpEditing = false;
+    cpKind = kind || 'box'; cpTarget = cpKind === 'box' ? focusedId : null; cpEditing = false; cpSlot = null;
     renderCpop(); cpop.hidden = false; placeCpop();
     ['boxCustom', 'hlCustom', 'inkCustom'].forEach(function (id) { var el = document.getElementById(id); if (el) { el.setAttribute('aria-expanded', String(id === CP[cpKind].btn)); } });
   }
   function closeCpop() {
     if (!cpop || cpop.hidden) { return; }
     commitPending();
-    cpop.hidden = true; cpEditing = false;
+    cpop.hidden = true; cpEditing = false; cpSlot = null;
     ['boxCustom', 'hlCustom', 'inkCustom'].forEach(function (id) { var el = document.getElementById(id); if (el) { el.setAttribute('aria-expanded', 'false'); } });
   }
   document.addEventListener('pointerdown', function (e) {
@@ -43270,7 +45408,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var onDoc = state.src && !$('view-doc').hidden;
     vbar.hidden = !onDoc;
     if (!onDoc) { return; }
-    $('vbZoom').textContent = zoomLabel() + (pdf ? (pagedOn() ? '・翻頁' : '・捲動') : '') + ' ▾';
+    $('vbZoom').innerHTML = '<span class="vbz-main"></span><span class="vbz-mode"></span><span class="vbz-c" aria-hidden="true">▾</span>';
+    $('vbZoom').querySelector('.vbz-main').textContent = zoomLabel();
+    $('vbZoom').querySelector('.vbz-mode').textContent = pdf ? (pagedOn() ? '・翻頁' : '・捲動') : '';
     var hasPages = !!(pdf && pdf.pages.length);
     ['vbPrev', 'vbNext', 'vbPage'].forEach(function (k) { $(k).hidden = !hasPages; });
     vbar.querySelector('.vb-sep').hidden = !hasPages;
@@ -43475,7 +45615,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   /* ---------- 中文字體 ---------- */
   var FONT_KEY = 'thai-font';
   var UI_FONTS = [
-    ['system', '蘋方（系統預設）', '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif'],
+    ['system', '蘋方（預設）', '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif'],
     ['notosans', '思源黑體', '"Noto Sans TC", "PingFang TC", system-ui, sans-serif'],
     ['notoserif', '思源宋體', '"Noto Serif TC", "Songti TC", "PMingLiU", serif'],
     ['wenkai', '霞鶩文楷', '"LXGW WenKai TC", "Kaiti TC", "BiauKai", serif']
@@ -43510,6 +45650,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     top.appendChild(hist);
     head.insertBefore(top, head.firstChild);
     var sep = head.querySelector('.toolbar .sep'); if (sep) { sep.remove(); }
+    var tb = head.querySelector('.toolbar'), seg = document.createElement('div');
+    seg.className = 'toolseg'; seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', '工具');
+    Array.prototype.slice.call(tb.querySelectorAll('.tool')).forEach(function (b, k) { if (!k) { tb.insertBefore(seg, b); } seg.appendChild(b); });
+    var cl = $('clear'); if (cl && !cl.querySelector('svg')) { cl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg><span class="cl-t">清除全部</span>'; cl.setAttribute('aria-label', '清除全部筆記'); }
   })();
   renderToolOpts(); syncUndoButtons();
 
@@ -43678,6 +45822,29 @@ if ('serviceWorker' in navigator) {
     bar.appendChild(b); document.body.appendChild(bar);
   });
 }
+/* 設定頁的「檢查更新」 */
+(function () {
+  var btn = document.getElementById('checkUpd'), msg = document.getElementById('updMsg');
+  if (!btn) { return; }
+  if (!('serviceWorker' in navigator)) { btn.hidden = true; return; }
+  var checking = false;
+  btn.addEventListener('click', function () {
+    if (checking) { return; }
+    if (navigator.onLine === false) { msg.textContent = '現在沒有網路，連上網路後再按一次。'; return; }
+    checking = true; btn.disabled = true; msg.textContent = '檢查中…';
+    navigator.serviceWorker.getRegistration().then(function (reg) {
+      if (!reg) { throw new Error('noreg'); }
+      return reg.update().then(function () { return reg; });
+    }).then(function (reg) {
+      var nw = reg.installing || reg.waiting;
+      if (!nw) { msg.textContent = '已經是最新版了。'; return; }
+      msg.textContent = '找到新版，下載中…下載好會自動重新整理。';
+      navigator.serviceWorker.addEventListener('controllerchange', function () { location.reload(); });
+      if (reg.waiting) { reg.waiting.postMessage && reg.waiting.postMessage('skip'); }
+    }).catch(function () { msg.textContent = '現在連不到更新伺服器，等一下再試。'; })
+      .then(function () { checking = false; btn.disabled = false; });
+  });
+})();
 /* 請瀏覽器不要自動清掉這個 App 的資料（PDF、筆記、生字卡） */
 if (navigator.storage && navigator.storage.persist) { navigator.storage.persisted().then(function (p) { if (!p) { navigator.storage.persist(); } }).catch(function () {}); }
 </script>
