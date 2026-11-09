@@ -420,22 +420,41 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
 .helptabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
 .helptabs button { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; }
 .helptabs button[aria-selected="true"] { background: var(--accent-fill); color: var(--accent-fill-fg); border-color: var(--accent-fill); font-weight: 600; }
-.helpbody .hlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.helpbody .hlist > li { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); }
-.helpbody .htop { display: flex; gap: 12px; align-items: flex-start; }
-.helpbody .himg { display: block; margin: 0 auto; max-width: 100%; width: auto; height: auto; max-height: 320px; border-radius: 10px; border: 1px solid var(--line); background: #f5eedf; }
-.helpbody .hmore summary { cursor: pointer; color: var(--accent); font-weight: 700; font-size: 15px; min-height: 36px; display: flex; align-items: center; gap: 6px; list-style: none; }
-.helpbody .hmore summary::-webkit-details-marker { display: none; }
-.helpbody .hmore summary::before { content: '▸'; display: inline-block; transition: transform .15s; }
-.helpbody .hmore[open] summary::before { transform: rotate(90deg); }
-.helpbody .hsteps { margin: 4px 0 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.8; }
-.helpbody .htip { margin: 8px 0 0; padding: 8px 12px; border-radius: 10px; background: var(--card); border-left: 4px solid #e07a2f; font-size: 14px; line-height: 1.6; }
-.helpcard { max-width: 680px; max-height: 88vh; display: flex; flex-direction: column; }
-.helpbody { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; min-height: 0; padding-right: 2px; }
+.helpbody .hlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.helpbody .hrow { width: 100%; display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); text-align: left; color: var(--fg); font: inherit; min-height: 64px; }
+.helpbody .hrow:active { transform: scale(.99); }
 .helpbody .hnum { flex: 0 0 28px; height: 28px; border-radius: 999px; background: var(--accent-fill); color: var(--accent-fill-fg); font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.helpbody .htext { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .helpbody .htitle { font-weight: 800; font-size: 17px; line-height: 1.4; }
-.helpbody .hdesc { font-size: 15px; line-height: 1.9; color: var(--fg); }
-.helpbody .hchip { display: inline-block; margin: 0 3px; padding: 0 10px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-weight: 700; font-size: 14px; line-height: 1.7; white-space: nowrap; background: var(--card); }
+.helpbody .hdesc { font-size: 15px; line-height: 1.9; color: var(--muted); }
+.helpbody .hgo { flex: 0 0 auto; font-size: 26px; line-height: 1; color: var(--muted); }
+.hchip { display: inline-block; margin: 0 3px; padding: 0 10px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-weight: 700; font-size: 14px; line-height: 1.7; white-space: nowrap; background: var(--card); }
+.helpcard { max-width: 640px; max-height: 88vh; display: flex; flex-direction: column; }
+.helpbody { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; min-height: 0; padding-right: 2px; }
+/* 跳出的說明卡 */
+.hdlayer { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(16, 22, 20, .55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); animation: hdfade .18s ease-out; }
+.hdlayer[hidden] { display: none; }
+@keyframes hdfade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hdpop { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+.hdcard { width: 100%; max-width: 720px; max-height: calc(100vh - 40px); display: flex; flex-direction: column; background: var(--card); color: var(--fg); border-radius: 22px; box-shadow: 0 30px 80px rgba(0, 0, 0, .35), 0 2px 8px rgba(0, 0, 0, .12); overflow: hidden; animation: hdpop .22s cubic-bezier(.2, .8, .2, 1); }
+.hdbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 8px; }
+.hdback { border: 0; background: transparent; color: var(--accent); font-weight: 700; font-size: 16px; min-height: 40px; padding: 0 6px; }
+.hdkicker { font-size: 13px; color: var(--muted); letter-spacing: .02em; }
+.hdscroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 22px 18px; flex: 1; min-height: 0; }
+.hdfig { margin: 4px 0 18px; padding: 22px; border-radius: 18px; background: linear-gradient(145deg, #e9efe9 0%, #f6f1e4 100%); display: flex; align-items: center; justify-content: center; min-height: 120px; }
+.hdfig[hidden] { display: none; }
+.hdfig img { display: block; max-width: 100%; max-height: 46vh; width: auto; height: auto; border-radius: 12px; box-shadow: 0 18px 40px rgba(38, 51, 46, .18), 0 2px 6px rgba(38, 51, 46, .10); opacity: 0; transition: opacity .2s; }
+.hdfig.ready img { opacity: 1; }
+.hdtitle { margin: 0 0 4px; font-size: 22px; font-weight: 800; }
+.hdline { margin: 0 0 14px; font-size: 16px; line-height: 1.9; color: var(--muted); }
+.hdsteps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.85; }
+.hdtip { margin: 16px 0 0; padding: 10px 14px; border-radius: 12px; background: rgba(224, 122, 47, .10); border-left: 4px solid #e07a2f; font-size: 15px; line-height: 1.7; }
+.hdtip::before { content: '小提醒　'; font-weight: 800; color: #c4651f; }
+.hdnav { display: flex; gap: 10px; padding: 12px 16px 16px; border-top: 1px solid var(--line); }
+.hdnav button { flex: 1; min-height: 44px; border-radius: 12px; font-size: 15px; }
+.hdnav button:disabled { opacity: .4; }
+:root[data-theme="dark"] .hdfig { background: linear-gradient(145deg, #1f262f 0%, #161b22 100%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hdfig { background: linear-gradient(145deg, #1f262f 0%, #161b22 100%); } }
 </style>
 </head>
 <body>
@@ -629,7 +648,7 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <p class="label appver">ไทย Reader 正式版 v1.6.0</p>
+    <p class="label appver">ไทย Reader 正式版 v1.6.1</p>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -655,6 +674,19 @@ button.speaking, .pop button.say.speaking { background: var(--accent-fill); colo
       <div class="helphead"><h2 id="h-help">使用說明</h2><button type="button" id="helpClose" aria-label="關閉">×</button></div>
       <div class="helptabs" id="helpTabs" role="tablist" aria-label="說明分類"></div>
       <div class="helpbody" id="helpBody"></div>
+    </div>
+  </div>
+  <div id="helpDetail" class="hdlayer" role="dialog" aria-modal="true" aria-labelledby="hdTitle" hidden>
+    <div class="hdcard">
+      <div class="hdbar"><button type="button" id="hdBack" class="hdback">‹ 返回清單</button><span class="hdkicker" id="hdKicker"></span></div>
+      <div class="hdscroll" id="hdScroll">
+        <figure class="hdfig" id="hdFig"></figure>
+        <h3 class="hdtitle" id="hdTitle"></h3>
+        <p class="hdline" id="hdLine"></p>
+        <ol class="hdsteps" id="hdSteps"></ol>
+        <p class="hdtip" id="hdTip" hidden></p>
+      </div>
+      <div class="hdnav"><button type="button" id="hdPrev">‹ 上一則</button><button type="button" id="hdNext">下一則 ›</button></div>
     </div>
   </div>
   <div id="welcome" class="modal" role="dialog" aria-modal="true" aria-labelledby="h-welcome" hidden>
@@ -41065,7 +41097,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.6.0';
+  var APP_VER = '正式版 v1.6.1';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -41993,6 +42025,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     });
     return frag;
   }
+  function helpImgUrl(name) { return new URL(HELP_IMG + name + '.webp', location.href).href; }
+  /* 清單：每則只有編號、重點、一句話；點了才跳出畫面截圖和詳細步驟 */
   function openHelp(start) {
     var m = $('helpModal'), body = $('helpBody'), tabs = $('helpTabs');
     var cur = typeof start === 'number' ? start : 0;
@@ -42007,36 +42041,53 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var ol = document.createElement('ol'); ol.className = 'hlist';
       HELP[cur][1].forEach(function (it, i) {
         var li = document.createElement('li');
-        var top = document.createElement('div'); top.className = 'htop';
+        var row = document.createElement('button'); row.type = 'button'; row.className = 'hrow';
         var num = document.createElement('span'); num.className = 'hnum'; num.textContent = String(i + 1);
-        var tx = document.createElement('div'); tx.className = 'htext';
-        var t = document.createElement('div'); t.className = 'htitle'; t.textContent = it.t;
-        var d = document.createElement('div'); d.className = 'hdesc'; d.appendChild(helpLine(it.s));
-        tx.appendChild(t); tx.appendChild(d); top.appendChild(num); top.appendChild(tx); li.appendChild(top);
-        if (it.img) {
-          var im = new Image(); im.className = 'himg'; im.loading = 'lazy'; im.alt = it.t + '的畫面（橘色框是要按的地方）';
-          im.src = new URL(HELP_IMG + it.img + '.webp', location.href).href;
-          im.onerror = function () { im.remove(); };
-          li.appendChild(im);
-        }
-        if (it.d && it.d.length) {
-          var det = document.createElement('details'); det.className = 'hmore';
-          var sm = document.createElement('summary'); sm.textContent = '看詳細步驟'; det.appendChild(sm);
-          var steps = document.createElement('ol'); steps.className = 'hsteps';
-          it.d.forEach(function (x) { var s2 = document.createElement('li'); s2.appendChild(helpLine(x)); steps.appendChild(s2); });
-          det.appendChild(steps);
-          if (it.tip) { var tp = document.createElement('p'); tp.className = 'htip'; tp.textContent = '小提醒：' + it.tip; det.appendChild(tp); }
-          li.appendChild(det);
-        }
-        ol.appendChild(li);
+        var tx = document.createElement('span'); tx.className = 'htext';
+        var t = document.createElement('span'); t.className = 'htitle'; t.textContent = it.t;
+        var d = document.createElement('span'); d.className = 'hdesc'; d.appendChild(helpLine(it.s));
+        tx.appendChild(t); tx.appendChild(d);
+        var go = document.createElement('span'); go.className = 'hgo'; go.setAttribute('aria-hidden', 'true'); go.textContent = '›';
+        row.appendChild(num); row.appendChild(tx); row.appendChild(go);
+        row.addEventListener('click', function () { openHelpDetail(cur, i); });
+        li.appendChild(row); ol.appendChild(li);
       });
       body.appendChild(ol);
+      body.scrollTop = 0;
     }
     paint();
     m.hidden = false;
     setTimeout(function () { try { $('helpClose').focus(); } catch (err) {} }, 30);
   }
-  $('helpClose').addEventListener('click', function () { $('helpModal').hidden = true; });
+  /* 跳出的說明卡：上面是畫面截圖（橘框＝要按的地方），下面是步驟；可以上一則、下一則 */
+  function openHelpDetail(tab, idx) {
+    var box = $('helpDetail'), list = HELP[tab][1], it = list[idx];
+    var fig = $('hdFig'), steps = $('hdSteps');
+    $('hdKicker').textContent = HELP[tab][0] + '・' + (idx + 1) + ' / ' + list.length;
+    $('hdTitle').textContent = it.t;
+    var line = $('hdLine'); line.replaceChildren(); line.appendChild(helpLine(it.s));
+    fig.replaceChildren();
+    if (it.img) {
+      var im = new Image(); im.alt = it.t + '的畫面，橘色框是要按的地方'; im.decoding = 'async';
+      im.src = helpImgUrl(it.img);
+      im.onload = function () { fig.classList.add('ready'); };
+      im.onerror = function () { fig.hidden = true; };
+      fig.classList.remove('ready'); fig.hidden = false; fig.appendChild(im);
+    } else { fig.hidden = true; }
+    steps.replaceChildren();
+    (it.d || []).forEach(function (x) { var li = document.createElement('li'); li.appendChild(helpLine(x)); steps.appendChild(li); });
+    var tip = $('hdTip'); tip.hidden = !it.tip; tip.textContent = it.tip ? it.tip : '';
+    var prev = $('hdPrev'), next = $('hdNext');
+    prev.disabled = idx === 0; next.disabled = idx === list.length - 1;
+    prev.onclick = function () { if (idx > 0) { openHelpDetail(tab, idx - 1); } };
+    next.onclick = function () { if (idx < list.length - 1) { openHelpDetail(tab, idx + 1); } };
+    box.hidden = false;
+    $('hdScroll').scrollTop = 0;
+    setTimeout(function () { try { $('hdBack').focus(); } catch (err) {} }, 30);
+  }
+  $('hdBack').addEventListener('click', function () { $('helpDetail').hidden = true; });
+  $('helpDetail').addEventListener('click', function (e) { if (e.target === $('helpDetail')) { $('helpDetail').hidden = true; } });
+  $('helpClose').addEventListener('click', function () { $('helpModal').hidden = true; $('helpDetail').hidden = true; });
   $('helpModal').addEventListener('click', function (e) { if (e.target === $('helpModal')) { $('helpModal').hidden = true; } });
   $('openHelp').addEventListener('click', function () { openHelp(0); });
   if ($('wHelp')) { $('wHelp').addEventListener('click', function () { openHelp(0); }); }
