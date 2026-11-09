@@ -808,6 +808,52 @@ body.cdopen { overflow: hidden; }
 .btns.cans { margin-top: 12px; }
 .qfb { margin-bottom: 10px; }
 #cardbody .fcard { margin-bottom: 4px; }
+
+/* ---- v1.12 聲調 ---- */
+.tonesec { margin-top: 8px; }
+.tsyls { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 8px; }
+.tsyl { position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 1px; min-width: 64px; padding: 8px 10px 6px; border-radius: 12px; background: var(--bg); border: 1.5px solid var(--tc); }
+.tsyl .tp { font-family: var(--thai); font-size: 22px; line-height: 1.3; }
+.tsyl .tr { font-size: 12px; color: var(--muted); }
+.tsyl .tt { display: inline-flex; align-items: center; gap: 3px; font-size: 13px; color: var(--tc); }
+.tsyl .tt b { font-weight: 700; }
+.tcurve { width: 22px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+.tcls { position: absolute; top: -9px; right: -6px; font-size: 11px; font-weight: 700; line-height: 18px; padding: 0 6px; border-radius: 999px; color: #fff; background: var(--cc); font-family: var(--thai), var(--ui); }
+.t-M { --tc: #7f8c8d; } .t-L { --tc: #2e86c1; } .t-F { --tc: #c0392b; } .t-H { --tc: #d68910; } .t-R { --tc: #8e44ad; }
+.c-m { --cc: #2e86c1; } .c-h { --cc: #c0392b; } .c-l { --cc: #27ae60; }
+:root[data-theme="dark"] .t-M { --tc: #b2bec3; } :root[data-theme="dark"] .t-L { --tc: #74b9ff; } :root[data-theme="dark"] .t-F { --tc: #ff7675; } :root[data-theme="dark"] .t-H { --tc: #fdcb6e; } :root[data-theme="dark"] .t-R { --tc: #c39bd3; }
+.twhy { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; gap: 2px; }
+.twhy .twp, .qwhy .twp { font-family: var(--thai); font-weight: 700; font-size: 16px; }
+.twhy li.exc { color: var(--muted); }
+.tdet { margin-top: 6px; font-size: 14px; }
+.tdet summary { cursor: pointer; color: var(--accent); font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.ttable { border-collapse: collapse; font-size: 13px; margin: 6px 0; width: 100%; }
+.ttable th, .ttable td { border: 1px solid var(--line); padding: 4px 6px; text-align: center; }
+.ttable thead th { background: var(--bg); }
+.tnote { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin: 6px 0 0; }
+.cword.tq .tqhl { color: var(--accent); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.qprompt.small { font-size: 17px; font-weight: 600; padding: 4px 0 0; }
+.qopt.tone { display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: var(--tc); font-weight: 700; }
+.qopts:has(.qopt.tone) { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+.qwhy { margin-top: 6px; font-weight: 500; font-size: 14px; color: var(--fg); }
+/* 查詞視窗：畫螢光筆、加註解 */
+.pop .popnotes { display: flex; flex-wrap: wrap; gap: 6px; }
+.pop .popnotes button { min-height: 34px; padding: 0 12px; font-size: 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; }
+.pop .popnotes .pn-dot { width: 12px; height: 12px; border-radius: 3px; }
+.pop .popnotes button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.pop .popnotes svg { width: 15px; height: 15px; }
+.pop .links a.ext { border-radius: 999px !important; }
+/* 橡皮擦 */
+.toolopts .ob.otool { gap: 5px; }
+.toolopts .ob.otool svg { width: 16px; height: 16px; }
+/* 影片字幕進度 */
+.vidbox { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); display: flex; flex-direction: column; gap: 8px; }
+.vidbox[hidden] { display: none; }
+.vidbox .vb-row { display: flex; align-items: center; gap: 10px; }
+.vidbox .vb-t { flex: 1; font-size: 14px; }
+.vidbox .vb-row button { min-height: 34px; font-size: 14px; border-radius: 999px; }
+.vidbox .vb-bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.vidbox .vb-bar span { display: block; height: 100%; width: 0; background: var(--accent-fill); transition: width .3s; }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -822,7 +868,7 @@ body.cdopen { overflow: hidden; }
     <header class="vhead"><h1 id="h-home">我的文件</h1></header>
     <div class="homeadd">
       <label class="filebtn">＋ 加入 PDF<input type="file" id="pdffile" class="vh" accept="application/pdf,.pdf" multiple></label>
-      <label class="filebtn">＋ 加入圖片<input type="file" id="imgfile" class="vh" accept="image/*" multiple></label>
+      <label class="filebtn">＋ 圖片／影片<input type="file" id="imgfile" class="vh" accept="image/*,video/*" multiple></label>
       <button type="button" id="openPaste" aria-expanded="false" aria-controls="pastebox">＋ 貼上文字</button>
     </div>
     <div id="pastebox" class="pastebox" hidden>
@@ -963,6 +1009,10 @@ body.cdopen { overflow: hidden; }
       <div class="seg" role="radiogroup" aria-label="中文字體" id="fontGroup"></div>
     </div>
     <div class="setrow">
+      <div class="setlabel">聲調學習模式<span class="sethelp">打開後，查詞視窗和生字卡會顯示每個音節的聲調、子音分類和推出聲調的規則；測驗也會出聲調題。</span></div>
+      <div class="seg" role="radiogroup" aria-label="聲調學習模式" id="toneGroup"></div>
+    </div>
+    <div class="setrow">
       <div class="setlabel">我的程度<span class="sethelp">「這句的其他句型」只列出這個程度以下的句型。你點的詞一定會顯示說明，不受程度限制。</span></div>
       <div class="seg" role="radiogroup" aria-label="我的程度" id="levelGroup"></div>
     </div>
@@ -1010,7 +1060,7 @@ body.cdopen { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.11.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.12.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -40952,8 +41002,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 
   var HINTS = {
     tap: '點一個詞，會用藍框框住它。手指可以正常捲動頁面。',
-    hl: '從一個詞劃到另一個詞，放開就畫好。點一下畫過的地方可以取消。',
-    ink: '直接在泰文上寫字或畫線。',
+    hl: '從一個詞劃到另一個詞就畫好。點一下詞是查詞，查詞視窗裡可以取消螢光筆。',
+    ink: '直接在泰文上寫字或畫線；手指點一下詞可以查詞。要擦掉就選「橡皮擦」。',
     box: '點一個泰文詞：在它正上方加註解。點空白處：放一段自由文字。點一下已有的註解，可以改上方的文字樣式，旁邊會出現 ⠿（拖曳移動）和 ×（刪除）。'
   };
 
@@ -41073,6 +41123,162 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (typeof translateText !== 'function' || navigator.onLine === false) { row.hidden = true; return row; }
     translateText(key).then(function (z) { z = (z || '').trim(); MT_CACHE[key] = z; show(z); }, function () { row.hidden = true; });
     return row;
+  }
+  /* ---------- 聲調學習模式：每個音節的子音類別、活／死音節、聲調符號，推出聲調 ---------- */
+  var TONE_KEY = 'thai-tone-mode', TONE_URL = 'tones.json';
+  var toneMode = false;
+  try { toneMode = localStorage.getItem(TONE_KEY) === '1'; } catch (err) {}
+  var TONES = null, tonesLoading = null;
+  var TONE_NAME = { M: '中平聲', L: '低聲', F: '降聲', H: '高聲', R: '升聲' };
+  var TONE_TH = { M: 'สามัญ', L: 'เอก', F: 'โท', H: 'ตรี', R: 'จัตวา' };
+  var TONE_PATH = { M: 'M3 9 L25 9', L: 'M3 10 L25 14', F: 'M3 9 Q12 1 25 15', H: 'M3 8 Q14 9 25 2', R: 'M3 11 Q12 17 25 3' };
+  var CLS_NAME = { m: '中子音', h: '高子音', l: '低子音' };
+  var LST_NAME = { L: '活音節', S: '死音節（短母音）', D: '死音節（長母音＋k/p/t 尾音）' };
+  var MARK_NAME = { 1: 'ไม้เอก ◌่', 2: 'ไม้โท ◌้', 3: 'ไม้ตรี ◌๊', 4: 'ไม้จัตวา ◌๋' };
+  function loadTones() {
+    if (TONES) { return Promise.resolve(TONES); }
+    if (tonesLoading) { return tonesLoading; }
+    tonesLoading = fetch(TONE_URL).then(function (r) { if (!r.ok) { throw new Error('HTTP ' + r.status); } return r.json(); }).then(function (d) { TONES = d; return d; }, function (e) { tonesLoading = null; throw e; });
+    return tonesLoading;
+  }
+  function toneRule(c, lst, mk) {
+    if (mk === 1) { return c === 'l' ? 'F' : 'L'; }
+    if (mk === 2) { return c === 'l' ? 'H' : 'F'; }
+    if (mk === 3) { return 'H'; }
+    if (mk === 4) { return 'R'; }
+    if (lst === 'L') { return c === 'h' ? 'R' : 'M'; }
+    if (c === 'l') { return lst === 'S' ? 'H' : 'F'; }
+    return 'L';
+  }
+  /* 一個詞的音節資料：[{ p 音節, i 起首子音, c 類別, s 活死, m 聲調符號, t 實際聲調, r 規則推出的聲調, lead 有沒有被帶 }] */
+  function toneInfo(w) {
+    if (!TONES || !w) { return null; }
+    var raw = TONES[w] || (typeof dictBase === 'function' && dictBase(w) && TONES[dictBase(w)]);
+    if (!raw) { return null; }
+    var rom = DICT && DICT[w] && DICT[w][0][1] ? String(DICT[w][0][1]).split('-') : [];
+    return raw.split('|').map(function (x, k) {
+      var a = x.split('~'), code = a[2] || '';
+      var o = { p: a[0], i: a[1], c: code[0], s: code[1], m: Number(code[2]) || 0, t: code[3], lead: code.indexOf('*') >= 0, rom: rom[k] || '' };
+      o.r = toneRule(o.c, o.s, o.m);
+      return o;
+    });
+  }
+  function toneSvg(t) { return '<svg class="tcurve" viewBox="0 0 28 18" aria-hidden="true"><path d="' + TONE_PATH[t] + '"/></svg>'; }
+  function toneWhy(o, prev) {
+    var lead = '';
+    if (o.lead) {
+      if (o.p.indexOf('ห' + o.i) >= 0) { lead = '（ห 不發音，帶著 ' + o.i + ' 照高子音）'; }
+      else if (o.p.indexOf('อ' + o.i) >= 0) { lead = '（อ 不發音，帶著 ' + o.i + ' 照中子音）'; }
+      else if (prev) { lead = '（前面的 ' + prev.i + ' 帶著它，照' + CLS_NAME[o.c] + '）'; }
+    }
+    var head = o.i + ' ' + CLS_NAME[o.c] + lead;
+    var body = o.m ? '＋' + MARK_NAME[o.m] : '・' + LST_NAME[o.s];
+    var s = head + body + ' → ' + TONE_NAME[o.r];
+    if (o.r !== o.t) { s += '；實際唸' + TONE_NAME[o.t] + '（例外）'; }
+    return s;
+  }
+  var TONE_TABLE = '<table class="ttable"><thead><tr><th></th><th>活音節</th><th>死・短</th><th>死・長</th><th>่</th><th>้</th><th>๊</th><th>๋</th></tr></thead><tbody>' +
+    '<tr><th>中子音</th><td>中平</td><td>低</td><td>低</td><td>低</td><td>降</td><td>高</td><td>升</td></tr>' +
+    '<tr><th>高子音</th><td>升</td><td>低</td><td>低</td><td>低</td><td>降</td><td>–</td><td>–</td></tr>' +
+    '<tr><th>低子音</th><td>中平</td><td>高</td><td>降</td><td>降</td><td>高</td><td>–</td><td>–</td></tr></tbody></table>' +
+    '<p class="tnote">中子音：ก จ ด ต บ ป อ（ฎ ฏ）。高子音：ข ฉ ถ ผ ฝ ศ ษ ส ห（ฃ ฐ）。其餘是低子音。<br>活音節：長母音結尾，或 ม น ง ย ว 結尾（ำ ใ ไ เา 也算）。死音節：短母音結尾，或 ก ด บ 類的尾音。</p>';
+  function buildToneSection(w) {
+    var sec = document.createElement('div'); sec.className = 'sec tonesec';
+    function fill() {
+      sec.replaceChildren();
+      var info = toneInfo(w);
+      if (!info) { sec.hidden = true; return; }
+      var h = document.createElement('div'); h.className = 'sl2'; h.textContent = '聲調'; sec.appendChild(h);
+      var row = document.createElement('div'); row.className = 'tsyls';
+      info.forEach(function (o) {
+        var chip = document.createElement('span'); chip.className = 'tsyl t-' + o.t;
+        chip.innerHTML = '<span class="tp" lang="th"></span><span class="tr"></span><span class="tt">' + toneSvg(o.t) + '<b></b></span>';
+        chip.querySelector('.tp').textContent = o.p; chip.querySelector('.tr').textContent = o.rom;
+        chip.querySelector('b').textContent = TONE_NAME[o.t];
+        var cb = document.createElement('span'); cb.className = 'tcls c-' + o.c; cb.textContent = o.i + '・' + CLS_NAME[o.c].slice(0, 1); cb.title = CLS_NAME[o.c];
+        chip.appendChild(cb);
+        row.appendChild(chip);
+      });
+      sec.appendChild(row);
+      var ul = document.createElement('ul'); ul.className = 'twhy';
+      info.forEach(function (o, k) { var li = document.createElement('li'); var b = document.createElement('span'); b.lang = 'th'; b.className = 'twp'; b.textContent = o.p; li.appendChild(b); li.appendChild(document.createTextNode('：' + toneWhy(o, info[k - 1]))); if (o.r !== o.t) { li.className = 'exc'; } ul.appendChild(li); });
+      sec.appendChild(ul);
+      var det = document.createElement('details'); det.className = 'tdet';
+      var sm = document.createElement('summary'); sm.textContent = '看聲調規則表'; det.appendChild(sm);
+      var box = document.createElement('div'); box.innerHTML = TONE_TABLE; det.appendChild(box);
+      sec.appendChild(det);
+    }
+    if (TONES) { fill(); } else { sec.textContent = '載入聲調資料…'; loadTones().then(fill, function () { sec.textContent = '聲調資料載入失敗（可能沒有網路）。'; }); }
+    return sec;
+  }
+  function renderToneSetting() {
+    var g = $('toneGroup'); if (!g) { return; }
+    segButtons(g, [['0', '關'], ['1', '開']], toneMode ? '1' : '0', function (v) {
+      toneMode = v === '1'; try { localStorage.setItem(TONE_KEY, toneMode ? '1' : '0'); } catch (err) {}
+      if (toneMode) { loadTones().catch(function () {}); }
+      renderToneSetting();
+    });
+  }
+  renderToneSetting();
+  if (toneMode) { loadTones().catch(function () {}); }
+  /* ---------- 邊查詞邊做筆記：查詞視窗裡直接畫螢光筆、加註解；手寫的橡皮擦 ---------- */
+  function annotateWord(seg) {
+    snapshot();
+    var wr = pageRectOf(seg.i, seg.i + seg.n);
+    var lift = Math.round(state.style.size * 1.3) + (pdf ? 3 : 8);
+    var b = { id: state.nextId++, x: Math.max(0, Math.round(wr.left - 5)), y: Math.max(0, Math.round(wr.top - lift)), t: '', a: [seg.i, seg.i + seg.n], s: Object.assign({}, state.style) };
+    state.boxes.push(b);
+    hidePop();
+    tapSel = null;
+    if (mode !== 'box') { mode = 'box'; applyMode(); }
+    renderText();
+    renderBoxes(b.id);
+    save();
+  }
+  function popNoteButtons(seg) {
+    var row = document.createElement('div'); row.className = 'popnotes';
+    var hb = document.createElement('button'); hb.type = 'button'; hb.className = 'pn-hl';
+    function paint() {
+      var on = hlAt(seg.i) >= 0;
+      hb.innerHTML = '<span class="pn-dot" aria-hidden="true"></span><span></span>';
+      hb.querySelector('span:last-child').textContent = on ? '取消螢光筆' : '畫螢光筆';
+      hb.querySelector('.pn-dot').style.background = toolPrefs.hlColor;
+      hb.setAttribute('aria-pressed', String(on));
+    }
+    paint();
+    hb.addEventListener('click', function () {
+      snapshot();
+      var k = hlAt(seg.i);
+      if (k >= 0) { state.hl.splice(k, 1); } else { addRangeColored([seg.i, seg.i + seg.n], toolPrefs.hlColor, toolPrefs.hlStyle); }
+      renderText(); save(); paint();
+    });
+    var ab = document.createElement('button'); ab.type = 'button'; ab.className = 'pn-box';
+    ab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/></svg><span>加註解</span>';
+    ab.addEventListener('click', function () { annotateWord(seg); });
+    row.appendChild(hb); row.appendChild(ab);
+    return row;
+  }
+  /* 橡皮擦：碰到的那一整筆擦掉（像 GoodNotes 的「整筆擦除」） */
+  function eraseAt(pt, a) {
+    var r = 9 / Math.max(0.5, scale) + 4, r2 = r * r, hit = false;
+    var keep = state.strokes.filter(function (s) {
+      var p = s.p, rr = r + (s.w || 3) / 2, rr2 = rr * rr;
+      for (var k = 0; k < p.length; k++) {
+        var dx = p[k][0] - pt[0], dy = p[k][1] - pt[1];
+        if (dx * dx + dy * dy <= rr2) { return false; }
+        if (k) {
+          var x1 = p[k - 1][0], y1 = p[k - 1][1], vx = p[k][0] - x1, vy = p[k][1] - y1, L = vx * vx + vy * vy;
+          if (L) { var t = Math.max(0, Math.min(1, ((pt[0] - x1) * vx + (pt[1] - y1) * vy) / L)), ex = x1 + t * vx - pt[0], ey = y1 + t * vy - pt[1]; if (ex * ex + ey * ey <= rr2) { return false; } }
+        }
+      }
+      return true;
+    });
+    if (keep.length !== state.strokes.length) {
+      if (!a.hit) { snapshot(); a.hit = true; }
+      state.strokes = keep; hit = true;
+      redrawInk();
+    }
+    return hit;
   }
   function segment(str) {
     var out = [];
@@ -42149,7 +42355,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     pop.appendChild(x); pop.appendChild(head);
     if (en0) { pop.appendChild(buildEntitySection(en0)); }
     if (!(seg.gz && en0)) { pop.appendChild(d); }
+    if (toneMode && !(seg.gz && en0) && /[\u0E01-\u0E2E]/.test(seg.t)) { pop.appendChild(buildToneSection(seg.t)); }
     if (gs.mine) { pop.appendChild(gs.mine); }
+    if (seg.w && /[\u0E01-\u0E2E]/.test(seg.t)) { pop.appendChild(popNoteButtons(seg)); }
     pop.appendChild(links); pop.appendChild(extl);
     if (gs.others) { pop.appendChild(gs.others); }
     var askWrap = document.createElement('details'); askWrap.className = 'sec fold';
@@ -43685,6 +43893,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       else if (c.pos) { back.appendChild(el('div', 'crom', c.pos)); }
       meaningNodes(c, back);
       if (c.my) { back.appendChild(el('div', 'cmy', '我的筆記：' + c.my)); }
+      if (toneMode) { back.appendChild(buildToneSection(c.w)); }
       var more = el('button', 'linkbtn', '看完整解釋和例句 ›'); more.type = 'button';
       more.addEventListener('click', function () { openCardDetail(c.id); });
       back.appendChild(more);
@@ -43722,10 +43931,26 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function startQuiz() {
-    var list = shuffle(cards.filter(function (c) { return inFolder(c) && cardMeaning(c); })).slice(0, 10);
-    if (!list.length) { return; }
-    quiz = { qs: list.map(function (c) { return makeQ(c); }), k: 0, right: 0, picked: null, wrong: [] };
+    if (toneMode && !TONES) { loadTones().then(startQuiz, function () { toneMode = false; startQuiz(); }); return; }
+    var list, qs;
+    if (quizType === 'tone') {
+      list = shuffle(cards.filter(function (c) { return inFolder(c) && toneInfo(c.w); })).slice(0, 10);
+      qs = list.map(toneQ);
+    } else {
+      list = shuffle(cards.filter(function (c) { return inFolder(c) && cardMeaning(c); })).slice(0, 10);
+      qs = list.map(function (c, k) { return toneMode && k % 3 === 2 && toneInfo(c.w) ? toneQ(c) : makeQ(c); });
+    }
+    if (!qs.length) { return; }
+    quiz = { qs: qs, k: 0, right: 0, picked: null, wrong: [] };
     renderCards();
+  }
+  /* 聲調題：這個音節唸什麼聲調？／這個子音是哪一類？ */
+  function toneQ(c) {
+    var info = toneInfo(c.w), k = Math.floor(Math.random() * info.length), o = info[k];
+    var kind = Math.random() < 0.65 ? 'tone' : 'cls';
+    var opts = kind === 'tone' ? ['M', 'L', 'F', 'H', 'R'].map(function (t) { return { w: t, m: TONE_NAME[t] }; }) : ['m', 'h', 'l'].map(function (x) { return { w: x, m: CLS_NAME[x] }; });
+    var ans = opts.filter(function (x) { return x.w === (kind === 'tone' ? o.t : o.c); })[0];
+    return { c: c, kind: kind, info: info, k: k, ans: { w: ans.w, m: ans.m, id: c.id }, opts: opts };
   }
   function makeQ(c) {
     var ans = { w: c.w, m: quizMeaning(c), id: c.id }, opts = [ans], used = {};
@@ -43746,7 +43971,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       host.appendChild(el('p', 'label', fc ? '從這個資料夾隨機出最多 10 題，答錯的會排進今天的複習。' : '還沒有可以出題的生字卡。'));
       if (!fc) { return; }
       var seg = el('div', 'seg qtypes'); seg.setAttribute('role', 'radiogroup'); seg.setAttribute('aria-label', '題型');
-      segButtons(seg, [['th2zh', '看泰文選意思'], ['zh2th', '看意思選泰文'], ['listen', '聽發音選泰文']], quizType, function (v) { quizType = v; renderCards(); });
+      var QT = [['th2zh', '看泰文選意思'], ['zh2th', '看意思選泰文'], ['listen', '聽發音選泰文']];
+      if (toneMode) { QT.push(['tone', '聲調與子音']); } else if (quizType === 'tone') { quizType = 'th2zh'; }
+      segButtons(seg, QT, quizType, function (v) { quizType = v; renderCards(); });
+      if (toneMode) { host.appendChild(el('p', 'label', '聲調學習模式開著：其他題型裡也會穿插聲調題。')); }
       host.appendChild(seg);
       var go = el('button', 'primary wide', '開始測驗'); go.type = 'button'; go.addEventListener('click', startQuiz);
       var row = el('div', 'btns'); row.appendChild(go); host.appendChild(row);
@@ -43758,7 +43986,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       box.appendChild(el('p', 'label', quiz.right === quiz.qs.length ? '全對！' : '答錯的已經排進今天的複習。'));
       if (quiz.wrong.length) {
         var ul = el('ul', 'qwrong');
-        quiz.wrong.forEach(function (q) { var li = el('li'); var t = el('span', 'cw', q.ans.w); t.lang = 'th'; li.appendChild(t); li.appendChild(el('span', 'cm', q.ans.m)); ul.appendChild(li); });
+        quiz.wrong.forEach(function (q) { var li = el('li'); var t = el('span', 'cw', q.kind ? q.c.w : q.ans.w); t.lang = 'th'; li.appendChild(t); li.appendChild(el('span', 'cm', q.kind ? q.info[q.k].p + '：' + q.ans.m : q.ans.m)); ul.appendChild(li); });
         box.appendChild(ul);
       }
       host.appendChild(box);
@@ -43771,7 +43999,15 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var prog = el('div', 'rprog'); var bar = el('div', 'rbar'); var fill = el('span'); fill.style.width = Math.round(quiz.k / quiz.qs.length * 100) + '%'; bar.appendChild(fill);
     prog.appendChild(bar); prog.appendChild(el('span', 'rnum', (quiz.k + 1) + ' / ' + quiz.qs.length)); host.appendChild(prog);
     var card = el('div', 'fcard qcard');
-    if (quizType === 'th2zh') { var w = el('div', 'cword', q.ans.w); w.lang = 'th'; card.appendChild(w); }
+    if (q.kind) {
+      var wl = el('div', 'cword tq'); wl.lang = 'th';
+      q.info.forEach(function (o, i) { var sp = el('span', i === q.k ? 'tqhl' : '', o.p); wl.appendChild(sp); });
+      card.appendChild(wl);
+      var sy = el('button', 'iconbtn csay'); sy.type = 'button'; sy.setAttribute('aria-label', '朗讀 ' + q.c.w); sy.innerHTML = SPK_ICON;
+      sy.addEventListener('click', function () { speak(q.c.w); });
+      card.appendChild(sy);
+      card.appendChild(el('div', 'qprompt small', q.kind === 'tone' ? '標起來的音節「' + q.info[q.k].p + '」唸什麼聲調？' : '「' + q.info[q.k].i + '」是哪一類子音？'));
+    } else if (quizType === 'th2zh') { var w = el('div', 'cword', q.ans.w); w.lang = 'th'; card.appendChild(w); }
     else if (quizType === 'zh2th') { card.appendChild(el('div', 'qprompt', q.ans.m)); }
     else {
       var lb = el('button', 'iconbtn qlisten'); lb.type = 'button'; lb.setAttribute('aria-label', '再聽一次'); lb.innerHTML = SPK_ICON;
@@ -43783,8 +44019,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var grid = el('div', 'qopts');
     q.opts.forEach(function (o) {
       var b = el('button', 'qopt'); b.type = 'button';
-      var showTh = quizType !== 'th2zh';
+      var showTh = !q.kind && quizType !== 'th2zh';
       b.textContent = showTh ? o.w : o.m; if (showTh) { b.lang = 'th'; b.classList.add('th'); }
+      if (q.kind === 'tone') { b.innerHTML = toneSvg(o.w) + '<span></span>'; b.querySelector('span').textContent = o.m; b.classList.add('tone', 't-' + o.w); }
       if (quiz.picked !== null) {
         b.disabled = true;
         if (o.w === q.ans.w) { b.classList.add('ok'); } else if (o === quiz.picked) { b.classList.add('bad'); }
@@ -43796,7 +44033,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         if (ok) { quiz.right++; c.right = (c.right || 0) + 1; }
         else { quiz.wrong.push(q); srsInit(c); c.due = today0(); c.lapses++; c.ivl = 0; c.box = 1; }
         c.seen = (c.seen || 0) + 1; saveCards();
-        if (quizType !== 'listen') { speak(q.ans.w); }
+        if (q.kind) { speak(q.c.w); } else if (quizType !== 'listen') { speak(q.ans.w); }
         renderCards();
       });
       grid.appendChild(b);
@@ -43805,7 +44042,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (quiz.picked !== null) {
       var fb = el('div', 'qfb ' + (quiz.picked.w === q.ans.w ? 'ok' : 'bad'));
       fb.textContent = quiz.picked.w === q.ans.w ? '答對了！' : '正確答案：';
-      if (quiz.picked.w !== q.ans.w) { var t2 = el('span', 'cw', q.ans.w); t2.lang = 'th'; fb.appendChild(t2); fb.appendChild(document.createTextNode('　' + q.ans.m)); }
+      if (q.kind) { if (quiz.picked.w !== q.ans.w) { fb.appendChild(document.createTextNode(q.ans.m)); } var why = el('div', 'qwhy'); var wp = el('span', 'twp', q.info[q.k].p); wp.lang = 'th'; why.appendChild(wp); why.appendChild(document.createTextNode('：' + toneWhy(q.info[q.k], q.info[q.k - 1]))); fb.appendChild(why); }
+      else if (quiz.picked.w !== q.ans.w) { var t2 = el('span', 'cw', q.ans.w); t2.lang = 'th'; fb.appendChild(t2); fb.appendChild(document.createTextNode('　' + q.ans.m)); }
       host.appendChild(fb);
       var nx = el('button', 'primary wide', quiz.k + 1 < quiz.qs.length ? '下一題' : '看成績'); nx.type = 'button';
       nx.addEventListener('click', function () { quiz.k++; quiz.picked = null; renderCards(); });
@@ -43927,6 +44165,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var cmp = typeof buildComposeRow === 'function' ? buildComposeRow(c.w) : null;
     if (cmp) { sec.appendChild(cmp); }
     body.appendChild(sec);
+    if (toneMode) { var tsx = el('section', 'cdsec'); tsx.appendChild(buildToneSection(c.w)); body.appendChild(tsx); }
     /* 我的筆記 */
     var ms = el('section', 'cdsec'); ms.appendChild(el('h3', '', '我的筆記'));
     var my = el('textarea', 'cdmy'); my.value = c.my || ''; my.placeholder = '自己的意思、記法、聯想（可不填）'; my.rows = 2; my.setAttribute('aria-label', c.w + ' 的筆記');
@@ -43991,7 +44230,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.11.0';
+  var APP_VER = '正式版 v1.12.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -44398,7 +44637,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   });
   /* ---------- 手動備份：把設定、生字卡、所有文件的筆記和目前的 PDF 打包成一個檔案 ---------- */
   var BK_LAST = 'thai-last-backup', backupStatus = '還沒備份過', pendingRestore = null;
-  var SETTING_KEYS = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-welcome-v1', 'thai-theme', 'thai-my-names', 'thai-font', 'thai-view', 'thai-tools', 'thai-progress', 'thai-home-view'];
+  var SETTING_KEYS = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-welcome-v1', 'thai-theme', 'thai-my-names', 'thai-font', 'thai-view', 'thai-tools', 'thai-progress', 'thai-home-view', 'thai-tone-mode'];
   function b64FromBytes(u8) {
     var s = '', CH = 0x8000;
     for (var i = 0; i < u8.length; i += CH) { s += String.fromCharCode.apply(null, u8.subarray(i, i + CH)); }
@@ -44867,11 +45106,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ['主頁', [
       { t: '清單或方塊', s: '右邊的兩個小圖示切換排列', img: 'home-grid',
         d: ['「清單」：一行一份文件，看得到更多資訊。', '「方塊」：大縮圖、名稱在下面，像 Google 雲端硬碟。', '方塊模式點縮圖就打開；按「⋯」可以搬資料夾或刪除。'] },
-      { t: '加文件', s: '按「＋ 加入 PDF」「＋ 加入圖片」或「＋ 貼上文字」', img: 'home-add',
-        d: ['PDF：按「＋ 加入 PDF」，從「檔案」App 選，可以一次選好幾個。', '照片或截圖：按「＋ 加入圖片」，選好的幾張會合成一份文件。', '逐字稿、文章：先在別的 App 拷貝，按「＋ 貼上文字」，長按文字框選「貼上」，再按「建立文件」。'],
+      { t: '加文件', s: '按「＋ 加入 PDF」「＋ 圖片／影片」或「＋ 貼上文字」', img: 'home-add',
+        d: ['PDF：按「＋ 加入 PDF」，從「檔案」App 選，可以一次選好幾個。', '照片或截圖：按「＋ 圖片／影片」，選好的幾張會合成一份文件。', '逐字稿、文章：先在別的 App 拷貝，按「＋ 貼上文字」，長按文字框選「貼上」，再按「建立文件」。'],
         tip: '新文件會放進目前選的資料夾。' },
+      { t: '影片的字幕', s: '按「＋ 圖片／影片」選有泰文字幕的影片', img: '',
+        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會每秒看一次畫面，畫面換了就讀一次上面的泰文，最後整理成一份文字文件。', '同一句字幕只會留一次；畫面上其他的泰文也可能被讀進來。', '3 分鐘的影片大約要 1–5 分鐘，中途可以按「停止」，已經讀到的會保留。'],
+        tip: 'IG、YouTube 的連結不能直接讀：先用 iPad 的「螢幕錄影」把影片錄下來，再加入那段錄影。' },
       { t: '圖片會自動認字', s: '照片、截圖加進來，App 會自己讀出泰文', img: 'home-img',
-        d: ['按「＋ 加入圖片」，選照片或截圖。', 'App 會打開這份文件，自動開始文字辨識（每張約 5–20 秒）。', '完成後就能點字查詞。'],
+        d: ['按「＋ 圖片／影片」，選照片或截圖。', 'App 會打開這份文件，自動開始文字辨識（每張約 5–20 秒）。', '完成後就能點字查詞。'],
         tip: '第一次要先下載約 8 MB 的辨識工具，記得連上網路。' },
       { t: '分資料夾', s: '點上面的分類切換，按「＋ 新資料夾」建新的', img: 'home-folders',
         d: ['點「全部」「未分類」或自己建的資料夾，下面只列出那個資料夾的文件。', '按「＋ 新資料夾」，打名字，按「建立」。'] },
@@ -44892,6 +45134,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['點被切錯的名字，按查詞視窗下方的「這是名字？」。', '用「‹＋」「＋›」往前、往後多選一個字，「－」少選一個字，直到中間顯示完整的名字。', '選種類（人名、作品…），可以寫中文名，按「存到我的名單」。', '之後所有文件都會把它當成一個詞。設定頁的「我的專有名詞」可以刪除。'] },
       { t: '地名、機關的意思', s: '點專有名詞，看中文名或「字面」意思', img: 'ent-mean',
         d: ['內建名單裡的國家、泰國各府、政府機關、大學，會直接顯示中文名。', '不在名單裡的，會拆成字典裡的詞，顯示「字面」意思，例如 กรม（廳）＋ส่งเสริม（促進）＋การค้า（貿易）。', '有網路時還會顯示「翻譯」：機器翻譯的中文意思，僅供參考。'] },
+      { t: '邊查邊做筆記', s: '查詞視窗按「畫螢光筆」或「加註解」', img: 'pop-notes',
+        d: ['在「點字」模式點一個詞，查詞視窗裡有「畫螢光筆」和「加註解」。', '「畫螢光筆」：用目前的螢光筆顏色畫這個詞；再按一次就取消。', '「加註解」：在這個詞上面加一個文字框，直接打字。會切到「文字框」工具，寫完按「點字」回來。', '用螢光筆、手寫工具時，點一下詞也能查詞。'] },
       { t: '翻譯一整段', s: '長按一個字，不放開，拖到最後一個字', img: 'sel-pop',
         d: ['確認工具列選的是「點字」。', '手指長按第一個字（約半秒），不要放開，拖到最後一個字再放開。用 Pencil 可以直接拖。', '下方會跳出這段文字和中文翻譯。', '還可以「朗讀」「複製」「畫螢光筆」，或「在 Google 翻譯打開」。'],
         tip: '直接翻譯需要網路。' }]],
@@ -44912,9 +45156,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['每份文件會記住你讀到第幾頁、讀到頁面的哪裡。', '下次打開同一份文件，會自動回到那裡。'] }]],
     ['筆記', [
       { t: '畫重點', s: '選「螢光筆」，從一個字劃到另一個字', img: 'note-hl',
-        d: ['按「螢光筆」，下面會出現顏色和樣式。', '選顏色；彩色圓圈是「我的顏色」，可以存自己常用的顏色。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '想取消：點一下畫過的地方。'] },
+        d: ['按「螢光筆」，下面會出現顏色和樣式。', '點顏色就用那個顏色；再點一次正在用的顏色可以換掉它。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '只點一下（不拖）是查詞；想取消螢光筆，在查詞視窗按「取消螢光筆」。'] },
       { t: '手寫', s: '選「手寫」，選顏色和粗細再寫', img: 'note-ink',
-        d: ['按「手寫」，下面會出現顏色和「細／中／粗」；彩色圓圈是「我的顏色」。', '直接在頁面上寫字或畫線。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」開關：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
+        d: ['按「手寫」，下面會出現「筆／橡皮擦」、顏色和「細／中／粗」。', '直接在頁面上寫字或畫線。', '要擦掉：選「橡皮擦」，碰到的那一整筆就會擦掉；擦錯了按「↶」。', '手指點一下泰文（沒有畫出線）就是查詞。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」開關：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
       { t: '寫註解', s: '選「文字框」，點字或點空白處', img: 'note-box',
         d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。'] },
       { t: '換顏色', s: '再點一次正在用的顏色，就能換掉它', img: 'note-colors',
@@ -44941,7 +45185,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '看答案、打分數', s: '先想一想，按「看答案」，再選記得的程度', img: 'cards-grade',
         d: ['先看泰文和例句，自己想意思，按「看答案」。', '「忘了」：今天會再出現一次。', '「有點難」「記得」「很簡單」：下次出現會越隔越久，按鈕下面寫著是幾天後。'] },
       { t: '測驗', s: '「測驗」分頁：選擇題，最多 10 題', img: 'cards-quiz',
-        d: ['選題型：看泰文選意思、看意思選泰文、聽發音選泰文。', '按「開始測驗」，點你覺得對的答案，答完看成績。', '答錯的會排進今天的複習。'] },
+        d: ['選題型：看泰文選意思、看意思選泰文、聽發音選泰文；打開「聲調學習模式」還有「聲調與子音」。', '按「開始測驗」，點你覺得對的答案，答完看成績。', '答錯的會排進今天的複習。'] },
       { t: '單字詳解和例句', s: '「全部」分頁點一個單字', img: 'cards-detail',
         d: ['會看到所有詞性和意思、拼音、自己的筆記。', '例句有三種：原本那一句、這份文件裡的其他句子、生活化例句（日常對話）。', '每句都能按喇叭朗讀，按「看中文翻譯」看中文（要網路）。', '下面可以搬資料夾、排進今天複習或刪除。'] }]],
     ['設定', [
@@ -44949,6 +45193,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['App 平常會自己更新；想馬上拿到新版時，到設定頁最下面按「檢查更新」。', '有新版會自動下載並重新整理；沒有的話會顯示「已經是最新版了」。', '版本號就寫在按鈕左邊。'] },
       { t: '換顏色', s: '「外觀」選淺色或深色', img: 'set-theme',
         d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。'] },
+      { t: '聲調學習模式', s: '「聲調學習模式」選「開」', img: 'tone-pop',
+        d: ['打開後，點一個詞，查詞視窗會多一塊「聲調」。', '每個音節：聲調（顏色和音高線）、起首子音是中／高／低子音。', '下面一行一行說明怎麼推出聲調，例如「ร 低子音＋ไม้โท → 高聲」；不照規則唸的會標「例外」。', '按「看聲調規則表」可以看整張表。', '生字卡詳解、複習的答案也會顯示；測驗會穿插聲調題。'],
+        tip: '聲調資料第一次打開要連網下載。' },
       { t: '換字體', s: '「中文字體」選喜歡的字', img: 'set-font',
         d: ['「蘋方」：iPad 內建的黑體，最清楚（預設）。', '「思源黑體」：線條較均勻的黑體。', '「思源宋體」：像書本的明體。', '「霞鶩文楷」：像手寫的楷體，比較柔和。', '只改按鈕和說明的中文字，泰文字不變。'],
         tip: '思源字體和文楷第一次要連網下載。' },
@@ -45372,7 +45619,136 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       });
     }).catch(function (err) { $('homeMsg').textContent = '加入圖片失敗：' + String(err && err.message || err); });
   }
-  $('imgfile').addEventListener('change', function () { var fs = this.files; libAddImages(fs); this.value = ''; });
+  $('imgfile').addEventListener('change', function () {
+    var all = Array.prototype.slice.call(this.files || []);
+    var vids = all.filter(function (f) { return /^video\//.test(f.type) || /\.(mp4|mov|m4v|webm)$/i.test(f.name); });
+    var imgs = all.filter(function (f) { return vids.indexOf(f) < 0; });
+    if (imgs.length) { libAddImages(imgs); }
+    if (vids.length) { libAddVideo(vids[0]); }
+    this.value = '';
+  });
+  /* ---------- 加入影片：每秒看一次畫面，畫面換了才做文字辨識，把泰文字幕整理成一份文字文件 ---------- */
+  var vid = { busy: false, stop: false };
+  var vbox = document.createElement('div'); vbox.className = 'vidbox'; vbox.id = 'vidbox'; vbox.hidden = true;
+  vbox.innerHTML = '<div class="vb-row"><span class="vb-t" id="vidMsg" aria-live="polite"></span><button type="button" id="vidStop">停止</button></div><div class="vb-bar"><span id="vidBar"></span></div>';
+  $('homeMsg').parentNode.insertBefore(vbox, $('homeMsg').nextSibling);
+  $('vidStop').addEventListener('click', function () { vid.stop = true; $('vidMsg').textContent = '停止中…已經讀到的字幕會保留。'; });
+  function vidSeek(v, t) {
+    return new Promise(function (res) {
+      var done = false;
+      function ok() { if (!done) { done = true; v.removeEventListener('seeked', ok); res(); } }
+      v.addEventListener('seeked', ok);
+      v.currentTime = t;
+      setTimeout(ok, 3000);
+    });
+  }
+  function vidLoad(f) {
+    return new Promise(function (res, rej) {
+      var v = document.createElement('video');
+      v.muted = true; v.playsInline = true; v.preload = 'auto'; v.setAttribute('playsinline', '');
+      var u = URL.createObjectURL(f);
+      v.onloadeddata = function () { res({ v: v, url: u }); };
+      v.onerror = function () { URL.revokeObjectURL(u); rej(new Error('這個影片格式讀不了（建議用 iPad 的螢幕錄影或 MP4）')); };
+      v.src = u;
+      v.load();
+    });
+  }
+  /* 比對用：去掉空白、標點，母音和聲調符號也拿掉（同一句字幕，辨識時常常掉幾個上面的符號） */
+  function vidNorm(t) { return t.replace(/[\s.,!?'"“”‘’()\-–—…:;|]/g, '').replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, ''); }
+  function vidLev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    for (j = 0; j <= n; j++) { d[j] = j; }
+    for (i = 1; i <= m; i++) { var prev = d[0]; d[0] = i; for (j = 1; j <= n; j++) { var tmp = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = tmp; } }
+    return d[n];
+  }
+  function vidSimilar(a, b) {
+    if (!a || !b) { return false; }
+    if (a === b || a.indexOf(b) >= 0 || b.indexOf(a) >= 0) { return true; }
+    if (Math.max(a.length, b.length) > 120) { return false; }
+    return 1 - vidLev(a, b) / Math.max(a.length, b.length) >= 0.75;
+  }
+  /* 把辨識結果的一個個字，依高度排回一行一行 */
+  function vidLinesOf(items) {
+    var rows = [];
+    items.slice().sort(function (p, q) { return p[1] - q[1] || p[0] - q[0]; }).forEach(function (it) {
+      var row = rows.filter(function (r) { return Math.abs(r.base - it[1]) < it[3] * 0.6; })[0];
+      if (!row) { row = { base: it[1], items: [] }; rows.push(row); }
+      row.items.push(it);
+    });
+    return rows.map(function (r) {
+      r.items.sort(function (p, q) { return p[0] - q[0]; });
+      return r.items.map(function (it, k) { return (k ? (typeof it[5] === 'string' ? it[5] : ' ') : '') + it[4]; }).join('').trim();
+    }).filter(function (t) { return /[ก-ฮ]/.test(t) && t.replace(/\s/g, '').length >= 2; });
+  }
+  async function libAddVideo(f) {
+    if (vid.busy) { $('homeMsg').textContent = '還有一部影片正在讀，請等它完成或按「停止」。'; return; }
+    vid.busy = true; vid.stop = false; vbox.hidden = false;
+    var msg = $('vidMsg'), bar = $('vidBar'), name = f.name.replace(/\.[^.]+$/, '') || '影片字幕';
+    msg.textContent = '讀取影片「' + name + '」…'; bar.style.width = '0%';
+    var o = null, lines = [], recent = [], frames = 0, ocrs = 0;
+    try {
+      o = await vidLoad(f);
+      var v = o.v, dur = v.duration;
+      if (!isFinite(dur) || dur <= 0) { throw new Error('讀不到影片長度'); }
+      if (dur > 20 * 60) { throw new Error('影片太長（超過 20 分鐘），請先剪短或分段錄'); }
+      var vw = v.videoWidth, vh = v.videoHeight;
+      if (!vw || !vh) { throw new Error('讀不到影片畫面'); }
+      var k = Math.min(2.5, 2200 / Math.max(vw, vh));
+      var big = document.createElement('canvas'); big.width = Math.round(vw * k); big.height = Math.round(vh * k);
+      var small = document.createElement('canvas'); small.width = 96; small.height = Math.max(8, Math.round(96 * vh / vw));
+      var bg = big.getContext('2d'), sg = small.getContext('2d', { willReadFrequently: true });
+      var prev = null, step = dur > 600 ? 1.5 : 1;
+      msg.textContent = '準備文字辨識工具…（第一次要下載約 8 MB）';
+      var w = await ensureOcr();
+      for (var t = 0.2; t < dur && !vid.stop; t += step) {
+        await vidSeek(v, Math.min(t, dur - 0.05));
+        frames++;
+        sg.drawImage(v, 0, 0, small.width, small.height);
+        var px = sg.getImageData(0, 0, small.width, small.height).data, gray = new Uint8Array(px.length / 4), diff = 0;
+        for (var i = 0, j = 0; i < px.length; i += 4, j++) { gray[j] = (px[i] * 3 + px[i + 1] * 6 + px[i + 2]) / 10; if (prev) { diff += Math.abs(gray[j] - prev[j]); } }
+        diff = prev ? diff / gray.length : 999;
+        bar.style.width = Math.round(t / dur * 100) + '%';
+        msg.textContent = '看到第 ' + Math.floor(t / 60) + ':' + ('0' + Math.floor(t % 60)).slice(-2) + '（共 ' + Math.floor(dur / 60) + ':' + ('0' + Math.floor(dur % 60)).slice(-2) + '），已找到 ' + lines.length + ' 句字幕…';
+        if (diff < 6) { continue; }
+        prev = gray;
+        bg.fillStyle = '#ffffff'; bg.fillRect(0, 0, big.width, big.height);
+        bg.drawImage(v, 0, 0, big.width, big.height);
+        var res = await w.recognize(big, {}, { blocks: true, text: false, hocr: false, tsv: false });
+        ocrs++;
+        var got = ocrItems(res.data, big.width), ls = vidLinesOf(got.items);
+        ls.forEach(function (ln) {
+          var nl = vidNorm(ln);
+          if (nl.length < 2) { return; }
+          for (var q = recent.length - 1; q >= 0; q--) {
+            if (vidSimilar(recent[q].n, nl)) {
+              /* 同一句：留比較完整（符號比較多）的那一次 */
+              if (ln.length > lines[recent[q].k].length) { lines[recent[q].k] = ln; }
+              return;
+            }
+          }
+          lines.push(ln); recent.push({ n: nl, k: lines.length - 1 }); if (recent.length > 12) { recent.shift(); }
+        });
+      }
+    } catch (err) {
+      msg.textContent = '讀影片失敗：' + String(err && err.message || err);
+      vid.busy = false;
+      if (o) { URL.revokeObjectURL(o.url); }
+      return;
+    }
+    if (o) { URL.revokeObjectURL(o.url); }
+    vid.busy = false;
+    if (!lines.length) { msg.textContent = '這部影片沒有讀到泰文字幕（看了 ' + frames + ' 個畫面）。'; bar.style.width = '100%'; return; }
+    vbox.hidden = true;
+    var text = lines.join('\n'), id = 'text:' + Date.now().toString(36), dn = name + '（影片字幕）';
+    lib.docs.push({ id: id, name: dn, type: 'text', size: text.length, added: Date.now(), opened: 0, folder: libTarget(), video: true });
+    saveLib();
+    try { localStorage.setItem(PDF_DOC_PREFIX + id, JSON.stringify({ text: text, src: { type: 'text', id: id, name: dn }, hl: [], strokes: [], boxes: [], nextId: 1 })); } catch (err) {}
+    $('homeMsg').textContent = '已把影片字幕整理成文件「' + dn + '」：' + lines.length + ' 句' + (vid.stop ? '（中途停止）' : '') + '。字幕是文字辨識讀出來的，可能有錯字。';
+    setTimeout(function () { $('homeMsg').textContent = ''; }, 12000);
+    renderHome();
+    openDoc(id);
+  }
+
 
   /* ---------- 儲存與復原 ---------- */
   function data() { return { text: state.text, src: state.src || null, hl: state.hl, strokes: state.strokes, boxes: state.boxes, nextId: state.nextId, style: state.style }; }
@@ -45438,8 +45814,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (e.target.closest && e.target.closest('.note')) { return; }
     if (seen[e.pointerType] !== undefined) { seen[e.pointerType] += 1; }
     if (drawingMode() && pencilOnly && e.pointerType === 'touch') { return; }
-    if (mode === 'ink') {
-      active = { id: e.pointerId, kind: 'ink', s: { w: toolPrefs.inkW, p: [toPage(e)] } };
+    if (mode === 'ink' && toolPrefs.inkTool === 'erase') {
+      active = { id: e.pointerId, kind: 'erase', hit: false };
+      eraseAt(toPage(e), active);
+      try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
+      e.preventDefault();
+    } else if (mode === 'ink') {
+      active = { id: e.pointerId, kind: 'ink', t0: Date.now(), cx: e.clientX, cy: e.clientY, s: { w: toolPrefs.inkW, p: [toPage(e)] } };
       if (inkStrokeColor()) { active.s.c = inkStrokeColor(); }
       if (pdf) { var ipg = pageAtY(active.s.p[0][1]); active.g = ipg && ipg.ink.width ? pageInkCtx(ipg) : null; }
       try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
@@ -45458,6 +45839,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 
   wrap.addEventListener('pointermove', function (e) {
     if (!active || e.pointerId !== active.id) { return; }
+    if (active.kind === 'erase') {
+      var el2 = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+      (el2 && el2.length ? el2 : [e]).forEach(function (ev) { eraseAt(toPage(ev), active); });
+      return;
+    }
     if (active.kind === 'ink') {
       var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
       if (!list || !list.length) { list = [e]; }
@@ -45479,15 +45865,24 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (!active || e.pointerId !== active.id) { return; }
     var a = active;
     active = null;
+    if (a.kind === 'erase') { if (a.hit) { save(); } return; }
     if (a.kind === 'ink') {
+      if (Date.now() - a.t0 < 350 && Math.abs(e.clientX - a.cx) + Math.abs(e.clientY - a.cy) < 8) {
+        var ti = indexByGeometry(e.clientX, e.clientY), ts = ti >= 0 ? segAt(ti) : null;
+        if (ts && ts.w && /[\u0E01-\u0E2E]/.test(ts.t)) { redrawInk(); tapSel = [ts.i, ts.i + ts.n]; renderText(); showPop(ts); return; }
+      }
       snapshot();
       state.strokes.push(a.s);
       redrawInk();
       save();
     } else if (a.kind === 'hl') {
+      if (!a.moved) {
+        var hs = segAt(a.a);
+        if (hs && hs.w) { tapSel = [hs.i, hs.i + hs.n]; renderText(); showPop(hs); } else { renderText(); }
+        return;
+      }
       snapshot();
-      var hit = hlAt(a.a);
-      if (!a.moved && hit >= 0) { state.hl.splice(hit, 1); } else { addRangeColored(snapRange(a.a, a.b), toolPrefs.hlColor, toolPrefs.hlStyle); }
+      addRangeColored(snapRange(a.a, a.b), toolPrefs.hlColor, toolPrefs.hlStyle);
       renderText();
       save();
     } else {
@@ -45529,6 +45924,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var a = active;
     active = null;
     if (a.kind === 'ink') { redrawInk(); }
+    if (a.kind === 'erase' && a.hit) { save(); }
     if (a.kind === 'hl') { renderText(); }
   });
 
@@ -45621,13 +46017,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function favTapIdx(kind, i, c) {
     var cur = kind === 'hl' ? toolPrefs.hlColor : kind === 'ink' ? toolPrefs.inkColor : currentStyle().color;
+    if (kind === 'ink' && toolPrefs.inkTool === 'erase') { toolPrefs.inkTool = 'pen'; toolPrefs.inkColor = c; saveTools(); closeCpop(); renderToolOpts(); return true; }
     if (cur === c) {
       if (cpop && !cpop.hidden && cpKind === kind && cpSlot === i) { closeCpop(); } else { openCpop(kind, i); }
       return true;
     }
     closeCpop();
     if (kind === 'hl') { toolPrefs.hlColor = c; saveTools(); renderToolOpts(); }
-    else if (kind === 'ink') { toolPrefs.inkColor = c; saveTools(); renderToolOpts(); }
+    else if (kind === 'ink') { toolPrefs.inkColor = c; toolPrefs.inkTool = 'pen'; saveTools(); renderToolOpts(); }
     return false;
   }
   /* 文字框樣式列的三個顏色鈕（styleAction 會先問這裡） */
@@ -45649,15 +46046,24 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         toolOpts.appendChild(b);
       });
     } else if (mode === 'ink') {
+      var ER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 19.5 3.6 14.6a1.6 1.6 0 0 1 0-2.3l8.7-8.7a1.6 1.6 0 0 1 2.3 0l5.8 5.8a1.6 1.6 0 0 1 0 2.3l-8 8z"/><path d="M8 9.5l6.5 6.5M8.5 19.5H21"/></svg>';
+      var PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/></svg>';
+      [['pen', '筆', PEN], ['erase', '橡皮擦', ER]].forEach(function (o) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'ob otool';
+        b.innerHTML = o[2] + '<span></span>'; b.querySelector('span').textContent = o[1];
+        b.setAttribute('aria-pressed', String((toolPrefs.inkTool || 'pen') === o[0]));
+        b.addEventListener('click', function () { toolPrefs.inkTool = o[0]; saveTools(); renderToolOpts(); });
+        toolOpts.appendChild(b);
+      });
       toolOpts.appendChild(optLabel('顏色'));
-      toolPrefs.inkFav.forEach(function (c, i) { toolOpts.appendChild(favSwatch('ink', i, c, toolPrefs.inkColor === c)); });
+      toolPrefs.inkFav.forEach(function (c, i) { toolOpts.appendChild(favSwatch('ink', i, c, toolPrefs.inkColor === c && toolPrefs.inkTool !== 'erase')); });
       toolOpts.appendChild(optLabel('粗細'));
       INK_WIDTHS.forEach(function (w) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'ob ow';
         var dot = document.createElement('span'); dot.className = 'odot'; dot.style.width = dot.style.height = Math.round(w[0] * 2.2 + 2) + 'px'; dot.style.background = colorCss(toolPrefs.inkColor);
         b.appendChild(dot); b.appendChild(document.createTextNode(w[1]));
         b.setAttribute('aria-pressed', toolPrefs.inkW === w[0] ? 'true' : 'false');
-        b.addEventListener('click', function () { toolPrefs.inkW = w[0]; saveTools(); renderToolOpts(); });
+        b.addEventListener('click', function () { toolPrefs.inkW = w[0]; toolPrefs.inkTool = 'pen'; saveTools(); renderToolOpts(); });
         toolOpts.appendChild(b);
       });
     }
