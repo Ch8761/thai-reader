@@ -896,6 +896,23 @@ body.cdopen { overflow: hidden; }
 .tpwrap > .primary { margin-top: 12px; }
 .tpwrap .qwhy { margin-top: 10px; line-height: 1.6; }
 .tpwrap .cword { font-size: 44px; }
+.vhead .back { flex: 0 0 auto; white-space: nowrap; }
+.vhead h1 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pop .adjlinks button.adjbtn { font-size: 13px; min-height: 28px; padding: 0; border: 0; background: none; color: var(--accent); font-weight: 600; }
+/* 調整斷詞 */
+.segedit { display: flex; flex-direction: column; gap: 8px; }
+.segedit .segtitle { font-weight: 600; color: var(--fg); }
+.segedit .segctx { color: var(--muted); opacity: .6; }
+.segedit .nmprev { white-space: nowrap; overflow: hidden; text-overflow: clip; flex: 1 1 auto; min-width: 0; text-align: center; }
+.segedit .segnew { background: color-mix(in srgb, var(--accent) 16%, transparent); border-radius: 6px; padding: 0 3px; }
+.segstrip { display: flex; align-items: stretch; flex-wrap: wrap; font-family: var(--thai); font-size: 30px; line-height: 1.6; }
+.segch { padding: 0 1px; }
+.seggap { min-width: 22px; width: 22px; min-height: 48px; padding: 0; border: 0; background: none; position: relative; border-radius: 6px; }
+.seggap::after { content: ''; position: absolute; left: 50%; top: 8px; bottom: 8px; border-left: 2px dashed var(--line); }
+.seggap.on::after { border-left: 3px solid var(--accent); }
+.seggap.on { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.segundo { align-self: flex-start; min-height: 36px; font-size: 14px; border-radius: 999px; }
+.nmtag.segtag-w, .nmtag.segtag-s { background: var(--bg); color: var(--accent); border: 1px solid var(--line); }
 /* 雲端同步 */
 .syncerr { color: #c0392b; }
 /* 影片：框出字幕 */
@@ -1091,6 +1108,10 @@ body.noscroll { overflow: hidden; }
       <div class="setlabel">我的專有名詞<span class="sethelp">字典沒收錄的明星、劇名、品牌等。查詞時按「這是名字？」就能加進來，之後所有文件都會把它當成一個詞。<br><span id="myNamesCount"></span></span></div>
       <ul class="mynames" id="myNamesList" hidden></ul>
     </div>
+    <div class="setrow fbrow">
+      <div class="setlabel">我的斷詞<span class="sethelp">查詞時按「斷詞不對？」，可以把切開的字合成一個詞，或把黏在一起的詞拆開；所有文件都會照這樣斷。<br><span id="mySegCount"></span></span></div>
+      <ul class="mynames" id="mySegList" hidden></ul>
+    </div>
     <div class="setrow fbrow" id="syncRow" hidden>
       <div class="setlabel">雲端同步（Google 雲端硬碟）<span class="sethelp">文件、PDF、筆記、生字卡和設定，存在你自己的 Google 雲端硬碟裡這個 App 專用的隱藏資料夾（不會出現在你的檔案清單，App 也看不到你其他的檔案）。在另一台平板、手機或電腦打開這個 App，連結同一個 Google 帳號，兩邊就會自動合併。<br><span id="syncState"></span></span></div>
       <div class="btns" id="syncBtns"></div>
@@ -1124,7 +1145,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.1</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.2</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -41500,6 +41521,163 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (s === 'lst') { return o.s === 'L' ? '長母音結尾，或 ม น ง ย ว 結尾，是活音節。' : '短母音結尾，或尾音是 k、t、p 音（ก ด บ 類），是死音節。'; }
     return toneWhy(o, null);
   }
+  /* ---------- 使用者自己調整斷詞：把切開的字合成一個詞、把黏在一起的詞拆開 ----------
+     合成的詞放進名單（GAZ，標 word，不當專有名詞）；拆開的規則在斷詞最後套用。所有文件都適用。 */
+  var MY_WORDS_KEY = 'thai-my-words', MY_SPLITS_KEY = 'thai-my-splits', myWords = [], mySplits = [], splitMap = {};
+  function loadMySeg() {
+    try { myWords = JSON.parse(localStorage.getItem(MY_WORDS_KEY) || '[]'); } catch (err) { myWords = []; }
+    try { mySplits = JSON.parse(localStorage.getItem(MY_SPLITS_KEY) || '[]'); } catch (err) { mySplits = []; }
+    if (!Array.isArray(myWords)) { myWords = []; }
+    if (!Array.isArray(mySplits)) { mySplits = []; }
+    splitMap = {}; mySplits.forEach(function (x) { if (x && x.t && x.parts && x.parts.join('') === x.t) { splitMap[x.t] = x.parts; } });
+  }
+  function saveMySeg() {
+    try { localStorage.setItem(MY_WORDS_KEY, JSON.stringify(myWords)); localStorage.setItem(MY_SPLITS_KEY, JSON.stringify(mySplits)); } catch (err) {}
+    loadMySeg();
+  }
+  /* 斷詞最後一步：照使用者的規則拆開 */
+  function userSplit(out) {
+    if (!mySplits.length) { return out; }
+    var res = [];
+    out.forEach(function (g) {
+      var parts = g.w && splitMap[g.t];
+      if (!parts) { res.push(g); return; }
+      var at = g.i;
+      parts.forEach(function (p) { res.push({ i: at, n: p.length, w: true, t: p, us: true, src: g.t }); at += p.length; });
+    });
+    return res;
+  }
+  function segChanged() {
+    if (typeof gazBuild === 'function') { gazBuild(); }
+    if (state.text) { segs = segment(state.text); }
+    if (typeof entsText !== 'undefined') { entsText = null; }
+    tapSel = null; renderText();
+    renderMySeg();
+  }
+  /* 可以切開的位置：上下的母音、聲調符號不能跟前一個字分開 */
+  function cutPoints(w) { var out = []; for (var k = 1; k < w.length; k++) { if (!isMark(w.charAt(k)) && !/[ะาำๅ]/.test(w.charAt(k))) { out.push(k); } } return out; }
+  function buildSegEditor(seg) {
+    var t = state.text, box = document.createElement('div'); box.className = 'sec segedit';
+    var mineW = myWords.some(function (x) { return x.t === seg.t; }), mineS = !!seg.us || !!splitMap[seg.t];
+    var tabs = document.createElement('div'); tabs.className = 'seg segtabs'; tabs.setAttribute('role', 'radiogroup'); tabs.setAttribute('aria-label', '要怎麼調整');
+    var body = document.createElement('div'), msg = document.createElement('div'); msg.className = 'sl2';
+    var mode = 'merge';
+    function close() { box.remove(); }
+    function paintTabs() { segButtons(tabs, [['merge', '合成一個詞'], ['split', '拆開']], mode, function (v) { mode = v; paint(); }); }
+    function paint() {
+      paintTabs(); body.replaceChildren(); msg.textContent = '';
+      if (mode === 'merge') {
+        var cur = { s: seg.i, e: seg.i + seg.n };
+        body.appendChild(Object.assign(document.createElement('div'), { className: 'sl2', textContent: '用 ‹＋ 和 ＋› 把前後被切開的字加進來，調成一個完整的詞。' }));
+        var row = document.createElement('div'); row.className = 'nmrow';
+        var prev = document.createElement('div'); prev.className = 'nmprev'; prev.lang = 'th';
+        function show() {
+          /* 預覽：框裡是新的一個詞，前後灰色是原本的鄰居 */
+          prev.replaceChildren();
+          var a = document.createElement('span'); a.className = 'segctx'; a.textContent = t.slice(Math.max(0, cur.s - 3), cur.s).split('\n').pop();
+          var m = document.createElement('span'); m.className = 'segnew'; m.textContent = t.slice(cur.s, cur.e);
+          var b = document.createElement('span'); b.className = 'segctx'; b.textContent = t.slice(cur.e, cur.e + 3).split('\n')[0];
+          prev.appendChild(a); prev.appendChild(m); prev.appendChild(b);
+        }
+        function btn(label, aria, fn) { var b = document.createElement('button'); b.type = 'button'; b.className = 'nmadj'; b.textContent = label; b.setAttribute('aria-label', aria); b.addEventListener('click', function () { fn(); show(); }); return b; }
+        /* 一次加減一整個原本的詞（比較快），找不到就一個字 */
+        row.appendChild(btn('‹＋', '加入前面一個詞', function () { var p = segAt(cur.s - 1); if (p && p.w && t.slice(p.i, cur.s).indexOf('\n') < 0) { cur.s = p.i; } }));
+        row.appendChild(btn('－', '前面少一個字', function () { var c = cutPoints(t.slice(cur.s, cur.e)); if (c.length) { cur.s += c[0]; } }));
+        row.appendChild(prev);
+        row.appendChild(btn('－', '後面少一個字', function () { var c = cutPoints(t.slice(cur.s, cur.e)); if (c.length) { cur.e = cur.s + c[c.length - 1]; } }));
+        row.appendChild(btn('＋›', '加入後面一個詞', function () { var n = segAt(cur.e); if (n && n.w && t.slice(cur.e, n.i + n.n).indexOf('\n') < 0) { cur.e = n.i + n.n; } }));
+        body.appendChild(row); show();
+        var acts = document.createElement('div'); acts.className = 'row2';
+        var ok = document.createElement('button'); ok.type = 'button'; ok.className = 'primary'; ok.textContent = '存成一個詞';
+        ok.addEventListener('click', function () {
+          var w = t.slice(cur.s, cur.e).trim();
+          if (w.length < 2 || !/[ก-ฮ]/.test(w)) { msg.textContent = '詞至少要 2 個字，而且要有泰文。'; return; }
+          if (/\s/.test(w)) { msg.textContent = '詞裡面不能有空白或換行。'; return; }
+          if (w === seg.t && !mineS) { msg.textContent = '範圍跟原本一樣。用 ‹＋ 或 ＋› 把被切開的部分加進來。'; return; }
+          myWords = myWords.filter(function (x) { return x.t !== w; }); myWords.push({ t: w, at: Date.now() });
+          mySplits = mySplits.filter(function (x) { return x.t !== w; });
+          saveMySeg(); hidePop(); segChanged();
+          $('info').textContent = '已把「' + w + '」存成一個詞，所有文件都會這樣斷。可以在「設定 → 我的斷詞」改回來。';
+        });
+        var no = document.createElement('button'); no.type = 'button'; no.textContent = '取消'; no.addEventListener('click', close);
+        acts.appendChild(ok); acts.appendChild(no); body.appendChild(acts);
+      } else {
+        var w = seg.t, cuts = {}, pts = cutPoints(w);
+        if (!pts.length) { body.appendChild(Object.assign(document.createElement('div'), { className: 'sl2', textContent: '這個詞太短，沒辦法再拆。' })); return; }
+        body.appendChild(Object.assign(document.createElement('div'), { className: 'sl2', textContent: '點兩個字中間的空隙，決定要從哪裡切開（可以切好幾刀）。' }));
+        var strip = document.createElement('div'); strip.className = 'segstrip'; strip.lang = 'th';
+        function drawStrip() {
+          strip.replaceChildren();
+          var last = 0;
+          pts.concat([w.length]).forEach(function (p) {
+            var ch = document.createElement('span'); ch.className = 'segch'; ch.textContent = w.slice(last, p); strip.appendChild(ch);
+            if (p < w.length) {
+              var gap = document.createElement('button'); gap.type = 'button'; gap.className = 'seggap' + (cuts[p] ? ' on' : ''); gap.setAttribute('aria-label', '在這裡切開'); gap.setAttribute('aria-pressed', String(!!cuts[p]));
+              gap.addEventListener('click', function () { cuts[p] = !cuts[p]; drawStrip(); });
+              strip.appendChild(gap);
+            }
+            last = p;
+          });
+        }
+        drawStrip(); body.appendChild(strip);
+        var acts2 = document.createElement('div'); acts2.className = 'row2';
+        var ok2 = document.createElement('button'); ok2.type = 'button'; ok2.className = 'primary'; ok2.textContent = '存成拆開';
+        ok2.addEventListener('click', function () {
+          var ks = Object.keys(cuts).filter(function (k) { return cuts[k]; }).map(Number).sort(function (a, b) { return a - b; });
+          if (!ks.length) { msg.textContent = '還沒選要切的位置：點字中間的空隙。'; return; }
+          var parts = [], last = 0; ks.concat([w.length]).forEach(function (k) { parts.push(w.slice(last, k)); last = k; });
+          mySplits = mySplits.filter(function (x) { return x.t !== w; }); mySplits.push({ t: w, parts: parts, at: Date.now() });
+          myWords = myWords.filter(function (x) { return x.t !== w; });
+          saveMySeg(); hidePop(); segChanged();
+          $('info').textContent = '已把「' + w + '」拆成「' + parts.join('｜') + '」，所有文件都會這樣斷。可以在「設定 → 我的斷詞」改回來。';
+        });
+        var no2 = document.createElement('button'); no2.type = 'button'; no2.textContent = '取消'; no2.addEventListener('click', close);
+        acts2.appendChild(ok2); acts2.appendChild(no2); body.appendChild(acts2);
+      }
+    }
+    box.appendChild(Object.assign(document.createElement('div'), { className: 'sl2 segtitle', textContent: '調整斷詞：這個詞切得不對時，可以合起來或拆開。' }));
+    if (mineW || mineS) {
+      var undo = document.createElement('button'); undo.type = 'button'; undo.className = 'segundo'; undo.textContent = '恢復原本的斷詞（「' + (seg.src || seg.t) + '」是你調整過的）';
+      undo.addEventListener('click', function () {
+        myWords = myWords.filter(function (x) { return x.t !== seg.t; });
+        mySplits = mySplits.filter(function (x) { return x.t !== seg.t && x.t !== seg.src; });
+        saveMySeg(); hidePop(); segChanged();
+        $('info').textContent = '已恢復原本的斷詞。';
+      });
+      box.appendChild(undo);
+    }
+    box.appendChild(tabs); box.appendChild(body); box.appendChild(msg);
+    paint();
+    return box;
+  }
+  function openSegEditor(seg) {
+    var pop = $('pop'), old = pop.querySelector('.segedit, .nameedit');
+    if (old) { old.remove(); }
+    var ed = buildSegEditor(seg), x = pop.querySelector('.head');
+    pop.insertBefore(ed, x ? x.nextSibling : pop.firstChild);
+    ed.scrollIntoView({ block: 'nearest' });
+  }
+  /* 設定頁：我的斷詞 */
+  function renderMySeg() {
+    var ul = $('mySegList'), c = $('mySegCount');
+    if (!ul) { return; }
+    c.textContent = myWords.length + mySplits.length ? '合成的詞 ' + myWords.length + ' 個、拆開的詞 ' + mySplits.length + ' 個。' : '還沒有調整過。';
+    ul.replaceChildren();
+    var all = myWords.map(function (x) { return { k: 'w', t: x.t, show: x.t, at: x.at }; }).concat(mySplits.map(function (x) { return { k: 's', t: x.t, show: x.parts.join('｜'), at: x.at }; }));
+    all.sort(function (a, b) { return (b.at || 0) - (a.at || 0); }).forEach(function (x) {
+      var li = document.createElement('li');
+      var tag = document.createElement('span'); tag.className = 'nmtag segtag-' + x.k; tag.textContent = x.k === 'w' ? '合成' : '拆開';
+      var w = document.createElement('span'); w.className = 'nmword'; w.lang = 'th'; w.textContent = x.show;
+      var del = document.createElement('button'); del.type = 'button'; del.className = 'nmdel'; del.textContent = '刪除';
+      del.addEventListener('click', function () {
+        if (x.k === 'w') { myWords = myWords.filter(function (y) { return y.t !== x.t; }); } else { mySplits = mySplits.filter(function (y) { return y.t !== x.t; }); }
+        saveMySeg(); segChanged();
+      });
+      li.appendChild(tag); li.appendChild(w); li.appendChild(del); ul.appendChild(li);
+    });
+    ul.hidden = !all.length;
+  }
+  loadMySeg();
   function segment(str) {
     var out = [];
     if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
@@ -41511,6 +41689,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (typeof gazMerge === 'function') { out = gazMerge(str, out); }
     out = mergeElong(out);
     out = dictMerge(out);
+    if (typeof userSplit === 'function') { out = userSplit(out); }
     return out;
   }
   function segAt(i) {
@@ -42608,6 +42787,15 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       nmb.addEventListener('click', function () { openNameEditor(seg.i, seg.i + seg.n, null); });
       links.appendChild(nmb);
     }
+    /* 「這是名字？」「斷詞不對？」放在一行小字（跟外部字典一樣），按鈕區不會變成三排 */
+    var adj = document.createElement('div'); adj.className = 'extlinks adjlinks';
+    var adjLab = document.createElement('span'); adjLab.textContent = '調整'; adj.appendChild(adjLab);
+    if (typeof nmb !== 'undefined' && nmb && nmb.parentNode === links) { links.removeChild(nmb); nmb.className = 'ext adjbtn'; adj.appendChild(nmb); }
+    if (typeof openSegEditor === 'function' && /[\u0E01-\u0E2E]/.test(seg.t)) {
+      var sgb = document.createElement('button'); sgb.type = 'button'; sgb.className = 'ext adjbtn'; sgb.textContent = '斷詞不對？'; sgb.setAttribute('aria-label', '這個詞切得不對：合起來或拆開');
+      sgb.addEventListener('click', function () { openSegEditor(seg); });
+      adj.appendChild(sgb);
+    }
     var gs = buildGrammarSection(seg);
     var sr = sentenceAround(seg.i), trs = document.createElement('a');
     trs.className = 'ext'; trs.target = '_blank'; trs.rel = 'noopener noreferrer'; trs.textContent = '翻譯這句';
@@ -42622,6 +42810,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (gs.mine && !gFirst) { pop.appendChild(gs.mine); }
     if (seg.w && /[\u0E01-\u0E2E]/.test(seg.t)) { pop.appendChild(popNoteButtons(seg)); }
     pop.appendChild(links); pop.appendChild(extl);
+    if (adj.childNodes.length > 1) { pop.appendChild(adj); }
     if (gs.others) { pop.appendChild(gs.others); }
     var askWrap = document.createElement('details'); askWrap.className = 'sec fold';
     var askSum = document.createElement('summary'); askSum.textContent = '整句解析・問 AI';
@@ -43414,6 +43603,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     }
     gazBuiltin.forEach(gazAdd);
     myNames.forEach(function (n) { if (n && n.t && n.t.length >= 2) { gazAdd({ t: n.t, type: n.type || 'other', zh: n.zh || '', desc: '', mine: true }); } });
+    if (typeof myWords !== 'undefined') { myWords.forEach(function (w) { if (w && w.t && w.t.length >= 2) { gazAdd({ t: w.t, type: 'other', zh: '', desc: '', mine: true, word: true }); } }); }
     Object.keys(GAZ).forEach(function (k) { GAZ[k].sort(function (a, b) { return (b.mine ? 1 : 0) - (a.mine ? 1 : 0) || b.t.length - a.t.length; }); });
     gazCount = { builtin: gazBuiltin.length, mine: myNames.length };
   }
@@ -43434,14 +43624,15 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var hits = [], i = 0, L = str.length;
     while (i < L - 1) {
       var list = GAZ[str.substr(i, 2)];
-      if (list && (starts[i] || !isThaiCh(str.charAt(i - 1)))) {
+      if (list && (starts[i] || !isThaiCh(str.charAt(i - 1)) || list.some(function (o) { return o.word && o.t.length >= 4; }))) {
         var hit = null;
         for (var k = 0; k < list.length; k++) {
           var o = list[k], e = i + o.t.length;
           if (str.substr(i, o.t.length) !== o.t) { continue; }
           var nx = str.charAt(e);
           if (isMark(nx) || /[\u0E30\u0E32\u0E33\u0E45]/.test(nx)) { continue; }
-          if (o.weak) { if (!starts[i] || str.charAt(i - 1) === '-' || nx === '-') { continue; } }
+          if (o.word) { if (!starts[i] && isThaiCh(str.charAt(i - 1)) && o.t.length < 4) { continue; } }
+          else if (o.weak) { if (!starts[i] || str.charAt(i - 1) === '-' || nx === '-') { continue; } }
           else if (o.t.length < 6 && !ends[e] && isThaiCh(nx)) { continue; }
           hit = { s: i, e: e, o: o }; break;
         }
@@ -43557,7 +43748,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       taken.push([s, e]);
       out.push({ s: s, e: e, type: type, t: t.slice(s, e), info: info || null });
     }
-    segs.forEach(function (g) { if (g.gz && !g.gz.weak) { add(g.i, g.i + g.n, ENT_TYPES[g.gz.type] ? g.gz.type : 'other', g.gz); } });
+    segs.forEach(function (g) { if (g.gz && !g.gz.weak && !g.gz.word) { add(g.i, g.i + g.n, ENT_TYPES[g.gz.type] ? g.gz.type : 'other', g.gz); } });
     /* 把連續的非空白詞段分成「詞串」 */
     var runs = [], cur = null;
     segs.forEach(function (g, k) {
@@ -44496,7 +44687,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.1';
+  var APP_VER = '正式版 v1.13.2';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45401,6 +45592,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['App 內建約一萬五千個明星、政治人物、劇名、品牌的名單。', '點到名單裡的名字，會顯示中文名、英文名和說明。', '「朗讀」唸出全名，「Google」用 Google 搜尋這個名字。'] },
       { t: '名字被切錯', s: '按「這是名字？」，調好範圍存起來', img: 'name-edit',
         d: ['點被切錯的名字，按查詞視窗下方的「這是名字？」。', '用「‹＋」「＋›」往前、往後多選一個字，「－」少選一個字，直到中間顯示完整的名字。', '選種類（人名、作品…），可以寫中文名，按「存到我的名單」。', '之後所有文件都會把它當成一個詞。設定頁的「我的專有名詞」可以刪除。'] },
+      { t: '詞切得不對', s: '查詞視窗最下面「調整」那行，按「斷詞不對？」', img: 'seg-edit',
+        d: ['一個詞被切成兩半：按「合成一個詞」，用 ‹＋ 或 ＋› 把前後被切開的部分加進來，按「存成一個詞」。', '兩個詞黏在一起：按「拆開」，點字中間的空隙決定從哪裡切，按「存成拆開」。', '之後所有文件都會照你的方式斷詞。', '想改回來：再點那個詞按「斷詞不對？」→「恢復原本的斷詞」，或到「設定 → 我的斷詞」刪掉。'] },
       { t: '地名、機關的意思', s: '點專有名詞，看中文名或「字面」意思', img: 'ent-mean',
         d: ['內建名單裡的國家、泰國各府、政府機關、大學，會直接顯示中文名。', '不在名單裡的，會拆成字典裡的詞，顯示「字面」意思，例如 กรม（廳）＋ส่งเสริม（促進）＋การค้า（貿易）。', '有網路時還會顯示「翻譯」：機器翻譯的中文意思，僅供參考。'] },
       { t: '邊查邊做筆記', s: '查詞視窗按「畫螢光筆」或「加註解」', img: 'pop-notes',
@@ -47272,6 +47465,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   renderToolOpts(); syncUndoButtons();
 
 
+  renderMySeg();
+  if (myWords.length || mySplits.length) { gazBuild(); if (state.text) { segs = segment(state.text); renderText(); } }
   /* ---------- 雲端同步（Google 雲端硬碟）----------
      資料存在使用者自己的 Google 雲端硬碟裡「這個 App 專用的隱藏資料夾」（appDataFolder），
      不會出現在雲端硬碟的檔案清單，也看不到使用者其他的檔案。
@@ -47280,7 +47475,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var SYNC_CLIENT_ID = '';
   var SYNC_SCOPE = 'https://www.googleapis.com/auth/drive.appdata email';
   var SYNC_META = 'thai-sync-meta', SYNC_TOK = 'thai-sync-token', SYNC_ON = 'thai-sync-on';
-  var SYNC_SET = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-theme', 'thai-tone-mode', 'thai-font', 'thai-tools', 'thai-my-names', 'thai-progress', 'thai-home-view'];
+  var SYNC_SET = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-theme', 'thai-tone-mode', 'thai-font', 'thai-tools', 'thai-my-names', 'thai-progress', 'thai-home-view', 'thai-my-words', 'thai-my-splits'];
   var SYNC_QUIET = ['thai-progress'];
   var DRV = 'https://www.googleapis.com/drive/v3/files', DRV_UP = 'https://www.googleapis.com/upload/drive/v3/files';
   var sync = { client: null, busy: false, again: false, timer: null, suspend: 0, status: '', err: '', last: 0, email: '' };
