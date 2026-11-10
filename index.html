@@ -938,6 +938,15 @@ body.cdopen { overflow: hidden; }
 .shhead button { width: 40px; height: 40px; min-height: 40px; padding: 0; border-radius: 50%; font-size: 20px; }
 .shbody { margin-top: 10px; font-size: 15px; line-height: 1.75; }
 .shbody .entlegend { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+/* 搬家提示 */
+.movebox { margin: 4px 0 14px; padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--accent); background: var(--card); display: flex; flex-direction: column; gap: 8px; }
+.movebox .mvhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 15px; }
+.movebox .mvhead b { font-size: 17px; margin-right: 6px; }
+.movebox .mvurl { font-weight: 600; word-break: break-all; color: var(--accent); }
+.movebox .mvsteps { margin: 0; padding-left: 22px; font-size: 14px; line-height: 1.65; color: var(--fg); }
+.movebox .mvbtns { display: flex; flex-wrap: wrap; gap: 10px; }
+.movebox .mvbtns a, .movebox .mvbtns button { min-height: 40px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; text-decoration: none; font-weight: 600; }
+.movebox .mvgo { background: var(--accent-fill); color: var(--accent-fill-fg); }
 /* 雲端同步 */
 .syncerr { color: #c0392b; }
 /* 影片：框出字幕 */
@@ -1170,7 +1179,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.6</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.7</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44712,7 +44721,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.6';
+  var APP_VER = '正式版 v1.13.7';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -47586,6 +47595,39 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (tb) { tb.addEventListener('click', function () { if (cur) { settingsOpen(null); } }); }
     settingsOpen(null);
   })();
+  /* ---------- 搬家提示：舊網址（GitHub Pages）上顯示新網址，教使用者把資料帶過去 ---------- */
+  /* 等雲端同步的程式也載入後再執行（它在檔案比較後面） */
+  setTimeout(function () {
+    var NEW_URL = 'https://thai-reader-enn.pages.dev/';
+    var OLD_HOSTS = ['ch8761.github.io'];
+    if (OLD_HOSTS.indexOf(location.hostname) < 0 && !/[?&]movetest=1/.test(location.search)) { return; }
+    var box = document.createElement('div'); box.className = 'movebox'; box.setAttribute('role', 'status');
+    function paint() {
+      var on = typeof syncOn === 'function' && syncOn();
+      box.innerHTML = '<div class="mvhead"><b>ไทย Reader 搬家了</b><span>新網址：</span><a class="mvurl" target="_blank" rel="noopener"></a></div>' +
+        '<ol class="mvsteps"></ol><div class="mvbtns"><a class="mvgo primary" target="_blank" rel="noopener">打開新網址</a><button type="button" class="mvsync"></button></div>';
+      box.querySelector('.mvurl').href = NEW_URL; box.querySelector('.mvurl').textContent = NEW_URL.replace(/^https:\/\//, '').replace(/\/$/, '');
+      box.querySelector('.mvgo').href = NEW_URL;
+      var steps = on
+        ? ['先按下面的「立即同步」，把這裡最新的資料存到你的 Google 雲端硬碟。', '打開新網址（iPad／iPhone：用 Safari 打開後按「分享 →加入主畫面」）。', '在新網址的「設定 → 資料與同步」連結同一個 Google 帳號，資料就會跟過去。', '確認新的都在了，就可以刪掉舊的主畫面圖示。']
+        : ['先到「設定 → 資料與同步」連結 Google 帳號（或用「匯出備份檔」存一份）。', '打開新網址（iPad／iPhone：用 Safari 打開後按「分享 →加入主畫面」）。', '在新網址連結同一個 Google 帳號（或用「從備份檔還原」），資料就會跟過去。', '確認新的都在了，就可以刪掉舊的主畫面圖示。'];
+      var ol = box.querySelector('.mvsteps'); steps.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ol.appendChild(li); });
+      var sb = box.querySelector('.mvsync');
+      sb.textContent = on ? (sync.busy ? '同步中…' : '立即同步') : '去連結 Google 帳號';
+      sb.disabled = !!sync.busy;
+      sb.addEventListener('click', function () {
+        if (!on) { showTab('settings'); if (typeof settingsOpen === 'function') { settingsOpen('data'); } return; }
+        if (syncToken()) { runSync(); } else { syncSignIn(); }
+        setTimeout(paint, 300);
+      });
+    }
+    paint();
+    var home = $('view-home'), head = home && home.querySelector('.vhead');
+    if (head) { head.parentNode.insertBefore(box, head.nextSibling); }
+    /* 同步狀態變了就更新按鈕 */
+    var _rs = renderSync;
+    renderSync = function () { _rs(); try { paint(); } catch (err) {} };
+  }, 0);
   renderMySeg();
   if (myWords.length || mySplits.length) { gazBuild(); if (state.text) { segs = segment(state.text); renderText(); } }
   /* ---------- 雲端同步（Google 雲端硬碟）----------
