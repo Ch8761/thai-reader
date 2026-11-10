@@ -20,6 +20,43 @@ function blockedHost(host) {
   return false;
 }
 
+/* 抓一個網址，讀到 3 MB 為止 */
+async function grab(url, headers, ms) {
+  const ctl = new AbortController();
+  const timer = setTimeout(function () { ctl.abort(); }, ms);
+  try {
+    const res = await fetch(url, { redirect: 'follow', signal: ctl.signal, headers: headers, cf: { cacheTtl: 600, cacheEverything: true } });
+    const out = { status: res.status, type: res.headers.get('content-type') || '', finalUrl: res.url || url };
+    if (!res.ok) { try { await res.body.cancel(); } catch (e) {} return out; }
+    const reader = res.body.getReader(), chunks = [];
+    let total = 0, cut = false;
+    for (;;) {
+      const r = await reader.read();
+      if (r.done) { break; }
+      total += r.value.byteLength;
+      if (total > MAX_BYTES) { chunks.push(r.value.slice(0, r.value.byteLength - (total - MAX_BYTES))); cut = true; try { await reader.cancel(); } catch (e) {} break; }
+      chunks.push(r.value);
+    }
+    const body = new Uint8Array(Math.min(total, MAX_BYTES));
+    let at = 0;
+    for (const c of chunks) { body.set(c, at); at += c.byteLength; }
+    out.body = body; out.cut = cut; out.ok = true;
+    return out;
+  } catch (e) {
+    return { error: ctl.signal.aborted ? 'timeout' : 'network' };
+  } finally { clearTimeout(timer); }
+}
+/* 被擋的樣子：錯誤碼，或是「請稍候、驗證你是真人」的頁面 */
+function looksBlocked(r) {
+  if (!r || r.error) { return true; }
+  if (!r.ok) { return true; }
+  if (r.body && r.body.byteLength < 60000) {
+    const head = new TextDecoder('utf-8', { fatal: false }).decode(r.body.subarray(0, 60000));
+    if (/cf-browser-verification|challenge-platform|_cf_chl_opt|<title>\s*(Just a moment|Attention Required|Access denied|Please Wait)|captcha-delivery|px-captcha|Pardon Our Interruption/i.test(head)) { return true; }
+  }
+  return false;
+}
+
 export async function onRequestGet(context) {
   const request = context.request;
   const self = new URL(request.url);
@@ -36,50 +73,28 @@ export async function onRequestGet(context) {
   if (target.username || target.password || blockedHost(target.hostname)) { return json({ ok: false, error: 'blocked' }, 400); }
   if (target.port && target.port !== '80' && target.port !== '443') { return json({ ok: false, error: 'blocked' }, 400); }
 
-  const ctl = new AbortController();
-  const timer = setTimeout(function () { ctl.abort(); }, TIMEOUT_MS);
-  let res;
-  try {
-    res = await fetch(target.toString(), {
-      redirect: 'follow',
-      signal: ctl.signal,
-      headers: {
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 ThaiReader/1.0',
-        'accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.5',
-        'accept-language': 'th,en;q=0.7'
-      },
-      cf: { cacheTtl: 600, cacheEverything: true }
-    });
-  } catch (e) {
-    clearTimeout(timer);
-    return json({ ok: false, error: ctl.signal.aborted ? 'timeout' : 'network' }, 502);
+  const viaReader = self.searchParams.get('via') === 'reader';
+  let got = null, firstErr = null;
+  if (!viaReader) {
+    got = await grab(target.toString(), {
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15',
+      'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'accept-language': 'th-TH,th;q=0.9,en;q=0.7'
+    }, TIMEOUT_MS);
+    if (got.error || looksBlocked(got)) { firstErr = got.error ? got : { error: 'status', status: got.status || 403 }; got = null; }
   }
-  const finalUrl = res.url || target.toString();
-  try { if (blockedHost(new URL(finalUrl).hostname)) { clearTimeout(timer); return json({ ok: false, error: 'blocked' }, 400); } } catch (e) {}
-  if (!res.ok) { clearTimeout(timer); return json({ ok: false, error: 'status', status: res.status }, 502); }
-  const type = res.headers.get('content-type') || '';
-  if (type && !/text\/html|application\/xhtml|text\/plain/i.test(type)) { clearTimeout(timer); return json({ ok: false, error: 'not_html', type: type.split(';')[0] }, 415); }
-
-  /* 讀到 3 MB 為止 */
-  const reader = res.body.getReader();
-  const chunks = [];
-  let total = 0, cut = false;
-  try {
-    for (;;) {
-      const r = await reader.read();
-      if (r.done) { break; }
-      total += r.value.byteLength;
-      if (total > MAX_BYTES) { chunks.push(r.value.slice(0, r.value.byteLength - (total - MAX_BYTES))); cut = true; try { await reader.cancel(); } catch (e) {} break; }
-      chunks.push(r.value);
+  /* 網站擋掉了（或內容要用程式載入）：改請「Jina Reader」代為用瀏覽器打開，拿回整理前的網頁 */
+  if (!got) {
+    const r2 = await grab('https://r.jina.ai/' + target.toString(), { 'accept': 'text/html', 'x-return-format': 'html', 'x-timeout': '20' }, 30000);
+    if (r2.error || looksBlocked(r2)) {
+      const e = firstErr || r2;
+      return json({ ok: false, error: e.error || 'status', status: e.status || r2.status || 0, reader: r2.status || r2.error || 0 }, 502);
     }
-  } catch (e) {
-    clearTimeout(timer);
-    return json({ ok: false, error: ctl.signal.aborted ? 'timeout' : 'network' }, 502);
+    got = r2; got.via = 'reader'; got.finalUrl = target.toString();
   }
-  clearTimeout(timer);
-  const body = new Uint8Array(Math.min(total, MAX_BYTES));
-  let at = 0;
-  for (const c of chunks) { body.set(c, at); at += c.byteLength; }
+  if (got.finalUrl) { try { if (blockedHost(new URL(got.finalUrl).hostname)) { return json({ ok: false, error: 'blocked' }, 400); } } catch (e) {} }
+  if (got.type && !/text\/html|application\/xhtml|text\/plain/i.test(got.type)) { return json({ ok: false, error: 'not_html', type: got.type.split(';')[0] }, 415); }
+  const body = got.body, cut = got.cut, type = got.type || '', finalUrl = got.finalUrl || target.toString();
   /* 原始內容直接交回（編碼由 App 判斷，泰文舊網站可能是 TIS-620） */
   return new Response(body, {
     status: 200,
@@ -88,6 +103,7 @@ export async function onRequestGet(context) {
       'x-final-url': encodeURI(finalUrl),
       'x-source-type': type.slice(0, 200),
       'x-truncated': cut ? '1' : '0',
+      'x-via': got.via || 'direct',
       'cache-control': 'private, max-age=300',
       'x-content-type-options': 'nosniff'
     }

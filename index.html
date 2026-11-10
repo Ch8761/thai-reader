@@ -1205,7 +1205,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.1</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44759,7 +44759,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.14.0';
+  var APP_VER = '正式版 v1.14.1';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -48171,7 +48171,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     blocked: '這個網址不能讀取。',
     timeout: '那個網站太久沒有回應，等一下再試，或改用複製貼上。',
     network: '連不到那個網站，請確認網址正確，或改用複製貼上。',
-    status: '那個網站拒絕了讀取（可能需要登入、付費或擋掉了程式），請改用複製貼上。',
+    status: '那個網站不讓 App 讀取（可能需要登入、付費，或擋掉了自動讀取），備用的讀取方式也失敗了。請在瀏覽器打開文章、全選複製，貼到下面的「貼上泰文」。',
     not_html: '這個網址不是一般網頁（可能是圖片或 PDF 檔）。PDF 可以先下載，再用「＋ 加入 PDF」。'
   };
   async function urlFetchArticle(raw) {
@@ -48180,19 +48180,28 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (!/^https?:\/\//i.test(u)) { u = 'https://' + u; }
     try { u = new URL(u).toString(); } catch (err) { throw new Error(URL_ERR.bad_url); }
     if (/(^|\.)(facebook|instagram|x|twitter|tiktok|threads)\.(com|net)$/i.test(new URL(u).hostname)) { throw new Error('Facebook、IG、X、TikTok 要登入才看得到內容，沒辦法直接讀取。可以複製貼文文字，用下面的「貼上泰文」加入。'); }
+    var a = await urlFetchOnce(u, false);
+    /* 直接讀到的網頁裡找不到泰文本文（常見於用程式載入內容的網站）：改請閱讀服務用瀏覽器打開再讀一次 */
+    if (a.thai < 60 && a.via !== 'reader') {
+      try { var b2 = await urlFetchOnce(u, true); if (b2.thai > a.thai) { a = b2; } } catch (err) {}
+    }
+    if (a.thai < 60) { throw new Error('這個網頁找不到泰文文章內容（可能是英文網頁、要登入才看得到，或內容是用程式載入的）。可以在瀏覽器打開文章、全選複製，再用下面的「貼上泰文」加入。'); }
+    return a;
+  }
+  async function urlFetchOnce(u, viaReader) {
     var r;
-    try { r = await fetch(URL_API + '?url=' + encodeURIComponent(u), { credentials: 'same-origin' }); }
+    try { r = await fetch(URL_API + '?url=' + encodeURIComponent(u) + (viaReader ? '&via=reader' : ''), { credentials: 'same-origin' }); }
     catch (err) { throw new Error(navigator.onLine === false ? '現在沒有網路，連上網路後再試。' : '讀取失敗，請確認有網路後再試一次。'); }
     if (r.status === 404 && !/json/.test(r.headers.get('content-type') || '')) { throw new Error('這個網址的 App 還不能讀取文章。請到新網址 thai-reader-enn.pages.dev 使用這個功能。'); }
     if (/json/.test(r.headers.get('content-type') || '')) {
       var j = {}; try { j = await r.json(); } catch (err) {}
-      throw new Error((URL_ERR[j.error] || '讀取失敗。') + (j.status ? '（網站回應 ' + j.status + '）' : ''));
+      throw new Error((URL_ERR[j.error] || '讀取失敗。') + (j.status ? '（網站回應 ' + j.status + (j.reader ? '，備用讀取 ' + j.reader : '') + '）' : ''));
     }
     var fin = u; try { fin = decodeURI(r.headers.get('x-final-url') || u); } catch (err) {}
     var html = urlDecode(await r.arrayBuffer(), r.headers.get('x-source-type'));
     var a = urlArticle(html, fin);
-    a.url = fin;
-    if (a.thai < 60) { throw new Error('這個網頁找不到泰文文章內容（可能是英文網頁、要登入才看得到，或內容是用程式載入的）。可以在瀏覽器打開文章、全選複製，再用下面的「貼上泰文」加入。'); }
+    if (/^https?:\/\/r\.jina\.ai\//.test(fin)) { fin = u; }
+    a.url = viaReader ? u : fin; a.via = r.headers.get('x-via') || (viaReader ? 'reader' : 'direct');
     return a;
   }
   var urlBusy = false;
@@ -48200,7 +48209,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (urlBusy) { return; }
     var btn = $('addUrl'), msg = $('homeMsg');
     urlBusy = true; if (btn) { btn.disabled = true; btn.textContent = '讀取中…'; }
-    msg.textContent = '正在讀取文章…';
+    msg.textContent = '正在讀取文章…（有些網站要等 10–20 秒）';
     try {
       var a = await urlFetchArticle(raw);
       var name = (a.title || a.text.slice(0, 24)).slice(0, 60);
