@@ -913,6 +913,26 @@ body.cdopen { overflow: hidden; }
 .seggap.on { background: color-mix(in srgb, var(--accent) 12%, transparent); }
 .segundo { align-self: flex-start; min-height: 36px; font-size: 14px; border-radius: 999px; }
 .nmtag.segtag-w, .nmtag.segtag-s { background: var(--bg); color: var(--accent); border: 1px solid var(--line); }
+/* 設定頁：分組、說明「?」、展開清單 */
+.setgrp { margin: 0 0 8px; }
+.setgrph { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: .04em; margin: 22px 0 6px; padding: 0 2px; }
+.setgrp:first-child .setgrph { margin-top: 4px; }
+.setlabel .setline { display: flex; align-items: center; flex-wrap: wrap; }
+.setlabel .setname { font-weight: 600; }
+.qhelp { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-height: 26px; min-width: 26px; padding: 0; margin-left: 8px; border-radius: 50%; font-size: 14px; font-weight: 700; line-height: 1; vertical-align: middle; color: var(--accent); background: none; border: 1.5px solid var(--line); }
+.qhelp::before { content: ''; position: absolute; inset: -9px; }
+.qhelp { position: relative; }
+.setstat { font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 2px; line-height: 1.5; }
+.setstat:empty { display: none; }
+.setlist { width: 100%; }
+.setlist > summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: 14px; min-height: 36px; display: flex; align-items: center; }
+.setlist:has(> ul[hidden]) { display: none; }
+.shelp .shcard { max-width: 460px; }
+.shhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.shhead h2 { margin: 0; font-size: 19px; }
+.shhead button { width: 40px; height: 40px; min-height: 40px; padding: 0; border-radius: 50%; font-size: 20px; }
+.shbody { margin-top: 10px; font-size: 15px; line-height: 1.75; }
+.shbody .entlegend { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 /* 雲端同步 */
 .syncerr { color: #c0392b; }
 /* 影片：框出字幕 */
@@ -1145,7 +1165,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.4</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.5</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44687,7 +44707,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.4';
+  var APP_VER = '正式版 v1.13.5';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45653,8 +45673,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ['設定', [
       { t: '更新 App', s: '設定頁最下面按「檢查更新」', img: '',
         d: ['App 平常會自己更新；想馬上拿到新版時，到設定頁最下面按「檢查更新」。', '有新版會自動下載並重新整理；沒有的話會顯示「已經是最新版了」。', '版本號就寫在按鈕左邊。'] },
-      { t: '換顏色', s: '「外觀」選淺色或深色', img: 'set-theme',
-        d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。'] },
+      { t: '換顏色', s: '「深淺色」選淺色或深色', img: 'set-theme',
+        d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。', '設定頁依功能分成幾組；每個設定旁邊的「?」可以看它的說明。'] },
       { t: '聲調學習模式', s: '「聲調學習模式」選「開」', img: 'tone-pop',
         d: ['打開後，點一個詞，查詞視窗會多一塊「聲調」。', '每個音節：聲調（顏色和音高線）、起首子音是中／高／低子音。', '下面一行一行說明怎麼推出聲調，例如「ร 低子音＋ไม้โท → 高聲」；不照規則唸的會標「例外」。', '按「看聲調規則表」可以看整張表。', '生字卡詳解、複習的答案也會顯示；測驗會穿插聲調題。', '生字卡頁會多一個「聲調」分頁：規則表（點格子看例詞、聽發音）、三類子音有哪些字，還有「練習推聲調」：一步一步答子音類別、活或死音節、聲調。'],
         tip: '聲調資料第一次打開要連網下載。' },
@@ -47467,6 +47487,72 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   renderToolOpts(); syncUndoButtons();
 
 
+  /* ---------- 設定頁整理：分門別類、說明收進「?」、清單用展開的 ---------- */
+  (function () {
+    var host = $('settings'); if (!host) { return; }
+    var GROUPS = [
+      ['外觀與字體', ['themeGroup', 'fontGroup']],
+      ['閱讀與查詞', ['levelGroup', 'romGroup', 'glossGroup', 'entGroup', 'toneGroup']],
+      ['我的詞庫', ['myNamesList', 'mySegList']],
+      ['資料與同步', ['syncBtns', 'bkSave']],
+      ['說明與回饋', ['openHelp', 'reWelcome', 'fbCat']]
+    ];
+    /* 說明視窗 */
+    var dlg = document.createElement('div'); dlg.className = 'modal shelp'; dlg.id = 'setHelp'; dlg.hidden = true;
+    dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-labelledby', 'shTitle');
+    dlg.innerHTML = '<div class="mcard shcard"><div class="shhead"><h2 id="shTitle"></h2><button type="button" id="shClose" aria-label="關閉">×</button></div><div class="shbody" id="shBody"></div></div>';
+    document.body.appendChild(dlg);
+    var lastBtn = null;
+    function closeHelp() { dlg.hidden = true; if (lastBtn) { try { lastBtn.focus(); } catch (err) {} } }
+    $('shClose').addEventListener('click', closeHelp);
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) { closeHelp(); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) { closeHelp(); } });
+    function openHelp(title, html, btn) {
+      lastBtn = btn; $('shTitle').textContent = title; $('shBody').innerHTML = html; dlg.hidden = false;
+      try { $('shClose').focus(); } catch (err) {}
+    }
+    /* 每一列：說明文字收進「?」，會變動的狀態（同步狀態、清單數量…）留在標題下面 */
+    var rows = Array.prototype.slice.call(host.querySelectorAll(':scope > .setrow'));
+    rows.forEach(function (row) {
+      var lab = row.querySelector('.setlabel'), help = lab && lab.querySelector('.sethelp');
+      if (!lab || !help) { return; }
+      var title = Array.prototype.filter.call(lab.childNodes, function (n) { return n.nodeType === 3; }).map(function (n) { return n.textContent; }).join('').trim();
+      var stat = document.createElement('div'); stat.className = 'setstat';
+      help.querySelectorAll('[id], .entlegend').forEach(function (x) { stat.appendChild(x); });
+      help.querySelectorAll('br').forEach(function (x) { x.remove(); });
+      var html = help.innerHTML.trim();
+      help.remove();
+      var head = document.createElement('span'); head.className = 'setname';
+      Array.prototype.slice.call(lab.childNodes).forEach(function (n) { if (n.nodeType === 3) { lab.removeChild(n); } });
+      if (title === '外觀') { title = '深淺色'; }
+      head.textContent = title;
+      var q = document.createElement('button'); q.type = 'button'; q.className = 'qhelp'; q.textContent = '?'; q.setAttribute('aria-label', '「' + title + '」是什麼？');
+      q.addEventListener('click', function () { openHelp(title, html, q); });
+      var line = document.createElement('span'); line.className = 'setline'; line.appendChild(head); line.appendChild(q);
+      lab.insertBefore(line, lab.firstChild);
+      if (stat.childNodes.length) { lab.appendChild(stat); }
+    });
+    /* 我的專有名詞、我的斷詞：清單收起來，按了才展開 */
+    [['myNamesList', '查看我的專有名詞'], ['mySegList', '查看我調整過的詞']].forEach(function (x) {
+      var ul = $(x[0]); if (!ul) { return; }
+      var d = document.createElement('details'); d.className = 'setlist';
+      var s = document.createElement('summary'); s.textContent = x[1]; d.appendChild(s);
+      ul.parentNode.insertBefore(d, ul); d.appendChild(ul);
+    });
+    /* 分組：照功能排好，每組一個小標題 */
+    var used = [];
+    GROUPS.forEach(function (g) {
+      var box = document.createElement('div'); box.className = 'setgrp';
+      var h = document.createElement('h2'); h.className = 'setgrph'; h.textContent = g[0]; box.appendChild(h);
+      g[1].forEach(function (id) {
+        var el = $(id), row = el && el.closest('.setrow');
+        if (row && used.indexOf(row) < 0) { used.push(row); box.appendChild(row); }
+      });
+      host.appendChild(box);
+    });
+    /* 沒分到組的（測試用的列）放最後 */
+    rows.forEach(function (row) { if (used.indexOf(row) < 0) { host.appendChild(row); } });
+  })();
   renderMySeg();
   if (myWords.length || mySplits.length) { gazBuild(); if (state.text) { segs = segment(state.text); renderText(); } }
   /* ---------- 雲端同步（Google 雲端硬碟）----------
