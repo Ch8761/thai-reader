@@ -989,6 +989,20 @@ body.noscroll { overflow: hidden; }
 .phtools svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .phact { flex-wrap: wrap; }
 @media (max-width: 360px) { .homeadd > * { padding-left: 8px; padding-right: 8px; font-size: 14px; } }
+
+/* ---- v1.16 真人發音（YouGlish） ---- */
+.pop .extlinks button.ygbtn { font-size: 13px; min-height: 28px; padding: 0; border: 0; background: none; color: var(--accent); font-weight: 600; }
+.ygsheet .cdscroll { display: flex; flex-direction: column; gap: 10px; }
+.ygsheet .vptitle { padding-right: 48px; }
+.ygbox { width: 100%; min-height: 120px; border-radius: 12px; overflow: hidden; }
+.ygbox[hidden] { display: none; }
+.ygmsg { font-size: 14px; color: var(--muted); }
+.ygmsg[hidden] { display: none; }
+.ygconsent { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding: 14px; border: 1px solid var(--line); border-radius: 12px; }
+.ygconsent[hidden] { display: none; }
+.ygconsent p { margin: 0; font-size: 14px; }
+.ygcredit { margin: 0; font-size: 12px; color: var(--muted); }
+.ygcredit a { color: var(--accent); }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -1209,7 +1223,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.3</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.15.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -42846,6 +42860,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       a.textContent = L[0];
       extl.appendChild(a);
     });
+    if (typeof ygButton === 'function' && /[\u0E01-\u0E2E]/.test(seg.t)) { extl.appendChild(ygButton(seg.t)); }
     var say = document.createElement('button');
     say.type = 'button'; say.className = 'say'; say.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg><span>朗讀</span>'; say.setAttribute('aria-label', '朗讀這個詞');
     say.addEventListener('click', function () { speak(seg.t); });
@@ -44763,7 +44778,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.14.3';
+  var APP_VER = '正式版 v1.15.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45672,6 +45687,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['查詞視窗的「句型說明」是你點的詞用到的句型。', '「這句的其他句型」是同一句裡的其他句型：點一個，文章裡會圈出那個句型用到的詞，查詞視窗最上面換成它的詳細說明和例句。', '關掉查詞視窗，圈選就會消失。'] },
       { t: '聽發音、翻整句', s: '按「朗讀這個詞」或「翻譯這句」', img: 'pop-links',
         d: ['「朗讀這個詞」：iPad 會唸出這個詞。', '「翻譯這句」：在 Google 翻譯打開你點的那一句。', '「在 thai2english 查」「在 Longdo 查」：去更大的線上字典查。'] },
+      { t: '聽真人發音', s: '查詞視窗「外部字典」那行，按「真人發音」', img: 'yg-pop',
+        d: ['點一個詞，在查詞視窗「外部字典」那一行按「真人發音」。', '會跳出 YouTube 影片裡有人說到這個詞的片段，字幕會標出來。', '按 ‹ › 換別段影片，可以調慢速度。按右上角「×」關掉。', '第一次用會先問你：這會載入 YouGlish 和 YouTube 的內容，按「繼續」。'],
+        tip: '需要網路。很少見的詞、人名可能找不到影片，這時用「朗讀」聽電腦發音。' },
       { t: '專有名詞', s: '淡色底的是人名、劇名、機構等，會顯示中文名', img: 'pop-name',
         d: ['App 內建約一萬五千個明星、政治人物、劇名、品牌的名單。', '點到名單裡的名字，會顯示中文名、英文名和說明。', '「朗讀」唸出全名，「Google」用 Google 搜尋這個名字。'] },
       { t: '名字被切錯', s: '按「這是名字？」，調好範圍存起來', img: 'name-edit',
@@ -48415,6 +48433,86 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       load().catch(function () { done(files.slice()); });
     });
   }
+  /* ---------- 聽真人發音（YouGlish）：查詞視窗「外部字典」那一行的「真人發音」 ----------
+     按了才載入 YouGlish 的播放器（YouTube 影片裡真的有人講這個詞的片段）。平常不連線、不載入任何東西。
+     YouGlish 規定「Powered by YouGlish.com」要一直看得到；隱私權政策要附 YouTube 條款與 Google 隱私權政策。 */
+  var YG_SRC = 'https://youglish.com/public/emb/widget.js';
+  var ygWidget = null, ygLoading = null, ygWord = '', ygShown = false;
+  var ygWrap = document.createElement('div'); ygWrap.className = 'cdlayer yglayer'; ygWrap.id = 'ygSheet'; ygWrap.hidden = true;
+  ygWrap.innerHTML = '<div class="cdback" id="ygBack"></div><div class="cdsheet ygsheet" role="dialog" aria-modal="true" aria-labelledby="ygTitle"><div class="cdscroll">' +
+    '<button type="button" class="cdx" id="ygClose" aria-label="關閉">×</button><h2 class="vptitle" id="ygTitle">真人發音</h2>' +
+    '<p class="vptip" id="ygTip">YouTube 影片裡有人說到這個詞的片段。按 ‹ › 換下一段。</p>' +
+    '<div class="ygconsent" id="ygConsent" hidden><p>第一次使用：這會載入 YouGlish 和 YouTube 的內容（它們會使用 Cookie）。</p><button type="button" class="primary" id="ygOk">繼續</button></div>' +
+    '<div class="ygmsg" id="ygMsg" hidden></div>' +
+    '<div class="ygbox" id="ygBox"><div id="ygWidget"></div></div>' +
+    '<p class="ygcredit">Powered by <a href="https://youglish.com" target="_blank" rel="noopener noreferrer">YouGlish.com</a> · 影片來自 YouTube（<a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">YouTube 服務條款</a>）</p>' +
+    '</div></div>';
+  document.body.appendChild(ygWrap);
+  function ygMsg(t) { var m = $('ygMsg'); m.textContent = t || ''; m.hidden = !t; }
+  function ygConsented() { try { return localStorage.getItem('thai-yg-ok') === '1'; } catch (err) { return false; } }
+  function ygLoad() {
+    if (window.YG && window.YG.Widget) { return Promise.resolve(); }
+    if (ygLoading) { return ygLoading; }
+    ygLoading = new Promise(function (ok, bad) {
+      var done = false;
+      var prev = window.onYouglishAPIReady;
+      window.onYouglishAPIReady = function () { done = true; if (typeof prev === 'function') { try { prev(); } catch (err) {} } ok(); };
+      var tag = document.createElement('script'); tag.src = YG_SRC; tag.async = true;
+      tag.onerror = function () { ygLoading = null; bad(new Error('load')); };
+      document.head.appendChild(tag);
+      setTimeout(function () { if (!done) { ygLoading = null; bad(new Error('timeout')); } }, 20000);
+    });
+    return ygLoading;
+  }
+  function ygWidth() { var b = $('ygBox'); return Math.max(260, Math.min(640, Math.floor((b && b.clientWidth) || 320))); }
+  function ygFetch() {
+    if (!ygWord) { return; }
+    if (!navigator.onLine) { ygMsg('現在沒有網路，連上網路後再試一次。'); return; }
+    ygMsg('載入中…');
+    ygLoad().then(function () {
+      if (!ygWidget) {
+        ygWidget = new window.YG.Widget('ygWidget', {
+          width: ygWidth(),
+          components: 8 + 16 + 64,   /* 字幕、速度、上一段／下一段 */
+          autoStart: 1,
+          events: {
+            onFetchDone: function (ev) { ygMsg(ev && ev.totalResult === 0 ? 'YouGlish 還沒有收錄有人說「' + ygWord + '」的影片。可以按「朗讀」聽電腦發音。' : ''); },
+            onError: function () { ygMsg('影片載入失敗，等一下再試一次。'); }
+          }
+        });
+      }
+      ygWidget.fetch(ygWord, 'Thai');
+    }).catch(function () { ygMsg('連不到 YouGlish。請確認網路，或等一下再試。'); });
+  }
+  function ygOpen(word) {
+    ygWord = String(word || '').trim();
+    if (!ygWord) { return; }
+    $('ygTitle').textContent = '真人發音：' + ygWord;
+    ygWrap.hidden = false; ygShown = true;
+    if (!ygConsented()) { $('ygConsent').hidden = false; $('ygBox').hidden = true; ygMsg(''); return; }
+    $('ygConsent').hidden = true; $('ygBox').hidden = false;
+    ygFetch();
+  }
+  function ygClose() {
+    ygWrap.hidden = true; ygShown = false;
+    if (ygWidget) { try { ygWidget.pause(); } catch (err) {} }
+  }
+  $('ygOk').addEventListener('click', function () {
+    try { localStorage.setItem('thai-yg-ok', '1'); } catch (err) {}
+    $('ygConsent').hidden = true; $('ygBox').hidden = false;
+    ygFetch();
+  });
+  $('ygClose').addEventListener('click', ygClose);
+  $('ygBack').addEventListener('click', ygClose);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ygShown) { ygClose(); } });
+  /* 查詞視窗用：外部字典那一行的按鈕 */
+  function ygButton(word) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'ext ygbtn';
+    b.textContent = '真人發音'; b.setAttribute('aria-label', '聽 YouTube 影片裡的真人發音（YouGlish）');
+    b.addEventListener('click', function () { ygOpen(word); });
+    return b;
+  }
+  window.ygOpen = ygOpen;
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
     btn.addEventListener('click', function () {

@@ -98,6 +98,7 @@ fs.mkdirSync(OUT, { recursive: true });
   await shot('pop-overview', '#pop', [], { tight: 0, maxH: 640 });
   await p.$eval('#pop', e => { e.scrollTop = e.scrollHeight; }); await p.waitForTimeout(200);
   await shot('pop-links', '#pop .links', ['#pop .links > *:nth-child(-n+2)'], { tight: 12 });
+  await shot('yg-pop', '#pop .links', ['#pop .ygbtn'], { tight: 12, union: '#pop .extlinks' });
   await shot('card-add', '#pop .head', ['#pop .cardbtn'], { tight: 12 });
   await p.click('#pop .cardbtn'); await p.waitForTimeout(200);
   await p.click('#pop .x'); await tapText('สโรชา', 2);
