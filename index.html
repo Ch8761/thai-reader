@@ -910,6 +910,9 @@ body.noscroll { overflow: hidden; }
 .vptime input { flex: 1; }
 .vpact { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
 .vpact button { min-height: 44px; padding: 0 18px; border-radius: 999px; }
+/* 讀影片的進度：浮在下方，不會把主頁的東西擠下去 */
+.vidbox { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(78px + env(safe-area-inset-bottom, 0px)); width: min(560px, calc(100% - 32px)); z-index: 40; box-shadow: 0 8px 28px rgba(0, 0, 0, .18); }
+#vidStop[hidden], #vidRetry[hidden], #vidClose[hidden] { display: none; }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -1121,7 +1124,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.1</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -41342,7 +41345,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var TONE_ROWS = [['m', '中子音'], ['h', '高子音'], ['l', '低子音']];
   var TONE_EX = {
     mL: ['กิน', 'ดี', 'ตา', 'ปลา', 'บิน', 'จาน'], mS: ['จับ', 'ติด', 'ตก', 'เด็ก'], mD: ['บาท', 'ปาก', 'จอด', 'แดด'],
-    m1: ['ไก่', 'ป่า', 'ต่อ', 'บ่าย'], m2: ['ได้', 'บ้าน', 'ต้ม', 'ป้า'], m3: ['โต๊ะ', 'จ๊ะ', 'ป๊า'], m4: ['จ๋า', 'เดี๋ยว', 'ตี๋'],
+    m1: ['ไก่', 'ป่า', 'ต่อ', 'บ่าย'], m2: ['ได้', 'บ้าน', 'ต้ม', 'ป้า'], m3: ['โต๊ะ', 'จ๊ะ', 'ป๊า'], m4: ['จ๋า', 'เดี๋ยว'],
     hL: ['ขา', 'หมา', 'สวย', 'ขาย', 'ฝน', 'สี'], hS: ['สิบ', 'ขับ', 'ผัก', 'หก'], hD: ['ขาด', 'สอบ', 'ถูก', 'ขวด'],
     h1: ['ข่าว', 'ส่ง', 'ผ่าน', 'ถ่าย'], h2: ['ข้าว', 'ห้อง', 'ถ้า', 'ส้ม'],
     lL: ['มา', 'คน', 'ยาว', 'นอน', 'ลม'], lS: ['รัก', 'นก', 'คิด', 'ลด'], lD: ['มาก', 'ลูก', 'ชอบ', 'เลือด'],
@@ -41445,7 +41448,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var wrow = el('div', 'tpword'); var w = el('span', 'cword', it.w); w.lang = 'th'; wrow.appendChild(w);
     var say = el('button', 'iconbtn csay'); say.type = 'button'; say.setAttribute('aria-label', '朗讀'); say.innerHTML = SPK_ICON; say.addEventListener('click', function () { speak(it.w); });
     wrow.appendChild(say); host.appendChild(wrow);
-    var g = glossSnapshot(it.w); host.appendChild(el('div', 'tpgloss', (g.rom ? g.rom + '　' : '') + (g.zh || g.en || '').split('；')[0]));
+    var g = glossSnapshot(it.w); var gl = (g.zh || g.en || '').split('；')[0].split('; ')[0]; if (gl.length > 30) { gl = gl.slice(0, 30) + '…'; }
+    host.appendChild(el('div', 'tpgloss', (g.rom ? g.rom + '　' : '') + gl));
     var done = [];
     steps.slice(0, tq.step).forEach(function (s) { done.push(s); });
     /* 已經答完的步驟 */
@@ -44492,7 +44496,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.0';
+  var APP_VER = '正式版 v1.13.1';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45171,7 +45175,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     lib.docs = lib.docs.filter(function (d) { return d.id !== id; });
     saveLib();
     try { localStorage.removeItem(PDF_DOC_PREFIX + id); } catch (err) {}
-    idbDel(id); idbDel('ocr:' + id); idbDel('thumb2:' + id); idbDel('thumb:' + id);
+    idbDel(id); idbDel('ocr:' + id); idbDel('thumb2:' + id); idbDel('thumb:' + id); idbDel('vid:' + id);
     if (wasCur) {
       teardownPdf();
       state = { text: '', src: null, hl: [], strokes: [], boxes: [], nextId: 1, style: state.style };
@@ -45185,6 +45189,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     $('docempty').hidden = has; $('docbody').hidden = !has; $('openExport').hidden = !has;
     $('h-docv').textContent = has ? state.src.name : '文件';
     if (has && curTab === 'doc') { layout(); }
+    if (typeof renderOcrBox === 'function') { renderOcrBox(); }
   }
   function openDoc(id) {
     var d = docById(id);
@@ -45372,7 +45377,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['PDF：按「＋ 加入 PDF」，從「檔案」App 選，可以一次選好幾個。', '照片或截圖：按「＋ 圖片／影片」，選好的幾張會合成一份文件。', '逐字稿、文章：先在別的 App 拷貝，按「＋ 貼上文字」，長按文字框選「貼上」，再按「建立文件」。'],
         tip: '新文件會放進目前選的資料夾。' },
       { t: '影片的字幕', s: '按「＋ 圖片／影片」選有泰文字幕的影片', img: 'vid-pick',
-        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會先找字幕在畫面的哪裡，用黃框框起來。框得不對，就用手指在畫面上重新框住字幕；拉下面的滑桿可以換一個有字幕的畫面看。', '按「開始讀字幕」。App 每秒看一次框裡的畫面，字幕換了就讀一次，最後整理成一份文字文件。', '同一句字幕只會留一次。', '3 分鐘的影片大約要 1–3 分鐘，中途可以按「停止」，已經讀到的會保留。'],
+        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會先找字幕在畫面的哪裡，用黃框框起來。框得不對，就用手指在畫面上重新框住字幕；拉下面的滑桿可以換一個有字幕的畫面看。', '按「開始讀字幕」。App 每秒看一次框裡的畫面，字幕換了就讀一次，最後整理成一份文字文件。', '同一句字幕只會留一次。進度會浮在畫面下方，中途可以按「停止」，已經讀到的會保留。', '沒讀到字幕時，按「重新框字幕」換個位置再試。', '讀出來的結果不滿意：打開那份影片文件，按右上角的「↻」，重新框字幕再讀一次（會取代原本的文字和筆記）。'],
         tip: 'IG、YouTube 的連結不能直接讀：先用 iPad 的「螢幕錄影」把影片錄下來，再加入那段錄影。' },
       { t: '圖片會自動認字', s: '照片、截圖加進來，App 會自己讀出泰文', img: 'home-img',
         d: ['按「＋ 圖片／影片」，選照片或截圖。', 'App 會打開這份文件，自動開始文字辨識（每張約 5–20 秒）。', '完成後就能點字查詞。'],
@@ -45765,7 +45770,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function renderOcrBox() {
     var box = $('ocrbox');
     if (!box) { return; }
-    if (!pdf) { box.hidden = true; $('ocrRedo').hidden = true; if (typeof syncDocSec === 'function') { syncDocSec(); } return; }
+    if (!pdf) { box.hidden = true; $('ocrRedo').hidden = !(typeof vidRedoable === 'function' && vidRedoable()); if (typeof syncDocSec === 'function') { syncDocSec(); } return; }
     if (ocr.msgId && ocr.msgId !== pdf.id && !ocr.busy) { ocr.msg = ''; ocr.msgId = ''; }
     var need = ocrNeed(), have = ocrHave();
     box.hidden = !need.length && !have && !ocr.busy && !ocr.msg;
@@ -45830,7 +45835,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   $('ocrGo').addEventListener('click', function () { runOcr(ocrNeed()); });
   $('ocrStop').addEventListener('click', function () { ocr.stop = true; setOcrMsg('辨識完這一頁就停止…'); });
-  $('ocrRedo').addEventListener('click', function () { runOcr(ocrHavePages()); });
+  $('ocrRedo').addEventListener('click', function () { if (!pdf && typeof vidRedoable === 'function' && vidRedoable()) { vidRedo(); return; } runOcr(ocrHavePages()); });
 
   /* ---------- 加入圖片：照片、截圖變成一份 PDF 文件，再自動做文字辨識 ---------- */
   function ocrLoadImage(f) {
@@ -45892,10 +45897,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     this.value = '';
   });
   /* ---------- 加入影片：每秒看一次畫面，畫面換了才做文字辨識，把泰文字幕整理成一份文字文件 ---------- */
-  var vid = { busy: false, stop: false };
+  var vid = { busy: false, stop: false, debug: false, dbg: [] };
   var vbox = document.createElement('div'); vbox.className = 'vidbox'; vbox.id = 'vidbox'; vbox.hidden = true;
-  vbox.innerHTML = '<div class="vb-row"><span class="vb-t" id="vidMsg" aria-live="polite"></span><button type="button" id="vidStop">停止</button></div><div class="vb-bar"><span id="vidBar"></span></div>';
+  vbox.innerHTML = '<div class="vb-row"><span class="vb-t" id="vidMsg" aria-live="polite"></span><button type="button" id="vidStop">停止</button><button type="button" class="primary" id="vidRetry" hidden>重新框字幕</button><button type="button" id="vidClose" hidden>關閉</button></div><div class="vb-bar"><span id="vidBar"></span></div>';
   $('homeMsg').parentNode.insertBefore(vbox, $('homeMsg').nextSibling);
+  $('vidClose').addEventListener('click', function () { vbox.hidden = true; vid.retry = null; });
+  $('vidRetry').addEventListener('click', function () { var r = vid.retry; vid.retry = null; if (r) { r(); } });
+  function vidButtons(mode) { $('vidStop').hidden = mode !== 'run'; $('vidRetry').hidden = mode !== 'retry'; $('vidClose').hidden = mode !== 'retry'; }
   $('vidStop').addEventListener('click', function () { vid.stop = true; $('vidMsg').textContent = '停止中…已經讀到的字幕會保留。'; });
   function vidSeek(v, t) {
     return new Promise(function (res) {
@@ -45927,7 +45935,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function vidSimilar(a, b) {
     if (!a || !b) { return false; }
-    if (a === b || a.indexOf(b) >= 0 || b.indexOf(a) >= 0) { return true; }
+    if (a === b) { return true; }
+    /* 一句包含另一句：長度差不多才算同一句（「บางคนคือ」和「บางคนคือการมีเจ้าหมาน้อย」是兩句） */
+    if ((a.indexOf(b) >= 0 || b.indexOf(a) >= 0) && Math.min(a.length, b.length) / Math.max(a.length, b.length) >= 0.7) { return true; }
     if (Math.max(a.length, b.length) > 120) { return false; }
     return 1 - vidLev(a, b) / Math.max(a.length, b.length) >= 0.75;
   }
@@ -46002,8 +46012,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       bd.area = bd.items.reduce(function (s, cp) { return s + cp.area; }, 0);
     });
     var top = bands.reduce(function (a, b2) { return b2.area > a ? b2.area : a; }, 0);
-    var keepIds = {}, kept = [];
-    bands.forEach(function (bd) { if (bd.area >= top * 0.25 && bd.items.length >= 3) { bd.items.forEach(function (cp) { if (!keepIds[comps.indexOf(cp)]) { keepIds[comps.indexOf(cp)] = 1; kept.push(cp); } }); } });
+    var keepIds = {}, kept = [], bandOut = [];
+    bands.forEach(function (bd) {
+      if (bd.area >= top * 0.25 && bd.items.length >= 3) {
+        var b0 = H, b1 = 0;
+        bd.items.forEach(function (cp) { b0 = Math.min(b0, cp.y0); b1 = Math.max(b1, cp.y1); if (!keepIds[comps.indexOf(cp)]) { keepIds[comps.indexOf(cp)] = 1; kept.push(cp); } });
+        bandOut.push({ cy: ((b0 + b1) / 2 / k + y0) / sh, h: ((b1 - b0) / k) / sh, n: bd.items.length, sig: bd.items.map(function (cp) { return [Math.round(cp.x0 / medH * 4), Math.round((cp.y0 - b0) / medH * 4), Math.round(cp.w / medH * 4), Math.round(cp.h / medH * 4)]; }) });
+      }
+    });
     if (!kept.length) { return out; }
     var bx0 = W, bx1 = 0, by0 = H, by1 = 0;
     kept.forEach(function (cp) { bx0 = Math.min(bx0, cp.x0); bx1 = Math.max(bx1, cp.x1); by0 = Math.min(by0, cp.y0); by1 = Math.max(by1, cp.y1); });
@@ -46018,7 +46034,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var og = oc.getContext('2d'); og.imageSmoothingQuality = 'high'; og.fillStyle = '#fff'; og.fillRect(0, 0, OW, OH); og.drawImage(mc, 0, 0, OW, OH);
     /* 比對畫面有沒有換字幕用的「指紋」：字塊的位置和大小 */
     var sig = kept.map(function (cp) { return [Math.round(cp.x0 / medH * 4), Math.round(cp.y0 / medH * 4), Math.round(cp.w / medH * 4), Math.round(cp.h / medH * 4)]; });
-    out.canvas = oc; out.sig = sig; out.medH = medH / k; out.n = kept.length; out.box = [(bx0 / k + x0) / sw, (by0 / k + y0) / sh, ((bx1 - bx0) / k) / sw, ((by1 - by0) / k) / sh];
+    out.canvas = oc; out.sig = sig; out.bands = bandOut; out.medH = medH / k; out.n = kept.length; out.box = [(bx0 / k + x0) / sw, (by0 / k + y0) / sh, ((bx1 - bx0) / k) / sw, ((by1 - by0) / k) / sh];
     return out;
   }
   /* 兩次的字塊指紋差多少（0＝一樣，1＝完全不同） */
@@ -46037,9 +46053,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         (p.lines || []).forEach(function (ln) {
           var t = (ln.text || '').replace(/\s+/g, ' ').trim();
           t = t.replace(/^[^ก-๛A-Za-z0-9]+/, '').replace(/[^ก-๛A-Za-z0-9!?.]+$/, '');
-          var th = (t.match(/[ก-ฮ]/g) || []).length, all = t.replace(/\s/g, '').length;
-          if (th < 2 || th / Math.max(1, all) < 0.5 || ln.confidence < minConf) { return; }
-          var f = typeof ocrFixText === 'function' ? ocrFixText(t) : { t: t }, kn = vidKnown(f.t);
+          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/\s/g, '').length;
+          if (th < 2 || thAll / Math.max(1, all) < 0.6 || ln.confidence < minConf) { return; }
+          var f = typeof ocrFixText === 'function' ? ocrFixText(vidDigits(t)) : { t: vidDigits(t) };
+          f.t = vidMarksFix(f.t);
+          var kn = vidKnown(f.t);
           if (kn < 0.35) { return; }
           out.push({ t: f.t, c: ln.confidence, th: th, kn: kn, q: ln.confidence + 40 * kn });
         });
@@ -46059,7 +46077,41 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     });
     return Math.min(1, ok / th);
   }
-  function vidScore(ls) { return ls.reduce(function (s, l) { return s + l.th * l.c / 100; }, 0); }
+  /* 有些圓體字的 ต 會被認成泰文數字 ๓，或多出一個 ๑：夾在泰文字中間的泰文數字，試著刪掉或換成 ต，選拼得出最多字典詞的那個 */
+  function vidDigits(t) {
+    var re = /([\u0E01-\u0E4E])[\u0E50-\u0E59]+(?=[\u0E01-\u0E4E]|\s|$)/g, pos = [], m;
+    while ((m = re.exec(t)) && pos.length < 3) { pos.push([m.index + 1, m[0].length - 1]); }
+    if (!pos.length) { return t; }
+    /* 每個數字試：保留、刪掉、換成 ต、換成 อ（圓體字的 อ 很像 ๑） */
+    var OPS = [null, '', 'ต', 'อ'], best = t, bestK = -1, n = Math.pow(4, pos.length);
+    for (var c = 0; c < n; c++) {
+      var out = '', last = 0, cc = c;
+      pos.forEach(function (p) { var op = OPS[cc % 4]; cc = Math.floor(cc / 4); out += t.slice(last, p[0]) + (op === null ? t.substr(p[0], p[1]) : op); last = p[0] + p[1]; });
+      out += t.slice(last);
+      var kk = vidKnown(out) - (c === 0 ? 0.001 : 0);
+      if (kk > bestK) { bestK = kk; best = out; }
+    }
+    return best;
+  }
+  /* 文字辨識常常漏掉聲調符號或上下母音：字典裡查不到的詞，如果「只補上符號」就變成唯一一個字典詞，就補上 */
+  var VID_MARKS = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, vidSkel = null;
+  function vidSkelIndex() {
+    if (vidSkel || !DICT) { return vidSkel; }
+    vidSkel = {};
+    Object.keys(DICT).forEach(function (w) { if (w.length > 12 || !/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/.test(w)) { return; } var k = w.replace(VID_MARKS, ''); (vidSkel[k] = vidSkel[k] || []).push(w); });
+    return vidSkel;
+  }
+  function vidSubseq(a, b) { var i = 0; for (var j = 0; j < b.length && i < a.length; j++) { if (a[i] === b[j]) { i++; } } return i === a.length; }
+  function vidMarksFix(t) {
+    if (typeof segment !== 'function' || !DICT) { return t; }
+    var idx = vidSkelIndex(); if (!idx) { return t; }
+    return segment(t).map(function (x) {
+      if (!x.w || DICT[x.t] || x.t.length < 2 || !/[\u0E01-\u0E2E]/.test(x.t)) { return x.t; }
+      var c = (idx[x.t.replace(VID_MARKS, '')] || []).filter(function (w) { return w.length > x.t.length && vidSubseq(x.t, w); });
+      return c.length === 1 ? c[0] : x.t;
+    }).join('');
+  }
+  function vidScore(ls) { return ls.reduce(function (s, l) { return s + l.th * l.c / 100 * (0.5 + l.kn / 2); }, 0); }
   function vidFrame(v, maxW) {
     var vw = v.videoWidth, vh = v.videoHeight, k = Math.min(1, (maxW || 1920) / Math.max(vw, vh));
     var c = document.createElement('canvas'); c.width = Math.round(vw * k); c.height = Math.round(vh * k);
@@ -46075,18 +46127,23 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var fc = vidFrame(v, 960);
       [false, true].forEach(function (inv) {
         var m = vidMask(fc, fc.width, fc.height, [0, 0, 1, 1], inv, 960, 18);
-        if (m.canvas && m.n >= 4) { hits.push({ t: t, cy: m.box[1] + m.box[3] / 2, h: Math.max(m.box[3], 0.03), n: m.n }); }
+        (m.bands || []).forEach(function (bd) { if (bd.n >= 3) { hits.push({ t: t, cy: bd.cy, h: Math.max(bd.h, 0.02), n: bd.n, sig: bd.sig, inv: inv }); } });
       });
     }
     if (!hits.length) { return null; }
+    /* 字幕的特徵是「同一個高度、內容一直在換」；時間、按讚數、帳號名稱這些畫面上固定的字內容不會變 */
     var best = null;
     hits.forEach(function (a) {
-      var grp = hits.filter(function (b) { return Math.abs(b.cy - a.cy) < 0.06; });
-      var sc = grp.length * 100 + grp.reduce(function (s, b) { return s + b.n; }, 0);
+      var grp = hits.filter(function (b) { return b.inv === a.inv && Math.abs(b.cy - a.cy) < 0.04; });
+      var uniq = [];
+      grp.forEach(function (b) { if (!uniq.some(function (u) { return vidSigDiff(u.sig, b.sig) <= 0.3; })) { uniq.push(b); } });
+      var times = {}; grp.forEach(function (b) { times[b.t] = 1; });
+      var sc = (uniq.length >= 2 ? uniq.length * 100 : 0) + Object.keys(times).length * 10 + grp.reduce(function (s, b) { return s + b.n; }, 0) / 100;
       if (!best || sc > best.sc) { best = { sc: sc, grp: grp, t: a.t }; }
     });
+    if (best.sc < 200) { return null; }
     var cys = best.grp.map(function (b) { return b.cy; }).sort(), hs = best.grp.map(function (b) { return b.h; }).sort();
-    var cy = cys[Math.floor(cys.length / 2)], h = Math.max(0.12, hs[hs.length - 1] * 2.6);
+    var cy = cys[Math.floor(cys.length / 2)], h = Math.max(0.1, hs[hs.length - 1] * 2.2);
     var y0 = Math.max(0, cy - h / 2), y1 = Math.min(1, cy + h / 2);
     return { r: [0, y0, 1, y1 - y0], t: best.t };
   }
@@ -46103,12 +46160,13 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     '<div class="vpact"><button type="button" id="vpCancel">取消</button><button type="button" class="primary" id="vpGo">開始讀字幕</button></div>' +
     '</div></div>';
   document.body.appendChild(vpWrap);
-  function vidPickRegion(v, guess) {
+  function vidPickRegion(v, guess, redo) {
     return new Promise(function (resolve) {
       var cv = $('vpCanvas'), stage = $('vpStage'), rect = $('vpRect'), reg = null, drag = null, seekBusy = false, want = null;
       var saved = null; try { saved = JSON.parse(localStorage.getItem(VREG_KEY) || 'null'); } catch (err) {}
       reg = guess ? guess.r.slice() : (saved && saved.length === 4 ? saved : [0, 0.62, 1, 0.33]);
-      $('vpTip').textContent = guess ? '我們先找到字幕大概在框起來的地方。不對的話，用手指在畫面上重新框一次（框住字幕就好，不用很準）。' : '沒有自動找到字幕。請用手指在畫面上把字幕框起來，或選下面的位置。';
+      $('vpTip').textContent = (redo ? '框是上次用的位置，可以重新框。重新辨識的結果會取代這份文件的文字，這份文件的筆記（螢光筆、手寫、註解）也會清掉。' : guess ? '我們先找到字幕大概在框起來的地方。不對的話，用手指在畫面上重新框一次（框住字幕就好，不用很準）。' : '沒有自動找到字幕。請用手指在畫面上把字幕框起來，或選下面的位置。');
+      $('vpGo').textContent = redo ? '重新辨識' : '開始讀字幕';
       cv.width = Math.min(960, v.videoWidth); cv.height = Math.round(cv.width * v.videoHeight / v.videoWidth);
       stage.style.aspectRatio = v.videoWidth + ' / ' + v.videoHeight;
       function paint() { cv.getContext('2d').drawImage(v, 0, 0, cv.width, cv.height); }
@@ -46177,19 +46235,20 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     vid.busy = true; vid.stop = false;
     var name = f.name.replace(/\.[^.]+$/, '') || '影片字幕', o = null, v = null;
     function quit(text) { if (text) { $('homeMsg').textContent = text; } vbox.hidden = true; vid.busy = false; if (o) { URL.revokeObjectURL(o.url); } }
-    $('homeMsg').textContent = '讀取影片「' + name + '」…';
+    vbox.hidden = false; vidButtons('none'); $('vidBar').style.width = '0%';
+    $('vidMsg').textContent = '讀取影片「' + name + '」…';
     try {
       o = await vidLoad(f); v = o.v;
       var dur = v.duration;
       if (!isFinite(dur) || dur <= 0) { throw new Error('讀不到影片長度'); }
       if (dur > 20 * 60) { throw new Error('影片太長（超過 20 分鐘），請先剪短或分段錄'); }
       if (!v.videoWidth || !v.videoHeight) { throw new Error('讀不到影片畫面'); }
-      $('homeMsg').textContent = '正在找字幕在畫面的哪裡…';
+      $('vidMsg').textContent = '正在找字幕在畫面的哪裡…';
       var guess = await vidGuessRegion(v);
-      $('homeMsg').textContent = '';
+      vbox.hidden = true;
       var region = await vidPickRegion(v, guess);
       if (!region) { quit('已取消讀影片。'); return; }
-      await vidRead(v, region, name, dur);
+      await vidRead(v, region, name, dur, null, f);
     } catch (err) {
       quit('讀影片失敗：' + String(err && err.message || err));
       return;
@@ -46197,8 +46256,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (o) { URL.revokeObjectURL(o.url); }
   }
 
-  async function vidRead(v, region, name, dur) {
-    vbox.hidden = false;
+  async function vidRead(v, region, name, dur, redoId, file) {
+    vbox.hidden = false; vidButtons('run');
     var msg = $('vidMsg'), bar = $('vidBar'), lines = [], recent = [], frames = 0, ocrs = 0;
     var modes = ['out', 'inv', 'raw'], wins = { out: 0, inv: 0, raw: 0 }, tried = 0, best = null;
     var prevSig = null, prevInvSig = null, prevGray = null, lastOcrT = -99;
@@ -46206,7 +46265,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var sg = small.getContext('2d', { willReadFrequently: true });
     msg.textContent = '準備文字辨識工具…（第一次要下載約 8 MB）'; bar.style.width = '0%';
     var w = await ensureOcr();
-    var step = dur > 600 ? 1.5 : 1;
+    /* 字幕常常只出現 1 秒多：短影片每 0.5 秒看一次 */
+    var step = dur > 600 ? 1.5 : dur > 180 ? 1 : 0.5;
     try {
       for (var t = 0.2; t < dur && !vid.stop; t += step) {
         await vidSeek(v, Math.min(t, dur - 0.05));
@@ -46226,11 +46286,12 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         }
         /* 保險：畫面上有字、但已經 3 秒沒讀了，就再讀一次 */
         if (!ch && t - lastOcrT >= 2.9 && (mo.canvas || (mi && mi.canvas))) { ch = true; }
+        if (vid.debug) { vid.dbg.push([Math.round(t * 10) / 10, ch, mo.n, vidSigDiff(mo.sig, prevSig)]); }
         if (!ch) { continue; }
         lastOcrT = t;
-        prevSig = mo.sig; if (mi) { prevInvSig = mi.sig; }
+        var sigNow = mo.sig, invNow = mi ? mi.sig : null;
         /* 前幾句三種讀法都試，之後用最常贏的那一種；它讀不到才試別的 */
-        var order = best ? [best].concat(modes.filter(function (m) { return m !== best; })) : modes, got = [], gotMode = null, gotScore = 0;
+        var order = best ? [best].concat(modes.filter(function (m) { return m !== best; })) : modes, got = [], gotMode = null, gotScore = 0, all = [];
         for (var z = 0; z < order.length; z++) {
           var md = order[z];
           if (md === 'out' && !mo.canvas) { continue; }
@@ -46238,14 +46299,21 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           var ls = await vidRecognize(w, fc, region, md, md === 'out' ? mo : (md === 'inv' ? mi : null));
           ocrs++;
           var sc = vidScore(ls);
+          if (vid.debug) { vid.dbg.push([md, ls.map(function (l) { return l.t + ':' + Math.round(l.c) + ':' + l.kn.toFixed(2); })]); }
+          all = all.concat(ls);
           if (sc > gotScore) { got = ls; gotMode = md; gotScore = sc; }
           if (best && got.length) { break; }
         }
+        /* 有讀到字才記住這個畫面；沒讀到（例如字幕正在淡入淡出）下一個畫面再試 */
+        if (got.length || (!mo.canvas && !(mi && mi.canvas))) { prevSig = sigNow; if (mi) { prevInvSig = invNow; } }
         if (gotMode) {
           wins[gotMode]++; tried++;
           if (tried >= 5 && !best) { best = modes.reduce(function (a, b) { return wins[b] > wins[a] ? b : a; }, 'out'); }
         }
-        got.forEach(function (ln) {
+        /* 別的讀法讀到的，只有跟最好那一種讀到的是同一句時，才拿來比哪個版本比較好（避免雜訊變成新的一句） */
+        var gn = got.map(function (g) { return vidNorm(g.t); });
+        all = all.filter(function (ln) { return got.indexOf(ln) >= 0 || gn.some(function (g) { return vidSimilar(g, vidNorm(ln.t)); }); });
+        all.forEach(function (ln) {
           var nl = vidNorm(ln.t);
           if (nl.length < 2) { return; }
           for (var q = recent.length - 1; q >= 0; q--) {
@@ -46264,16 +46332,58 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       vid.busy = false;
     }
     vid.last = { frames: frames, ocrs: ocrs, wins: wins, best: best, region: region };
-    if (!lines.length) { msg.textContent = '這部影片沒有讀到泰文字幕（看了 ' + frames + ' 個畫面）。可以再加入一次，把字幕框小一點試試看。'; bar.style.width = '100%'; return; }
+    if (!lines.length) {
+      msg.textContent = '沒有讀到泰文字幕（看了 ' + frames + ' 個畫面）。可能是框的位置不對，按「重新框字幕」再試一次。'; bar.style.width = '100%';
+      vidButtons('retry');
+      /* 重新框：同一部影片再打開框字幕的視窗 */
+      vid.retry = async function () {
+        vid.busy = true; vid.stop = false;
+        var o2 = null;
+        try {
+          o2 = file ? await vidLoad(file) : null;
+          var vv = o2 ? o2.v : v;
+          var r2 = await vidPickRegion(vv, { r: region, t: vv.duration * 0.3 }, !!redoId);
+          if (!r2) { vid.busy = false; vbox.hidden = true; } else { await vidRead(vv, r2, name, dur, redoId, file); }
+        } catch (err) { vid.busy = false; $('vidMsg').textContent = '讀影片失敗：' + String(err && err.message || err); }
+        if (o2) { URL.revokeObjectURL(o2.url); }
+      };
+      return;
+    }
     vbox.hidden = true;
-    var text = lines.map(function (l) { return l.t; }).join('\n'), id = 'text:' + Date.now().toString(36), dn = name + '（影片字幕）';
-    lib.docs.push({ id: id, name: dn, type: 'text', size: text.length, added: Date.now(), opened: 0, folder: libTarget(), video: true });
+    var text = lines.map(function (l) { return l.t; }).join('\n'), id = redoId || 'text:' + Date.now().toString(36), d = redoId ? docById(redoId) : null;
+    var dn = d ? d.name : name + '（影片字幕）';
+    if (!d) { d = { id: id, name: dn, type: 'text', size: text.length, added: Date.now(), opened: 0, folder: libTarget(), video: true }; lib.docs.push(d); }
+    d.size = text.length; d.vregion = region;
+    /* 把影片本身也存起來，之後才能「重新辨識」（太大的影片不存） */
+    if (file && file.size < 400 * 1048576 && !(redoId && d.vblob)) { try { await idbPut('vid:' + id, file); d.vblob = true; } catch (err) { d.vblob = false; } }
     saveLib();
+    if (redoId && state.src && state.src.id === id) { state.src = null; }
     try { localStorage.setItem(PDF_DOC_PREFIX + id, JSON.stringify({ text: text, src: { type: 'text', id: id, name: dn }, hl: [], strokes: [], boxes: [], nextId: 1 })); } catch (err) {}
-    $('homeMsg').textContent = '已把影片字幕整理成文件「' + dn + '」：' + lines.length + ' 句' + (vid.stop ? '（中途停止）' : '') + '。字幕是文字辨識讀出來的，可能有錯字。';
+    $('homeMsg').textContent = (redoId ? '已重新辨識「' : '已把影片字幕整理成文件「') + dn + '」：' + lines.length + ' 句' + (vid.stop ? '（中途停止）' : '') + '。字幕是文字辨識讀出來的，可能有錯字。';
     setTimeout(function () { $('homeMsg').textContent = ''; }, 12000);
     renderHome();
     openDoc(id);
+  }
+  /* 影片文件的「↻ 重新辨識」：重新框字幕、再讀一次，結果取代原本的文字 */
+  function vidRedoable() { var d = state.src && docById(state.src.id); return !!(d && d.video && d.vblob); }
+  async function vidRedo() {
+    var d = state.src && docById(state.src.id);
+    if (!d || vid.busy) { return; }
+    var f = null; try { f = await idbGet('vid:' + d.id); } catch (err) {}
+    if (!f) { $('info').textContent = '這台裝置上沒有存這部影片，請從主頁重新加入影片。'; return; }
+    vid.busy = true; vid.stop = false;
+    var o = null;
+    try {
+      o = await vidLoad(f);
+      var guess = d.vregion ? { r: d.vregion, t: o.v.duration * 0.3, redo: true } : await vidGuessRegion(o.v);
+      var region = await vidPickRegion(o.v, guess, true);
+      if (!region) { vid.busy = false; URL.revokeObjectURL(o.url); return; }
+      showTab('home');
+      await vidRead(o.v, region, d.name, o.v.duration, d.id, f);
+    } catch (err) {
+      vid.busy = false; $('homeMsg').textContent = '重新辨識失敗：' + String(err && err.message || err);
+    }
+    if (o) { URL.revokeObjectURL(o.url); }
   }
 
 
@@ -47280,7 +47390,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var docs = [], seen = {};
       lb.docs.forEach(function (d) {
         var m = M.docs[d.id];
-        if (!m) { ch.lib = true; ch.docs.push(d.id); rawRemove.call(localStorage, PDF_DOC_PREFIX + d.id); idbDel(d.id); idbDel('ocr:' + d.id); idbDel('thumb2:' + d.id); return; }
+        if (!m) { ch.lib = true; ch.docs.push(d.id); rawRemove.call(localStorage, PDF_DOC_PREFIX + d.id); idbDel(d.id); idbDel('ocr:' + d.id); idbDel('thumb2:' + d.id); idbDel('vid:' + d.id); return; }
         seen[d.id] = 1;
         if (!syncSame(m, L.docs[d.id])) {
           ch.lib = true; ch.docs.push(d.id);
