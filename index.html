@@ -1145,7 +1145,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.2</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.3</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44687,7 +44687,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.2';
+  var APP_VER = '正式版 v1.13.3';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45661,6 +45661,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '換字體', s: '「中文字體」選喜歡的字', img: 'set-font',
         d: ['「蘋方」：iPad 內建的黑體，最清楚（預設）。', '「思源黑體」：線條較均勻的黑體。', '「思源宋體」：像書本的明體。', '「霞鶩文楷」：像手寫的楷體，比較柔和。', '只改按鈕和說明的中文字，泰文字不變。'],
         tip: '思源字體和文楷第一次要連網下載。' },
+      { t: '雲端同步', s: '設定頁按「連結 Google 帳號」', img: '',
+        d: ['文件、PDF、筆記、生字卡和設定，會存在你自己 Google 雲端硬碟裡這個 App 專用的隱藏資料夾（不會出現在檔案清單，App 也看不到你其他的檔案）。', '在另一台平板、手機或電腦打開這個 App，連結同一個 Google 帳號，兩邊就會自動合併：改過的以比較新的為準，刪掉的另一台也會刪。', '連結後，打開 App 和修改之後會自動同步。Google 的登入每小時要確認一次；過了就按「立即同步」。', '加到主畫面的 App 按連結時，會先跳到 Google 的登入頁，登入完自動回到 App。', '匯入的影片本身不會上傳（太大），影片做成的文字文件會同步。'] },
       { t: '備份', s: '按「匯出備份檔」，存到 iCloud Drive', img: 'set-backup',
         d: ['按「匯出備份檔」。', '在跳出的視窗選「儲存到檔案」，再選 iCloud Drive 或 Google Drive。', '要還原時按「從備份檔還原」，選那個檔案。'],
         tip: '換 iPad、刪掉 App 或清除瀏覽器資料前，一定要先備份！' },
@@ -47472,7 +47474,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
      不會出現在雲端硬碟的檔案清單，也看不到使用者其他的檔案。
      同步單位：每份文件（清單資訊＋筆記）、每張生字卡、每個設定，各自記「最後修改時間」，兩邊合併時新的贏；
      刪掉的東西會記一筆「刪除時間」，另一台同步時也會跟著刪。PDF 原檔各自存成一個檔案。 */
-  var SYNC_CLIENT_ID = '';
+  var SYNC_CLIENT_ID = '268036065948-eonf124to1ccbpg76ibvur6bjcoqit00.apps.googleusercontent.com';
   var SYNC_SCOPE = 'https://www.googleapis.com/auth/drive.appdata email';
   var SYNC_META = 'thai-sync-meta', SYNC_TOK = 'thai-sync-token', SYNC_ON = 'thai-sync-on';
   var SYNC_SET = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-theme', 'thai-tone-mode', 'thai-font', 'thai-tools', 'thai-my-names', 'thai-progress', 'thai-home-view', 'thai-my-words', 'thai-my-splits'];
@@ -47673,12 +47675,41 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         sync.err = '';
         runSync();
       },
-      error_callback: function (e) { sync.err = e && e.type === 'popup_closed' ? '登入視窗關掉了，還沒連結。' : '登入視窗打不開' + (e && e.type ? '（' + e.type + '）' : '') + '。'; renderSync(); }
+      error_callback: function (e) {
+        /* 小視窗被擋：改用整頁登入 */
+        if (e && e.type === 'popup_failed_to_open') { syncSignInRedirect(); return; }
+        sync.err = e && e.type === 'popup_closed' ? '登入視窗關掉了，還沒連結。' : '登入視窗打不開' + (e && e.type ? '（' + e.type + '）' : '') + '。'; renderSync();
+      }
     });
     return sync.client;
   }
   /* 按鈕按下去時呼叫（Safari 規定登入視窗一定要在點按的當下打開） */
+  /* 加到主畫面的 App（iPad「加入主畫面」）裡，登入的小視窗常常回不來：改成整頁跳到 Google 登入，登入完再跳回 App */
+  function syncStandalone() { try { return !!(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches)); } catch (err) { return false; } }
+  function syncRedirectUri() { return location.origin + location.pathname.replace(/index\.html$/, ''); }
+  function syncSignInRedirect() {
+    var st = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    try { rawSet.call(localStorage, 'thai-sync-state', st); } catch (err) {}
+    var q = { client_id: SYNC_CLIENT_ID, redirect_uri: syncRedirectUri(), response_type: 'token', scope: SYNC_SCOPE, include_granted_scopes: 'true', state: st };
+    if (!syncOn()) { q.prompt = 'consent'; }
+    location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + Object.keys(q).map(function (k) { return k + '=' + encodeURIComponent(q[k]); }).join('&');
+  }
+  /* 從 Google 登入頁跳回來時，網址後面帶著登入結果 */
+  function syncFromRedirect() {
+    var h = location.hash || '';
+    if (!/access_token=|error=/.test(h) || !/state=/.test(h)) { return false; }
+    var p = {}; h.replace(/^#/, '').split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) { p[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' ')); } });
+    var want = null; try { want = localStorage.getItem('thai-sync-state'); rawRemove.call(localStorage, 'thai-sync-state'); } catch (err) {}
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (err) { location.hash = ''; }
+    if (!want || p.state !== want) { sync.err = '登入結果對不上（可能是舊的連結），請再按一次「連結 Google 帳號」。'; return true; }
+    if (p.error || !p.access_token) { sync.err = p.error === 'access_denied' ? '你取消了授權。' : '登入沒有成功' + (p.error ? '（' + p.error + '）' : '') + '。'; return true; }
+    if (p.scope && p.scope.indexOf('drive.appdata') < 0) { sync.err = '需要勾選「查看及管理這個應用程式的設定資料」才能同步，請再按一次並勾選。'; return true; }
+    try { rawSet.call(localStorage, SYNC_TOK, JSON.stringify({ tok: p.access_token, exp: syncNow() + (Number(p.expires_in) || 3600) * 1000 })); rawSet.call(localStorage, SYNC_ON, '1'); } catch (err) {}
+    sync.err = ''; sync.justLinked = true;
+    return true;
+  }
   function syncSignIn() {
+    if (syncStandalone()) { syncSignInRedirect(); return; }
     var c = syncClient();
     if (!c) { sync.err = 'Google 登入服務還在載入，請再按一次。'; renderSync(); syncLoadGis().then(function () { syncClient(); }); return; }
     c.requestAccessToken({ prompt: syncOn() ? '' : 'consent' });
@@ -47807,7 +47838,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     $('syncMsg').className = 'label' + (sync.err ? ' syncerr' : '');
   }
   if (SYNC_CLIENT_ID) {
+    var fromGoogle = syncFromRedirect();
     renderSync();
+    if (fromGoogle) { showTab('settings'); if (sync.justLinked) { setTimeout(runSync, 300); } }
     /* 預先載入 Google 登入元件，按按鈕時才能馬上打開登入視窗 */
     var syncPre = function () { syncLoadGis().then(function () { syncClient(); renderSync(); }, function () {}); };
     if (syncOn()) { syncPre(); setTimeout(runSync, 2500); } else { setTimeout(syncPre, 4000); }
