@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.16.0'
+VER = '1.17.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
