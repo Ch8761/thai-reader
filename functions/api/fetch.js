@@ -85,7 +85,15 @@ export async function onRequestGet(context) {
   }
   /* 網站擋掉了（或內容要用程式載入）：改請「Jina Reader」代為用瀏覽器打開，拿回整理前的網頁 */
   if (!got) {
-    const r2 = await grab('https://r.jina.ai/' + target.toString(), { 'accept': 'text/html', 'x-return-format': 'html', 'x-timeout': '20' }, 30000);
+    /* 有設定自己的金鑰（Cloudflare 的環境變數 JINA_API_KEY）就用它，額度大很多；沒有就用不需要帳號的免費額度 */
+    const key = context.env && context.env.JINA_API_KEY;
+    const jh = { 'accept': 'text/html', 'x-return-format': 'html', 'x-timeout': '20' };
+    const jurl = 'https://r.jina.ai/' + target.toString();
+    let r2 = await grab(jurl, key ? Object.assign({ authorization: 'Bearer ' + key }, jh) : jh, 30000);
+    /* 金鑰的額度用完或失效：改用免費額度 */
+    if (key && (r2.status === 401 || r2.status === 402 || r2.status === 403)) { r2 = await grab(jurl, jh, 30000); }
+    /* 太多人同時用（429）：等兩秒再試一次 */
+    if (r2.status === 429) { await new Promise(function (ok) { setTimeout(ok, 2000); }); r2 = await grab(jurl, key ? Object.assign({ authorization: 'Bearer ' + key }, jh) : jh, 30000); }
     if (r2.error || looksBlocked(r2)) {
       const e = firstErr || r2;
       return json({ ok: false, error: e.error || 'status', status: e.status || r2.status || 0, reader: r2.status || r2.error || 0 }, 502);

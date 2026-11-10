@@ -1205,7 +1205,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.1</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.2</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44759,7 +44759,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.14.1';
+  var APP_VER = '正式版 v1.14.2';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -48195,6 +48195,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (r.status === 404 && !/json/.test(r.headers.get('content-type') || '')) { throw new Error('這個網址的 App 還不能讀取文章。請到新網址 thai-reader-enn.pages.dev 使用這個功能。'); }
     if (/json/.test(r.headers.get('content-type') || '')) {
       var j = {}; try { j = await r.json(); } catch (err) {}
+      if (j.reader === 429) { throw new Error('那個網站不讓 App 直接讀取，備用的讀取服務現在太多人在用（429）。等一分鐘再按一次「讀取文章」，或在瀏覽器打開文章、全選複製，貼到下面的「貼上泰文」。'); }
       throw new Error((URL_ERR[j.error] || '讀取失敗。') + (j.status ? '（網站回應 ' + j.status + (j.reader ? '，備用讀取 ' + j.reader : '') + '）' : ''));
     }
     var fin = u; try { fin = decodeURI(r.headers.get('x-final-url') || u); } catch (err) {}
