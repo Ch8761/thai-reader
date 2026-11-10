@@ -1,0 +1,935 @@
+ที่#0|prep|at; to; on the site of; within; amidst; at the location of; for; during; at the time of
+ที่#1|noun|land; place; area; seat (booking and reservations); site; location; position; office
+ที่#2|classifier|Classifier for places, locations, servings. ⇒ all nouns using this classifier
+ที่#3|pron|relative pronoun; that; which; that which; who; whom; where; when
+การ#0|noun|work; matter; task; affair
+การ#1|prefix|prefixed to nouns to form noun derivatives, meaning “affairs of.; matters of .; -ery; -y”; prefixed to action 
+เป็น#0|verb|to be; to get; to have; to experience; to suffer; used at the end of an expression to indicate that the person
+เป็น#1|adj|alive; living
+เป็น#2|conj|as; like; as if
+เป็น#3|adv|to the degree (of); to the extent (of); as much as; as far as; up to
+ใน#0|prep|in; inside; within; amidst; into; on; at; during
+ใน#1|adj|internal; interior; inner
+ใน#2|prep|of; belonging (to)
+ของ#0|noun|thing; item; article; stuff; matter; possession; belonging; property; someone or something that is owned or po
+ของ#1|prep|of; belonging to; pertaining to
+มี#0|verb|to have; to own; to possess; to contain; to include; to consist of; to be composed of; to be; to exist; to com
+มี#1|adj|having possessions; wealthy; rich
+มี#2|noun|possessions; property; wealth
+มี#3|prep|having; with
+จะ#0|verb|used to indicate a future tense: will; would; to be to; to be about to; to be going to; etc.
+จะ#1|adv|almost; nearly
+จะ#2|conj|used to introduce alternatives: whether; either; etc.
+และ#0|conj|and
+ไม่#0|adv|no; not
+ไม่#1|conj|neither; nor
+ไม่#2|intj|no
+ไม่#3|noun|no
+ได้#0|verb|to get; to obtain; to receive; used before a verb to indicate that one has done or has an opportunity to do th
+ได้#1|intj|used to express a range of emotions, including acceptance, agreement, permission, anger, reproof, resignation,
+ให้#0|verb|to give; to grant; to gratuitously give; to donate; to allow; to permit; used to express a permission, require
+ให้#1|noun|gratuitous gift; donation
+ให้#2|prep|to; for; that, so that; to the point of, to the extent of, to the degree of, until; in a manner that (is); for
+ว่า#0|verb|to say, to speak, to tell; to utter, to pronounce; to instruct; to direct; to address; to deal (with); to hand
+ว่า#1|conj|as; like; as if; as; that; as follows; as to; regarding; concerning
+ไป#0|verb|to go; to move (away from the speaker); to leave; to depart
+ไป#1|adv|used to indicate motion away from the speaker's direction; used to indicate motion that still continues or tha
+ไป#2|intj|begone
+มา#0|verb|to move or come (towards the speaker's direction); to arrive
+มา#1|adv|used to indicate motion towards the speaker's direction; used to indicate motion that still continues or that 
+มา#2|noun|moon
+ก็#0|conj|used to indicate a consequence or result: so, thus, then, next, accordingly, etc.; also; as well
+ก็#1|particle|used just for linking words or for starting or emphasising an expression
+ความ#0|noun|affair; matter; content; essence; text, message, passage; version, edition; legal case; legal matter; lawsuit
+ความ#1|prefix|a prefix to convert a verb or adjective into an abstract noun
+คน#0|noun|person; people; human being (Classifiers: คน or หัว or ราย or นาย or ท่าน)
+คน#1|classifier|Classifier for most human beings. ⇒ all nouns using this classifier
+คน#2|verb|to stir; to scramble; to mix
+กับ#0|noun|trap; gin; trap
+กับ#1|conj|and; as well as
+กับ#2|adv|also; as well
+กับ#3|prep|with; together with; along with; used to indicate a point, person, etc, reached or approached, a relation, con
+แล้ว#0|verb|to end; to come to an end; to complete; to finish
+แล้ว#1|adj|complete (with); full (of)
+แล้ว#2|adv|Indicating an action completion; Indicating that a new state or a new situation has begun; Indicating that a n
+อยู่#0|verb|to be (at, in, on some place, some condition, etc.); to dwell, to live, to reside; to remain, to stay
+อยู่#1|adv|used to indicate that an action is being done or a condition is happening; still; successfully; capably; somew
+หรือ#0|conj|or
+หรือ#1|particle|final interrogative particle on a yes-no question
+จาก#0|noun|nipa, a palm tree of the species Nypa fruticans
+จาก#1|verb|to depart, to leave
+จาก#2|prep|from
+กัน#0|adv|together; jointly; altogether; each other; one another
+กัน#1|pron|a first person pronoun used when speaking to a male friend
+กัน#2|verb|to hinder; to prevent; to bar; to reserve; to set aside; to keep (out, away, etc)
+กัน#3|noun|a type of war elephants employed to surround and protect a military body; a type of barges in the royal barge 
+นี้#0|det|this; these
+แต่#0|adv|each and every (one of), every single (followed by a classifier)
+แต่#1|prep|from; since
+แต่#2|adj|only; just; nothing but
+แต่#3|conj|but; however
+อย่าง#0|noun|variety; style; pattern; kind; sort; type; mode
+อย่าง#1|adj|like; as
+อย่าง#2|prefix|-ly (creating an adverb from an adjective); way (in the following way)
+อย่าง#3|classifier|Classifier for kinds, varieties, patterns, types, sorts.
+ต้อง#0|verb|to touch; to come into contact (with); to hit; to be subject to; to be liable to; to be susceptible of; to be 
+ด้วย#0|conj|because; as; since
+ด้วย#1|adv|also; as well; too; used at the end of an expression to indicate an appeal, request, or requirement
+ด้วย#2|prep|with; together with; along with
+ขึ้น#0|verb|to wax; to move or go up, upwards, frontwards, northwards, or eastwards; to come above the horizon, as a heave
+ขึ้น#1|adv|up; upwards; frontally; frontwards; northerly; northwards; easterly; eastwards
+ขึ้น#2|adj|waxing
+ขึ้น#3|noun|waxing moon; day of the waxing moon, as opposed to แรม (rɛɛm, “day of the waning moon”)
+เขา#0|pron|he; she; they; I; oneself
+เขา#1|noun|one who is not on someone's part or side or is not a member of someone's group, entity, etc.
+เขา#2|noun|hill; mountain
+เขา#3|noun|horn; antler
+นั้น#0|det|that; those
+ผู้#0|noun|person; people
+ผู้#1|adj|male
+ผู้#2|pron|those; those who
+ซึ่ง#0|prep|placed before a noun, noun phrase, or noun substitute to indicate that it serves as an object
+ซึ่ง#1|pron|used to represent a specified or implied antecedent, or to indicate anyone or anything previously mentioned or
+ซึ่ง#2|verb|to bring, bring in, bring about (e.g. sorrow, misfortune)
+ตาม#0|verb|to follow; to come after; to go after; to pursue; to chase; to chase up; to summon; to call
+ตาม#1|conj|as; like; as; because (of); according to; up to; depending on
+ตาม#2|adv|after; behind
+ตาม#3|prep|around; about; along; by
+มาก#0|adv|a lot; much; many; very
+โดย#0|prep|by; with; by means of
+โดย#1|noun|water
+ใช้#0|verb|to use; to employ; to put to use; to utilise; to apply (a law, rule, etc); to exercise (a power, right, freedo
+ทาง#0|noun|way, route, or course for travel; opportunity; chance; section; part; side; method; means; procedure; process
+ทาง#1|classifier|Classifier for routes, ways. ⇒ all nouns using this classifier; Classifier for directions, sides. ⇒ all nouns 
+ทาง#2|prep|in relation to; regarding; concerning
+ทาง#3|noun|midrib (of the coconut palm leaf); frond, leaf (of a type attached to the trunk or main stem)
+เรื่อง#0|noun|story; tale; account; essence; content; subject; topic
+เรื่อง#1|prep|regarding; respecting
+เรื่อง#2|classifier|Classifier for the above noun.
+เรา#0|pron|a first person plural/singular pronoun employed when addressing a person of equal or lower status; I, we; a se
+ยัง#0|verb|to be, have; to exist; to be alive; to be living; to survive; to stay; to remain; to cause to stay or remain; 
+ยัง#1|verb|to cause; to make; to bring about; to result (in)
+ยัง#2|adv|still; yet; also; too; not yet
+ยัง#3|prep|to; towards; up to; until; through
+ทำ#0|verb|to make; to do; to perform; to conduct; to carry out; to execute; to make; to create; to invent; to harm; to h
+เพื่อ#0|prep|for
+เพื่อ#1|conj|for; since; because
+เพื่อ#2|adv|why
+เพื่อ#3|intj|why?; for what?
+ผม#0|noun|headhair.
+ผม#1|pron|a first person pronoun employed by a male when addressing any commoner.
+อีก#0|adj|more; additional; further; other; different
+อีก#1|adv|more; additionally; further; any more; any longer; again
+หนึ่ง#0|num|1 (Thai numeral: ๑)
+หนึ่ง#1|noun|one
+หนึ่ง#2|adj|one; whole; only; single; sole; some; certain; best; excellent; top
+หนึ่ง#3|adv|first; firstly; a bit; a mite; a trifle
+เมื่อ#0|classifier|classifier for a time, times
+เมื่อ#1|conj|when
+ถึง#0|verb|to arrive (at, in, on, etc); to reach; to attain; to have or contain sufficiently; to meet (a criterion, requi
+ถึง#1|prep|to; into; to the extent of; to the degree of; to the point of; as far as; as much as; up to; until
+ถึง#2|conj|even though; even if; thus; then
+ถึง#3|noun|steam cooker
+เข้า#0|verb|to move in or inwards: to come in, to go in, to enter, etc; to cause to do so; to arrive; to include; to inser
+เข้า#1|adv|used to indicate an increasing degree; together; altogether
+เข้า#2|noun|obsolete form of ข้าว (kâao, “rice”)
+เพราะ#0|adj|melodious; pleasing to the ear
+เพราะ#1|conj|because
+ดี#0|adj|nice; fine; excellent; satisfactory; agreeable; pleasant; favourable; beautiful; adorable; lovely; attractive;
+ดี#1|adv|well: nicely, finely, excellently, satisfactorily, agreeably, pleasantly, etc.; quite; so
+ดี#2|noun|gallbladder; bile
+ดี#3|intj|clipping of สวัสดี (sà-wàt-dii)
+ออก#0|verb|to pay (a monetary sum); to come under (a governing power); to come or go out, into view, or into being; to ca
+ออก#1|adj|subject (to a governing power); east; eastward; out; outward
+ออก#2|adv|east; eastward; out; outward; quite
+ออก#3|noun|an honorific given to a nobleman, prefixed to his noble rank
+ฉัน#0|pron|a first-person pronoun used by anyone when addressing a person of equal or lower status
+ฉัน#1|conj|as; like; as if
+ฉัน#2|prep|as; like
+ฉัน#3|verb|to eat; to drink; to take; to consume
+เกิด#0|verb|to come into being: to be born, to rise, to originate, to emerge, to occur, to happen, to take place, etc.; to
+เกิด#1|conj|used to introduce a likelihood, possibility, or supposition: if, should, in case that, if it happens to be tha
+คือ#0|verb|to be; to be as follows
+เห็น#0|verb|to see: to perceive visually or mentally; to think; to opine; to view; to consider; to feel; to seem, to appea
+เห็น#1|noun|civet: any mammal of the family Viverridae
+จึง#0|conj|so, thus, therefore, accordingly, consequentially, because of that, for that reason, hence; then
+ทำให้#0|verb|to cause (something to be or do); to make (do something)
+กว่า#0|adv|away; off; more; in a superior or inferior extent; to a superior or inferior degree
+กว่า#1|prep|than; more than; over; beyond; until; up to; by
+กว่า#2|pron|a bit over; an additional amount or degree that is uncertain or unspecified
+ไทย#0|noun|person; human being; (ชาว~, คน~) Siamese person; Thai person
+ไทย#1|name|(ประเทศ~, เมือง~, กรุง~) Siam; Thailand (a country in Southeast Asia); Central Thai language, the official lan
+ไทย#2|adj|not universally or internationally recognised, accepted, or practised; only done or taking place in Thailand
+ไทย#3|adj|that should be given
+ไว้#0|verb|to place; to locate; to keep; to hold; to maintain; to preserve; to keep, wear, or sport (a style of moustache
+ตัว#0|noun|self; person; body; physique; figure; form; shape; person; human being
+ตัว#1|pron|a second person pronoun, used to address a person of equal or lower status: you
+ตัว#2|classifier|Classifier for animals. ⇒ all nouns using this classifier; Classifier for digits, letters, and certain objects
+ปี#0|noun|year (amount or period of time)
+เธอ#0|pron|a second-person pronoun used to address a person of equal or lower status; a third-person pronoun used to refe
+เธอ#1|noun|an agentive referring to a monarch, chiefly used in royal titles
+คุณ#0|noun|attribute; characteristic; property; benefit; interest; use; magic; black magic; black art; occult; supernatur
+คุณ#1|pron|a second or third person pronoun, used out of respect
+ต่อ#0|noun|wasp
+ต่อ#1|verb|to extend; to prolong; to connect; to join; to build, construct, or create, especially by assembling certain m
+ต่อ#2|adj|next; further
+ต่อ#3|classifier|time: used for expressing multiplication
+ทั้ง#0|adj|all; entire; whole; total
+ทั้ง#1|adv|throughout; also; too
+ทั้ง#2|prep|with; together with
+ทั้ง#3|conj|even though; although; in spite of the fact that; while; during; at the same time that
+มัน#0|noun|fat; grease; oil; tallow
+มัน#1|adj|greasy; oily; tasting like coconut milk, fat, oil, etc.; glossy; lustrous; shiny
+มัน#2|noun|yam; tuber (Classifiers: ต้น or หัว)
+มัน#3|pron|a third person pronoun used to refer to a non-human animal/animals: he, she, it, they, etc.; a third person pr
+เลย#0|adv|really; completely; entirely; at all!; so much!; extremely (used for emphasis at the end of a statement); so; 
+เลย#1|verb|to pass; to go through; to pass through
+เลย#2|conj|so; then
+เลย#3|name|Loei (a province in northeastern Thailand)
+ถ้า#0|conj|if
+อะไร#0|pron|what?; something; anything; whatever
+เวลา#0|noun|time; period of time; point of time; occasion
+เวลา#1|conj|when; whenever; while
+ลง#0|verb|to come down; to get down; to descend; to cause to do so; to get on; to embark; to enter; to board; to get off
+ลง#1|adv|down; downwards; south; southwards; more (in or to a greater extent or degree); used to indicate the state of 
+ต่าง#0|noun|a shoulder pole carried by a beast of burden; a packsaddle
+ต่าง#1|verb|to carry; to put on or take on a load, as of passengers, goods, etc.
+ต่าง#2|adj|different; substituting; replacing; other
+ต่าง#3|adv|as a substitute or replacement; in place of someone or something
+ส่วน#0|noun|part; portion; piece; part; participation; role; division; section; measure; quantity
+ส่วน#1|prep|as for; as regards; on the part of; whilst; whereas
+ประเทศ#0|noun|nation; also used as a prefix to the name of a nation; area; district; locality; place; region; spot; city; pr
+ประเทศ#1|noun|alternative form of บรเทศ (bɔɔ-rá-têet)
+อาจ#0|verb|may; might
+อาจ#1|verb|to dare to
+แบบ#0|noun|form; pattern; design; model; template; example; instance; form; shape; method; way; procedure
+แบบ#1|conj|like; as; such as; in the way of; in the manner of
+แบบ#2|adv|sort of; kind of
+แบบ#3|classifier|Classifier for styles, patterns, models, forms. ⇒ all nouns using this classifier
+ถูก#0|adj|cheap; inexpensive; low
+ถูก#1|verb|to touch; to contact; to come into contact with; to be in accordance with; to be in line with; to agree with; 
+ทุก#0|adj|every, each
+วัน#0|noun|day; daytime; today
+วัน#1|noun|fly (any of numerous two-winged insects of the order Diptera)
+วัน#2|noun|forest; grove; jungle; wood
+ก่อน#0|adv|before; early; first
+ก่อน#1|adj|prior; previous; last; old
+ก่อน#2|prep|before
+ก่อน#3|conj|before
+เช่น#0|noun|example, sample
+เช่น#1|conj|such as, like
+อื่น#0|adj|other
+ดู#0|verb|to view; to look; to watch; to view; to consider; to examine; to inspect; to view; to consider; to regard; to 
+ดู#1|adv|for trial; experimentally
+ครั้ง#0|noun|time; instance, occurrence; occasion
+ครั้ง#1|classifier|Classifier for the amount of time taken for an action, phenomenon, etc.
+รู้#0|verb|to know (information), to be aware; to understand
+เอา#0|verb|to bring; to take; to capture; to seize; to cope; to handle; to desire; to want
+สอง#0|num|2 (Thai numeral: ๒ (2))
+นำ#0|verb|to lead; to bring
+งาน#0|noun|act; action; activity; deed; duty; task; undertaking; employment; trade; occupation; profession; result of an 
+งาน#1|noun|a traditional unit of measurement of land, equal to 400m²
+สามารถ#0|verb|can; may; to be able (to) or suitable (for)
+นาย#0|noun|man; chief; lord; master; ruler; leader; boss; person in charge; a prefix indicating leadership or the state o
+นาย#1|classifier|Classifier for men.
+นะ#0|particle|particle used to make a sentence seem softer, more persuasive or less abrupt; expresses a mild question isn't 
+หน้า#0|noun|face; surface; front; person; reputation; dignity; page (as of a book)
+หน้า#1|adj|front; next; coming; following; future
+หน้า#2|adv|ahead; in the front; to the front
+หน้า#3|prep|in front of; before
+บอก#0|verb|to tell
+กลับ#0|verb|to return; to come back; to flip; to turn over
+แห่ง#0|noun|place
+แห่ง#1|classifier|Classifier for places or locations. ⇒ all nouns using this classifier
+แห่ง#2|prep|of
+บาง#0|noun|narrow or small watercourse; community or polity located near such watercourse or at the place used to be such
+บาง#1|adj|light; thin
+บาง#2|adj|certain; some; not all
+ได้รับ#0|verb|to get, obtain, receive; to have received; used to make passive or pseudo-passive constructions
+จน#0|adj|poor, not rich
+จน#1|verb|to lose, be defeated; to be stuck, up against it
+จน#2|conj|until; till
+ด้าน#0|noun|side, sector, part; direction, field, aspect
+ด้าน#1|adj|hard, callous, coarse, rough; shameless, brazen; to be a dud
+คิด#0|verb|to think; to contemplate; to form in mind; to consider; to view; to opine; to figure; to guess; to conjecture;
+เด็ก#0|noun|child: person below the age of adulthood; young person; childish person; baby; infant
+เด็ก#1|adj|young; childish; inexperienced; untrained; unskillful
+ชีวิต#0|noun|life
+ชีวิต#1|classifier|Classifier for living beings.
+สิ่ง#0|noun|thing (physical or abstract)
+พระ#0|noun|god, deity; someone or something revered as a god or deity; priest; representation, as image, statue, sculptur
+เหมือน#0|adj|same, similar
+เหมือน#1|conj|as, like, as if, similar to
+รับ#0|verb|to greet; to receive; to welcome; to acquire; to get; to obtain; to receive; to take; to accept; to acknowledg
+หลาย#0|adj|several; numerous; many
+พูด#0|verb|to speak
+บ้าน#0|noun|place of habitation; residence; family; household; building for any purpose; village
+บ้าน#1|adj|domestic; ordinary; plain
+ใหม่#0|adj|new; fresh; latest; recent; modern
+ใหม่#1|adv|again; once more; newly; freshly; anew; afresh
+เคย#0|adv|ever; never, at all
+เคย#1|verb|to use to (usually express a past tense)
+เคย#2|noun|krill
+นี่#0|adj|this; these
+นี่#1|pron|this; these; used as a first person pronoun: I, we, etc.
+นี่#2|noun|obsolete form of หนี้ (nîi)
+กลุ่ม#0|noun|group
+ปัญหา#0|noun|problem; trouble; difficulty; question; riddle; puzzle
+สังคม#0|noun|society; community
+สังคม#1|adj|social
+ใคร#0|pron|who; which person; what person?; whoever; anyone; someone; everyone; they (people in general); person; one
+หา#0|intj|used to express surprise, bewilderment, disbelief, contempt, or interrogation
+หา#1|verb|to call; to summon; to seek; to find; to search; to look (for); to visit; to see; to meet; to accuse; to alleg
+หา#2|prep|to; into
+หา#3|adv|adverb-auxiliary used in certain negative constructions: otherwise, not
+คำ#0|noun|gold
+คำ#1|noun|word; speech; bite (of food), morsel; bit
+อยาก#0|verb|to want; to desire; to want to; to wish to; to be hungry; to be thirsty
+ใด#0|pron|any; which
+เสียง#0|noun|sound, including voice, a sensation perceived by the ear; opinion; view (as in ออกเสียง (ɔ̀ɔk-sǐiang)); popula
+คง#0|adv|surely, sure to, bound to, most likely, probably
+คง#1|verb|to endure; to last; to remain; to stay; used to express a conjecture, inclination, or opinion
+คง#2|adv|still: as yet; even then or now as formerly; in the future as in the past
+มอง#0|verb|to watch; to look
+ระหว่าง#0|noun|distance (between two points in space or time): space, gap; interval, duration, period; meanwhile; etc.; time;
+ระหว่าง#1|prep|between; amongst; amidst; against; versus; during
+สำหรับ#0|prep|for; intended for; meant for
+น้ำ#0|noun|water; any liquid or fluid (Classifier changes according to its container.); body of water, as lake, river, se
+น้ำ#1|classifier|Classifier for discharges of semen upon orgasm.; Classifier for rounds, times, or occasions, especially in mat
+ผล#0|noun|result; outcome; profit; effect; fruit
+ผล#1|classifier|Classifier for fruits.
+ฯ#0|punct|an abbreviation marker (named ไปยาลน้อย or เปยยาลน้อย).
+ใช่#0|adv|used to express negation: no, not, never, etc.
+ใช่#1|verb|be
+ใช่#2|adj|good; appropriate; suitable; satisfactory; acceptable; correct
+ใช่#3|intj|used to express affirmation: yes, right, correct, sure, etc.; use to express joy or pleasure: yes, etc.; used 
+แสดง#0|verb|to act or perform (as, in, etc); to display; to express; to make known; to reveal; to show; to declare; to dem
+กำลัง#0|noun|force; strength; power; vigour; power: product of equal factors; power: rate of doing work
+กำลัง#1|verb|preverbal auxiliary marking progressive or continuous aspect
+สร้าง#0|verb|to bring into being: to build, to construct, to create, to make, etc.
+ท่าน#0|noun|added before or after a name, title, etc, to show respect
+ท่าน#1|pron|a second or third person pronoun, giving a sense of either neutrality or respect
+ท่าน#2|classifier|Classifier for human beings. ⇒ all nouns using this classifier
+เงิน#0|noun|silver (metal); silver (color); money
+โลก#0|noun|land; country; mankind; humanity; world; the Earth
+ช่วย#0|verb|to help
+กำหนด#0|verb|to fix, to set, to determine; to designate, to indicate, to specify; to establish, to create, to set up; to di
+กำหนด#1|noun|determination, designation, indication, specification; law, rule, regulation; direction; instruction; order; c
+จริง#0|adj|real; true; actual; authentic; genuine
+จริง#1|adv|really; truly; indeed
+ขอ#0|noun|hook (curved or angular piece of metal or other hard substance for catching, pulling, holding, or suspending s
+ขอ#1|verb|to beg, to ask, to request; to want, to wish, to desire; used to express a wish, desire, or command: would lik
+ขอ#2|noun|a kind of tuberous plant
+ทำงาน#0|verb|to work; to perform work
+ระบบ#0|noun|system; form, custom, manner; method, procedure
+ใหญ่#0|adj|big; very big; large; great; important; main
+ใหญ่#1|verb|to be big; to be large; to be huge; to be enormous; to be major; to be extensive; to be sizeable
+ลูก#0|noun|child; offspring; issue; son; daughter; ball; round object; fruit
+ลูก#1|classifier|Classifier for balls, round objects, and fruits. ⇒ all nouns using this classifier
+เอง#0|pron|oneself
+เอง#1|adv|by oneself, alone; only, just
+อัน#0|noun|item; piece
+อัน#1|pron|one
+อัน#2|classifier|Classifier for small objects; the general classifier for small inanimate things. ⇒ all nouns using this classi
+พอ#0|adv|enough, sufficiently
+พอ#1|conj|just as soon as, just as, when
+ที่สุด#0|adv|the most, very most
+แม่#0|noun|female parent, mother-in-law, or person regarded as a female parent; female parent of an animal; female head, 
+พบ#0|verb|to meet, to encounter; to find
+บน#0|prep|on; up; upon; above; over
+บน#1|adj|upper; high; higher
+บน#2|verb|to promise; to pledge; to ask (a supernatural being) to grant one's wish, with a promise to give or do somethi
+บน#3|noun|promise; pledge; promise or pledge to give something to or do something for a supernatural being in return for
+เสีย#0|verb|to degenerate; to deteriorate; to worsen; to decay; to die; to lose; to be deprived of; to have no more; to su
+เสีย#1|particle|used at the end of a verb or adverb for emphasising or for indicating an imperative or hortative
+แก่#0|prep|to: used for identifying the person or thing affected by or receiving something
+แก่#1|adj|old; aged; aging; mature; ripe; dark (as in colour); concentrated; strong
+แก่#2|adv|too much
+แก่#3|prep|from; of; belonging to
+ควร#0|verb|should, ought to, must
+เมือง#0|noun|city-state; fortified polity; any polity, as district, town, city, state, nation, etc.; region, sphere, or dom
+เมือง#1|name|Northern Thailand
+น้อย#0|adj|little, few; small
+น้อย#1|adv|a little, a few
+เดิน#0|verb|to move on or as if on foot: to walk, to step, to run, to flow, etc.; to cause to go or move, to set in motion
+สี#0|noun|color, colour; สีแดงเป็นสีมงคลของชาวจีน; sǐi dɛɛng bpen sǐi mong-kon kɔ̌ɔng chaao jiin; Red (color) is an ausp
+สี#1|adj|colored
+สี#2|verb|to rub; to scrape
+สี#3|verb|used in บัดสี (bàt-sǐi, “to feel ashamed, be ashamed”)
+น่า#0|prefix|prefix to a verb or adjective similar to English -able
+น่า#1|particle|particle used to add a persuasive quality to a sentence
+พี่#0|noun|elder brother; elder sister; older person; superior; master; leader; boss; used as a title for or term of addr
+ร่วม#0|verb|to join in; to participate; to share
+ร่วม#1|adv|in participation, jointly, together
+ร่วม#2|adv|nearly; almost; about
+พัฒนา#0|verb|to progress; to advance; to develop; to create; to evolve
+ใจ#0|noun|heart; mind; spirit; breath; desire; intention
+ใจ#1|verb|to thank; to be brave; to dare; to have courage
+ใจ#2|intj|thanks
+หาก#0|adj|separate; apart
+หาก#1|conj|if
+มาตรา#0|noun|system (of units of seize, time, volume, etc.); distinct portion or provision of a law: article, section, etc.
+สูง#0|adj|tall; high
+กิน#0|verb|to eat; to take; to drink; to absorb; to engross; to occupy; to destroy, as by decomposition or burning; to us
+ส่ง#0|verb|to send; to deliver; to drop off; to see off
+เดียว#0|adj|only one; sole; single; alone
+แรก#0|adj|first; being before all others with respect to time, order, rank, importance, etc.; of, relating to, or occurr
+แรก#1|adv|before all others or anything else in time, order, rank, importance, etc.; for the first time; initially; at t
+แรก#2|verb|to initiate, originate, or set going; to commence or start
+กรณี#0|noun|case; circumstance; event; incident; instance; matter
+ระดับ#0|noun|level; class; rank; degree; order; sequence.
+ระดับ#1|verb|to arrange or place in levels, classes, ranks, degrees, orders, sequences, etc.; to put or place in a horizont
+ตัวเอง#0|pron|oneself; ourselves; second person pronoun
+กฎหมาย#0|verb|to mark down, to note down, to write down; to record, to register, to document; to delimit; to demarcate; to o
+กฎหมาย#1|noun|law; rule; regulation; legislation; statute
+กล่าว#0|verb|to express in words: to declare, to mention, to say, to speak, to tell, etc.; to sing; to propose: to make a m
+อาหาร#0|noun|food; meal; diet
+เกี่ยวกับ#0|prep|about; regarding; concerning
+เกี่ยวกับ#1|verb|Used other than figuratively or idiomatically: see เกี่ยว (gìao), กับ (gàp).
+ดังกล่าว#0|adj|such; (previously) said; (previously) mentioned.
+ดังกล่าว#1|adv|so; thus.
+ดังกล่าว#2|conj|as (previously) said; as (previousy) mentioned.
+นัก#0|noun|used to prefix any word to form an agent noun
+นัก#1|noun|an honorific for a member of the Khmer royalty or nobility, either male or female
+นัก#2|adj|many; much
+นัก#3|adv|much; quite; very
+จัด#0|verb|to consider; to deem; to count; to set; to arrange; to order; to organize; to systematize; to arrange (for); t
+จัด#1|adj|complete; absolute; full; utter; total; strong; intense; dark; darkish; strong; heavy; serious; harsh; severe
+จัด#2|adv|completely; absolutely; fully; utterly; totally; strongly; intensely; heavily; seriously; harshly; severely; i
+ช่วง#0|noun|portion; section; part; period
+ช่วง#1|adj|bright; luminous; brilliant
+ฝ่าย#0|noun|part; section; side.; faction; party.
+เพียง#0|adv|up to, equal to; only, as much as, as far as, till, just until; like, as if
+ลักษณะ#0|noun|characteristic; quality; nature; manner; appearance.; kind; type.; document; letter; message.; title: division
+หลัง#0|noun|back; back; rear
+หลัง#1|adj|next; after; later; hind
+หลัง#2|adv|after; past; behind; at the back
+หลัง#3|prep|behind; after, past
+จำนวน#0|noun|amount; quantity; number
+ข้อ#0|noun|joint; part; section; point; item; issue
+ข้อ#1|classifier|Classifier for the above nouns
+พวก#0|noun|group; party (of people, animals)
+พวก#1|classifier|Classifier for a group.
+ตน#0|noun|self; oneself
+ตน#1|classifier|Classifier for giants, demons, hermits, ascetics, and the like.
+รวม#0|verb|to gather; to assemble; to collect; to compile; to include; to add; to cover; to mix; to merge; to join; to un
+รวม#1|adj|joint; collective; mutual; general; universal; common; public
+เริ่ม#0|verb|to begin; to start
+สาว#0|noun|girl, young woman; bride
+สาว#1|adj|youthful, juvenile, girlish
+สาว#2|verb|to drag, to tow
+เพื่อน#0|pron|a third person pronoun: he, she, it, they, etc.; anyone or anything else; any other person or thing; other(s);
+เพื่อน#1|noun|person whom one knows, likes, trusts, is allied with, or receives support from: friend, buddy, mate; familiar,
+บุคคล#0|noun|person, as natural person, legal person, etc.
+ถาม#0|verb|to ask
+ครับ#0|particle|employed by males to express affirmation or assent, or to politely end any expression.
+บ้าง#0|adv|some (normally modifies a verb and conveys the sense of “to some extent”)
+พิจารณา#0|verb|to inspect; to consider; to investigate.; to try
+อำนาจ#0|noun|authority; force; influence; power
+รัก#0|verb|to love, to have affection (for), to adore, to admire, to cherish, to be fond (of); to prefer, to favour
+รัก#1|noun|love, affection, adoration, admiration, cherishment, fondness; preference, favour
+รัก#2|adj|loved; beloved; adored; admired; cherished; dear; darling
+รัก#3|noun|(ต้น~) crown flower: the plant Calotropis gigantea of the family Apocynaceae; (ดอก~) the flower of this plant
+วันที่#0|noun|date (calendar)
+ภาพ#0|noun|condition, state (as in compound words); picture, image
+ตา#0|noun|eye; one who does something with an eye or the eyes, especially as a profession; anything that is like an eye,
+ตา#1|noun|maternal grandfather; man at or around the same age as one's maternal grandfather; any old man; any man
+ค่า#0|noun|price, cost, fee, value, worth
+ค่า#1|conj|used in ค่าที่ (“because, owing to the fact that, on account of the fact that”)
+ค่า#2|particle|alternative form of ค่ะ (kâ)
+ผ่าน#0|verb|to pass: to move or proceed (from one to another, past, over, beyond, across, or through); to pass: to go thro
+ผ่าน#1|prep|from one to another; past; over; beyond; across; through
+ผ่าน#2|noun|passing score or grade
+ห้อง#0|noun|room (division of building); measure, bar
+หนังสือ#0|noun|letter; character; script; written form; written message; document
+ข้อมูล#0|noun|data; information (in any context)
+ยิ่ง#0|adj|extreme; utmost
+ยิ่ง#1|adv|especially, increasingly, progressively
+ดัง#0|adj|loud; noisy.; famous; popular.
+ดัง#1|prep|like; as.
+ดัง#2|noun|nose.
+เพิ่ม#0|verb|to add; to insert; to include; to make greater: to increase, to augment, to enhance, to expand, etc.; to becom
+เพิ่ม#1|adv|up; more; in addition (to what already exists); in a higher degree
+ทรง#0|verb|to bear; to hold; to carry; to bear; to hold up; to support; to have; to possess; to contain; to bear, to carr
+ทรง#1|adj|royal; regal
+ทรง#2|adv|used as a ceremonial prefix a verb generally applicable to commoners, so as to make it royal
+ทรง#3|noun|shape; form; kind; sort; type
+ตั้งแต่#0|prep|from; since
+พ่อ#0|noun|male parent, father-in-law, or person regarded as a male parent; male parent of an animal; male head, lord, le
+ต่อไป#0|adv|next; later; continually; further; afterward
+สำคัญ#0|adj|distinct; notable; noteworthy; special; remarkable; chief, key, main, principal; important, significant; first
+สำคัญ#1|noun|distinction; mark; sign
+สำคัญ#2|verb|to believe, consider, think, or understand, especially groundlessly or incorrectly; to matter; to signify; to 
+เปิด#0|verb|to open: to render unclosed or uncovered; to undo or remove the cover, lid, or fastening of; to part; to undo 
+เปิด#1|adj|open: uncovered, unclosed; unfastened, unsealed; unconcealed, manifest; unsettled, not yet settled; unrestrict
+เปิด#2|verb|to flee; to run away
+เศรษฐกิจ#0|noun|economy.
+ไหน#0|pron|which; where; who (for question)
+ไหน#1|particle|which; why (used to express complaining, claiming, or doubting mood)
+ไหน#2|noun|plum
+กระทำ#0|verb|to do; to perform; to carry out
+ตั้ง#0|classifier|Classifier for things piled up or placed over, above, or on one another.
+ตั้ง#1|noun|occasion; round; time
+ตั้ง#2|adv|as much as, as many as, so far as; up to; almost
+ตั้ง#3|verb|to set up, to erect; to create, to establish; to form, to constitute; to locate; to situate; to put; to place;
+เข้าใจ#0|verb|to understand
+ชอบ#0|verb|to like; to admire; to appreciate; to adore; to approve; to be in favour (of); to tend (to); to be likely (to)
+ชอบ#1|adv|often; frequently; habitually; as a tendency or habit
+ชอบ#2|prep|in accordance (with); in line (with); in conformity (to)
+ชอบ#3|adj|suitable; proper; appropriate; right; correct; entitled; rightful; having a right or title
+ภาษา#0|noun|language (form of communication using words: spoken, gestured, or written); language (computer language); a mi
+ตรง#0|adj|straight; not bent; honest
+ตรง#1|prep|at
+เรียน#0|verb|to learn; to study; to address, inform, notify, speak to, or tell (a person of equal or higher status); used a
+เรียน#1|adv|used to prefix a verb for politeness when addressing a person of equal or higher status: kindly, humbly, respe
+ตอน#0|verb|to castrate
+ตอน#1|verb|to graft
+ตอน#2|noun|part; section; portion; division; time; point (of time); occasion; episode (as of a television series)
+ตอน#3|prep|when; during; at (a point of time)
+รัฐ#0|noun|state (polity); Shortening of รัฐบาล (rát-tà-baan, “government”)
+การศึกษา#0|noun|abstract noun of ศึกษา (sʉ̀k-sǎa): education
+ก็ได้#0|intj|used to express agreement, allowance, or approval: well; very well; all right; good; fine; okay; etc.
+ก็ได้#1|phrase|used at the end of an expression of agreement, allowance, or approval
+รู้สึก#0|verb|to feel
+ขนาด#0|noun|size; dimension; proportion; measure; magnitude; point; extent; degree; portion; quantity; amount; dose
+ขนาด#1|adv|even: used in comparisons for emphasis; to the point, extent, or degree (of, that, etc.)
+เท่านั้น#0|adv|only, just, no more than
+นั่ง#0|verb|to sit; to be seated; to chair, to preside (over); to rule, to administer; to stay; to reside
+ชื่อ#0|noun|name; title (Classifier: ชื่อ); dignity; glory; honour; reputation
+เดือน#0|noun|moon (Classifier: ดวง); month (Classifier: เดือน)
+ชาติ#0|noun|birth; origin; life; very long time; race; clan
+ผิด#0|adj|wrong, incorrect; different
+รัฐบาล#0|noun|government: governing body of persons in a state or community; particular group of persons forming a cabinet
+หลัก#0|noun|pillar; post; basis; core; principle; foundation; position (of a number)
+หลัก#1|num|lakh; hundred thousand
+นาน#0|adj|long (having considerable duration in space or time); long (of a specified number of units in extent or durati
+นาน#1|adv|long (for or throughout a considerable extent of space or time)
+นาน#2|noun|naan
+รถ#0|noun|chariot; carriage; cart; wagon; wheeled vehicle (of any kind); used as a title for a wheeled vehicle
+พ.ศ.#0|name|abbreviation of พุทธศักราช (pút-tá-sàk-gà-ràat); abbreviation of พระพุทธศักราช (pút-tá-sàk-gà-ràat)
+จีน#0|name|China (a country in Asia)
+จีน#1|noun|Chinese person; any of the Chinese languages; a type of traditional Thai songs, as จีนขวัญอ่อน (jiin-kwǎn-ɔ̀ɔn
+ฟัง#0|verb|to listen; to hear; to obey; to comply with
+เล็ก#0|adj|small
+ภายใน#0|prep|within; inside
+ภายใน#1|adj|interior; internal; domestic
+แต่ละ#0|adj|each; every; each and every (usually followed by classifier).
+ละ#0|particle|particle used often with mildly entreative or corroborative force
+ละ#1|particle|each, per
+ละ#2|verb|to vacate; to depart; to leave; to abandon; to omit (words or phrases)
+ละ#3|particle|already
+ต้องการ#0|verb|to need; to want; to wish; to desire; to yearn; to crave; to require; to demand; to need to
+ต้องการ#1|adj|avid; desired
+ตาย#0|verb|to die (to cease to live; to cease to function; to cease to move); to render dead
+ตาย#1|adj|dead (numb; bereft of sensation; lacking sensitivity of feeling; no longer functioning; no longer moving); kil
+ตาย#2|adv|to death (until death); to death (to a great degree; to excess)
+มือ#0|noun|(classifier ข้าง) hand; handlike part of anything: hand, handle, etc.; one who does something with the hand, e
+หญิง#0|noun|woman; female; used as a title for or term of address to a noblewoman, and used by a noblewoman to refer to he
+เรียก#0|verb|to call: to cry out or shout; to call: to name, address, or designate; to call: to summon; to call: to ask or 
+รูป#0|noun|outward appearance; shape; form; figure; image: physical representation or likeness, as picture, photograph, p
+รูป#1|classifier|Classifier for priests. ⇒ all nouns using this classifier
+รูป#2|pron|a first person pronoun employed by a priest
+บาท#0|noun|foot
+บาท#1|noun|baht (Thai unit of currency, equal to 4 สลึง (sà-lʉ̌ng)); a Thai unit of poem: line, stanza, verse, etc; a Tha
+บาท#2|noun|priest
+ประชาชน#0|noun|national, citizen; citizenry, the people (of a nation), the public; people in general, the general public; pri
+ยา#0|noun|medicine; drug; tobacco; cigarette; opium
+ยา#1|verb|to caulk
+ยา#2|noun|dammar (substance used for caulking boats); niello, or some type of colored enameling compound inlaid in jewel
+ยา#3|noun|male
+มนุษย์#0|noun|human; human being; man; person
+สาม#0|num|3 (Thai numeral: ๓ (3))
+สาม#1|noun|three; third son
+ลด#0|verb|to lower, to reduce; to alleviate
+ผลิต#0|verb|to produce, manufacture
+เล่น#0|verb|to play: to employ oneself in amusement or recreation; to kid; to jest; to be unserious; to do, perform, use, 
+เล่น#1|adv|for pleasure, amusement, or recreation
+ซื้อ#0|verb|to buy; to purchase
+หมด#0|verb|to have no more; to run out (of); to be no longer available; to be no more; to no longer exist; to end
+หมด#1|adv|all; every; completely
+หมด#2|prep|throughout; across
+การเมือง#0|noun|politics
+ขาย#0|verb|to sell
+เสนอ#0|verb|to offer; to propose; to present; to introduce
+ปฏิบัติ#0|verb|to conduct; to do; to perform; to carry out; to conduct; to behave; to treat: to act or behave (towards someon
+ชาว#0|noun|approx. -er, -an, -ese, -ist etc.; people sharing something together, as nationality, duty, role, occupation, 
+พร้อม#0|adj|ready; prepared; set
+พร้อม#1|adv|together; simultaneously
+มัก#0|verb|to like; to satisfy with
+มัก#1|adv|often; usually; likely to; inclined to
+รักษา#0|verb|to keep; to maintain; to preserve; to conserve; to observe; to uphold; to watch; to guard; to protect; to take
+เลือก#0|verb|to choose; to select; to pick; to elect
+อ่าน#0|verb|to read; to count
+อย่างไร#0|pron|how? what? in what manner? in what way? by what means?
+อย่างไร#1|phrase|whatever; however; no matter what; whatever happens
+เขียน#0|verb|to write; to draw; to compose; to draw up
+ล่ะ#0|particle|alternative form of เล่า (lâo)
+ระยะ#0|noun|space; interval or separation (as in punctuation); period; stage; distance; time
+ค่ะ#0|intj|used to express affirmation, agreement, or acknowledgment.; used to express annoyance or frustration.
+ค่ะ#1|particle|used at the end of an indicative expression, request, or wish.
+ตลอด#0|prep|through; throughout
+ตลอด#1|adv|throughly; always
+สู่#0|verb|to be directed towards
+สู่#1|prep|to; towards
+ความคิด#0|noun|thought; idea.; abstract noun of คิด (kít)
+หน้าที่#0|noun|post; position; duty; function; office
+ราคา#0|noun|price; cost
+ประชุม#0|verb|to assemble; to gather; to cause to meet; to bring together; to assemble; to gather; to meet; to come together
+ประชุม#1|noun|assembly; gathering; meeting; collection; compilation
+ผู้หญิง#0|noun|female; woman
+ติด#0|verb|to apply (to); to attach; to affix; to fasten; to cling (to); to adhere (to); to lie next or close (to); to be
+ติด#1|adv|successfully; with success
+ติด#2|prep|adjacent, next, or close (to)
+ใส่#0|verb|to don; to wear; to put on; to put, place, or set (in, into, etc); to cause to be in, into, etc; to insert; to
+ใส่#1|prep|in; into; towards; in the direction of
+ศึกษา#0|noun|studying; learning; education
+ศึกษา#1|verb|to study; to learn; to be educated
+เก็บ#0|adj|kept; stored
+เก็บ#1|verb|to accumulate; to heap up; to collect; to compel or demand (financial payment); to pick; to take from a place;
+ชั้น#0|noun|class, rank, grade; storey, floor, level; layer; shelf
+เดียวกัน#0|adj|identical; same.
+สิทธิ#0|noun|entitlement; right; title; possibility; potential
+ประโยชน์#0|noun|purpose; objective; aim; interest, benefit; advantage, use
+คณะกรรมการ#0|noun|group of persons set up to perform certain functions: board, committee, commission, council, etc.
+แค่#0|adj|only; mere
+แค่#1|adv|only; merely
+แค่#2|det|a degree, extent, or quantity of
+เปลี่ยน#0|verb|to change; to modify; to alter; to make different; to change; to undergo a change; to become different; to shi
+ปัจจุบัน#0|noun|now; present
+ปัจจุบัน#1|adj|present; current; modern; up-to-date; updated; acute; urgent
+ปัจจุบัน#2|adv|now; presently; currently
+เจ้า#0|noun|god; deity; image or statue of the Buddha; chief; lord; master; ruler; administrator; governor
+เจ้า#1|classifier|Classifier for business owners, service providers, and service recipients.
+เจ้า#2|noun|nonglutinous rice
+เจ้า#3|pron|a second or third person pronoun, used to address a person of equal or lower status, often used with the first
+พื้นที่#0|noun|area.
+คะ#0|intj|used to express doubt, interrogation, suggestion.
+คะ#1|particle|used at the end of an expression of doubt, interrogation, or suggestion.
+วิธี#0|noun|method; mode; means; way.
+ตำแหน่ง#0|noun|position; location; point; spot; position; office
+ทำไม#0|pron|why? what? for what? for what purpose, reason, or cause?; what to do?
+ประจำ#0|adj|constant; frequent; habitual; customary; normal; fixed; permanent; particular, specific; intended (for), speci
+ประจำ#1|noun|deposit: thing given as security or in part payment
+ประจำ#2|verb|to affix; to attach; to fix; to assign; to position; to station; to remain, to stay; to cause to remain or sta
+พยายาม#0|verb|to make an effort; to endeavor; to strive; to struggle; to try; to attempt; to persevere; to persist; to attem
+พยายาม#1|noun|attempt: substantial but unsuccessful effort (to commit a crime)
+เนื่องจาก#0|conj|owing to; due to; because.
+โอกาส#0|noun|chance; occasion; opportunity
+แม้#0|adv|even
+แม้#1|conj|although; in spite of (the fact that)
+สมัย#0|noun|time; era
+อย่า#0|adv|don't, do not
+สัมพันธ์#0|verb|to relate; to associate; to be related (to).
+ประเภท#0|noun|category; class; kind.
+เหตุ#0|noun|cause, factor; ground, reason; event; incident; situation; happening; occurrence; circumstance; account; note;
+เหตุ#1|conj|because; because of
+ตอบ#0|verb|to counter (with same action); to solve; to answer; to reply
+ตอบ#1|verb|to be sunken, hollow (of cheeks)
+วัฒนธรรม#0|noun|culture.
+ตนเอง#0|pron|oneself
+นั่น#0|pron|that; those
+สัก#0|adv|just; about; around; as little as; merely
+สัก#1|prep|at; to
+สัก#2|noun|teak
+สัก#3|verb|to tattoo
+สินค้า#0|noun|merchandise; goods; product
+เดิม#0|adj|original; first
+เดิม#1|noun|origin, beginning
+จำเป็น#0|adj|necessary; essential; to need to
+เปลี่ยนแปลง#0|verb|to change.
+ถือ#0|verb|to hold, carry, or bear, with or as if with a hand; to wield; to handle; to hold; to have; to occupy; to have 
+เล่า#0|verb|to narrate; to tell; to chant; to intone; to recite
+เล่า#1|particle|placed after an expression for emphasis
+เล่า#2|noun|obsolete form of เหล้า (lâo)
+ประกอบ#0|verb|to put together; to assemble.; to do; to perform.; to consist of; to be composed of.; to be an ingredient of.
+ชนิด#0|noun|type; kind; class; sort; variety; species
+กระทรวง#0|noun|kind; type; sort; category; legal case; authority; power; function; agency; bureau; department
+ปรากฏ#0|verb|to appear; to occur; to be or become shown; to be or become known; to show; to exhibit; to appear; to seem
+แล้วก็#0|conj|then, and then
+ชาย#0|noun|male; man
+ชาย#1|noun|edge; eaves
+ชาย#2|verb|to decline; to be in descent
+ชาย#3|verb|to blow gently
+ดำเนินการ#0|verb|to operate; to run; to carry out work.
+รอบ#0|noun|cycle; round; turn; period; cycle (of twelve years); period (of twelve years); time; occasion; round (of compe
+รอบ#1|classifier|Classifier for the above-said noun.
+รอบ#2|adv|round; around; in a circular manner
+รอบ#3|prep|around
+บริษัท#0|noun|company: group or number (as of individuals associated or assembled together).; business entity, as company, c
+จังหวัด#0|noun|area; region; district; locality; territory; province: highest administrative division of Thailand, governed b
+ใบ#0|noun|leaf (of a plant); sail (of a boat); sheet (as of paper); used as a title for certain documents
+ใบ#1|classifier|Classifier for something hollow or flat, such as plates, glasses, book pages, fried eggs, and, traditionally, 
+นอน#0|verb|to lie or lay (down, flat, etc.); to sleep; to go to bed; to take a nap; to be in or as in the state of sleep;
+นอน#1|adj|horizontal
+นอน#2|verb|used in แน่นอน (nɛ̂ɛ-nɔɔn, “to be certain, definite”)
+ทั้งหมด#0|pron|all
+เกิน#0|verb|to exceed
+เกิน#1|adv|too much, too
+สุข#0|noun|joy; happiness; delight
+รู้จัก#0|verb|to know (a person); to be acquainted with
+ครู#0|noun|teacher; schoolteacher; instructor
+โดยเฉพาะ#0|adv|specifically; especially; particularly; in particular.
+ดังนั้น#0|adv|like that; as such; thus; therefore.
+ร้าน#0|noun|platform for a certain activity, as stand, stage, stall, etc.; stand for supporting a plant, especially a clim
+ร้าน#1|classifier|Classifier for places for selling goods, as shop, store, etc. ⇒ all nouns using this classifier
+บริการ#0|noun|service; servant
+บริการ#1|verb|to service, to serve; to help, to assist
+ทราบ#0|verb|to know; to understand; to realize
+ประมาณ#0|verb|to measure, to determine; to approximate, to estimate.; to analyse; to check carefully or part by part; to dis
+ประมาณ#1|adv|approximately; about; around; roughly.
+ประมาณ#2|prep|like; as.
+จุด#0|verb|to light
+จุด#1|noun|dot; point; period
+จุด#2|verb|to make a dot or point
+ง่าย#0|adj|easy, simple
+ง่าย#1|adv|easily; at ease; simply
+โครงการ#0|noun|project, plan
+ตัวอย่าง#0|noun|example; sample
+ตัวอย่าง#1|adj|exemplary
+ข้าง#0|prep|towards; in the direction of; beside; on the side of; by
+ข้าง#1|noun|side; flank; ribs
+ข้าง#2|adv|nearby
+ข้าง#3|classifier|Classifier for parts of the human body, shoe, side. ⇒ all nouns using this classifier
+ภาค#0|noun|(if belonging to a god, high priest, or royal person: พระ~) luck; good luck; good fortune; part; section; divi
+เรียกว่า#0|verb|to be called
+คืน#0|noun|night (Classifier: คืน)
+คืน#1|verb|to be or cause to be back: to return; to give back, to send back; to bring back, to take back, to restore; to 
+คืน#2|adv|back
+หรอก#0|particle|at all
+โรค#0|noun|disease; sickness
+อาการ#0|noun|condition; state; status; symptom; manifestation; indication; manner; way; style; fashion; appearance; look; c
+อายุ#0|noun|age: length of life; duration; term
+อายุ#1|verb|to be aged; to be old
+เหล่านี้#0|pron|these, this group
+พา#0|verb|to lead; to bring; to take; to direct; to conduct; to guide; to carry or have (on one's body, with oneself, or
+แก#0|pron|a second person pronoun used to address a person of equal or lower status out of affection or intimacy; a seco
+แตกต่าง#0|verb|to differ; to be different
+วิธีการ#0|noun|methodology, method
+น้อง#0|noun|younger brother; younger sister; younger person; baby; infant; young child; subordinate; inferior; servant
+หมอ#0|noun|person specialising in something: expert, specialist, professional, etc.; person specialising in magic, the oc
+หมอ#1|noun|climbing perch (Anabas testudineus)
+ความรู้สึก#0|noun|abstract noun of รู้สึก (rúu-sʉ̀k): feeling; emotion
+แทน#0|verb|to represent; to take place of; to replace; to repay; to retaliate
+แทน#1|adv|instead; in place; rather
+แทน#2|adj|tan
+ที่อยู่#0|noun|address
+เชื่อ#0|verb|to believe; to rely on; to trust; to buy on credit
+ล้าน#0|adj|bald
+ล้าน#1|num|million
+ยาว#0|adj|long
+ยาว#1|adv|for a long or longer period of time
+ยาว#2|verb|to prolong; to extend; to lengthen
+ราชการ#0|noun|government affair; public affair; affair of the state; government service; public service; government sector; 
+ราชการ#1|adj|official; governmental; public; state
+ครอบครัว#0|noun|family
+ไหม#0|particle|or not?
+ไหม#1|noun|silkworm.; thread.; silk.
+ไหม#2|noun|fine: monetary penalty.; compensation; damages.
+ไหม#3|verb|to fine.
+เดินทาง#0|verb|to travel; to go on a trip
+นา#0|noun|paddy field; area similar to rice field used for other purposes
+นา#1|adv|used in ชั่วนาตาปี (chûua-naa-dtaa-bpii, “year in and year out, forever”)
+นา#2|particle|particle used to add emphasis
+โรงเรียน#0|noun|school
+คณะ#0|noun|group; body; party; company; assemblage; chapter (assembly of the priests in a region or the entire order); de
+คณะ#1|classifier|classifier for the above noun
+สภา#0|noun|assembly; council; congress; convention; conference; meeting; gathering; forum; court; tribunal
+สภาพ#0|noun|state
+ที#0|noun|chance, occasion, opportunity, time; round, turn; advantage; upper hand; gesture, manner, motion, posture; app
+ที#1|classifier|Classifier for occasions or times.
+ที#2|noun|The name of the Latin script letter T/t.
+พรรค#0|noun|group, band, or company (of people).; side, part: one of two or more contesting groups, parties, etc.; kind, t
+วัด#0|noun|religious compound or place of worship, as temple, sanctuary, monastery, etc.; Buddhist compound; Buddhist pla
+วัด#1|verb|to compare; to measure; to duel
+วัด#2|verb|to swing (a thread, string, arm, etc.)
+ประกาศ#0|verb|to announce; to declare; to proclaim; to give notice (of)
+ประกาศ#1|noun|announcement; declaration; proclamation; notice; notification; sign; mark
+นาง#0|noun|woman; royal woman; noblewoman; a prefix or suffix indicating a woman or femininity; a title given to the wife
+นาง#1|classifier|Classifier for women.; Classifier for anyone or anything.
+หัว#0|noun|the upper part of the body (Classifier: หัว); chief; leader; top; peak; summit (Classifiers: หัว or ยอด); fron
+หัว#1|verb|to laugh; to ridicule
+กลาง#0|noun|middle; center
+กลาง#1|prep|in the middle of; amidst; amongst; during
+กลาง#2|adj|central; middle; mean; mid; common; general; public
+แรง#0|noun|force; strength; power; energy; labour; effort
+แรง#1|adj|strong; intense; powerful; mighty; severe, serious, violent; harsh, unpleasant, bitter; fierce, striking, bold
+คู่#0|noun|pair; even number; couple; partner
+คู่#1|classifier|Classifier for pairs of items (people, things). ⇒ all nouns using this classifier
+คู่#2|verb|to be paired with
+ตลาด#0|noun|market
+กลายเป็น#0|verb|to become, change to, turn into
+จับ#0|verb|to touch; to grab; to grasp; to grip; to hold; to take hold; to seize; to catch; to capture; to apprehend; to 
+จับ#1|classifier|Classifier for things set apart by grasping, as noodles, etc..
+วิจัย#0|noun|collection; compilation; assemblage; accumulation; gathering; research
+วิจัย#1|verb|to research
+แนว#0|noun|row; column; line; style; trend; fashion
+แนว#1|classifier|Classifier for lines, rows, strips, ways, processes.
+ข้าว#0|noun|rice; food; meal; year; article, object, thing; belonging, possession
+หัน#0|verb|to turn; to rotate
+ไม่ว่า#0|conj|regardless of; irrespective of; whether; no matter
+เฉพาะ#0|adj|specific; particular; peculiar
+ยก#0|noun|a unit of measuring wooden boards, equal to 1 cubit wide, 16 wa long, and 1 inch thick; period of time; round;
+ยก#1|verb|to raise; to lift; to raise; to erect; to build; to construct; to create; to move; to cause to move; to deny, 
+ยก#2|adj|all; entire; every
+อาศัย#0|verb|to live; to reside; to dwell; to depend on; to rely on
+ย่อม#0|adv|used to indicate that something happens or goes on as usual, by nature, or certainly: liable to, likely to, ap
+ย่อม#1|adj|relatively small, little, thin, or lightweight; relatively low; decreased; reduced; lowered; relaxed; weakened
+ชุด#0|noun|set (a number of things or persons grouped or belonging together, often forming a unit or having certain featu
+ชุด#1|classifier|Classifier for the above nouns. ⇒ all nouns using this classifier
+ชุด#2|noun|fuel (material burned to produce heat); a type of belt worn by women around the waist during the postpartum co
+ชุด#3|noun|a type of fishing basket, made of woven vines; a type of cylindrical basket, made of woven rattan, traditional
+หนู#0|noun|murid: member of the Muridae family; mouse; rat; young person; child; used as a title for or term of address t
+หนู#1|pron|first or second person pronoun for lower status person, or just for fun
+นโยบาย#0|noun|policy; plan; intention; deal
+น่ะ#0|particle|particle used at the end of a sentence to make it softer, more persuasive or less abrupt; particle used after 
+เท่า#0|prep|to the extent of; to the degree of; to the point of; up to; as far as; until; equivalent to; equal to; on a pa
+เท่า#1|noun|time; -fold
+เท่า#2|noun|obsolete form of เถ้า (tâo)
+ความรู้#0|noun|abstract noun of รู้ (rúu): knowledge
+ยอม#0|verb|to yield; to give way; to give in.; to relent; to relax; to remit.; to allow; to let; to permit.; to agree; to
+ราย#0|noun|case; instance; issue; list, table
+ราย#1|classifier|Classifier for cases, instances, persons, items, issues, stories and records, etc.
+ควบคุม#0|noun|custody
+ควบคุม#1|verb|to take into custody; to hold in custody; to regulate; to control
+ธรรมชาติ#0|noun|nature
+วาง#0|verb|to lay; to put; to place; to set; to file; to submit; to present; to lodge; to give; to administer; to lay dow
+วาง#1|adv|hurriedly, hastily, rushingly; incessantly, on and on, without stopping
+ปกติ#0|adj|natural; normal; usual; typical; ordinary; regular
+ยืน#0|verb|to be in an upright position on the feet; to rise to the feet; to stop on the feet; to cause to stand; to set 
+ยืน#1|adj|long; long-lasting; lasting; enduring
+ประการ#0|noun|form; manner; means; way
+บริหาร#0|verb|to administer; to govern; to rule; to manage; to handle; to deal with; to explain; to clarify; to exercise (to
+บริหาร#1|noun|word, speech; authoritative word, as order, command, etc; exercise (activity that requires physical or mental 
+สัญญา#0|noun|sign: mark, symbol; emblem, token; signal, gesture; sense, consciousness, conscience; soundness, sanity; perce
+สัญญา#1|verb|to give, make, or express a sign, signal, or gesture; to promise or agree; to give, make, or express a promise
+สมาชิก#0|noun|member (Classifier: คน); subscriber (Classifiers: คน or ราย); element
+นิยม#0|noun|principle; theory; doctrine
+นิยม#1|suffix|-ism; -tion; -al
+นิยม#2|adj|popular; fashionable
+นิยม#3|verb|to be popular; to be fashionable; to be in vogue; to appreciate; to admire
+รอ#0|verb|to wait
+หลังจาก#0|conj|after
+ต้น#0|noun|tree (used to precede any plant's name) (Classifier: ต้น); trunk (of a tree); stalk; beginning; source
+ต้น#1|classifier|Classifier for plants, posts and pillars. ⇒ all nouns using this classifier
+สิ#0|particle|a particle, usually placed at the end of a sentence, to indicate request, confirmation or emphasis
+อนุญาต#0|noun|permission, allowance
+อนุญาต#1|verb|to permit, to allow
+ร่าง#0|noun|shape; structure; figure; form
+ร่าง#1|verb|to make a draft, sketch or outline
+สอน#0|verb|to teach; to instruct
+ญี่ปุ่น#0|name|Japan (a country in East Asia)
+ทางการ#0|noun|government; government agency; government authority; public sector
+ทางการ#1|adj|official; formal
+เปล่า#0|adj|containing nothing, being nothing: empty, blank, vacant, etc.; giving nothing, resulting in nothing: void, inv
+เปล่า#1|adv|used to express negation: no, not, never, etc.; alone, solely, only; simply, plainly; freely; for free; free o
+เปล่า#2|intj|an exclamation used to express negation: no, not, never, nah, nothing, etc.
+ใกล้#0|adj|near; close
+ใกล้#1|adv|nearly; closely; almost
+ใกล้#2|prep|near; close
+สิบ#0|num|10 (Thai numeral: ๑๐ (10))
+สิบ#1|noun|ten
+แก้ไข#0|verb|to fix; to set right; to rectify.; to edit; to amend; to revise.
+เพลง#0|noun|song; music
+เพลง#1|classifier|Classifier for songs.
+พิเศษ#0|adj|special; extraordinary; exceptional; distinct; eminent; outstanding; exclusive; irregular; adjunct
+จัดการ#0|verb|to manage; to administer; to direct.; to conduct; to carry out; to perform; to do.; to deal with; to cope with
+ปาก#0|noun|mouth; lip; oral cavity; mouth; opening; entrance; mouth; estuary; speech; utterance; voice
+ปาก#1|verb|to speak; to utter; to voice
+ปาก#2|classifier|Classifier for nets, as fishing nets.; Classifier for witnesses.
+ปาก#3|num|hundred
+เป็นต้น#0|phrase|for instance, just to mention
+ความหมาย#0|noun|intention; wish.; meaning; definition.
+บริเวณ#0|noun|circuit; compass; circumference; region; area; precincts; environs; surroundings; administrative division of S
+บริเวณ#1|prep|around; about
+ยิ้ม#0|noun|smile
+ยิ้ม#1|verb|to smile; to fuck: to have sex
+ทั้งนี้#0|det|all of this/these; this/these all; all of the previously mentioned
+ทั้งนี้#1|conj|in spite of this/these; notwithstanding the previously mentioned; however
+ยุค#0|noun|age; era
+สัตว์#0|noun|member of the kingdom Animalia; living being other than human; brutish or beastlike person; inhuman person; (อ
+สัตว์#1|adv|extremely; very
+สัตว์#2|intj|(อี~, ไอ้~) an exclamation of anger, contempt, disapproval, discontent, disgust, dismay, rejection, or surpris
+บท#0|noun|chapter (of a book); lesson (in a textbook)
+เขต#0|noun|limit; boundary; area; zone; territory; district of Bangkok
+เขต#1|classifier|Classifier for areas.
+ดูแล#0|verb|to look after; to take care of; to tend to; to supervise.
+หาย#0|verb|to ruin, to wreck; to collapse, to fall; to perish, to be destroyed; to end, to pass; to disappear; to vanish;
+หาย#1|verb|to take in; to draw in
+นอก#0|adv|outside; out
+นอก#1|adj|external; outside
+ไม้#0|noun|plant; tree; trunk of a tree: wood, timber, lumber, log, etc.; narrow or long piece of wood or similar object:
+ไม้#1|classifier|Classifier for anything involving a stick, rod, or the like.
+บังคับ#0|verb|to command; to direct.; to force; to compel; to oblige; to require; to necessitate.; to enforce; to execute.
+บังคับ#1|noun|command, direction; jurisdiction, authority.; requirement or rule for writing a poem, such as that governing t
+ยาก#0|adj|rare, scarce; lacking, wanting; needy; poor; difficult; hard
+ยาก#1|adv|difficultly; with difficulty; without ease
+ยาก#2|noun|difficulty; hardship; trouble
+สาย#0|noun|line; wire; rope; string; strap; connection; tie; telephone call; telephone extension; telephone line; darling
+สาย#1|classifier|Classifier for roads, strings, wires, rivers, and other stringy things.
+สาย#2|adj|late; delayed
+สาย#3|noun|late morning
+อัตรา#0|noun|rate; scale; ratio; rank; position
+ได้แก่#0|verb|to belong to; to fall into or be in the possession or ownership of; to be at the disposal of.; to be; to be eq
+ได้แก่#1|conj|namely; that is; viz; ie.
+เชิง#0|noun|artifice; stratagem; tactic; trick.; aspect; attitude; reaction.; foot: the terminal part of the leg; lowest p
+ตรวจ#0|verb|to examine; to inspect; to check
+วันนี้#0|noun|today
+สำนักงาน#0|noun|office; bureau; agency
+จบ#0|noun|end
+จบ#1|classifier|Classifier for rounds, cycles, times, i.e. when something ends or finishes each time.
+จบ#2|verb|to end; to finish; to connect the ends of two things
+จบ#3|verb|to raise offerings or put both hands together (พนมมือ) above forehead to dedicate the offerings; to raise its 
+สัมภาษณ์#0|noun|interview.
+สัมภาษณ์#1|verb|to interview.
+ทันที#0|adv|immediately; instantly; promptly
+เจอ#0|verb|to discover, to meet, to find
+ยอมรับ#0|verb|to accept; to agree; to concur
+เจ้าของ#0|noun|owner; possessor
+ผู้ชาย#0|noun|man; adult male
+นอกจาก#0|prep|other than; otherwise than; apart from; except; excluding.; in addition to; not only (as in not only … but als
+ชุมชน#0|noun|community.
+ทั่ว#0|adj|all over; general
+ขาด#0|verb|to stop; to cease; to pause; to be separated, parted, set apart, or removed (from, as by cutting, tearing, pul
+ขาด#1|adv|separately; apart; off; unfully; incompletely; imperfectly; defectively; completely, absolutely, entirely; in 
+ยังไง#0|adv|alternative form of อย่างไร (yàang-rai)
+ยังไง#1|intj|used as a greeting: what's up?, how's things?, etc.
+ยังไง#2|phrase|no matter how, no matter what; by no means, in no way; regardless, despite everything
+อา#0|noun|younger sibling of one's father.; a title or term of address for any elderly person, especially that of relati
+อา#1|intj|ah.
+ไง#0|pron|how; what; in what way.
+ไง#1|intj|used as a conventional greeting.
+สวย#0|adj|beautiful; perfectly steamed; well steamed
+สวย#1|verb|to undergo something bad, such as to get scolded or punched
+เจ้าหน้าที่#0|noun|one who is charged with a function or functions: functionary, official, officer, etc.
+เจ้าหน้าที่#1|adj|competent (having jurisdiction or authority)
+รายงาน#0|noun|report: account or statement (of a matter, situation, etc.)
+รายงาน#1|verb|to report: to give an account or statement (of); to report: to present (oneself before an authority)
+ข่าว#0|noun|news
+ฉบับ#0|noun|edition; copy; issue; version
+ฉบับ#1|classifier|Classifier for letters, newspapers: copy; issue ⇒ all nouns using this classifier
+ฐานะ#0|noun|function; position; status; capacity; role; condition, state, or situation, especially social or financial
+มิ#0|adv|used to express negation: no, not, never, etc.
+สถาบัน#0|noun|institute; institution; establishment.
+ประธาน#0|noun|chief; lord; master; leader; head; president; chairperson; subject
+ประธาน#1|adj|chief; leading; presiding; principal; main; principal; main; primary
+ประธาน#2|name|the fourfold effort, namely, สังวรประธาน (sǎng-wá-rá-bprà-taan), ปหานประธาน (bpà-hǎa-ná-bprà-taan), ภาวนาประธา
+ปรับ#0|verb|to tell
+ปรับ#1|verb|to fine (to subject to a pecuniary penalty); to adjust; to adapt; to improve; to compare; to even; to level; t
+ปรับ#2|noun|fine (pecuniary penalty)
+สนับสนุน#0|verb|to support; to aid; to back up.
+โต#0|adj|big; large
+โต#1|noun|lion
+เกี่ยวข้อง#0|verb|(~กับ, ด้วย) to be related, relevant, or pertinent (to); to be concerned (with); to be connected (with)
+แพทย์#0|noun|medical practitioner; physician; doctor
+เสมอ#0|adj|even; level; equal
+เสมอ#1|adv|always; constantly
+หล่อน#0|pron|a second or third person pronoun applicable to anyone, irrespective of the sex or status; a second or third pe
+ตอนนี้#0|adv|now, at the moment
+เครื่อง#0|noun|thing; article; matter; material; part; component; constituent; element; ingredient; instrument; implement; to
+เครื่อง#1|classifier|Classifier for machines, engines, or the like. ⇒ all nouns using this classifier
+เครื่อง#2|noun|airplane; aircraft
+แก้#0|verb|to undo; to untie; to let loose; to remedy; to cure; to remove; to correct; to set right; to fix; to mend; to 
+ทหาร#0|noun|the military; military or military-like body, armed force, armed body; member thereof, person in military serv
+เหลือ#0|verb|to remain; to be left; to exceed; to go beyond; to be in excess; to be available beyond need
+ระเบียบ#0|noun|sequence, succession; proper arrangement; organisation, regulation; compliance with law or established authori
+วิเคราะห์#0|verb|to analyze.

@@ -1,0 +1,22 @@
+const { chromium, devices } = require('playwright');
+(async () => {
+  const b = await chromium.launch(); const ctx = await b.newContext({ ...devices['iPhone 13'] }); const p = await ctx.newPage();
+  const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); localStorage.setItem('thai-tone-mode','1'); }); await p.reload(); await p.waitForTimeout(1500);
+  const E = (c) => p.evaluate(c => window.__ev(c), c);
+  await p.click('#openPaste'); await p.fill('#textTitle', 'ทดสอบ'); await p.fill('#input', 'เมื่อวานฉันไปตลาดกับแม่เพราะว่าต้องซื้อผักและผลไม้ที่สดมาก'); await p.click('#addText'); await p.waitForTimeout(800);
+  await E("(function(){ showPop(segAt(state.text.indexOf('ตลาด') + 1)); return 1; })()"); await p.waitForTimeout(800);
+  await p.click('#pop .tdet summary'); await p.waitForTimeout(200);
+  await p.evaluate(() => document.querySelector('#pop .tdet').scrollIntoView());
+  await p.screenshot({ path: 'tests/np-poptable.png' });
+  console.log('table overflow', await p.evaluate(() => { const w = document.querySelector('#pop .ttwrap'); return w.scrollWidth + '/' + w.clientWidth; }));
+  await E("(function(){ addCard(segAt(state.text.indexOf('ตลาด') + 1)); return 1; })()");
+  await p.click('#pop .x');
+  await p.click('.tabbar [data-tab="cards"]'); await p.click('#cardTabs button:has-text("聲調")'); await p.waitForTimeout(500);
+  await p.screenshot({ path: 'tests/np-tone.png', fullPage: true });
+  await p.click('#cardTabs button:has-text("全部")'); await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(1500);
+  await p.evaluate(() => { const c = document.querySelector('#cdBody .credit.one'); if (c) c.scrollIntoView(); });
+  await p.screenshot({ path: 'tests/np-detail.png' });
+  console.log('credit', await p.evaluate(() => { const c = document.querySelector('#cdBody .credit.one'); return c ? c.offsetHeight + ' ' + c.textContent : 'none'; }));
+  console.log('ERRORS:', errs.join(' | ') || 'none'); await b.close();
+})();

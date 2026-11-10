@@ -1,0 +1,20 @@
+const { chromium } = require('playwright');
+(async () => {
+  const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 612, height: 1100 }, deviceScaleFactor: 2 })).newPage();
+  const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  await p.goto('file://' + process.argv[2]); await p.evaluate(() => localStorage.clear()); await p.reload();
+  await p.locator('#wrap').scrollIntoViewIfNeeded();
+  const pt = await p.evaluate(() => { const n = document.getElementById('text').firstChild; const rg = document.createRange(); rg.setStart(n, 25); rg.setEnd(n, 26); const r = rg.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+  await p.mouse.click(pt.x, pt.y);
+  const sent = () => p.$eval('#pop .sent', e => e.textContent);
+  console.log('sentence:', await sent());
+  await p.click('#pop .row2 button:nth-child(1)'); console.log('grow left:', await sent());
+  await p.click('#pop .row2 button:nth-child(2)'); console.log('grow right (stops at line end):', await sent());
+  await p.click('#pop .row2 button:nth-child(3)'); console.log('reset:', await sent());
+  const hrefs = await p.$$eval('#pop a.ai', es => es.map(e => e.href));
+  console.log('claude url decoded:\n' + decodeURIComponent(hrefs[0].split('q=')[1]));
+  console.log('other urls start:', hrefs.map(h => h.slice(0, 40)).join(' | '), '| url length:', hrefs[0].length);
+  const box = await p.$eval('#pop', e => { const r = e.getBoundingClientRect(); return { y: r.top, h: r.height }; });
+  await p.screenshot({ path: process.argv[3] + '/ask.png', clip: { x: 0, y: Math.max(0, box.y - 60), width: 612, height: Math.min(box.h + 80, 900) } });
+  console.log('ERRORS:', errs.length ? errs.join('|') : 'none'); await b.close();
+})();

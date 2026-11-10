@@ -1,0 +1,11 @@
+import { onRequestGet } from './fetch.mjs';
+let n429 = 0; const seen = [];
+globalThis.fetch = async (u, opt) => { seen.push(u + ' auth=' + !!(opt.headers.authorization));
+  let st = 200, body = '<p>ข่าว</p>';
+  if (u.indexOf('r.jina.ai') < 0) st = 403;
+  else if (process.env.CASE === '429once' && n429++ === 0) st = 429;
+  else if (process.env.CASE === 'badkey' && opt.headers.authorization) st = 402;
+  const r = new Response(body, { status: st, headers: { 'content-type': 'text/html' } }); Object.defineProperty(r, 'url', { value: u }); return r; };
+const req = new Request('https://x.pages.dev/api/fetch?url=' + encodeURIComponent('https://www.bbc.com/thai/a'), { headers: { 'sec-fetch-site': 'same-origin' } });
+const t0 = Date.now(); const r = await onRequestGet({ request: req, env: process.env.KEY ? { JINA_API_KEY: 'k' } : {} });
+console.log(process.env.CASE, 'key=' + !!process.env.KEY, r.status, r.headers.get('x-via'), Math.round((Date.now() - t0) / 100) / 10 + 's', seen.slice(1).join(' ; '));

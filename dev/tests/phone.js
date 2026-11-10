@@ -1,0 +1,20 @@
+const { chromium, devices } = require('playwright');
+(async () => {
+  const b = await chromium.launch(); const ctx = await b.newContext({ ...devices['iPhone 13'], deviceScaleFactor: 1 }); const p = await ctx.newPage();
+  const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  const U = process.env.U || 'http://127.0.0.1:8765/index.html';
+  await p.goto(U); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1000);
+  const pre = process.env.P || 'ph';
+  await p.screenshot({ path: `tests/${pre}-home.png`, fullPage: false });
+  await p.setInputFiles('#pdffile', ['/mnt/user-data/uploads/B.pdf']);
+  await p.waitForFunction(() => /共 \d+ 頁/.test(document.getElementById('docpages').textContent), null, { timeout: 60000 });
+  await p.waitForTimeout(800);
+  await p.screenshot({ path: `tests/${pre}-doc.png` });
+  await p.click('.tool[data-mode="box"]'); await p.waitForTimeout(200);
+  await p.screenshot({ path: `tests/${pre}-box.png` });
+  await p.click('.tool[data-mode="tap"]');
+  await p.click('.tabbar [data-tab="cards"]'); await p.waitForTimeout(300); await p.screenshot({ path: `tests/${pre}-cards.png` });
+  await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(300); await p.screenshot({ path: `tests/${pre}-set.png` });
+  console.log('overflow', await p.evaluate(() => { const d = document.documentElement; const wide = []; document.querySelectorAll('body *').forEach(el => { const r = el.getBoundingClientRect(); if (r.right > d.clientWidth + 1 && r.width > 0 && getComputedStyle(el).position !== 'fixed') wide.push((el.id || el.className || el.tagName).toString().slice(0, 30) + ':' + Math.round(r.right)); }); return d.scrollWidth + '/' + d.clientWidth + ' ' + wide.slice(0, 10).join(', '); }));
+  console.log('ERRORS:', errs.join(' | ') || 'none'); await b.close();
+})();

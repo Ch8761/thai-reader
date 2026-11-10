@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage(); p.on('pageerror', e => console.log('ERR', String(e)));
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.setInputFiles('#imgfile', ['phototest/sign.jpg']); await p.waitForSelector('#photoEdit:not([hidden])'); await p.waitForTimeout(500);
+  if (0) await p.evaluate(() => { const st = document.getElementById('phStage'); ['pointerdown','pointermove','pointerup'].forEach(t => document.addEventListener(t, e => { if (t !== 'pointermove' || e.buttons) console.log(t, e.target.id || e.target.tagName, Math.round(e.clientX), Math.round(e.clientY)); }, true)); });
+  p.on('console', m => console.log('C', m.text()));
+  const r = await p.evaluate(() => { const b = document.getElementById('phStage').getBoundingClientRect(); return { x: b.left, y: b.top, w: b.width, h: b.height }; });
+  console.log(JSON.stringify(r));
+  await p.mouse.move(r.x + 3, r.y + 3); await p.mouse.down(); await p.mouse.move(r.x + 200, r.y + 150, { steps: 3 }); await p.mouse.up();
+  console.log(await p.getAttribute('#phPoly', 'points'));
+  console.log(await p.evaluate(() => { const e = document.elementFromPoint(100, 400); return e.id || e.className || e.tagName; }));
+  await b.close(); })();

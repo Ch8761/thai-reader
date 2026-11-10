@@ -1,0 +1,11 @@
+const { chromium } = require('playwright');
+(async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage(); const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  await p.route('**/api/fetch?*', r => r.fulfill({ status: 502, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'status', status: 403, reader: 429 }) }));
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.click('#openPaste'); await p.fill('#urlInput', 'https://www.bbc.com/thai/articles/x'); await p.click('#addUrl'); await p.waitForTimeout(800);
+  console.log('msg', await p.textContent('#homeMsg')); console.log('report visible', await p.isVisible('#urlReport'));
+  await p.screenshot({ path: 'tests/urlrep-1.png' });
+  await p.click('#urlReport'); await p.waitForTimeout(400);
+  console.log('h1', await p.textContent('#h-settingsv'), '| cat', await p.evaluate(() => window.__ev('fbCat')), '| text', JSON.stringify(await p.inputValue('#fbText')), '|', await p.textContent('#fbStatus'));
+  await p.screenshot({ path: 'tests/urlrep-2.png' });
+  console.log('ERRORS:', errs.join(' | ') || 'none'); await b.close(); })();

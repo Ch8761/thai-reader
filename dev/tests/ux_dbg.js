@@ -1,0 +1,28 @@
+const { chromium } = require('playwright');
+(async () => {
+  const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage();
+  const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(800);
+  await p.setInputFiles('#pdffile', ['/mnt/user-data/uploads/B.pdf']);
+  await p.waitForFunction(() => /共 \d+ 頁/.test(document.getElementById('docpages').textContent), null, { timeout: 60000 });
+  await p.click('.tabbar [data-tab="home"]');
+  await p.setInputFiles('#imgfile', ['ocrtest/ig/becky.png']);
+  await p.waitForFunction(() => /由文字辨識讀出/.test(document.getElementById('ocrmsg').textContent) && /becky/.test(document.getElementById('h-docv').textContent), null, { timeout: 120000 });
+  await p.screenshot({ path: 'tests/u-doc.png' });
+  console.log(await p.evaluate(() => { const s = document.getElementById('docsec'); return JSON.stringify([s.getBoundingClientRect().height, ...[...s.querySelectorAll('*')].filter(c => c.getBoundingClientRect().height > 40).map(c => [c.id || c.className, c.tagName, getComputedStyle(c).display, Math.round(c.getBoundingClientRect().height)])]); }));
+  await b.close(); return;
+  await p.click('.tabbar [data-tab="home"]');
+  await p.click('#homeFolders button.fadd'); await p.fill('#homeFolders .fname', '新聞'); await p.click('#homeFolders button:has-text("建立")');
+  await p.waitForTimeout(500);
+  await p.click('#homeFolders button:has-text("全部")'); await p.waitForTimeout(2500);
+  await p.screenshot({ path: 'tests/u-home.png' });
+  await p.click('#homeFolders button:has-text("新聞")'); await p.waitForTimeout(300);
+  await p.screenshot({ path: 'tests/u-home-folder.png' });
+  await p.click('.tabbar [data-tab="settings"]'); await p.click('#openHelp'); await p.waitForTimeout(300);
+  await p.click('#helpTabs button:nth-child(2)'); await p.screenshot({ path: 'tests/u-help.png' });
+  await p.click('#helpClose');
+  await p.click('.tabbar [data-tab="cards"]'); await p.click('#cardFolders button.fadd'); await p.fill('#cardFolders .fname', '單字'); await p.click('#cardFolders button:has-text("建立")'); await p.waitForTimeout(300);
+  await p.screenshot({ path: 'tests/u-cards.png' });
+  console.log('thumbs:', await p.evaluate(() => 0));
+  console.log('ERRORS:', errs.join(' | ') || 'none'); await b.close();
+})();

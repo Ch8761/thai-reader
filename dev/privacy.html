@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ไทย Reader 隱私權政策</title>
+<style>
+  :root { --bg: #f6efe2; --card: #fffaf0; --fg: #24302c; --muted: #5d6b66; --accent: #0d6b86; --line: #d9d2c3; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #2b2e31; --card: #34383c; --fg: #e9ecea; --muted: #b3bcb8; --accent: #7cc4e0; --line: #4a4f54; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.75 -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 26px; line-height: 1.3; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 32px 0 8px; }
+  .date { color: var(--muted); margin: 0 0 24px; }
+  section.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px 12px; margin: 16px 0; }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  .en { color: var(--muted); font-size: 15px; }
+  .en h2 { color: var(--fg); }
+</style>
+</head>
+<body>
+<main>
+  <h1>ไทย Reader 隱私權政策</h1>
+  <p class="date">生效日期：2026 年 11 月 10 日（最後更新：2026 年 11 月 10 日，加入「從網址匯入文章」）</p>
+
+  <section class="card">
+    <h2>一句話說明</h2>
+    <p>ไทย Reader 沒有自己的伺服器，也不收集、不出售你的資料，沒有廣告和追蹤。你的文件、筆記和生字卡都存在你自己的裝置上；只有在你打開「雲端同步」時，才會存一份到你自己的 Google 雲端硬碟。</p>
+  </section>
+
+  <h2>1. 存在你裝置上的資料</h2>
+  <ul>
+    <li>你加入的文件、PDF、圖片、影片，以及螢光筆、手寫、註解、生字卡、閱讀進度和設定，都存在你這台裝置的瀏覽器儲存空間裡。</li>
+    <li>文字辨識（掃描頁、影片字幕）在你的裝置上執行，不會把圖片或影片送到任何辨識服務。</li>
+    <li>朗讀使用你裝置內建的語音。</li>
+    <li>刪除文件、或清除瀏覽器的網站資料，就會刪掉這些資料。</li>
+  </ul>
+
+  <h2>2. Google 雲端硬碟同步（選用）</h2>
+  <ul>
+    <li>只有你在設定頁按「連結 Google 帳號」並同意後才會開始。</li>
+    <li>App 只要求兩種權限：
+      <ul>
+        <li><b>這個 App 專用的隱藏資料夾</b>（drive.appdata）：用來存放你的文件、PDF、文字辨識結果、筆記、生字卡和設定的同步副本。這個資料夾不會出現在你的雲端硬碟檔案清單裡，App 也<b>無法</b>看到或修改你雲端硬碟裡的其他任何檔案。</li>
+        <li><b>你的 email 地址</b>：只用來在設定頁顯示「目前連結的是哪個帳號」。</li>
+      </ul>
+    </li>
+    <li>資料直接在你的裝置和你的 Google 雲端硬碟之間傳送，不會經過我們的任何伺服器，我們也看不到。</li>
+    <li>匯入的影片檔不會上傳。</li>
+    <li>Google 給的登入憑證只存在你的裝置上，約 1 小時後失效。</li>
+    <li>停止同步：在設定頁按「取消連結」。刪除雲端上的資料：到 Google 雲端硬碟的「設定 → 管理應用程式」，找到 Thai Reader，選「刪除隱藏的應用程式資料」。你也可以在 <a href="https://myaccount.google.com/permissions">Google 帳戶的第三方存取權</a> 移除這個 App 的權限。</li>
+    <li>ไทย Reader 使用及傳輸從 Google API 取得的資訊時，會遵守 <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API 服務使用者資料政策</a>，包括「有限使用」（Limited Use）的規定。這些資料只用來提供同步功能，不會用於廣告、不會轉給他人，也不會用來訓練人工智慧模型。</li>
+  </ul>
+
+  <h2>3. 只有在你按下某個功能時才會送出的資料</h2>
+  <ul>
+    <li><b>翻譯</b>（翻譯這句、整篇翻譯、選取翻譯）：你要翻譯的泰文會送到 Google 翻譯服務。</li>
+    <li><b>問 AI</b>：會在新分頁打開 claude.ai，並帶入你查詢的句子。</li>
+    <li><b>從網址匯入文章</b>：你貼上的網址會交給本網站的一支小程式，由它代為打開那個網頁並把內容交回給你的裝置，不會保存。如果那個網站擋掉了這種讀取，或內容要用程式載入，網址會再交給 <a href="https://jina.ai/reader">Jina AI 的 Reader 服務</a>代為打開網頁，那個服務有它自己的隱私權政策。</li>
+    <li><b>外部字典</b>（thai2english、Longdo 等）：會在新分頁打開那個網站，並帶入你查的詞。</li>
+    <li><b>意見回饋</b>：你填寫並送出的內容會送到 Google 表單。</li>
+  </ul>
+  <p>這些網站各自有自己的隱私權政策。</p>
+
+  <h2>4. 網站本身</h2>
+  <ul>
+    <li>App 放在 GitHub Pages。和所有網站一樣，主機服務商可能會記錄連線的網路位址等技術資訊。</li>
+    <li>部分字體從 Google Fonts 載入，Google 會收到你裝置的網路位址。</li>
+    <li>我們不使用 cookie 來追蹤你，也沒有分析工具或廣告。</li>
+  </ul>
+
+  <h2>5. 兒童</h2>
+  <p>本 App 不會刻意收集任何人的個人資料，包括兒童。</p>
+
+  <h2>6. 政策變更與聯絡方式</h2>
+  <p>政策內容如果有變更，會更新這一頁並修改上面的生效日期。有任何問題，請使用 App 內「設定 → 意見回饋」與我們聯絡。</p>
+
+  <div class="en">
+    <h2>Summary in English</h2>
+    <p>ไทย Reader is a Thai reading app that runs entirely in your browser. It has no server of its own and does not collect, sell, or share personal data; there are no ads or analytics. Your documents, notes, and flashcards are stored on your device.</p>
+    <p>Optional Google Drive sync starts only after you choose "Connect Google account". It requests the <b>drive.appdata</b> scope (a hidden, app-specific folder used to store a sync copy of your documents, PDFs, notes, flashcards, and settings; the app cannot see or change any other file in your Drive) and your <b>email address</b> (shown in Settings so you know which account is linked). Data travels directly between your device and your own Google Drive. You can disconnect in Settings and delete the app's hidden data in Google Drive (Settings → Manage apps). ไทย Reader's use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+    <p>Text you choose to translate is sent to Google Translate; a URL you import is fetched by this site's small server function (nothing is stored) and, if the site blocks it or needs scripts, by the Jina AI Reader service; "Ask AI" opens claude.ai; feedback you submit goes to a Google Form. Contact: use Settings → Feedback in the app.</p>
+  </div>
+</main>
+</body>
+</html>
