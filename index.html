@@ -1179,7 +1179,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.8</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.9</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -1222,8 +1222,8 @@ body.noscroll { overflow: hidden; }
   </div>
   <div id="welcome" class="modal" role="dialog" aria-modal="true" aria-labelledby="h-welcome" hidden>
     <div class="mcard">
-      <h2 id="h-welcome">歡迎！先設定四件事</h2>
-      <p class="wnote">選好就能開始。之後隨時可以按下方的「設定」修改；各頁怎麼用，可以看「設定 → 使用說明」。</p>
+      <h2 id="h-welcome">歡迎來到 <span lang="th">ไทย</span> Reader！<br>先設定四件事：</h2>
+      <p class="wnote"><span lang="th">ไทย</span> Reader 是幫你讀懂泰文的 App：點一下泰文詞就能看中文意思、聽發音、看句型說明，還能畫重點、做筆記，存成生字卡複習。下面的選項之後隨時可以在「設定」修改；每個功能怎麼用，可以到「設定 → 說明與回饋 → 使用說明」查看。</p>
       <div class="setrow">
         <div class="setlabel">我的泰文程度<span class="sethelp" id="wLevelHelp"></span></div>
         <div class="seg" role="radiogroup" aria-label="我的泰文程度" id="wLevel"></div>
@@ -43573,7 +43573,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     welcomeFrom = document.activeElement;
     renderWelcome();
     $('welcome').hidden = false;
-    setTimeout(function () { try { $('wDone').focus(); } catch (err) {} }, 30);
+    setTimeout(function () { try { $('wDone').focus({ preventScroll: true }); } catch (err) {} var mc = $('welcome').querySelector('.mcard'); if (mc) { mc.scrollTop = 0; } $('welcome').scrollTop = 0; }, 30);
   }
   function closeWelcome() {
     $('welcome').hidden = true;
@@ -44733,7 +44733,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.8';
+  var APP_VER = '正式版 v1.13.9';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
