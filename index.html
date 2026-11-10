@@ -1247,7 +1247,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.17.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.18.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44848,7 +44848,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.17.0';
+  var APP_VER = '正式版 v1.18.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45929,7 +45929,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var ocr = { busy: false, stop: false, done: 0, total: 0, page: 0, msg: '', msgId: '', lastError: '', worker: null, ready: null, engine: '尚未載入', fixes: 0, ms: 0, onlog: null, autoId: '' };
   function ocrUrls() {
     var b = new URL(OCR_BASE, location.href).href;
-    return { lib: b + 'tesseract.min.js', worker: b + 'worker.min.js', core: b + 'core', lang: b + 'lang', cross: new URL(b).origin !== location.origin };
+    return { lib: b + 'tesseract.min.js', worker: b + 'worker.min.js', core: b + 'core', lang: b + 'lang2', cross: new URL(b).origin !== location.origin };
   }
   function ocrScript(u) {
     return new Promise(function (res, rej) {
@@ -45946,10 +45946,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ocr.ready = (window.Tesseract ? Promise.resolve() : ocrScript(u.lib)).then(function () {
       if (!window.Tesseract) { throw new Error('文字辨識工具沒有載入成功'); }
       return window.Tesseract.createWorker(['tha', 'eng'], 1, {
-        workerPath: u.worker, corePath: u.core, langPath: u.lang, gzip: true, workerBlobURL: u.cross,
+        workerPath: u.worker, corePath: u.core, langPath: u.lang, cachePath: 'm2', gzip: true, workerBlobURL: u.cross,
         logger: function (m) { if (ocr.onlog) { ocr.onlog(m); } },
         errorHandler: function (e) { ocr.lastError = String(e && e.message || e).slice(0, 120); }
       });
+    }).then(function (w) {
+      /* 刪掉舊版存在裝置上的辨識資料（./tha、./eng），省空間 */
+      try { var rq = indexedDB.open('keyval-store'); rq.onsuccess = function () { try { var db = rq.result; if (db.objectStoreNames.contains('keyval')) { var st = db.transaction('keyval', 'readwrite').objectStore('keyval'); st.delete('./tha.traineddata'); st.delete('./eng.traineddata'); } } catch (err) {} }; } catch (err) {}
+      return w;
     }).then(function (w) { ocr.worker = w; ocr.engine = '已載入（' + (u.cross ? '從 GitHub 下載' : '同一個網站') + '）'; return w; }, function (err) {
       ocr.ready = null; ocr.engine = '載入失敗'; throw err;
     });

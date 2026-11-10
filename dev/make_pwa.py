@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.17.0'
+VER = '1.18.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
@@ -30,7 +30,7 @@ shutil.copyfile(os.path.join(D, 'reader.json'), os.path.join(OUT, 'reader.json')
 for fn in os.listdir(os.path.join(D, 'helpimg', 'webp')):
     shutil.copyfile(os.path.join(D, 'helpimg', 'webp', fn), os.path.join(OUT, 'help', fn))
 NM = os.path.join(D, 'ocrpkg', 'node_modules')
-for sub in ('ocr/core', 'ocr/lang'):
+for sub in ('ocr/core', 'ocr/lang', 'ocr/lang2'):
     os.makedirs(os.path.join(OUT, sub), exist_ok=True)
 for a, b in (('tesseract.js/dist/tesseract.min.js', 'ocr/tesseract.min.js'), ('tesseract.js/dist/worker.min.js', 'ocr/worker.min.js'),
              ('tesseract.js-core/tesseract-core-simd-lstm.wasm.js', 'ocr/core/tesseract-core-simd-lstm.wasm.js'),
@@ -39,6 +39,10 @@ for a, b in (('tesseract.js/dist/tesseract.min.js', 'ocr/tesseract.min.js'), ('t
              ('@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz', 'ocr/lang/eng.traineddata.gz'),
              ('tesseract.js/LICENSE.md', 'ocr/LICENSE-tesseract.js.txt'), ('tesseract.js-core/LICENSE', 'ocr/LICENSE-tesseract-core.txt')):
     shutil.copyfile(os.path.join(NM, a), os.path.join(OUT, b))
+# 1.18：新的泰文辨識模型（ocrtrain 訓練、ocrmodel/），英文模型照舊
+if os.path.exists(os.path.join(D, 'ocrmodel', 'tha.traineddata.gz')):
+    shutil.copyfile(os.path.join(D, 'ocrmodel', 'tha.traineddata.gz'), os.path.join(OUT, 'ocr/lang2/tha.traineddata.gz'))
+    shutil.copyfile(os.path.join(NM, '@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz'), os.path.join(OUT, 'ocr/lang2/eng.traineddata.gz'))
 
 rep("var APP_VER = '測試頁 v26';", "var APP_VER = '正式版 v" + VER + "';")
 # 回饋：正式版沒有 Claude 的資料庫，送到 Google 表單成功就算送出；沒網路就先存著，下次補送
@@ -181,7 +185,10 @@ self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== OCR_CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== OCR_CACHE).map((k) => caches.delete(k))))
+    /* 舊的辨識模型（ocr/lang/）不再使用，從快取刪掉 */
+    .then(() => caches.open(OCR_CACHE)).then((c) => c.keys().then((ks) => Promise.all(ks.filter((r) => r.url.indexOf('/ocr/lang/') >= 0).map((r) => c.delete(r)))))
+    .then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', (e) => {
   const req = e.request;
@@ -270,6 +277,8 @@ open(OUT + '/NOTICES.md', 'w', encoding='utf-8').write('''# 資料來源與授�
 | PDF 產生 | pdf-lib | MIT |
 | 文字辨識（OCR） | Tesseract.js、tesseract.js-core（Tesseract OCR） | Apache-2.0 |
 | 泰文、英文辨識資料 | tessdata_best（Google／Tesseract） | Apache-2.0 |
+| 泰文辨識模型（1.18 起） | 以 tessdata_best 泰文模型為基礎，用 Google Fonts 的開放泰文字型（SIL Open Font License）產生訓練圖片繼續訓練；字型本身沒有隨 App 散布 | Apache-2.0 |
+| 讀物庫短文 | ไทย Reader 原創（由 Claude 撰寫） | 隨 App 提供 |
 | 辨識錯字修正用詞頻 | PyThaiNLP corpus（Thai National Corpus 詞頻） | CC0 |
 | 明星、政治人物、劇集、電影、樂團、品牌、國家、地名、泰國政府機關與大學名單 | Wikidata | CC0 |
 | 生字卡的生活化例句（泰文＋英文） | scb-mt-en-th-2020（VISTEC 與 SCB） | CC BY-SA 4.0 |

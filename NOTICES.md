@@ -11,6 +11,8 @@
 | PDF 產生 | pdf-lib | MIT |
 | 文字辨識（OCR） | Tesseract.js、tesseract.js-core（Tesseract OCR） | Apache-2.0 |
 | 泰文、英文辨識資料 | tessdata_best（Google／Tesseract） | Apache-2.0 |
+| 泰文辨識模型（1.18 起） | 以 tessdata_best 泰文模型為基礎，用 Google Fonts 的開放泰文字型（SIL Open Font License）產生訓練圖片繼續訓練；字型本身沒有隨 App 散布 | Apache-2.0 |
+| 讀物庫短文 | ไทย Reader 原創（由 Claude 撰寫） | 隨 App 提供 |
 | 辨識錯字修正用詞頻 | PyThaiNLP corpus（Thai National Corpus 詞頻） | CC0 |
 | 明星、政治人物、劇集、電影、樂團、品牌、國家、地名、泰國政府機關與大學名單 | Wikidata | CC0 |
 | 生字卡的生活化例句（泰文＋英文） | scb-mt-en-th-2020（VISTEC 與 SCB） | CC BY-SA 4.0 |
