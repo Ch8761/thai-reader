@@ -914,14 +914,19 @@ body.cdopen { overflow: hidden; }
 .segundo { align-self: flex-start; min-height: 36px; font-size: 14px; border-radius: 999px; }
 .nmtag.segtag-w, .nmtag.segtag-s { background: var(--bg); color: var(--accent); border: 1px solid var(--line); }
 /* 設定頁：分組、說明「?」、展開清單 */
-.setgrp { margin: 0 0 8px; }
-.setgrph { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: .04em; margin: 22px 0 6px; padding: 0 2px; }
-.setgrp:first-child .setgrph { margin-top: 4px; }
+.setgrp[hidden], .setmenu[hidden], .setaway { display: none !important; }
+.setmenu { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; background: var(--card); overflow: hidden; margin: 4px 0 18px; }
+.setmi { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 12px 16px; border: 0; border-radius: 0; background: none; text-align: left; justify-content: space-between; }
+.setmi + .setmi { border-top: 1px solid var(--line); }
+.setmi .smtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.setmi .smt { font-size: 17px; font-weight: 600; color: var(--fg); }
+.setmi .sms { font-size: 13px; color: var(--muted); font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.setmi .smchev { flex: 0 0 auto; width: 20px; height: 20px; fill: none; stroke: var(--muted); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.setgrp > .setrow:first-child { border-top: 0; }
 .setlabel .setline { display: flex; align-items: center; flex-wrap: wrap; }
 .setlabel .setname { font-weight: 600; }
-.qhelp { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-height: 26px; min-width: 26px; padding: 0; margin-left: 8px; border-radius: 50%; font-size: 14px; font-weight: 700; line-height: 1; vertical-align: middle; color: var(--accent); background: none; border: 1.5px solid var(--line); }
-.qhelp::before { content: ''; position: absolute; inset: -9px; }
-.qhelp { position: relative; }
+.qhelp { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; min-height: 18px; min-width: 18px; padding: 0; margin-left: 6px; border-radius: 50%; font-size: 11px; font-weight: 700; line-height: 1; vertical-align: middle; color: var(--muted); background: none; border: 1px solid var(--line); }
+.qhelp::before { content: ''; position: absolute; inset: -12px; }
 .setstat { font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 2px; line-height: 1.5; }
 .setstat:empty { display: none; }
 .setlist { width: 100%; }
@@ -1165,7 +1170,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.5</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.6</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -41617,7 +41622,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           myWords = myWords.filter(function (x) { return x.t !== w; }); myWords.push({ t: w, at: Date.now() });
           mySplits = mySplits.filter(function (x) { return x.t !== w; });
           saveMySeg(); hidePop(); segChanged();
-          $('info').textContent = '已把「' + w + '」存成一個詞，所有文件都會這樣斷。可以在「設定 → 我的斷詞」改回來。';
+          $('info').textContent = '已把「' + w + '」存成一個詞，所有文件都會這樣斷。可以在「設定 → 我的詞庫 → 我的斷詞」改回來。';
         });
         var no = document.createElement('button'); no.type = 'button'; no.textContent = '取消'; no.addEventListener('click', close);
         acts.appendChild(ok); acts.appendChild(no); body.appendChild(acts);
@@ -41649,7 +41654,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           mySplits = mySplits.filter(function (x) { return x.t !== w; }); mySplits.push({ t: w, parts: parts, at: Date.now() });
           myWords = myWords.filter(function (x) { return x.t !== w; });
           saveMySeg(); hidePop(); segChanged();
-          $('info').textContent = '已把「' + w + '」拆成「' + parts.join('｜') + '」，所有文件都會這樣斷。可以在「設定 → 我的斷詞」改回來。';
+          $('info').textContent = '已把「' + w + '」拆成「' + parts.join('｜') + '」，所有文件都會這樣斷。可以在「設定 → 我的詞庫 → 我的斷詞」改回來。';
         });
         var no2 = document.createElement('button'); no2.type = 'button'; no2.textContent = '取消'; no2.addEventListener('click', close);
         acts2.appendChild(ok2); acts2.appendChild(no2); body.appendChild(acts2);
@@ -44707,7 +44712,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.5';
+  var APP_VER = '正式版 v1.13.6';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45613,7 +45618,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '名字被切錯', s: '按「這是名字？」，調好範圍存起來', img: 'name-edit',
         d: ['點被切錯的名字，按查詞視窗下方的「這是名字？」。', '用「‹＋」「＋›」往前、往後多選一個字，「－」少選一個字，直到中間顯示完整的名字。', '選種類（人名、作品…），可以寫中文名，按「存到我的名單」。', '之後所有文件都會把它當成一個詞。設定頁的「我的專有名詞」可以刪除。'] },
       { t: '詞切得不對', s: '查詞視窗最下面「調整」那行，按「斷詞不對？」', img: 'seg-edit',
-        d: ['一個詞被切成兩半：按「合成一個詞」，用 ‹＋ 或 ＋› 把前後被切開的部分加進來，按「存成一個詞」。', '兩個詞黏在一起：按「拆開」，點字中間的空隙決定從哪裡切，按「存成拆開」。', '之後所有文件都會照你的方式斷詞。', '想改回來：再點那個詞按「斷詞不對？」→「恢復原本的斷詞」，或到「設定 → 我的斷詞」刪掉。'] },
+        d: ['一個詞被切成兩半：按「合成一個詞」，用 ‹＋ 或 ＋› 把前後被切開的部分加進來，按「存成一個詞」。', '兩個詞黏在一起：按「拆開」，點字中間的空隙決定從哪裡切，按「存成拆開」。', '之後所有文件都會照你的方式斷詞。', '想改回來：再點那個詞按「斷詞不對？」→「恢復原本的斷詞」，或到「設定 → 我的詞庫 → 我的斷詞」刪掉。'] },
       { t: '地名、機關的意思', s: '點專有名詞，看中文名或「字面」意思', img: 'ent-mean',
         d: ['內建名單裡的國家、泰國各府、政府機關、大學，會直接顯示中文名。', '不在名單裡的，會拆成字典裡的詞，顯示「字面」意思，例如 กรม（廳）＋ส่งเสริม（促進）＋การค้า（貿易）。', '有網路時還會顯示「翻譯」：機器翻譯的中文意思，僅供參考。'] },
       { t: '邊查邊做筆記', s: '查詞視窗按「畫螢光筆」或「加註解」', img: 'pop-notes',
@@ -45674,7 +45679,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '更新 App', s: '設定頁最下面按「檢查更新」', img: '',
         d: ['App 平常會自己更新；想馬上拿到新版時，到設定頁最下面按「檢查更新」。', '有新版會自動下載並重新整理；沒有的話會顯示「已經是最新版了」。', '版本號就寫在按鈕左邊。'] },
       { t: '換顏色', s: '「深淺色」選淺色或深色', img: 'set-theme',
-        d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。', '設定頁依功能分成幾組；每個設定旁邊的「?」可以看它的說明。'] },
+        d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。', '設定頁先列出分類（外觀與字體、閱讀與查詞、我的詞庫、資料與同步、說明與回饋），點進去才是那一類的設定；左上「‹ 設定」回到分類。每個設定旁邊的「?」可以看它的說明。'] },
       { t: '聲調學習模式', s: '「聲調學習模式」選「開」', img: 'tone-pop',
         d: ['打開後，點一個詞，查詞視窗會多一塊「聲調」。', '每個音節：聲調（顏色和音高線）、起首子音是中／高／低子音。', '下面一行一行說明怎麼推出聲調，例如「ร 低子音＋ไม้โท → 高聲」；不照規則唸的會標「例外」。', '按「看聲調規則表」可以看整張表。', '生字卡詳解、複習的答案也會顯示；測驗會穿插聲調題。', '生字卡頁會多一個「聲調」分頁：規則表（點格子看例詞、聽發音）、三類子音有哪些字，還有「練習推聲調」：一步一步答子音類別、活或死音節、聲調。'],
         tip: '聲調資料第一次打開要連網下載。' },
@@ -47491,11 +47496,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   (function () {
     var host = $('settings'); if (!host) { return; }
     var GROUPS = [
-      ['外觀與字體', ['themeGroup', 'fontGroup']],
-      ['閱讀與查詞', ['levelGroup', 'romGroup', 'glossGroup', 'entGroup', 'toneGroup']],
-      ['我的詞庫', ['myNamesList', 'mySegList']],
-      ['資料與同步', ['syncBtns', 'bkSave']],
-      ['說明與回饋', ['openHelp', 'reWelcome', 'fbCat']]
+      ['look', '外觀與字體', ['themeGroup', 'fontGroup']],
+      ['read', '閱讀與查詞', ['levelGroup', 'romGroup', 'glossGroup', 'entGroup', 'toneGroup']],
+      ['words', '我的詞庫', ['myNamesList', 'mySegList']],
+      ['data', '資料與同步', ['syncBtns', 'bkSave']],
+      ['help', '說明與回饋', ['openHelp', 'reWelcome', 'fbCat']]
     ];
     /* 說明視窗 */
     var dlg = document.createElement('div'); dlg.className = 'modal shelp'; dlg.id = 'setHelp'; dlg.hidden = true;
@@ -47539,19 +47544,47 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var s = document.createElement('summary'); s.textContent = x[1]; d.appendChild(s);
       ul.parentNode.insertBefore(d, ul); d.appendChild(ul);
     });
-    /* 分組：照功能排好，每組一個小標題 */
-    var used = [];
+    /* 分類：設定首頁是一張分類清單，點進去才是那一類的設定（像 iPad 的「設定」App） */
+    var used = [], menu = document.createElement('nav'); menu.className = 'setmenu'; menu.setAttribute('aria-label', '設定分類');
+    var boxes = {};
     GROUPS.forEach(function (g) {
-      var box = document.createElement('div'); box.className = 'setgrp';
-      var h = document.createElement('h2'); h.className = 'setgrph'; h.textContent = g[0]; box.appendChild(h);
-      g[1].forEach(function (id) {
+      var box = document.createElement('div'); box.className = 'setgrp'; box.hidden = true; box.setAttribute('data-grp', g[0]);
+      var names = [];
+      g[2].forEach(function (id) {
         var el = $(id), row = el && el.closest('.setrow');
-        if (row && used.indexOf(row) < 0) { used.push(row); box.appendChild(row); }
+        if (row && used.indexOf(row) < 0) { used.push(row); box.appendChild(row); var n = row.querySelector('.setname'); if (n) { names.push(n.textContent.replace(/（.*?）/g, '')); } }
       });
+      boxes[g[0]] = box;
       host.appendChild(box);
+      var mi = document.createElement('button'); mi.type = 'button'; mi.className = 'setmi'; mi.setAttribute('data-grp', g[0]);
+      mi.innerHTML = '<span class="smtx"><span class="smt"></span><span class="sms"></span></span><svg class="smchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+      mi.querySelector('.smt').textContent = g[1]; mi.querySelector('.sms').textContent = names.join('、');
+      mi.addEventListener('click', function () { settingsOpen(g[0]); });
+      menu.appendChild(mi);
     });
-    /* 沒分到組的（測試用的列）放最後 */
-    rows.forEach(function (row) { if (used.indexOf(row) < 0) { host.appendChild(row); } });
+    host.insertBefore(menu, host.firstChild);
+    /* 沒分到類的（測試用的列）留在首頁最下面 */
+    rows.forEach(function (row) { if (used.indexOf(row) < 0) { host.appendChild(row); row.classList.add('setmainonly'); } });
+    var view = $('view-settings'), vh = view.querySelector('.vhead'), h1 = $('h-settingsv');
+    var back = document.createElement('button'); back.type = 'button'; back.className = 'back'; back.textContent = '‹ 設定'; back.hidden = true;
+    back.addEventListener('click', function () { settingsOpen(null); });
+    vh.insertBefore(back, h1);
+    var cur = null;
+    window.settingsOpen = settingsOpen;
+    function settingsOpen(key) {
+      cur = key && boxes[key] ? key : null;
+      menu.hidden = !!cur; back.hidden = !cur;
+      Object.keys(boxes).forEach(function (k) { boxes[k].hidden = k !== cur; });
+      host.querySelectorAll('.setmainonly').forEach(function (r) { r.classList.toggle('setaway', !!cur); });
+      view.querySelectorAll('.appverrow, .testtools').forEach(function (x) { x.classList.toggle('setaway', !!cur); });
+      h1.textContent = cur ? GROUPS.filter(function (g) { return g[0] === cur; })[0][1] : '設定';
+      window.scrollTo(0, 0);
+      if (cur) { var f = boxes[cur].querySelector('button, [tabindex]'); } else { var m = menu.querySelector('.setmi'); }
+    }
+    /* 已經在設定頁時再點下面的「設定」，回到分類清單 */
+    var tb = document.querySelector('.tabbar [data-tab="settings"]');
+    if (tb) { tb.addEventListener('click', function () { if (cur) { settingsOpen(null); } }); }
+    settingsOpen(null);
   })();
   renderMySeg();
   if (myWords.length || mySplits.length) { gazBuild(); if (state.text) { segs = segment(state.text); renderText(); } }
@@ -47926,7 +47959,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   if (SYNC_CLIENT_ID) {
     var fromGoogle = syncFromRedirect();
     renderSync();
-    if (fromGoogle) { showTab('settings'); if (sync.justLinked) { setTimeout(runSync, 300); } }
+    if (fromGoogle) { showTab('settings'); if (typeof settingsOpen === 'function') { settingsOpen('data'); } if (sync.justLinked) { setTimeout(runSync, 300); } }
     /* 預先載入 Google 登入元件，按按鈕時才能馬上打開登入視窗 */
     var syncPre = function () { syncLoadGis().then(function () { syncClient(); renderSync(); }, function () {}); };
     if (syncOn()) { syncPre(); setTimeout(runSync, 2500); } else { setTimeout(syncPre, 4000); }
@@ -48090,7 +48123,7 @@ if ('serviceWorker' in navigator) {
     if (document.getElementById('updbar')) { return; }
     var bar = document.createElement('div');
     bar.id = 'updbar'; bar.setAttribute('role', 'status');
-    bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--card);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:15px;max-width:calc(100% - 32px)';
+    bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px;align-items:center;width:max-content;white-space:nowrap;padding:10px 14px;border-radius:12px;background:var(--card);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:15px;max-width:calc(100% - 32px)';
     bar.textContent = '有新版本了。';
     var b = document.createElement('button'); b.type = 'button'; b.className = 'primary'; b.textContent = '重新整理';
     b.addEventListener('click', function () { location.reload(); });
