@@ -45,7 +45,40 @@
   }
   /* 字幕清理：把框裡的畫面放大，找出「周圍一圈都是深色」的亮色字塊（有黑邊或黑底的字幕），其他背景通通變白，
      再只留排成一行一行的字，縮放到文字辨識最認得的大小。inv＝深色字（白邊）。 */
-  function vidMask(src, sw, sh, rx, inv, maxW, target) {
+  /* App 介面的字（IG 的帳號名、說明文字、按鈕）整部影片都在同一個地方、一直不變；字幕會換。
+     看整部影片的十幾個畫面，記下「幾乎每個畫面都是字」的位置，讀字幕時略過那些字（只看畫面最上面和下面三成，避免把一直沒換的字幕也略過）。 */
+  async function vidStatic(v) {
+    if (v._stat) { return v._stat; }
+    var dur = v.duration, N = dur < 4 ? 0 : 12;
+    if (!N) { return null; }
+    /* 介面的字很細，要用接近原本的解析度看，不然會糊掉 */
+    var SW = Math.min(1280, v.videoWidth), SH = Math.max(8, Math.round(SW * v.videoHeight / v.videoWidth));
+    var c = document.createElement('canvas'); c.width = SW; c.height = SH; var g = c.getContext('2d', { willReadFrequently: true });
+    var co = new Uint8Array(SW * SH), ci = new Uint8Array(SW * SH);
+    for (var i = 0; i < N; i++) {
+      await vidSeek(v, Math.min(dur - 0.05, dur * (i + 0.5) / N));
+      g.drawImage(v, 0, 0, SW, SH);
+      var d = g.getImageData(0, 0, SW, SH).data;
+      for (var j = 0, q = 0; j < co.length; j++, q += 4) {
+        var r = d[q], gg = d[q + 1], b = d[q + 2], L = (r * 3 + gg * 6 + b) / 10, sat = Math.max(r, gg, b) - Math.min(r, gg, b);
+        if (L > 170 && (sat < 80 || (r > 170 && gg > 150 && b < 130))) { co[j]++; }
+        if (L < 80) { ci[j]++; }
+      }
+    }
+    var need = Math.ceil(N * 0.8), out = new Uint8Array(SW * SH), inv = new Uint8Array(SW * SH);
+    for (var y = 0; y < SH; y++) {
+      if (y > SH * 0.15 && y < SH * 0.7) { continue; }
+      for (var x = 0; x < SW; x++) {
+        /* 旁邊一格也算（壓縮造成的一點點晃動） */
+        var mo = 0, mi = 0;
+        for (var yy = Math.max(0, y - 1); yy <= Math.min(SH - 1, y + 1); yy++) { for (var xx = Math.max(0, x - 1); xx <= Math.min(SW - 1, x + 1); xx++) { mo = Math.max(mo, co[yy * SW + xx]); mi = Math.max(mi, ci[yy * SW + xx]); } }
+        out[y * SW + x] = mo >= need ? 1 : 0; inv[y * SW + x] = mi >= need ? 1 : 0;
+      }
+    }
+    v._stat = { w: SW, h: SH, out: out, inv: inv };
+    return v._stat;
+  }
+  function vidMask(src, sw, sh, rx, inv, maxW, target, stat) {
     var x0 = Math.round(rx[0] * sw), y0 = Math.round(rx[1] * sh), w = Math.max(8, Math.round(rx[2] * sw)), h = Math.max(8, Math.round(rx[3] * sh));
     var k = Math.min(2.5, (maxW || 1280) / w);
     var W = Math.max(8, Math.round(w * k)), H = Math.max(8, Math.round(h * k));
@@ -54,32 +87,36 @@
     g.imageSmoothingQuality = 'high';
     g.drawImage(src, x0, y0, w, h, 0, 0, W, H);
     var d = g.getImageData(0, 0, W, H).data, n = W * H;
-    var lum = new Uint8Array(n), fg = new Uint8Array(n), i, j, x, y, q, m, v;
+    var lum = new Uint8Array(n), fg = new Uint8Array(n), viv = new Uint8Array(n), i, j, x, y, q, m, v;
     for (i = 0, j = 0; j < n; i += 4, j++) {
       var r = d[i], gg = d[i + 1], b = d[i + 2], L = (r * 3 + gg * 6 + b) / 10, sat = Math.max(r, gg, b) - Math.min(r, gg, b);
       lum[j] = inv ? 255 - L : L;
       fg[j] = inv ? (L < 80 ? 1 : 0) : (L > 170 && (sat < 80 || (r > 170 && gg > 150 && b < 130)) ? 1 : 0);
+      /* 很鮮豔的黃色字（廣告、綜藝字幕常見）：自己算一類，不會跟旁邊的白牆連成一塊；旁邊只有一邊有陰影也算 */
+      if (!inv && r > 190 && gg > 160 && b < 90 && r - b > 130) { viv[j] = 1; }
     }
     var R = Math.max(2, Math.round(3 * Math.max(1, k * 0.8))), mn = new Uint8Array(n), tmp = new Uint8Array(n);
     for (y = 0; y < H; y++) { var row = y * W; for (x = 0; x < W; x++) { m = 255; for (q = Math.max(0, x - R); q <= Math.min(W - 1, x + R); q++) { v = lum[row + q]; if (v < m) { m = v; } } tmp[row + x] = m; } }
     for (x = 0; x < W; x++) { for (y = 0; y < H; y++) { m = 255; for (q = Math.max(0, y - R); q <= Math.min(H - 1, y + R); q++) { v = tmp[q * W + x]; if (v < m) { m = v; } } mn[y * W + x] = m; } }
     var lab = new Int32Array(n).fill(-1), comps = [], stack = new Int32Array(n);
+    var smap = stat ? (inv ? stat.inv : stat.out) : null, sfx = stat ? stat.w / sw / k : 0, sfy = stat ? stat.h / sh / k : 0, sox = stat ? x0 * stat.w / sw : 0, soy = stat ? y0 * stat.h / sh : 0;
     for (j = 0; j < n; j++) {
       if (!fg[j] || lab[j] >= 0) { continue; }
-      var id = comps.length, sp = 0, cp = { area: 0, edge: 0, good: 0, x0: W, x1: 0, y0: H, y1: 0 };
+      var id = comps.length, sp = 0, cp = { area: 0, edge: 0, good: 0, st: 0, viv: 0, x0: W, x1: 0, y0: H, y1: 0 };
       stack[sp++] = j; lab[j] = id;
       while (sp) {
         var p = stack[--sp], px = p % W, py = (p - px) / W, edge = false;
-        cp.area++;
+        cp.area++; if (viv[p]) { cp.viv++; }
+        if (smap && smap[Math.min(stat.h - 1, Math.floor(soy + py * sfy)) * stat.w + Math.min(stat.w - 1, Math.floor(sox + px * sfx))]) { cp.st++; }
         if (px < cp.x0) { cp.x0 = px; } if (px > cp.x1) { cp.x1 = px; } if (py < cp.y0) { cp.y0 = py; } if (py > cp.y1) { cp.y1 = py; }
-        if (px > 0) { q = p - 1; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
-        if (px < W - 1) { q = p + 1; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
-        if (py > 0) { q = p - W; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
-        if (py < H - 1) { q = p + W; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (px > 0) { q = p - 1; if (!fg[q] || viv[q] !== viv[p]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (px < W - 1) { q = p + 1; if (!fg[q] || viv[q] !== viv[p]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (py > 0) { q = p - W; if (!fg[q] || viv[q] !== viv[p]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (py < H - 1) { q = p + W; if (!fg[q] || viv[q] !== viv[p]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
         if (edge) { cp.edge++; if (lum[p] - mn[p] > 100) { cp.good++; } }
       }
       cp.h = cp.y1 - cp.y0 + 1; cp.w = cp.x1 - cp.x0 + 1;
-      cp.ok = cp.area >= 5 * k && cp.h < H * 0.7 && cp.w < W * 0.5 && cp.good / cp.edge >= 0.7;
+      cp.ok = cp.area >= 5 * k && cp.h < H * 0.7 && cp.w < W * 0.5 && cp.good / cp.edge >= (cp.viv >= cp.area * 0.6 ? 0.12 : 0.7) && cp.st < cp.area * 0.5;
       comps.push(cp);
     }
     var ok = comps.filter(function (cp) { return cp.ok; });
@@ -154,19 +191,54 @@
       (b.paragraphs || []).forEach(function (p) {
         (p.lines || []).forEach(function (ln) {
           var t = (ln.text || '').replace(/\s+/g, ' ').trim();
+          /* 字幕裡的中文字會被讀成亂碼（例如「大拇指」變成「75รซีร่ซี」）：泰文的「詞」在辨識結果裡是一個字一個字的，所以改用空格切開的片段，看拼不拼得出字典詞 */
+          /* 頭尾拼不出字典詞的詞（多半是中文字或圖案讀成的亂碼）去掉 */
+          var tk = t.split(' '), tc = vidTokConf(ln, tk);
+          /* 被空格切開的詞（「จิบกา แฟหอมๆ」）黏回去能多拼出詞的，不是亂碼 */
+          function glues(k) { var nb = k > 0 ? tk[k - 1] : tk[k + 1], g = k > 0 ? nb + tk[k] : tk[k] + nb; return nb && vidKnownN(g) > vidKnownN(nb) + 1; }
+          function junk(k) { var x = tk[k]; if (/[\u0E01-\u0E2E]/.test(x) && glues(k)) { return false; } if (!/[\u0E01-\u0E2E]/.test(x)) { return !/^[0-9.,\-–+%:\/()]+$/.test(x) && tc[k] < 90; } return vidKnown(x) < 0.34 || (vidKnown2(x) < 0.34 && tc[k] < 88); }
+          while (tk.length > 1 && junk(tk.length - 1) && vidKnown(tk.slice(0, -1).join(' ')) >= 0.5) { tk.pop(); tc.pop(); }
+          while (tk.length > 1 && junk(0) && vidKnown(tk.slice(1).join(' ')) >= 0.5) { tk.shift(); tc.shift(); }
+          var trimmed = tk.length < t.split(' ').length;
+          t = tk.join(' ');
+          /* 去掉亂碼之後，用留下來那幾段的信心當這一行的信心 */
+          var lc = trimmed && tc.length ? tc.reduce(function (a2, b2) { return a2 + b2; }, 0) / tc.length : ln.confidence;
           t = t.replace(/^[^ก-๛A-Za-z0-9]+/, '').replace(/[^ก-๛A-Za-z0-9!?.]+$/, '');
-          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/\s/g, '').length;
-          if (th < 2 || thAll / Math.max(1, all) < 0.6 || ln.confidence < minConf) { return; }
+          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/[\s0-9.,\-–+%:\/()]/g, '').length;
+          if (th < 2 || thAll / Math.max(1, all) < 0.6 || lc < minConf) { return; }
           var f = typeof ocrFixText === 'function' ? ocrFixText(vidDigits(t)) : { t: vidDigits(t) };
           f.t = vidMarksFix(f.t);
           var kn = vidKnown(f.t);
-          if (kn < 0.35) { return; }
-          out.push({ t: f.t, c: ln.confidence, th: th, kn: kn, q: ln.confidence + 40 * kn });
+          /* 信心普通、只有一半拼得出詞、泰文裡又夾著數字或符號的（多半是中文字幕被讀成泰文亂碼）不要 */
+          /* 只有一兩種字母重複的（「งงง」）是雜訊 */
+          var uq = {}; (f.t.match(/[\u0E01-\u0E2E]/g) || []).forEach(function (ch) { uq[ch] = 1; });
+          if (Object.keys(uq).length < 2) { return; }
+          if (kn < 0.35 || (lc < 78 && kn < 0.7 && /[\u0E01-\u0E4E][0-9(.]|[0-9(.][\u0E01-\u0E4E]/.test(f.t))) { return; }
+          out.push({ t: f.t, c: lc, th: th, kn: kn, q: lc + 40 * kn });
         });
       });
     });
     return out;
   }
+  /* 每個用空格分開的片段的平均信心（辨識結果裡泰文是一個字一個字的「詞」，照順序對回片段） */
+  function vidTokConf(ln, tk) {
+    var ws = (ln.words || []).filter(function (wd) { return wd.text && wd.text.trim(); }), out = [], k = 0;
+    tk.forEach(function (tok) {
+      var need = tok.length, got = 0, sum = 0, cnt = 0;
+      while (k < ws.length && got < need) { var wt = ws[k].text.replace(/\s/g, ''); got += wt.length; sum += ws[k].confidence * wt.length; cnt += wt.length; k++; }
+      out.push(cnt ? sum / cnt : 100);
+    });
+    return out;
+  }
+  /* 和 vidKnown 一樣，但只算兩個子音以上的詞（亂碼常常剛好拼出「ที่、รู、ซี」這種一個字的詞） */
+  function vidKnown2(t) {
+    var th = (t.match(/[\u0E01-\u0E2E]/g) || []).length;
+    if (!th || typeof segment !== 'function' || !DICT) { return 0.5; }
+    var ok = 0;
+    segment(t).forEach(function (x) { var c = (x.t.match(/[\u0E01-\u0E2E]/g) || []).length; if (c >= 2 && (DICT[x.t] || (typeof dictBase === 'function' && dictBase(x.t) && DICT[dictBase(x.t)]))) { ok += c; } });
+    return Math.min(1, ok / th);
+  }
+  function vidKnownN(t) { return vidKnown2(t) * (t.match(/[\u0E01-\u0E2E]/g) || []).length; }
   /* 這一行有多少是字典裡的詞（0～1）：讀錯的字幕通常拼不出真的詞 */
   function vidKnown(t) {
     var th = (t.match(/[\u0E01-\u0E2E]/g) || []).length;
@@ -220,34 +292,38 @@
     c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
     return c;
   }
-  /* 自動找字幕在哪：看影片裡幾個畫面，找「有黑邊或底色的字」最常出現的高度 */
-  async function vidGuessRegion(v) {
+  /* 自動找字幕在哪：看影片裡幾個畫面，找「有黑邊或底色的字、而且內容一直在換」的高度。
+     字幕可能不只一個位置（例如廣告的大字一下在上面、一下在中間），就把這些位置都框進來；App 介面的字已經略過。 */
+  async function vidGuessRegion(v, stat) {
     var dur = v.duration, hits = [];
     for (var i = 1; i <= 7; i++) {
       var t = dur * i / 8;
       await vidSeek(v, Math.min(t, dur - 0.05));
       var fc = vidFrame(v, 960);
       [false, true].forEach(function (inv) {
-        var m = vidMask(fc, fc.width, fc.height, [0, 0, 1, 1], inv, 960, 18);
+        var m = vidMask(fc, fc.width, fc.height, [0, 0, 1, 1], inv, 960, 18, stat);
         (m.bands || []).forEach(function (bd) { if (bd.n >= 3) { hits.push({ t: t, cy: bd.cy, h: Math.max(bd.h, 0.02), n: bd.n, sig: bd.sig, inv: inv }); } });
       });
     }
     if (!hits.length) { return null; }
-    /* 字幕的特徵是「同一個高度、內容一直在換」；時間、按讚數、帳號名稱這些畫面上固定的字內容不會變 */
-    var best = null;
+    /* 同一個高度的字分成一群；內容換過（指紋不同）兩次以上的才是字幕 */
+    var groups = [];
     hits.forEach(function (a) {
       var grp = hits.filter(function (b) { return b.inv === a.inv && Math.abs(b.cy - a.cy) < 0.04; });
       var uniq = [];
       grp.forEach(function (b) { if (!uniq.some(function (u) { return vidSigDiff(u.sig, b.sig) <= 0.3; })) { uniq.push(b); } });
       var times = {}; grp.forEach(function (b) { times[b.t] = 1; });
-      var sc = (uniq.length >= 2 ? uniq.length * 100 : 0) + Object.keys(times).length * 10 + grp.reduce(function (s, b) { return s + b.n; }, 0) / 100;
-      if (!best || sc > best.sc) { best = { sc: sc, grp: grp, t: a.t }; }
+      groups.push({ grp: grp, cy: a.cy, t: a.t, uniq: uniq.length, sc: (uniq.length >= 2 ? uniq.length * 100 : 0) + Object.keys(times).length * 10 + grp.reduce(function (s2, b) { return s2 + b.n; }, 0) / 100 });
     });
-    if (best.sc < 200) { return null; }
-    var cys = best.grp.map(function (b) { return b.cy; }).sort(), hs = best.grp.map(function (b) { return b.h; }).sort();
-    var cy = cys[Math.floor(cys.length / 2)], h = Math.max(0.1, hs[hs.length - 1] * 2.2);
-    var y0 = Math.max(0, cy - h / 2), y1 = Math.min(1, cy + h / 2);
-    return { r: [0, y0, 1, y1 - y0], t: best.t };
+    var best = groups.reduce(function (x, g) { return !x || g.sc > x.sc ? g : x; }, null);
+    if (!best || best.sc < 200) { return null; }
+    var live = groups.filter(function (g) { return g.uniq >= 2 && g.sc >= 200; });
+    var y0 = 1, y1 = 0;
+    live.forEach(function (g) { g.grp.forEach(function (b) { y0 = Math.min(y0, b.cy - b.h * 1.1); y1 = Math.max(y1, b.cy + b.h * 1.1); }); });
+    var cy = (y0 + y1) / 2, h = Math.max(0.1, y1 - y0);
+    y0 = Math.max(0, cy - h / 2); y1 = Math.min(1, cy + h / 2);
+    if (y1 - y0 > 0.7) { y0 = 0; y1 = 1; }
+    return { r: [0, y0, 1, y1 - y0], t: best.t, multi: y1 - y0 > 0.25 };
   }
 
   /* ---------- 框出字幕位置的視窗 ---------- */
@@ -267,7 +343,7 @@
       var cv = $('vpCanvas'), stage = $('vpStage'), rect = $('vpRect'), reg = null, drag = null, seekBusy = false, want = null;
       var saved = null; try { saved = JSON.parse(localStorage.getItem(VREG_KEY) || 'null'); } catch (err) {}
       reg = guess ? guess.r.slice() : (saved && saved.length === 4 ? saved : [0, 0.62, 1, 0.33]);
-      $('vpTip').textContent = (redo ? '框是上次用的位置，可以重新框。重新辨識的結果會取代這份文件的文字，這份文件的筆記（螢光筆、手寫、註解）也會清掉。' : guess ? '我們先找到字幕大概在框起來的地方。不對的話，用手指在畫面上重新框一次（框住字幕就好，不用很準）。' : '沒有自動找到字幕。請用手指在畫面上把字幕框起來，或選下面的位置。');
+      $('vpTip').textContent = (redo ? '框是上次用的位置，可以重新框。重新辨識的結果會取代這份文件的文字，這份文件的筆記（螢光筆、手寫、註解）也會清掉。' : guess && guess.multi ? '這部影片的字幕會出現在不同位置，所以框得比較大（App 介面上的字會自動略過）。不對的話，用手指重新框一次。' : guess ? '我們先找到字幕大概在框起來的地方。不對的話，用手指在畫面上重新框一次（框住字幕就好，不用很準）。' : '沒有自動找到字幕。請用手指在畫面上把字幕框起來，或選下面的位置。');
       $('vpGo').textContent = redo ? '重新辨識' : '開始讀字幕';
       cv.width = Math.min(960, v.videoWidth); cv.height = Math.round(cv.width * v.videoHeight / v.videoWidth);
       stage.style.aspectRatio = v.videoWidth + ' / ' + v.videoHeight;
@@ -312,7 +388,7 @@
   }
 
   /* 三種讀法：out＝亮色字有黑邊或深色底；inv＝深色字在亮底上；raw＝直接讀框裡的畫面（沒有邊的字幕） */
-  async function vidRecognize(w, fc, region, mode, pre) {
+  async function vidRecognize(w, fc, region, mode, pre, stat) {
     var cv, minConf;
     if (mode === 'raw') {
       var x0 = Math.round(region[0] * fc.width), y0 = Math.round(region[1] * fc.height), cw = Math.max(8, Math.round(region[2] * fc.width)), ch = Math.max(8, Math.round(region[3] * fc.height));
@@ -322,15 +398,40 @@
       await w.setParameters({ tessedit_pageseg_mode: '3' });
       minConf = 70;
     } else {
-      var m = pre || vidMask(fc, fc.width, fc.height, region, mode === 'inv', 1280, 18);
+      var m = pre || vidMask(fc, fc.width, fc.height, region, mode === 'inv', 1280, 18, stat);
       if (!m.canvas) { return []; }
       cv = m.canvas;
       await w.setParameters({ tessedit_pageseg_mode: '11' });
       minConf = 60;
     }
     var res = await w.recognize(cv, {}, { blocks: true, text: false, hocr: false, tsv: false });
-    return vidLinesFrom(res.data, minConf);
+    var ls = vidLinesFrom(res.data, minConf);
+    /* 字幕裡夾著中文字時，泰文＋英文的辨識有時整行當成英文（「นิ้วชี้ 食指」變成「hi Bis」）：
+       沒讀到泰文、又有信心低的英文行，就用「只認泰文」再讀一次 */
+    if (!ls.length && mode !== 'raw' && vidLatinJunk(res.data)) {
+      try {
+        var w2 = await vidThaWorker();
+        await w2.setParameters({ tessedit_pageseg_mode: '11' });
+        var r2 = await w2.recognize(cv, {}, { blocks: true, text: false, hocr: false, tsv: false });
+        ls = vidLinesFrom(r2.data, minConf);
+      } catch (err) {}
+    }
+    return ls;
   }
+  function vidLatinJunk(data) {
+    var bad = false;
+    (data.blocks || []).forEach(function (b) { (b.paragraphs || []).forEach(function (p) { (p.lines || []).forEach(function (ln) { var tx = ln.text || ''; if (ln.confidence < 75 && /[A-Za-z]{2}/.test(tx) && !/[\u0E01-\u0E2E]/.test(tx)) { bad = true; } }); }); });
+    return bad;
+  }
+  /* 只認泰文的第二個辨識工具（要用時才開，用完就關，模型已經下載過不用再下載） */
+  function vidThaWorker() {
+    if (vid.tw) { return vid.tw; }
+    var u = ocrUrls();
+    vid.tw = window.Tesseract.createWorker(['tha'], 1, { workerPath: u.worker, corePath: u.core, langPath: u.lang, cachePath: 'm2', gzip: true, workerBlobURL: u.cross });
+    vid.tw.catch(function () { vid.tw = null; });
+    return vid.tw;
+  }
+  function vidThaDone() { var p = vid.tw; vid.tw = null; if (p) { p.then(function (w) { w.terminate(); }, function () {}); } }
 
   async function libAddVideo(f) {
     if (vid.busy) { $('homeMsg').textContent = '還有一部影片正在讀，請等它完成或按「停止」。'; return; }
@@ -346,7 +447,8 @@
       if (dur > 20 * 60) { throw new Error('影片太長（超過 20 分鐘），請先剪短或分段錄'); }
       if (!v.videoWidth || !v.videoHeight) { throw new Error('讀不到影片畫面'); }
       $('vidMsg').textContent = '正在找字幕在畫面的哪裡…';
-      var guess = await vidGuessRegion(v);
+      var stat = await vidStatic(v);
+      var guess = await vidGuessRegion(v, stat);
       vbox.hidden = true;
       var region = await vidPickRegion(v, guess);
       if (!region) { quit('已取消讀影片。'); return; }
@@ -358,6 +460,23 @@
     if (o) { URL.revokeObjectURL(o.url); }
   }
 
+  /* 動畫字幕一個字一個字跑出來、或從旁邊滑進來時，會讀到半句（例如「นทุน」）。
+     某句只出現一下下、完整地包含在前後幾秒的另一句裡，而且不是在詞的邊界切開的（像「บางคนคือ」是完整的一句，要留），就拿掉。 */
+  function vidDropPartial(lines) {
+    function wordEnds(t) { var e = {}, p = 0; segment(t).forEach(function (x) { p += x.t.length; e[p] = 1; }); return e; }
+    return lines.filter(function (a) {
+      var na = vidNorm(a.t);
+      return !lines.some(function (b) {
+        if (b === a) { return false; }
+        var nb = vidNorm(b.t);
+        if (nb.length < na.length + 2 || nb.indexOf(na) < 0) { return false; }
+        if ((a.hits || 1) > 3 || a.t0 === undefined || b.t0 === undefined || a.t0 < b.t0 - 3 || a.t0 > b.t1 + 3) { return false; }
+        var at = b.t.replace(/\s+/g, '').indexOf(a.t.replace(/\s+/g, ''));
+        if (at === 0 && typeof segment === 'function' && wordEnds(b.t.replace(/\s+/g, ''))[a.t.replace(/\s+/g, '').length]) { return false; }
+        return true;
+      });
+    });
+  }
   async function vidRead(v, region, name, dur, redoId, file) {
     vbox.hidden = false; vidButtons('run');
     var msg = $('vidMsg'), bar = $('vidBar'), lines = [], recent = [], frames = 0, ocrs = 0;
@@ -367,6 +486,7 @@
     var sg = small.getContext('2d', { willReadFrequently: true });
     msg.textContent = '準備文字辨識工具…（第一次要下載約 8 MB）'; bar.style.width = '0%';
     var w = await ensureOcr();
+    var stat = await vidStatic(v);
     /* 字幕常常只出現 1 秒多：短影片每 0.5 秒看一次 */
     var step = dur > 600 ? 1.5 : dur > 180 ? 1 : 0.5;
     try {
@@ -377,7 +497,8 @@
         msg.textContent = '看到第 ' + Math.floor(t / 60) + ':' + ('0' + Math.floor(t % 60)).slice(-2) + '（共 ' + Math.floor(dur / 60) + ':' + ('0' + Math.floor(dur % 60)).slice(-2) + '），已找到 ' + lines.length + ' 句字幕…';
         var fc = vidFrame(v, 1920);
         /* 畫面有沒有換字幕：有邊的字看字塊指紋，沒有邊的字看框裡的畫面變了多少 */
-        var mo = vidMask(fc, fc.width, fc.height, region, false, 1280, 18), mi = (!best || best === 'inv') ? vidMask(fc, fc.width, fc.height, region, true, 1280, 18) : null;
+        /* 短影片兩種都看（有的影片白字幕和黃底黑字輪流出現） */
+        var mo = vidMask(fc, fc.width, fc.height, region, false, 1280, 18, stat), mi = (!best || best === 'inv' || dur <= 180) ? vidMask(fc, fc.width, fc.height, region, true, 1280, 18, stat) : null;
         var ch = vidSigDiff(mo.sig, prevSig) > 0.3 || (mi && vidSigDiff(mi.sig, prevInvSig) > 0.3);
         if (!best || best === 'raw') {
           sg.drawImage(fc, region[0] * fc.width, region[1] * fc.height, region[2] * fc.width, region[3] * fc.height, 0, 0, small.width, small.height);
@@ -398,13 +519,14 @@
           var md = order[z];
           if (md === 'out' && !mo.canvas) { continue; }
           if (md === 'inv' && mi && !mi.canvas) { continue; }
-          var ls = await vidRecognize(w, fc, region, md, md === 'out' ? mo : (md === 'inv' ? mi : null));
+          var ls = await vidRecognize(w, fc, region, md, md === 'out' ? mo : (md === 'inv' ? mi : null), stat);
           ocrs++;
           var sc = vidScore(ls);
           if (vid.debug) { vid.dbg.push([md, ls.map(function (l) { return l.t + ':' + Math.round(l.c) + ':' + l.kn.toFixed(2); })]); }
           all = all.concat(ls);
-          if (sc > gotScore) { got = ls; gotMode = md; gotScore = sc; }
-          if (best && got.length) { break; }
+          if (sc > gotScore * 1.03) { got = ls; gotMode = md; gotScore = sc; }
+          /* 最常贏的讀法讀到「像樣的一句」就不用試別的；讀到的像亂碼（例如換成黃底黑字），再試其他讀法 */
+          if (best && got.some(function (l) { return l.kn >= 0.7 && l.c >= 75; })) { break; }
         }
         /* 有讀到字才記住這個畫面；沒讀到（例如字幕正在淡入淡出）下一個畫面再試 */
         if (got.length || (!mo.canvas && !(mi && mi.canvas))) { prevSig = sigNow; if (mi) { prevInvSig = invNow; } }
@@ -418,11 +540,13 @@
         all.forEach(function (ln) {
           var nl = vidNorm(ln.t);
           if (nl.length < 2) { return; }
+          ln.t0 = t; ln.t1 = t; ln.hits = 1;
           for (var q = recent.length - 1; q >= 0; q--) {
             if (vidSimilar(recent[q].n, nl)) {
               /* 同一句出現好幾次：留「信心高、又拼得出字典裡的詞」的那一次 */
               var cur = lines[recent[q].k];
-              if (ln.q > cur.q + 1 || (Math.abs(ln.q - cur.q) <= 1 && ln.t.length > cur.t.length)) { lines[recent[q].k] = ln; }
+              cur.t1 = t; cur.hits++;
+              if (ln.q > cur.q + 1 || (Math.abs(ln.q - cur.q) <= 1 && ln.t.length > cur.t.length)) { ln.t0 = cur.t0; ln.hits = cur.hits; lines[recent[q].k] = ln; }
               return;
             }
           }
@@ -431,8 +555,10 @@
       }
     } finally {
       try { await w.setParameters({ tessedit_pageseg_mode: '3' }); } catch (err) {}
+      vidThaDone();
       vid.busy = false;
     }
+    lines = vidDropPartial(lines);
     vid.last = { frames: frames, ocrs: ocrs, wins: wins, best: best, region: region };
     if (!lines.length) {
       msg.textContent = '沒有讀到泰文字幕（看了 ' + frames + ' 個畫面）。可能是框的位置不對，按「重新框字幕」再試一次。'; bar.style.width = '100%';
@@ -477,7 +603,7 @@
     var o = null;
     try {
       o = await vidLoad(f);
-      var guess = d.vregion ? { r: d.vregion, t: o.v.duration * 0.3, redo: true } : await vidGuessRegion(o.v);
+      var guess = d.vregion ? { r: d.vregion, t: o.v.duration * 0.3, redo: true } : await vidGuessRegion(o.v, await vidStatic(o.v));
       var region = await vidPickRegion(o.v, guess, true);
       if (!region) { vid.busy = false; URL.revokeObjectURL(o.url); return; }
       showTab('home');

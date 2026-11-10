@@ -75,6 +75,37 @@
   var PH_FULL = [[0, 0], [1, 0], [1, 1], [0, 1]];
   function phIsFull(q) { return q.every(function (p, i) { return Math.abs(p[0] - PH_FULL[i][0]) < 0.004 && Math.abs(p[1] - PH_FULL[i][1]) < 0.004; }); }
   /* 一張一張調整；回傳調整好的檔案清單，按取消回傳 null */
+  /* 自動框招牌、菜單：找畫面裡最大一塊「顏色鮮豔、很亮」的區域（黃底、紅底、藍底的招牌），用它的四個角當起點。
+     找不到（例如白底的紙）就選整張，使用者自己拖。 */
+  function phDetect(base) {
+    var SW = 300, SH = Math.max(8, Math.round(SW * base.height / base.width));
+    var c = document.createElement('canvas'); c.width = SW; c.height = SH; var g = c.getContext('2d', { willReadFrequently: true });
+    g.drawImage(base, 0, 0, SW, SH);
+    var d = g.getImageData(0, 0, SW, SH).data, n = SW * SH, m = new Uint8Array(n), i, j;
+    for (i = 0, j = 0; j < n; i += 4, j++) { var mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]); m[j] = mx > 140 && (mx - mn) / mx > 0.45 ? 1 : 0; }
+    var lab = new Int32Array(n).fill(-1), st = new Int32Array(n), best = null;
+    for (j = 0; j < n; j++) {
+      if (!m[j] || lab[j] >= 0) { continue; }
+      var sp = 0, a = 0, tl = [0, 0, 1e9], tr = [0, 0, -1e9], br = [0, 0, -1e9], bl = [0, 0, 1e9];
+      st[sp++] = j; lab[j] = j;
+      while (sp) {
+        var p = st[--sp], x = p % SW, y = (p - x) / SW; a++;
+        if (x + y < tl[2]) { tl = [x, y, x + y]; } if (x + y > br[2]) { br = [x, y, x + y]; }
+        if (x - y > tr[2]) { tr = [x, y, x - y]; } if (x - y < bl[2]) { bl = [x, y, x - y]; }
+        [p - 1, p + 1, p - SW, p + SW].forEach(function (q, k) { if (q < 0 || q >= n || (k === 0 && x === 0) || (k === 1 && x === SW - 1)) { return; } if (m[q] && lab[q] < 0) { lab[q] = j; st[sp++] = q; } });
+      }
+      if (!best || a > best.a) { best = { a: a, q: [tl, tr, br, bl] }; }
+    }
+    if (!best || best.a < n * 0.06 || best.a > n * 0.85) { return null; }
+    var q = best.q.map(function (p) { return [p[0] / SW, p[1] / SH]; });
+    /* 四邊形的面積要和這塊顏色差不多（太細長、太歪的不是招牌） */
+    var area = 0; for (i = 0; i < 4; i++) { var u = q[i], v = q[(i + 1) % 4]; area += u[0] * v[1] - v[0] * u[1]; }
+    area = Math.abs(area) / 2;
+    if (area < best.a / n * 0.8 || area > best.a / n * 2.2) { return null; }
+    /* 往外多留一點 */
+    var cx = (q[0][0] + q[1][0] + q[2][0] + q[3][0]) / 4, cy = (q[0][1] + q[1][1] + q[2][1] + q[3][1]) / 4;
+    return q.map(function (p) { return [Math.max(0, Math.min(1, cx + (p[0] - cx) * 1.04)), Math.max(0, Math.min(1, cy + (p[1] - cy) * 1.04))]; });
+  }
   function photoEdit(files) {
     return new Promise(function (resolve) {
       var out = [], idx = 0, base = null, quad = null, rot = 0;
@@ -112,7 +143,9 @@
         base = document.createElement('canvas'); base.width = Math.max(1, Math.round(iw * k)); base.height = Math.max(1, Math.round(ih * k));
         var g = base.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, base.width, base.height); g.drawImage(im, 0, 0, base.width, base.height);
         URL.revokeObjectURL(o.url);
-        quad = PH_FULL.map(function (p) { return p.slice(); }); rot = 0;
+        var dq = phDetect(base);
+        quad = dq || PH_FULL.map(function (p) { return p.slice(); }); rot = 0;
+        $('phTip').textContent = dq ? '已經自動框出招牌／菜單，按「完成」就會拉正再辨識。框得不對，就拖四個角的圓點；想要整張就按「選整張」。' : '拖曳四個角的圓點，框住要讀的文字（例如招牌、菜單）。斜斜拍的會自動拉正；不用很準。';
         $('phTitle').textContent = files.length > 1 ? '調整照片（第 ' + (idx + 1) + '／' + files.length + ' 張）' : '調整照片';
         $('phOk').textContent = idx + 1 < files.length ? '下一張' : '完成';
         $('phSkipAll').hidden = !(files.length > 1 && idx + 1 < files.length);
