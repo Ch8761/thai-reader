@@ -854,6 +854,62 @@ body.cdopen { overflow: hidden; }
 .vidbox .vb-row button { min-height: 34px; font-size: 14px; border-radius: 999px; }
 .vidbox .vb-bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
 .vidbox .vb-bar span { display: block; height: 100%; width: 0; background: var(--accent-fill); transition: width .3s; }
+
+/* ---- v1.13 ---- */
+.credit.one { font-size: 11px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#text mark.gsel { background: rgba(13, 107, 134, 0.14); }
+.pop .gfocus { scroll-margin-top: 8px; margin-top: 4px; }
+.pop .gfocus .sl2:first-child::after { content: '（從這句的其他句型點進來）'; font-weight: 400; }
+.pop .gfocus .gcard[open] { border-color: var(--accent); }
+.ttwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 6px 0; }
+.ttable { width: auto; min-width: 100%; }
+.ttable th, .ttable td { white-space: nowrap; }
+.ttable thead th { font-weight: 600; }
+.ttable .tmk { font-family: var(--thai); font-size: 18px; line-height: 1; }
+.tcell { display: inline-flex; align-items: center; gap: 3px; color: var(--tc); }
+.tcell b { font-weight: 700; }
+.tcell .tcurve { width: 18px; height: 12px; }
+.ttable td.tna { color: var(--muted); }
+.ttable.tclick td { padding: 2px; }
+.tcellbtn { min-height: 38px; width: 100%; padding: 4px 6px; border: 1.5px solid transparent; border-radius: 8px; background: none; justify-content: center; }
+.tcellbtn[aria-pressed="true"] { border-color: var(--accent); background: var(--bg); }
+.texhost { margin: 12px 0 4px; }
+.texlab { font-weight: 600; margin-bottom: 8px; }
+.texrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.texw { display: inline-flex; flex-direction: column; align-items: center; gap: 1px; min-width: 76px; padding: 8px 10px; border-radius: 12px; border: 1.5px solid var(--tc); background: var(--card); min-height: 0; }
+.texw .texth { font-family: var(--thai); font-size: 24px; line-height: 1.3; color: var(--fg); }
+.texw .texr { font-size: 12px; color: var(--tc); }
+.texw .texz { font-size: 12.5px; color: var(--muted); max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tcls2 { margin: 12px 0; }
+.tclsrow { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
+.tclsrow .tclsl { position: static; flex: 0 0 auto; font-size: 12px; line-height: 22px; }
+.tclsrow .tclst { font-size: 18px; line-height: 1.6; letter-spacing: .06em; }
+.tgo { margin-top: 8px; }
+.tpword { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.tpgloss { color: var(--muted); font-size: 14px; margin: 2px 0 8px; }
+.tpsteps { margin: 6px 0 8px; padding-left: 22px; font-size: 14px; color: var(--muted); }
+.tpsteps li.ok::marker { color: var(--accent); }
+.tpwhy { margin: 8px 0 12px; }
+.tqend { margin-top: 10px; }
+.tphead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0 4px; font-size: 14px; color: var(--muted); }
+.tpwrap { padding: 14px 16px 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+.tpwrap > .primary { margin-top: 12px; }
+.tpwrap .qwhy { margin-top: 10px; line-height: 1.6; }
+.tpwrap .cword { font-size: 44px; }
+/* 雲端同步 */
+.syncerr { color: #c0392b; }
+/* 影片：框出字幕 */
+body.noscroll { overflow: hidden; }
+.vpsheet .cdscroll { display: flex; flex-direction: column; gap: 10px; }
+.vptitle { margin: 0; font-size: 20px; padding-right: 8px; }
+.vptip { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
+.vpstage { position: relative; width: 100%; max-height: 52vh; margin: 0 auto; touch-action: none; border-radius: 10px; overflow: hidden; background: #000; cursor: crosshair; }
+.vpstage canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+.vprect { position: absolute; border: 3px solid #ffd400; border-radius: 6px; box-shadow: 0 0 0 9999px rgba(0, 0, 0, .45); pointer-events: none; }
+.vptime { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.vptime input { flex: 1; }
+.vpact { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+.vpact button { min-height: 44px; padding: 0 18px; border-radius: 999px; }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -1032,6 +1088,11 @@ body.cdopen { overflow: hidden; }
       <div class="setlabel">我的專有名詞<span class="sethelp">字典沒收錄的明星、劇名、品牌等。查詞時按「這是名字？」就能加進來，之後所有文件都會把它當成一個詞。<br><span id="myNamesCount"></span></span></div>
       <ul class="mynames" id="myNamesList" hidden></ul>
     </div>
+    <div class="setrow fbrow" id="syncRow" hidden>
+      <div class="setlabel">雲端同步（Google 雲端硬碟）<span class="sethelp">文件、PDF、筆記、生字卡和設定，存在你自己的 Google 雲端硬碟裡這個 App 專用的隱藏資料夾（不會出現在你的檔案清單，App 也看不到你其他的檔案）。在另一台平板、手機或電腦打開這個 App，連結同一個 Google 帳號，兩邊就會自動合併。<br><span id="syncState"></span></span></div>
+      <div class="btns" id="syncBtns"></div>
+      <div id="syncMsg" class="label" aria-live="polite"></div>
+    </div>
     <div class="setrow fbrow">
       <div class="setlabel">備份與還原<span class="sethelp">把生字卡、設定、所有文件的筆記和目前的 PDF 存成一個檔案，可以存到 iCloud Drive 或 Google Drive。<br><span id="bkLast"></span></span></div>
       <div class="btns"><button type="button" class="primary" id="bkSave">匯出備份檔</button><label class="filebtn2">從備份檔還原<input type="file" id="bkFile" class="vh" accept=".json,application/json"></label></div>
@@ -1060,7 +1121,7 @@ body.cdopen { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.12.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -41004,7 +41065,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     tap: '點一個詞，會用藍框框住它。手指可以正常捲動頁面。',
     hl: '從一個詞劃到另一個詞就畫好。點一下詞是查詞，查詞視窗裡可以取消螢光筆。',
     ink: '直接在泰文上寫字或畫線；手指點一下詞可以查詞。要擦掉就選「橡皮擦」。',
-    box: '點一個泰文詞：在它正上方加註解。點空白處：放一段自由文字。點一下已有的註解，可以改上方的文字樣式，旁邊會出現 ⠿（拖曳移動）和 ×（刪除）。'
+    box: '點一個泰文詞會先查詞，按「加註解」就在詞的正上方加框（用 Apple Pencil 點詞會直接加框）。點空白處：放一段自由文字。點一下已有的註解可以改樣式，旁邊有 ⠿（拖曳移動）和 ×（刪除）。'
   };
 
   var $ = function (id) { return document.getElementById(id); };
@@ -41177,11 +41238,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (o.r !== o.t) { s += '；實際唸' + TONE_NAME[o.t] + '（例外）'; }
     return s;
   }
-  var TONE_TABLE = '<table class="ttable"><thead><tr><th></th><th>活音節</th><th>死・短</th><th>死・長</th><th>่</th><th>้</th><th>๊</th><th>๋</th></tr></thead><tbody>' +
-    '<tr><th>中子音</th><td>中平</td><td>低</td><td>低</td><td>低</td><td>降</td><td>高</td><td>升</td></tr>' +
-    '<tr><th>高子音</th><td>升</td><td>低</td><td>低</td><td>低</td><td>降</td><td>–</td><td>–</td></tr>' +
-    '<tr><th>低子音</th><td>中平</td><td>高</td><td>降</td><td>降</td><td>高</td><td>–</td><td>–</td></tr></tbody></table>' +
-    '<p class="tnote">中子音：ก จ ด ต บ ป อ（ฎ ฏ）。高子音：ข ฉ ถ ผ ฝ ศ ษ ส ห（ฃ ฐ）。其餘是低子音。<br>活音節：長母音結尾，或 ม น ง ย ว 結尾（ำ ใ ไ เา 也算）。死音節：短母音結尾，或 ก ด บ 類的尾音。</p>';
+  var TONE_NOTE = '<p class="tnote">中子音：ก จ ด ต บ ป อ（ฎ ฏ）。高子音：ข ฉ ถ ผ ฝ ศ ษ ส ห（ฃ ฐ）。其餘是低子音。<br>活音節：長母音結尾，或 ม น ง ย ว 結尾（ำ ใ ไ เา 也算）。死音節：短母音結尾，或 ก ด บ 類的尾音。</p>';
   function buildToneSection(w) {
     var sec = document.createElement('div'); sec.className = 'sec tonesec';
     function fill() {
@@ -41205,7 +41262,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       sec.appendChild(ul);
       var det = document.createElement('details'); det.className = 'tdet';
       var sm = document.createElement('summary'); sm.textContent = '看聲調規則表'; det.appendChild(sm);
-      var box = document.createElement('div'); box.innerHTML = TONE_TABLE; det.appendChild(box);
+      var box = document.createElement('div'); box.innerHTML = toneTableHtml(false) + TONE_NOTE; det.appendChild(box);
       sec.appendChild(det);
     }
     if (TONES) { fill(); } else { sec.textContent = '載入聲調資料…'; loadTones().then(fill, function () { sec.textContent = '聲調資料載入失敗（可能沒有網路）。'; }); }
@@ -41280,6 +41337,165 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     }
     return hit;
   }
+  /* ---------- 生字卡的「聲調」分頁：規則表（點格子看例詞）、子音分類、一步一步推聲調的練習 ---------- */
+  var TONE_COLS = [['L', '活音節'], ['S', '死・短'], ['D', '死・長'], ['1', '่'], ['2', '้'], ['3', '๊'], ['4', '๋']];
+  var TONE_ROWS = [['m', '中子音'], ['h', '高子音'], ['l', '低子音']];
+  var TONE_EX = {
+    mL: ['กิน', 'ดี', 'ตา', 'ปลา', 'บิน', 'จาน'], mS: ['จับ', 'ติด', 'ตก', 'เด็ก'], mD: ['บาท', 'ปาก', 'จอด', 'แดด'],
+    m1: ['ไก่', 'ป่า', 'ต่อ', 'บ่าย'], m2: ['ได้', 'บ้าน', 'ต้ม', 'ป้า'], m3: ['โต๊ะ', 'จ๊ะ', 'ป๊า'], m4: ['จ๋า', 'เดี๋ยว', 'ตี๋'],
+    hL: ['ขา', 'หมา', 'สวย', 'ขาย', 'ฝน', 'สี'], hS: ['สิบ', 'ขับ', 'ผัก', 'หก'], hD: ['ขาด', 'สอบ', 'ถูก', 'ขวด'],
+    h1: ['ข่าว', 'ส่ง', 'ผ่าน', 'ถ่าย'], h2: ['ข้าว', 'ห้อง', 'ถ้า', 'ส้ม'],
+    lL: ['มา', 'คน', 'ยาว', 'นอน', 'ลม'], lS: ['รัก', 'นก', 'คิด', 'ลด'], lD: ['มาก', 'ลูก', 'ชอบ', 'เลือด'],
+    l1: ['พี่', 'แม่', 'ที่', 'ไม่'], l2: ['น้ำ', 'ร้อน', 'ใช้', 'ม้า']
+  };
+  var CLS_LETTERS = { m: 'ก จ ด ต บ ป อ ฎ ฏ', h: 'ข ฉ ถ ผ ฝ ศ ษ ส ห ฃ ฐ', l: 'ค ฅ ฆ ง ช ซ ฌ ญ ฑ ฒ ณ ท ธ น พ ฟ ภ ม ย ร ล ว ฬ ฮ' };
+  var toneCell = 'mL', tq = null;
+  /* 格子裡的聲調（照規則推出來） */
+  function cellTone(c, col) { return /\d/.test(col) ? toneRule(c, 'L', Number(col)) : toneRule(c, col, 0); }
+  function cellHtml(t) { return '<span class="tcell t-' + t + '">' + toneSvg(t) + '<b>' + TONE_NAME[t].replace('聲', '') + '</b></span>'; }
+  /* 規則表：markExtra＝格子能不能點 */
+  function toneTableHtml(clickable) {
+    var h = '<div class="ttwrap"><table class="ttable' + (clickable ? ' tclick' : '') + '"><thead><tr><th></th>';
+    TONE_COLS.forEach(function (c) { h += '<th>' + (/\d/.test(c[0]) ? '<span class="tmk" lang="th">◌' + c[1] + '</span>' : c[1]) + '</th>'; });
+    h += '</tr></thead><tbody>';
+    TONE_ROWS.forEach(function (r) {
+      h += '<tr><th>' + r[1] + '</th>';
+      TONE_COLS.forEach(function (c) {
+        var key = r[0] + c[0], ok = !(r[0] !== 'm' && (c[0] === '3' || c[0] === '4'));
+        if (!ok) { h += '<td class="tna">–</td>'; return; }
+        var inner = cellHtml(cellTone(r[0], c[0]));
+        h += clickable ? '<td><button type="button" class="tcellbtn" data-cell="' + key + '" aria-pressed="' + (key === toneCell) + '">' + inner + '</button></td>' : '<td>' + inner + '</td>';
+      });
+      h += '</tr>';
+    });
+    return h + '</tbody></table></div>';
+  }
+  /* 例詞：只留資料和規則一致的（不是例外的）單音節詞 */
+  function cellExamples(key) {
+    return (TONE_EX[key] || []).map(function (w) { var info = toneInfo(w); return info && info.length === 1 && info[0].r === info[0].t ? { w: w, o: info[0] } : null; }).filter(Boolean);
+  }
+  function cellLabel(key) {
+    var r = TONE_ROWS.filter(function (x) { return x[0] === key[0]; })[0][1], col = key.slice(1);
+    return r + '＋' + (/\d/.test(col) ? MARK_NAME[col] : LST_NAME[col]) + ' → ' + TONE_NAME[cellTone(key[0], col)];
+  }
+  function renderToneTab(host) {
+    host.appendChild(el('p', 'label', '泰文的聲調由三件事決定：起首子音是哪一類、活音節還是死音節、有沒有聲調符號。點表格裡的格子，可以看例詞、聽發音。'));
+    if (!TONES) {
+      var ld = el('p', 'label', '載入聲調資料…'); host.appendChild(ld);
+      loadTones().then(function () { if (cardTab === 'tone') { renderCards(); } }, function () { ld.textContent = '聲調資料載入失敗（可能沒有網路）。'; });
+      return;
+    }
+    if (tq) { renderTonePractice(host); return; }
+    var box = el('div', 'ttab'); box.innerHTML = toneTableHtml(true); host.appendChild(box);
+    var exHost = el('div', 'texhost'); host.appendChild(exHost);
+    function showEx() {
+      exHost.replaceChildren();
+      exHost.appendChild(el('div', 'texlab', cellLabel(toneCell)));
+      var row = el('div', 'texrow');
+      cellExamples(toneCell).forEach(function (x) {
+        var g = glossSnapshot(x.w), b = el('button', 'texw t-' + x.o.t); b.type = 'button';
+        var th = el('span', 'texth', x.w); th.lang = 'th'; b.appendChild(th);
+        b.appendChild(el('span', 'texr', g.rom || ''));
+        b.appendChild(el('span', 'texz', (g.zh || g.en || '').split('；')[0]));
+        b.addEventListener('click', function () { speak(x.w); });
+        row.appendChild(b);
+      });
+      exHost.appendChild(row);
+      exHost.appendChild(el('p', 'tnote', '點詞可以聽發音。'));
+    }
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.tcellbtn'); if (!b) { return; }
+      toneCell = b.getAttribute('data-cell');
+      box.querySelectorAll('.tcellbtn').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      showEx();
+    });
+    showEx();
+    var cl = el('details', 'tdet tcls2'); var sm = el('summary', '', '三類子音有哪些字'); cl.appendChild(sm);
+    TONE_ROWS.forEach(function (r) {
+      var p = el('div', 'tclsrow'); p.appendChild(el('span', 'tcls c-' + r[0] + ' tclsl', r[1]));
+      var t = el('span', 'tclst', CLS_LETTERS[r[0]]); t.lang = 'th'; p.appendChild(t); cl.appendChild(p);
+    });
+    cl.appendChild(el('p', 'tnote', '活音節：長母音結尾，或 ม น ง ย ว 結尾（ำ ใ ไ เา 也算）。死音節：短母音結尾，或 ก ด บ 類的尾音（k、t、p 音）。前面有不發音的 ห 時，照高子音算；อ 帶 ย（อย่า、อยู่、อย่าง、อยาก）照中子音算。'));
+    host.appendChild(cl);
+    var go = el('button', 'primary tgo', '練習推聲調（10 題）'); go.type = 'button';
+    go.addEventListener('click', function () { tq = makeTonePractice(); renderCards(); });
+    host.appendChild(go);
+  }
+  /* 練習：一題一個單音節詞，依序問：子音類別 →（沒有聲調符號時）活或死 → 聲調 */
+  function makeTonePractice() {
+    var pool = [];
+    Object.keys(TONE_EX).forEach(function (k) { cellExamples(k).forEach(function (x) { pool.push(x); }); });
+    cards.forEach(function (c) { var info = toneInfo(c.w); if (info && info.length === 1 && info[0].r === info[0].t && !info[0].lead && !pool.some(function (x) { return x.w === c.w; })) { pool.push({ w: c.w, o: info[0] }); } });
+    return { items: shuffle(pool).slice(0, 10), k: 0, step: 0, right: 0, wrong: 0, picked: null };
+  }
+  function renderTonePractice(host) {
+    var it = tq.items[tq.k];
+    if (!it) {
+      host.appendChild(el('div', 'qdone', '練習完成：' + tq.right + ' 步答對、' + tq.wrong + ' 步答錯。'));
+      var again = el('button', 'primary', '再練一次'); again.type = 'button'; again.addEventListener('click', function () { tq = makeTonePractice(); renderCards(); });
+      var back = el('button', '', '回到規則表'); back.type = 'button'; back.addEventListener('click', function () { tq = null; renderCards(); });
+      var row = el('div', 'row2 tqend'); row.appendChild(again); row.appendChild(back); host.appendChild(row);
+      return;
+    }
+    var o = it.o, steps = ['cls'].concat(o.m ? [] : ['lst']).concat(['tone']);
+    var top = el('div', 'tphead'); top.appendChild(el('span', 'qprog', '第 ' + (tq.k + 1) + ' / ' + tq.items.length + ' 題'));
+    var quit = el('button', 'linkbtn', '結束練習'); quit.type = 'button'; quit.addEventListener('click', function () { tq = null; renderCards(); }); top.appendChild(quit);
+    host.appendChild(top);
+    var wrap = el('div', 'tpwrap'); host.appendChild(wrap); host = wrap;
+    var wrow = el('div', 'tpword'); var w = el('span', 'cword', it.w); w.lang = 'th'; wrow.appendChild(w);
+    var say = el('button', 'iconbtn csay'); say.type = 'button'; say.setAttribute('aria-label', '朗讀'); say.innerHTML = SPK_ICON; say.addEventListener('click', function () { speak(it.w); });
+    wrow.appendChild(say); host.appendChild(wrow);
+    var g = glossSnapshot(it.w); host.appendChild(el('div', 'tpgloss', (g.rom ? g.rom + '　' : '') + (g.zh || g.en || '').split('；')[0]));
+    var done = [];
+    steps.slice(0, tq.step).forEach(function (s) { done.push(s); });
+    /* 已經答完的步驟 */
+    var ul = el('ol', 'tpsteps');
+    done.forEach(function (s) { ul.appendChild(el('li', 'ok', stepAnswerText(s, o))); });
+    if (done.length) { host.appendChild(ul); }
+    var cur = steps[tq.step];
+    if (!cur) {
+      host.appendChild(el('div', 'qwhy tpwhy', toneWhy(o, null)));
+      var nx = el('button', 'primary', tq.k + 1 < tq.items.length ? '下一題' : '看結果'); nx.type = 'button';
+      nx.addEventListener('click', function () { tq.k++; tq.step = 0; tq.picked = null; renderCards(); });
+      host.appendChild(nx);
+      return;
+    }
+    var q = cur === 'cls' ? ['起首子音「' + o.i + '」是哪一類？', [['m', '中子音'], ['h', '高子音'], ['l', '低子音']], o.c]
+      : cur === 'lst' ? ['沒有聲調符號。這個音節是活音節還是死音節？', [['L', '活音節'], ['S', '死音節']], o.s === 'L' ? 'L' : 'S']
+        : ['所以聲調是？', ['M', 'L', 'F', 'H', 'R'].map(function (t) { return [t, TONE_NAME[t]]; }), o.t];
+    if (cur === 'tone' && o.m) { q[0] = '有聲調符號 ' + MARK_NAME[o.m] + '。所以聲調是？'; }
+    host.appendChild(el('div', 'qprompt small', q[0]));
+    var opts = el('div', 'qopts');
+    q[1].forEach(function (x) {
+      var b = el('button', 'qopt' + (cur === 'tone' ? ' tone t-' + x[0] : '')); b.type = 'button';
+      if (cur === 'tone') { b.innerHTML = toneSvg(x[0]); b.appendChild(document.createTextNode(x[1])); } else { b.textContent = x[1]; }
+      if (tq.picked) { b.disabled = true; if (x[0] === q[2]) { b.classList.add('ok'); } else if (x[0] === tq.picked) { b.classList.add('bad'); } }
+      b.addEventListener('click', function () {
+        if (tq.picked) { return; }
+        tq.picked = x[0];
+        if (x[0] === q[2]) { tq.right++; tq.step++; tq.picked = null; } else { tq.wrong++; }
+        renderCards();
+      });
+      opts.appendChild(b);
+    });
+    host.appendChild(opts);
+    if (tq.picked) {
+      host.appendChild(el('div', 'qwhy', '答案是「' + q[1].filter(function (x) { return x[0] === q[2]; })[0][1] + '」。' + stepHint(cur, o)));
+      var cont = el('button', 'primary', '繼續'); cont.type = 'button';
+      cont.addEventListener('click', function () { tq.picked = null; tq.step++; renderCards(); });
+      host.appendChild(cont);
+    }
+  }
+  function stepAnswerText(s, o) {
+    if (s === 'cls') { return o.i + ' 是' + CLS_NAME[o.c]; }
+    if (s === 'lst') { return LST_NAME[o.s]; }
+    return TONE_NAME[o.t];
+  }
+  function stepHint(s, o) {
+    if (s === 'cls') { return CLS_NAME[o.c] + '：' + CLS_LETTERS[o.c] + (o.c === 'l' ? '（中、高子音以外都是低子音）' : ''); }
+    if (s === 'lst') { return o.s === 'L' ? '長母音結尾，或 ม น ง ย ว 結尾，是活音節。' : '短母音結尾，或尾音是 k、t、p 音（ก ด บ 類），是死音節。'; }
+    return toneWhy(o, null);
+  }
   function segment(str) {
     var out = [];
     if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
@@ -41312,6 +41528,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var marks = state.hl.map(function (r) { return { s: r[0], e: r[1], c: 'hl' + (r[2] ? ' hlc' : '') + (r[3] === 'u' ? ' hlu' : ''), bg: r[2] || null }; });
     if (preview) { marks.push({ s: preview[0], e: preview[1], c: 'pv' }); }
     if (tapSel) { marks.push({ s: tapSel[0], e: tapSel[1], c: 'tapsel' }); }
+    if (gramSel) { gramSel.forEach(function (r) { marks.push({ s: r[0], e: r[1], c: 'tapsel gsel' }); }); }
     if (typeof ra !== 'undefined' && ra && ra.cur) { marks.push({ s: ra.cur[0], e: ra.cur[1], c: 'reading' }); if (ra.word) { marks.push({ s: ra.word[0], e: ra.word[1], c: 'readword' }); } }
     state.boxes.forEach(function (b) { if (b.a) { var bc = (b.s && b.s.color) || 'red', cu = /^#/.test(bc); marks.push({ s: b.a[0], e: b.a[1], c: 'anno anno-' + (cu ? 'custom' : bc), ac: cu ? bc : null }); } });
     if (typeof showEnts !== 'undefined' && showEnts && typeof getEnts === 'function') { getEnts().forEach(function (en) { marks.push({ s: en.s, e: en.e, c: 'ent ent-' + en.type }); }); }
@@ -41486,11 +41703,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (!p.length) { return; }
     var col = s.c || g._inkDef;
     if (col) { g.strokeStyle = col; g.fillStyle = col; }
-    if (p.length === 1) { g.beginPath(); g.arc(p[0][0], p[0][1], s.w / 2, 0, Math.PI * 2); g.fill(); return; }
+    var dot = Math.max(s.w / 2, 1.3);
+    if (p.length === 1 || (p.length <= 3 && Math.abs(p[p.length - 1][0] - p[0][0]) + Math.abs(p[p.length - 1][1] - p[0][1]) < 1)) { g.beginPath(); g.arc(p[0][0], p[0][1], dot, 0, Math.PI * 2); g.fill(); return; }
     g.lineWidth = s.w;
     g.beginPath();
     g.moveTo(p[0][0], p[0][1]);
-    for (var k = 1; k < p.length; k++) { g.lineTo(p[k][0], p[k][1]); }
+    /* 經過相鄰兩點的中點畫曲線，筆跡比較圓滑（點很少時也不會一段一段折線） */
+    if (p.length === 2) { g.lineTo(p[1][0], p[1][1]); }
+    else {
+      for (var k = 1; k < p.length - 1; k++) { g.quadraticCurveTo(p[k][0], p[k][1], (p[k][0] + p[k + 1][0]) / 2, (p[k][1] + p[k + 1][1]) / 2); }
+      g.lineTo(p[p.length - 1][0], p[p.length - 1][1]);
+    }
     g.stroke();
   }
   function redrawInk() {
@@ -41571,6 +41794,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     return list.length ? list[list.length - 1] : rg.getBoundingClientRect();
   }
   /* ---------- 句型庫（方案 D） ---------- */
+  var gramSel = null, gramFocus = null;
   var LEVELS = [['a', '入門'], ['b', '初級'], ['c', '中級'], ['d', '高級'], ['all', '全部']];
   var LV_NAME = { a: '入門', b: '初級', c: '中級', d: '高級' };
   var LV_ORDER = { a: 1, b: 2, c: 3, d: 4 };
@@ -41821,11 +42045,14 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var S = state.text.slice(range[0], range[1]);
     var found = matchPatterns(W, S);
     found.forEach(function (f) {
-      f.mine = f.hits.indexOf(ti) !== -1;
+      f.mine = f.hits.indexOf(ti) !== -1 || (gramFocus && f.g.id === gramFocus);
+      f.focus = !!(gramFocus && f.g.id === gramFocus);
       f.near = f.mine ? ti : f.hits[0];
     });
     var cap = level === 'all' ? 9 : LV_ORDER[level];
     var mine = found.filter(function (f) { return f.mine; });
+    mine.sort(function (x, y) { return (y.focus ? 1 : 0) - (x.focus ? 1 : 0); });
+    var hasFocus = mine.some(function (f) { return f.focus; });
     var others = found.filter(function (f) { return !f.mine && LV_ORDER[f.g.lv] <= cap; });
     others.sort(function (x, y) {
       function d(f) { return level === 'all' ? LV_ORDER[f.g.lv] : (LV_ORDER[f.g.lv] === cap ? 0 : cap - LV_ORDER[f.g.lv]); }
@@ -41836,7 +42063,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var sec = document.createElement('div'); sec.className = 'sec';
       var lab = document.createElement('div'); lab.className = 'sl2'; lab.textContent = '句型說明';
       sec.appendChild(lab);
-      mine.forEach(function (f, n) { sec.appendChild(grammarCard(f, W, n === 0)); });
+      if (hasFocus) { sec.classList.add('gfocus'); }
+      mine.forEach(function (f, n) { sec.appendChild(grammarCard(f, W, n === 0, inRange, false)); });
       out.mine = sec;
     }
     if (others.length) {
@@ -41844,17 +42072,45 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var sum = document.createElement('summary'); sum.textContent = '這句的其他句型（' + others.length + '）';
       det.appendChild(sum);
       var list = document.createElement('div'); list.className = 'glist';
-      others.forEach(function (f) { list.appendChild(grammarCard(f, W, false)); });
+      others.forEach(function (f) { list.appendChild(grammarCard(f, W, false, inRange, true)); });
       det.appendChild(list);
       out.others = det;
     }
     return out;
   }
 
-  function grammarCard(f, W, open) {
+  /* 句型用到的詞在文章裡的位置（相鄰的併成一段） */
+  function grammarRanges(f, inRange) {
+    var segsHit = f.hits.map(function (h) { return inRange[h]; }).filter(Boolean).sort(function (a, b) { return a.i - b.i; }), out = [];
+    segsHit.forEach(function (x) {
+      var last = out[out.length - 1];
+      if (last && x.i <= last[1] + 1) { last[1] = Math.max(last[1], x.i + x.n); } else { out.push([x.i, x.i + x.n]); }
+    });
+    return out;
+  }
+  /* 點「這句的其他句型」裡的一個：把那個句型的詞圈起來，查詞視窗換成那個句型的詳細說明 */
+  function focusGrammar(f, inRange) {
+    var first = inRange[Math.min.apply(null, f.hits)];
+    if (!first) { return; }
+    var rs = grammarRanges(f, inRange);
+    gramFocus = f.g.id;
+    tapSel = null;
+    showPop(first);
+    gramFocus = null;
+    gramSel = rs;
+    renderText();
+    $('pop').scrollTop = 0;
+  }
+  function grammarCard(f, W, open, inRange, isOther) {
     var g = f.g;
     var d = document.createElement('details'); d.className = 'gcard'; if (open) { d.open = true; }
     var s = document.createElement('summary');
+    if (inRange && isOther) {
+      s.addEventListener('click', function (ev) { ev.preventDefault(); focusGrammar(f, inRange); });
+    } else if (inRange) {
+      d.addEventListener('toggle', function () { gramSel = d.open ? grammarRanges(f, inRange) : null; renderText(); });
+      if (open && f.focus) { /* 剛換過來的句型：圈選已經由 focusGrammar 處理 */ }
+    }
     var nm = document.createElement('span'); nm.className = 'gname'; nm.lang = 'th'; nm.textContent = g.name;
     var zh = document.createElement('span'); zh.className = 'gzh'; zh.textContent = g.zh;
     var bd = document.createElement('span'); bd.className = 'gbadge lv-' + g.lv; bd.textContent = LV_NAME[g.lv];
@@ -42315,9 +42571,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     }
   }
   renderSettings();
-  function hidePop() { $('pop').hidden = true; }
+  function hidePop() { $('pop').hidden = true; if (gramSel) { gramSel = null; renderText(); } }
   function showPop(seg) {
     lastPopSeg = seg;
+    if (gramSel && !gramFocus) { gramSel = null; renderText(); }
     var pop = $('pop');
     pop.replaceChildren();
     var x = document.createElement('button');
@@ -42353,10 +42610,12 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     trs.href = trUrl(state.text.slice(sr[0], sr[1]).trim().slice(0, 600));
     links.insertBefore(trs, say.nextSibling);
     pop.appendChild(x); pop.appendChild(head);
+    var gFirst = !!(gs.mine && gs.mine.classList.contains('gfocus'));
+    if (gFirst) { pop.appendChild(gs.mine); }
     if (en0) { pop.appendChild(buildEntitySection(en0)); }
     if (!(seg.gz && en0)) { pop.appendChild(d); }
     if (toneMode && !(seg.gz && en0) && /[\u0E01-\u0E2E]/.test(seg.t)) { pop.appendChild(buildToneSection(seg.t)); }
-    if (gs.mine) { pop.appendChild(gs.mine); }
+    if (gs.mine && !gFirst) { pop.appendChild(gs.mine); }
     if (seg.w && /[\u0E01-\u0E2E]/.test(seg.t)) { pop.appendChild(popNoteButtons(seg)); }
     pop.appendChild(links); pop.appendChild(extl);
     if (gs.others) { pop.appendChild(gs.others); }
@@ -44192,7 +44451,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       var key = d.w[c.w] ? c.w : (typeof dictBase === 'function' && dictBase(c.w) && d.w[dictBase(c.w)] ? dictBase(c.w) : null);
       if (!key) { lifeBody.appendChild(el('p', 'label', '例句庫裡還沒有這個詞的句子。')); return; }
       d.w[key].forEach(function (k) { var s = d.s[k]; if (s) { lifeBody.appendChild(exampleRow(s[0], s[1], key, '')); } });
-      lifeBody.appendChild(el('div', 'credit', '例句：scb-mt-en-th-2020（CC BY-SA 4.0，VISTEC 與 SCB）；中文為機器翻譯，需要網路。'));
+      lifeBody.appendChild(el('div', 'credit one', '例句：scb-mt-en-th-2020（CC BY-SA 4.0）・中文為機器翻譯'));
     }, function () { lifeBody.textContent = '例句庫載入失敗（可能沒有網路），連上網路後再打開一次。'; });
     /* 學習狀況與管理 */
     var st2 = el('section', 'cdsec cdmeta'); st2.appendChild(el('h3', '', '學習狀況'));
@@ -44223,14 +44482,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     host.replaceChildren();
     renderFolders();
     var n = dueCards().length;
-    segButtons($('cardTabs'), [['review', '複習' + (n ? '（' + n + '）' : '')], ['quiz', '測驗'], ['list', '全部（' + cards.filter(inFolder).length + '）']], cardTab, function (v) { cardTab = v; if (v !== 'quiz') { quiz = null; } renderCards(); });
-    if (cardTab === 'review') { renderReview(host); } else if (cardTab === 'quiz') { renderQuiz(host); } else { renderList(host); }
+    if (cardTab === 'tone' && !toneMode) { cardTab = 'review'; }
+    var tabs = [['review', '複習' + (n ? '（' + n + '）' : '')], ['quiz', '測驗'], ['list', '全部（' + cards.filter(inFolder).length + '）']];
+    if (toneMode) { tabs.push(['tone', '聲調']); }
+    segButtons($('cardTabs'), tabs, cardTab, function (v) { cardTab = v; if (v !== 'quiz') { quiz = null; } if (v !== 'tone') { tq = null; } renderCards(); });
+    if (cardTab === 'review') { renderReview(host); } else if (cardTab === 'quiz') { renderQuiz(host); } else if (cardTab === 'tone') { renderToneTab(host); } else { renderList(host); }
     updateCardButton();
   }
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.12.0';
+  var APP_VER = '正式版 v1.13.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45109,8 +45371,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '加文件', s: '按「＋ 加入 PDF」「＋ 圖片／影片」或「＋ 貼上文字」', img: 'home-add',
         d: ['PDF：按「＋ 加入 PDF」，從「檔案」App 選，可以一次選好幾個。', '照片或截圖：按「＋ 圖片／影片」，選好的幾張會合成一份文件。', '逐字稿、文章：先在別的 App 拷貝，按「＋ 貼上文字」，長按文字框選「貼上」，再按「建立文件」。'],
         tip: '新文件會放進目前選的資料夾。' },
-      { t: '影片的字幕', s: '按「＋ 圖片／影片」選有泰文字幕的影片', img: '',
-        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會每秒看一次畫面，畫面換了就讀一次上面的泰文，最後整理成一份文字文件。', '同一句字幕只會留一次；畫面上其他的泰文也可能被讀進來。', '3 分鐘的影片大約要 1–5 分鐘，中途可以按「停止」，已經讀到的會保留。'],
+      { t: '影片的字幕', s: '按「＋ 圖片／影片」選有泰文字幕的影片', img: 'vid-pick',
+        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會先找字幕在畫面的哪裡，用黃框框起來。框得不對，就用手指在畫面上重新框住字幕；拉下面的滑桿可以換一個有字幕的畫面看。', '按「開始讀字幕」。App 每秒看一次框裡的畫面，字幕換了就讀一次，最後整理成一份文字文件。', '同一句字幕只會留一次。', '3 分鐘的影片大約要 1–3 分鐘，中途可以按「停止」，已經讀到的會保留。'],
         tip: 'IG、YouTube 的連結不能直接讀：先用 iPad 的「螢幕錄影」把影片錄下來，再加入那段錄影。' },
       { t: '圖片會自動認字', s: '照片、截圖加進來，App 會自己讀出泰文', img: 'home-img',
         d: ['按「＋ 圖片／影片」，選照片或截圖。', 'App 會打開這份文件，自動開始文字辨識（每張約 5–20 秒）。', '完成後就能點字查詞。'],
@@ -45126,6 +45388,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         d: ['確認工具列選的是「點字」（綠色底）。', '用手指點文件裡的任何一個字，會跳出查詞視窗。', '點別的字就換查那個字；按右上角「×」關掉。'] },
       { t: '看懂查詞視窗', s: '最上面是這個詞，下面是詞性、拼音和中文意思', img: 'pop-overview',
         d: ['最上面：你點的詞。', '第二行：詞性（名詞、動詞…）和拼音。', '再下面：中文意思。標「中文自動對照」的是電腦翻的，僅供參考。', '往下捲還有「這句的其他句型」和「整句解析・問 AI」。'] },
+      { t: '句型', s: '點「這句的其他句型」裡的一個', img: 'gram-focus',
+        d: ['查詞視窗的「句型說明」是你點的詞用到的句型。', '「這句的其他句型」是同一句裡的其他句型：點一個，文章裡會圈出那個句型用到的詞，查詞視窗最上面換成它的詳細說明和例句。', '關掉查詞視窗，圈選就會消失。'] },
       { t: '聽發音、翻整句', s: '按「朗讀這個詞」或「翻譯這句」', img: 'pop-links',
         d: ['「朗讀這個詞」：iPad 會唸出這個詞。', '「翻譯這句」：在 Google 翻譯打開你點的那一句。', '「在 thai2english 查」「在 Longdo 查」：去更大的線上字典查。'] },
       { t: '專有名詞', s: '淡色底的是人名、劇名、機構等，會顯示中文名', img: 'pop-name',
@@ -45146,7 +45410,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '跟著讀', s: '朗讀時，正在唸的那一段會標出來', img: 'read-along',
         d: ['按「▶」之後，正在唸的那一小段會有淡色底，畫面也會自己捲過去。', '自己用手指捲動頁面時，會先停止跟著捲 4 秒，方便你回頭看。', '左右翻頁模式下，唸到下一頁會自動翻頁。'] },
       { t: '放大縮小', s: '兩指縮放，或按「符合螢幕 ▾」選比例', img: 'view-zoom',
-        d: ['兩根手指在文件上張開、捏合，就能放大縮小。用螢光筆、手寫時也可以。', '或按工具框左上角的「符合螢幕 ▾」，選「符合螢幕」「符合寬度」或 125%、150%、200%。', '「符合螢幕」：一整頁剛好放進畫面（打開文件時的預設）。「符合寬度」：左右剛好塞滿。'],
+        d: ['兩根手指在文件上張開、捏合，就能放大縮小。用螢光筆、手寫時也可以。', '或按工具框左上角的「符合螢幕 ▾」，選「符合螢幕」「符合寬度」或 100%、125%、150%、200%。', '「符合螢幕」：一整頁剛好放進畫面（打開文件時的預設）。「符合寬度」：左右剛好塞滿。', '100%：PDF 照紙本的實際大小顯示。'],
         tip: '放大後，文件可以左右滑動看兩邊。' },
       { t: '捲動或翻頁', s: '在同一個選單選「上下捲動」或「左右翻頁」', img: 'view-menu',
         d: ['「上下捲動」：所有頁面接在一起，往下滑就是下一頁。', '「左右翻頁」：一次看一頁，往左滑是下一頁、往右滑是上一頁，也可以按「‹」「›」。', '翻頁的滑動只在「點字」時有效；畫螢光筆、手寫時請按「‹」「›」。'] },
@@ -45158,9 +45422,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '畫重點', s: '選「螢光筆」，從一個字劃到另一個字', img: 'note-hl',
         d: ['按「螢光筆」，下面會出現顏色和樣式。', '點顏色就用那個顏色；再點一次正在用的顏色可以換掉它。', '「整塊」是塗滿底色，「底線」是只畫在字的下面。', '手指或 Pencil 從第一個字劃到最後一個字，放開就畫好了。', '只點一下（不拖）是查詞；想取消螢光筆，在查詞視窗按「取消螢光筆」。'] },
       { t: '手寫', s: '選「手寫」，選顏色和粗細再寫', img: 'note-ink',
-        d: ['按「手寫」，下面會出現「筆／橡皮擦」、顏色和「細／中／粗」。', '直接在頁面上寫字或畫線。', '要擦掉：選「橡皮擦」，碰到的那一整筆就會擦掉；擦錯了按「↶」。', '手指點一下泰文（沒有畫出線）就是查詞。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」開關：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
+        d: ['按「手寫」，下面會出現「筆／橡皮擦」、顏色和「細／中／粗」。', '直接在頁面上寫字或畫線。', '要擦掉：選「橡皮擦」，碰到的那一整筆就會擦掉；擦錯了按「↶」。', '用 Pencil 點一下是寫一個點（例如 i 上面的點）；用手指點一下泰文才是查詞。', '兩根手指可以縮放，不會畫出線。', '打開工具列最右邊的「只用 Pencil 畫」開關：只有 Pencil 會畫線，一根手指滑動是捲動頁面，比較不會誤畫。'] },
       { t: '寫註解', s: '選「文字框」，點字或點空白處', img: 'note-box',
-        d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：在它正上方加一個小註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。'] },
+        d: ['按「文字框」，下面會出現大小、顏色、粗細和字體。', '點一個泰文詞：先跳出查詞視窗，按「加註解」就在詞的正上方加一個小註解。用 Apple Pencil 點詞會直接加註解。', '點空白處：放一段自由文字。', '點已經有的註解，可以改樣式，或拖曳「⠿」移動。'] },
       { t: '換顏色', s: '再點一次正在用的顏色，就能換掉它', img: 'note-colors',
         d: ['螢光筆、手寫、文字框下面都有三個顏色，點一下就換成那個顏色。', '正在用的顏色下面有個小箭頭；再點它一次，會跳出「我的顏色」。', '點「我的顏色」裡的一個，就換掉外面這一格。', '按「＋」可以自訂任何顏色，它會存進「我的顏色」（最多 50 種）。', '按「編輯」，再點顏色就能刪掉；換下來的顏色會收進「我的顏色」，不會不見。'],
         tip: '文字框：先點一下要改的那一框，再換顏色，就會改那一框。' },
@@ -45194,7 +45458,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '換顏色', s: '「外觀」選淺色或深色', img: 'set-theme',
         d: ['「跟隨系統」：照 iPad 的淺色／深色自動切換。', '「淺色」「深色」：固定不變。'] },
       { t: '聲調學習模式', s: '「聲調學習模式」選「開」', img: 'tone-pop',
-        d: ['打開後，點一個詞，查詞視窗會多一塊「聲調」。', '每個音節：聲調（顏色和音高線）、起首子音是中／高／低子音。', '下面一行一行說明怎麼推出聲調，例如「ร 低子音＋ไม้โท → 高聲」；不照規則唸的會標「例外」。', '按「看聲調規則表」可以看整張表。', '生字卡詳解、複習的答案也會顯示；測驗會穿插聲調題。'],
+        d: ['打開後，點一個詞，查詞視窗會多一塊「聲調」。', '每個音節：聲調（顏色和音高線）、起首子音是中／高／低子音。', '下面一行一行說明怎麼推出聲調，例如「ร 低子音＋ไม้โท → 高聲」；不照規則唸的會標「例外」。', '按「看聲調規則表」可以看整張表。', '生字卡詳解、複習的答案也會顯示；測驗會穿插聲調題。', '生字卡頁會多一個「聲調」分頁：規則表（點格子看例詞、聽發音）、三類子音有哪些字，還有「練習推聲調」：一步一步答子音類別、活或死音節、聲調。'],
         tip: '聲調資料第一次打開要連網下載。' },
       { t: '換字體', s: '「中文字體」選喜歡的字', img: 'set-font',
         d: ['「蘋方」：iPad 內建的黑體，最清楚（預設）。', '「思源黑體」：線條較均勻的黑體。', '「思源宋體」：像書本的明體。', '「霞鶩文楷」：像手寫的楷體，比較柔和。', '只改按鈕和說明的中文字，泰文字不變。'],
@@ -45667,79 +45931,342 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     if (Math.max(a.length, b.length) > 120) { return false; }
     return 1 - vidLev(a, b) / Math.max(a.length, b.length) >= 0.75;
   }
-  /* 把辨識結果的一個個字，依高度排回一行一行 */
-  function vidLinesOf(items) {
-    var rows = [];
-    items.slice().sort(function (p, q) { return p[1] - q[1] || p[0] - q[0]; }).forEach(function (it) {
-      var row = rows.filter(function (r) { return Math.abs(r.base - it[1]) < it[3] * 0.6; })[0];
-      if (!row) { row = { base: it[1], items: [] }; rows.push(row); }
-      row.items.push(it);
+  /* 字幕清理：把框裡的畫面放大，找出「周圍一圈都是深色」的亮色字塊（有黑邊或黑底的字幕），其他背景通通變白，
+     再只留排成一行一行的字，縮放到文字辨識最認得的大小。inv＝深色字（白邊）。 */
+  function vidMask(src, sw, sh, rx, inv, maxW, target) {
+    var x0 = Math.round(rx[0] * sw), y0 = Math.round(rx[1] * sh), w = Math.max(8, Math.round(rx[2] * sw)), h = Math.max(8, Math.round(rx[3] * sh));
+    var k = Math.min(2.5, (maxW || 1280) / w);
+    var W = Math.max(8, Math.round(w * k)), H = Math.max(8, Math.round(h * k));
+    var c = document.createElement('canvas'); c.width = W; c.height = H;
+    var g = c.getContext('2d', { willReadFrequently: true });
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(src, x0, y0, w, h, 0, 0, W, H);
+    var d = g.getImageData(0, 0, W, H).data, n = W * H;
+    var lum = new Uint8Array(n), fg = new Uint8Array(n), i, j, x, y, q, m, v;
+    for (i = 0, j = 0; j < n; i += 4, j++) {
+      var r = d[i], gg = d[i + 1], b = d[i + 2], L = (r * 3 + gg * 6 + b) / 10, sat = Math.max(r, gg, b) - Math.min(r, gg, b);
+      lum[j] = inv ? 255 - L : L;
+      fg[j] = inv ? (L < 80 ? 1 : 0) : (L > 170 && (sat < 80 || (r > 170 && gg > 150 && b < 130)) ? 1 : 0);
+    }
+    var R = Math.max(2, Math.round(3 * Math.max(1, k * 0.8))), mn = new Uint8Array(n), tmp = new Uint8Array(n);
+    for (y = 0; y < H; y++) { var row = y * W; for (x = 0; x < W; x++) { m = 255; for (q = Math.max(0, x - R); q <= Math.min(W - 1, x + R); q++) { v = lum[row + q]; if (v < m) { m = v; } } tmp[row + x] = m; } }
+    for (x = 0; x < W; x++) { for (y = 0; y < H; y++) { m = 255; for (q = Math.max(0, y - R); q <= Math.min(H - 1, y + R); q++) { v = tmp[q * W + x]; if (v < m) { m = v; } } mn[y * W + x] = m; } }
+    var lab = new Int32Array(n).fill(-1), comps = [], stack = new Int32Array(n);
+    for (j = 0; j < n; j++) {
+      if (!fg[j] || lab[j] >= 0) { continue; }
+      var id = comps.length, sp = 0, cp = { area: 0, edge: 0, good: 0, x0: W, x1: 0, y0: H, y1: 0 };
+      stack[sp++] = j; lab[j] = id;
+      while (sp) {
+        var p = stack[--sp], px = p % W, py = (p - px) / W, edge = false;
+        cp.area++;
+        if (px < cp.x0) { cp.x0 = px; } if (px > cp.x1) { cp.x1 = px; } if (py < cp.y0) { cp.y0 = py; } if (py > cp.y1) { cp.y1 = py; }
+        if (px > 0) { q = p - 1; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (px < W - 1) { q = p + 1; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (py > 0) { q = p - W; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (py < H - 1) { q = p + W; if (!fg[q]) { edge = true; } else if (lab[q] < 0) { lab[q] = id; stack[sp++] = q; } } else { edge = true; }
+        if (edge) { cp.edge++; if (lum[p] - mn[p] > 100) { cp.good++; } }
+      }
+      cp.h = cp.y1 - cp.y0 + 1; cp.w = cp.x1 - cp.x0 + 1;
+      cp.ok = cp.area >= 5 * k && cp.h < H * 0.7 && cp.w < W * 0.5 && cp.good / cp.edge >= 0.7;
+      comps.push(cp);
+    }
+    var ok = comps.filter(function (cp) { return cp.ok; });
+    var out = { canvas: null, sig: null, medH: 0, n: 0 };
+    if (ok.length < 2) { return out; }
+    /* 字的高度：大的字塊（不含聲調符號這類小點）的中位數 */
+    var big = ok.slice().sort(function (a, b) { return b.area - a.area; }).slice(0, Math.max(3, Math.ceil(ok.length * 0.6)));
+    var hs = big.map(function (cp) { return cp.h; }).sort(function (a, b) { return a - b; }), medH = hs[Math.floor(hs.length / 2)];
+    /* 一行一行：被兩個以上字塊蓋到的高度範圍 */
+    var cover = new Uint16Array(H);
+    big.forEach(function (cp) { if (cp.h >= medH * 0.5 && cp.h <= medH * 2.2) { for (var yy = cp.y0; yy <= cp.y1; yy++) { cover[yy]++; } } });
+    var bands = [], cur = null, gapMax = Math.round(medH * 0.3), gap = 0;
+    for (y = 0; y < H; y++) {
+      if (cover[y] >= 2) { if (!cur) { cur = { y0: y, y1: y }; bands.push(cur); } cur.y1 = y; gap = 0; }
+      else if (cur) { gap++; if (gap > gapMax) { cur = null; } }
+    }
+    if (!bands.length) { return out; }
+    bands.forEach(function (bd) {
+      bd.e0 = bd.y0 - medH * 0.7; bd.e1 = bd.y1 + medH * 0.6;
+      bd.items = ok.filter(function (cp) { var cy = (cp.y0 + cp.y1) / 2; return cy >= bd.e0 && cy <= bd.e1 && cp.h <= medH * 2.5; });
+      /* 同一行裡離太遠的零星字塊（背景上的其他字）不要 */
+      bd.items.sort(function (a, b) { return a.x0 - b.x0; });
+      var cl = [], cc = null;
+      bd.items.forEach(function (cp) { if (!cc || cp.x0 - cc.x1 > medH * 1.2) { cc = { x1: cp.x1, area: 0, items: [] }; cl.push(cc); } cc.items.push(cp); cc.area += cp.area; cc.x1 = Math.max(cc.x1, cp.x1); });
+      var best = cl.reduce(function (a, b2) { return b2.area > a ? b2.area : a; }, 0);
+      bd.items = []; cl.forEach(function (c2) {
+        /* 字比較矮的一群（背景上的小字）不要 */
+        var hh = c2.items.filter(function (cp) { return cp.area >= medH * medH * 0.08; }).map(function (cp) { return cp.h; }).sort(function (a, b) { return a - b; });
+        var mh = hh.length ? hh[Math.floor(hh.length / 2)] : 0;
+        if (c2.area >= best * 0.15 && c2.items.length >= 2 && mh >= medH * 0.65) { bd.items = bd.items.concat(c2.items); }
+      });
+      bd.area = bd.items.reduce(function (s, cp) { return s + cp.area; }, 0);
     });
-    return rows.map(function (r) {
-      r.items.sort(function (p, q) { return p[0] - q[0]; });
-      return r.items.map(function (it, k) { return (k ? (typeof it[5] === 'string' ? it[5] : ' ') : '') + it[4]; }).join('').trim();
-    }).filter(function (t) { return /[ก-ฮ]/.test(t) && t.replace(/\s/g, '').length >= 2; });
+    var top = bands.reduce(function (a, b2) { return b2.area > a ? b2.area : a; }, 0);
+    var keepIds = {}, kept = [];
+    bands.forEach(function (bd) { if (bd.area >= top * 0.25 && bd.items.length >= 3) { bd.items.forEach(function (cp) { if (!keepIds[comps.indexOf(cp)]) { keepIds[comps.indexOf(cp)] = 1; kept.push(cp); } }); } });
+    if (!kept.length) { return out; }
+    var bx0 = W, bx1 = 0, by0 = H, by1 = 0;
+    kept.forEach(function (cp) { bx0 = Math.min(bx0, cp.x0); bx1 = Math.max(bx1, cp.x1); by0 = Math.min(by0, cp.y0); by1 = Math.max(by1, cp.y1); });
+    var pad = Math.round(medH * 0.8), cx0 = Math.max(0, bx0 - pad), cy0 = Math.max(0, by0 - pad), cw = Math.min(W, bx1 + pad + 1) - cx0, ch = Math.min(H, by1 + pad + 1) - cy0;
+    /* 縮放：讓字高大約是 target 像素（文字辨識最準的大小） */
+    var s = Math.max(0.25, Math.min(2, (target || 20) / medH));
+    var OW = Math.max(8, Math.round(cw * s)), OH = Math.max(8, Math.round(ch * s));
+    var full = new Uint8ClampedArray(cw * ch * 4);
+    for (y = 0; y < ch; y++) { for (x = 0; x < cw; x++) { var L2 = lab[(y + cy0) * W + x + cx0], on = L2 >= 0 && keepIds[L2], o = (y * cw + x) * 4; full[o] = full[o + 1] = full[o + 2] = on ? 0 : 255; full[o + 3] = 255; } }
+    var mc = document.createElement('canvas'); mc.width = cw; mc.height = ch; mc.getContext('2d').putImageData(new ImageData(full, cw, ch), 0, 0);
+    var oc = document.createElement('canvas'); oc.width = OW; oc.height = OH;
+    var og = oc.getContext('2d'); og.imageSmoothingQuality = 'high'; og.fillStyle = '#fff'; og.fillRect(0, 0, OW, OH); og.drawImage(mc, 0, 0, OW, OH);
+    /* 比對畫面有沒有換字幕用的「指紋」：字塊的位置和大小 */
+    var sig = kept.map(function (cp) { return [Math.round(cp.x0 / medH * 4), Math.round(cp.y0 / medH * 4), Math.round(cp.w / medH * 4), Math.round(cp.h / medH * 4)]; });
+    out.canvas = oc; out.sig = sig; out.medH = medH / k; out.n = kept.length; out.box = [(bx0 / k + x0) / sw, (by0 / k + y0) / sh, ((bx1 - bx0) / k) / sw, ((by1 - by0) / k) / sh];
+    return out;
   }
+  /* 兩次的字塊指紋差多少（0＝一樣，1＝完全不同） */
+  function vidSigDiff(a, b) {
+    if (!a || !b) { return a === b ? 0 : 1; }
+    var used = {}, hit = 0;
+    a.forEach(function (p) { for (var z = 0; z < b.length; z++) { if (used[z]) { continue; } var o = b[z]; if (Math.abs(o[0] - p[0]) <= 1 && Math.abs(o[1] - p[1]) <= 1 && Math.abs(o[2] - p[2]) <= 1 && Math.abs(o[3] - p[3]) <= 1) { used[z] = 1; hit++; return; } } });
+    return 1 - hit / Math.max(a.length, b.length);
+  }
+
+  /* 辨識結果整理成一行一行：去掉頭尾的雜訊，信心太低或泰文太少的不要 */
+  function vidLinesFrom(data, minConf) {
+    var out = [];
+    (data.blocks || []).forEach(function (b) {
+      (b.paragraphs || []).forEach(function (p) {
+        (p.lines || []).forEach(function (ln) {
+          var t = (ln.text || '').replace(/\s+/g, ' ').trim();
+          t = t.replace(/^[^ก-๛A-Za-z0-9]+/, '').replace(/[^ก-๛A-Za-z0-9!?.]+$/, '');
+          var th = (t.match(/[ก-ฮ]/g) || []).length, all = t.replace(/\s/g, '').length;
+          if (th < 2 || th / Math.max(1, all) < 0.5 || ln.confidence < minConf) { return; }
+          var f = typeof ocrFixText === 'function' ? ocrFixText(t) : { t: t }, kn = vidKnown(f.t);
+          if (kn < 0.35) { return; }
+          out.push({ t: f.t, c: ln.confidence, th: th, kn: kn, q: ln.confidence + 40 * kn });
+        });
+      });
+    });
+    return out;
+  }
+  /* 這一行有多少是字典裡的詞（0～1）：讀錯的字幕通常拼不出真的詞 */
+  function vidKnown(t) {
+    var th = (t.match(/[\u0E01-\u0E2E]/g) || []).length;
+    if (!th || typeof segment !== 'function' || !DICT) { return 0.5; }
+    var ok = 0;
+    segment(t).forEach(function (x) {
+      if (!x.w || !/[\u0E01-\u0E2E]/.test(x.t)) { return; }
+      var known = DICT[x.t] || (typeof dictBase === 'function' && dictBase(x.t) && DICT[dictBase(x.t)]) || false;
+      if (known && x.t.length >= 2) { ok += (x.t.match(/[\u0E01-\u0E2E]/g) || []).length; }
+    });
+    return Math.min(1, ok / th);
+  }
+  function vidScore(ls) { return ls.reduce(function (s, l) { return s + l.th * l.c / 100; }, 0); }
+  function vidFrame(v, maxW) {
+    var vw = v.videoWidth, vh = v.videoHeight, k = Math.min(1, (maxW || 1920) / Math.max(vw, vh));
+    var c = document.createElement('canvas'); c.width = Math.round(vw * k); c.height = Math.round(vh * k);
+    c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+    return c;
+  }
+  /* 自動找字幕在哪：看影片裡幾個畫面，找「有黑邊或底色的字」最常出現的高度 */
+  async function vidGuessRegion(v) {
+    var dur = v.duration, hits = [];
+    for (var i = 1; i <= 7; i++) {
+      var t = dur * i / 8;
+      await vidSeek(v, Math.min(t, dur - 0.05));
+      var fc = vidFrame(v, 960);
+      [false, true].forEach(function (inv) {
+        var m = vidMask(fc, fc.width, fc.height, [0, 0, 1, 1], inv, 960, 18);
+        if (m.canvas && m.n >= 4) { hits.push({ t: t, cy: m.box[1] + m.box[3] / 2, h: Math.max(m.box[3], 0.03), n: m.n }); }
+      });
+    }
+    if (!hits.length) { return null; }
+    var best = null;
+    hits.forEach(function (a) {
+      var grp = hits.filter(function (b) { return Math.abs(b.cy - a.cy) < 0.06; });
+      var sc = grp.length * 100 + grp.reduce(function (s, b) { return s + b.n; }, 0);
+      if (!best || sc > best.sc) { best = { sc: sc, grp: grp, t: a.t }; }
+    });
+    var cys = best.grp.map(function (b) { return b.cy; }).sort(), hs = best.grp.map(function (b) { return b.h; }).sort();
+    var cy = cys[Math.floor(cys.length / 2)], h = Math.max(0.12, hs[hs.length - 1] * 2.6);
+    var y0 = Math.max(0, cy - h / 2), y1 = Math.min(1, cy + h / 2);
+    return { r: [0, y0, 1, y1 - y0], t: best.t };
+  }
+
+  /* ---------- 框出字幕位置的視窗 ---------- */
+  var VREG_KEY = 'thai-vid-region';
+  var vpWrap = document.createElement('div'); vpWrap.className = 'cdlayer vplayer'; vpWrap.id = 'vidPick'; vpWrap.hidden = true;
+  vpWrap.innerHTML = '<div class="cdback"></div><div class="cdsheet vpsheet" role="dialog" aria-modal="true" aria-labelledby="vpTitle"><div class="cdscroll">' +
+    '<h2 class="vptitle" id="vpTitle">框出字幕的位置</h2>' +
+    '<p class="vptip" id="vpTip"></p>' +
+    '<div class="vpstage" id="vpStage"><canvas id="vpCanvas"></canvas><div class="vprect" id="vpRect"></div></div>' +
+    '<label class="vptime"><span>換一個畫面看</span><input type="range" id="vpTime" min="0" max="1000" value="300"></label>' +
+    '<div class="seg vppre" id="vpPresets" role="group" aria-label="常見位置"></div>' +
+    '<div class="vpact"><button type="button" id="vpCancel">取消</button><button type="button" class="primary" id="vpGo">開始讀字幕</button></div>' +
+    '</div></div>';
+  document.body.appendChild(vpWrap);
+  function vidPickRegion(v, guess) {
+    return new Promise(function (resolve) {
+      var cv = $('vpCanvas'), stage = $('vpStage'), rect = $('vpRect'), reg = null, drag = null, seekBusy = false, want = null;
+      var saved = null; try { saved = JSON.parse(localStorage.getItem(VREG_KEY) || 'null'); } catch (err) {}
+      reg = guess ? guess.r.slice() : (saved && saved.length === 4 ? saved : [0, 0.62, 1, 0.33]);
+      $('vpTip').textContent = guess ? '我們先找到字幕大概在框起來的地方。不對的話，用手指在畫面上重新框一次（框住字幕就好，不用很準）。' : '沒有自動找到字幕。請用手指在畫面上把字幕框起來，或選下面的位置。';
+      cv.width = Math.min(960, v.videoWidth); cv.height = Math.round(cv.width * v.videoHeight / v.videoWidth);
+      stage.style.aspectRatio = v.videoWidth + ' / ' + v.videoHeight;
+      function paint() { cv.getContext('2d').drawImage(v, 0, 0, cv.width, cv.height); }
+      function show() { rect.style.left = reg[0] * 100 + '%'; rect.style.top = reg[1] * 100 + '%'; rect.style.width = reg[2] * 100 + '%'; rect.style.height = reg[3] * 100 + '%'; }
+      async function goTo(t) {
+        want = t; if (seekBusy) { return; }
+        seekBusy = true;
+        while (want !== null) { var tt = want; want = null; await vidSeek(v, tt); paint(); }
+        seekBusy = false;
+      }
+      var t0 = guess ? guess.t : v.duration * 0.3;
+      $('vpTime').value = String(Math.round(t0 / v.duration * 1000));
+      goTo(t0); show();
+      $('vpTime').oninput = function () { goTo(Math.min(v.duration - 0.05, v.duration * Number(this.value) / 1000)); };
+      var P = [['下方', [0, 0.62, 1, 0.33]], ['中間', [0, 0.36, 1, 0.28]], ['上方', [0, 0.04, 1, 0.3]], ['整個畫面', [0, 0, 1, 1]]];
+      segButtons($('vpPresets'), P.map(function (p, i) { return [String(i), p[0]]; }), '', function (val) { reg = P[Number(val)][1].slice(); show(); });
+      function pt(e) { var r = stage.getBoundingClientRect(); return [Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height))]; }
+      stage.onpointerdown = function (e) { drag = { a: pt(e), id: e.pointerId }; try { stage.setPointerCapture(e.pointerId); } catch (err) {} e.preventDefault(); };
+      stage.onpointermove = function (e) {
+        if (!drag || e.pointerId !== drag.id) { return; }
+        var b = pt(e), x0 = Math.min(drag.a[0], b[0]), y0 = Math.min(drag.a[1], b[1]), w = Math.abs(b[0] - drag.a[0]), h = Math.abs(b[1] - drag.a[1]);
+        if (w > 0.03 && h > 0.02) { reg = [x0, y0, w, h]; show(); }
+      };
+      stage.onpointerup = stage.onpointercancel = function () { drag = null; };
+      function done(r) {
+        vpWrap.hidden = true; document.body.classList.remove('noscroll');
+        $('vpGo').onclick = $('vpCancel').onclick = null; vpWrap.querySelector('.cdback').onclick = null;
+        resolve(r);
+      }
+      $('vpGo').onclick = function () {
+        /* 框太小的話上下多留一點，字幕換行或長短不同也框得到 */
+        var r = reg.slice();
+        if (r[3] < 0.08) { var ex = (0.08 - r[3]) / 2; r[1] = Math.max(0, r[1] - ex); r[3] = Math.min(1 - r[1], 0.08); }
+        try { localStorage.setItem(VREG_KEY, JSON.stringify(r)); } catch (err) {}
+        done(r);
+      };
+      $('vpCancel').onclick = function () { done(null); };
+      vpWrap.querySelector('.cdback').onclick = function () { done(null); };
+      vpWrap.hidden = false; document.body.classList.add('noscroll');
+    });
+  }
+
+  /* 三種讀法：out＝亮色字有黑邊或深色底；inv＝深色字在亮底上；raw＝直接讀框裡的畫面（沒有邊的字幕） */
+  async function vidRecognize(w, fc, region, mode, pre) {
+    var cv, minConf;
+    if (mode === 'raw') {
+      var x0 = Math.round(region[0] * fc.width), y0 = Math.round(region[1] * fc.height), cw = Math.max(8, Math.round(region[2] * fc.width)), ch = Math.max(8, Math.round(region[3] * fc.height));
+      var k = Math.min(2.5, 1800 / cw);
+      cv = document.createElement('canvas'); cv.width = Math.round(cw * k); cv.height = Math.round(ch * k);
+      var g = cv.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(fc, x0, y0, cw, ch, 0, 0, cv.width, cv.height);
+      await w.setParameters({ tessedit_pageseg_mode: '3' });
+      minConf = 70;
+    } else {
+      var m = pre || vidMask(fc, fc.width, fc.height, region, mode === 'inv', 1280, 18);
+      if (!m.canvas) { return []; }
+      cv = m.canvas;
+      await w.setParameters({ tessedit_pageseg_mode: '11' });
+      minConf = 60;
+    }
+    var res = await w.recognize(cv, {}, { blocks: true, text: false, hocr: false, tsv: false });
+    return vidLinesFrom(res.data, minConf);
+  }
+
   async function libAddVideo(f) {
     if (vid.busy) { $('homeMsg').textContent = '還有一部影片正在讀，請等它完成或按「停止」。'; return; }
-    vid.busy = true; vid.stop = false; vbox.hidden = false;
-    var msg = $('vidMsg'), bar = $('vidBar'), name = f.name.replace(/\.[^.]+$/, '') || '影片字幕';
-    msg.textContent = '讀取影片「' + name + '」…'; bar.style.width = '0%';
-    var o = null, lines = [], recent = [], frames = 0, ocrs = 0;
+    vid.busy = true; vid.stop = false;
+    var name = f.name.replace(/\.[^.]+$/, '') || '影片字幕', o = null, v = null;
+    function quit(text) { if (text) { $('homeMsg').textContent = text; } vbox.hidden = true; vid.busy = false; if (o) { URL.revokeObjectURL(o.url); } }
+    $('homeMsg').textContent = '讀取影片「' + name + '」…';
     try {
-      o = await vidLoad(f);
-      var v = o.v, dur = v.duration;
+      o = await vidLoad(f); v = o.v;
+      var dur = v.duration;
       if (!isFinite(dur) || dur <= 0) { throw new Error('讀不到影片長度'); }
       if (dur > 20 * 60) { throw new Error('影片太長（超過 20 分鐘），請先剪短或分段錄'); }
-      var vw = v.videoWidth, vh = v.videoHeight;
-      if (!vw || !vh) { throw new Error('讀不到影片畫面'); }
-      var k = Math.min(2.5, 2200 / Math.max(vw, vh));
-      var big = document.createElement('canvas'); big.width = Math.round(vw * k); big.height = Math.round(vh * k);
-      var small = document.createElement('canvas'); small.width = 96; small.height = Math.max(8, Math.round(96 * vh / vw));
-      var bg = big.getContext('2d'), sg = small.getContext('2d', { willReadFrequently: true });
-      var prev = null, step = dur > 600 ? 1.5 : 1;
-      msg.textContent = '準備文字辨識工具…（第一次要下載約 8 MB）';
-      var w = await ensureOcr();
+      if (!v.videoWidth || !v.videoHeight) { throw new Error('讀不到影片畫面'); }
+      $('homeMsg').textContent = '正在找字幕在畫面的哪裡…';
+      var guess = await vidGuessRegion(v);
+      $('homeMsg').textContent = '';
+      var region = await vidPickRegion(v, guess);
+      if (!region) { quit('已取消讀影片。'); return; }
+      await vidRead(v, region, name, dur);
+    } catch (err) {
+      quit('讀影片失敗：' + String(err && err.message || err));
+      return;
+    }
+    if (o) { URL.revokeObjectURL(o.url); }
+  }
+
+  async function vidRead(v, region, name, dur) {
+    vbox.hidden = false;
+    var msg = $('vidMsg'), bar = $('vidBar'), lines = [], recent = [], frames = 0, ocrs = 0;
+    var modes = ['out', 'inv', 'raw'], wins = { out: 0, inv: 0, raw: 0 }, tried = 0, best = null;
+    var prevSig = null, prevInvSig = null, prevGray = null, lastOcrT = -99;
+    var small = document.createElement('canvas'); small.width = 96; small.height = Math.max(8, Math.round(96 * (region[3] * v.videoHeight) / (region[2] * v.videoWidth)));
+    var sg = small.getContext('2d', { willReadFrequently: true });
+    msg.textContent = '準備文字辨識工具…（第一次要下載約 8 MB）'; bar.style.width = '0%';
+    var w = await ensureOcr();
+    var step = dur > 600 ? 1.5 : 1;
+    try {
       for (var t = 0.2; t < dur && !vid.stop; t += step) {
         await vidSeek(v, Math.min(t, dur - 0.05));
         frames++;
-        sg.drawImage(v, 0, 0, small.width, small.height);
-        var px = sg.getImageData(0, 0, small.width, small.height).data, gray = new Uint8Array(px.length / 4), diff = 0;
-        for (var i = 0, j = 0; i < px.length; i += 4, j++) { gray[j] = (px[i] * 3 + px[i + 1] * 6 + px[i + 2]) / 10; if (prev) { diff += Math.abs(gray[j] - prev[j]); } }
-        diff = prev ? diff / gray.length : 999;
         bar.style.width = Math.round(t / dur * 100) + '%';
         msg.textContent = '看到第 ' + Math.floor(t / 60) + ':' + ('0' + Math.floor(t % 60)).slice(-2) + '（共 ' + Math.floor(dur / 60) + ':' + ('0' + Math.floor(dur % 60)).slice(-2) + '），已找到 ' + lines.length + ' 句字幕…';
-        if (diff < 6) { continue; }
-        prev = gray;
-        bg.fillStyle = '#ffffff'; bg.fillRect(0, 0, big.width, big.height);
-        bg.drawImage(v, 0, 0, big.width, big.height);
-        var res = await w.recognize(big, {}, { blocks: true, text: false, hocr: false, tsv: false });
-        ocrs++;
-        var got = ocrItems(res.data, big.width), ls = vidLinesOf(got.items);
-        ls.forEach(function (ln) {
-          var nl = vidNorm(ln);
+        var fc = vidFrame(v, 1920);
+        /* 畫面有沒有換字幕：有邊的字看字塊指紋，沒有邊的字看框裡的畫面變了多少 */
+        var mo = vidMask(fc, fc.width, fc.height, region, false, 1280, 18), mi = (!best || best === 'inv') ? vidMask(fc, fc.width, fc.height, region, true, 1280, 18) : null;
+        var ch = vidSigDiff(mo.sig, prevSig) > 0.3 || (mi && vidSigDiff(mi.sig, prevInvSig) > 0.3);
+        if (!best || best === 'raw') {
+          sg.drawImage(fc, region[0] * fc.width, region[1] * fc.height, region[2] * fc.width, region[3] * fc.height, 0, 0, small.width, small.height);
+          var px = sg.getImageData(0, 0, small.width, small.height).data, gray = new Uint8Array(px.length / 4), diff = 0;
+          for (var i = 0, j = 0; i < px.length; i += 4, j++) { gray[j] = (px[i] * 3 + px[i + 1] * 6 + px[i + 2]) / 10; if (prevGray) { diff += Math.abs(gray[j] - prevGray[j]); } }
+          diff = prevGray ? diff / gray.length : 999;
+          if (diff >= 6) { ch = true; prevGray = gray; }
+        }
+        /* 保險：畫面上有字、但已經 3 秒沒讀了，就再讀一次 */
+        if (!ch && t - lastOcrT >= 2.9 && (mo.canvas || (mi && mi.canvas))) { ch = true; }
+        if (!ch) { continue; }
+        lastOcrT = t;
+        prevSig = mo.sig; if (mi) { prevInvSig = mi.sig; }
+        /* 前幾句三種讀法都試，之後用最常贏的那一種；它讀不到才試別的 */
+        var order = best ? [best].concat(modes.filter(function (m) { return m !== best; })) : modes, got = [], gotMode = null, gotScore = 0;
+        for (var z = 0; z < order.length; z++) {
+          var md = order[z];
+          if (md === 'out' && !mo.canvas) { continue; }
+          if (md === 'inv' && mi && !mi.canvas) { continue; }
+          var ls = await vidRecognize(w, fc, region, md, md === 'out' ? mo : (md === 'inv' ? mi : null));
+          ocrs++;
+          var sc = vidScore(ls);
+          if (sc > gotScore) { got = ls; gotMode = md; gotScore = sc; }
+          if (best && got.length) { break; }
+        }
+        if (gotMode) {
+          wins[gotMode]++; tried++;
+          if (tried >= 5 && !best) { best = modes.reduce(function (a, b) { return wins[b] > wins[a] ? b : a; }, 'out'); }
+        }
+        got.forEach(function (ln) {
+          var nl = vidNorm(ln.t);
           if (nl.length < 2) { return; }
           for (var q = recent.length - 1; q >= 0; q--) {
             if (vidSimilar(recent[q].n, nl)) {
-              /* 同一句：留比較完整（符號比較多）的那一次 */
-              if (ln.length > lines[recent[q].k].length) { lines[recent[q].k] = ln; }
+              /* 同一句出現好幾次：留「信心高、又拼得出字典裡的詞」的那一次 */
+              var cur = lines[recent[q].k];
+              if (ln.q > cur.q + 1 || (Math.abs(ln.q - cur.q) <= 1 && ln.t.length > cur.t.length)) { lines[recent[q].k] = ln; }
               return;
             }
           }
           lines.push(ln); recent.push({ n: nl, k: lines.length - 1 }); if (recent.length > 12) { recent.shift(); }
         });
       }
-    } catch (err) {
-      msg.textContent = '讀影片失敗：' + String(err && err.message || err);
+    } finally {
+      try { await w.setParameters({ tessedit_pageseg_mode: '3' }); } catch (err) {}
       vid.busy = false;
-      if (o) { URL.revokeObjectURL(o.url); }
-      return;
     }
-    if (o) { URL.revokeObjectURL(o.url); }
-    vid.busy = false;
-    if (!lines.length) { msg.textContent = '這部影片沒有讀到泰文字幕（看了 ' + frames + ' 個畫面）。'; bar.style.width = '100%'; return; }
+    vid.last = { frames: frames, ocrs: ocrs, wins: wins, best: best, region: region };
+    if (!lines.length) { msg.textContent = '這部影片沒有讀到泰文字幕（看了 ' + frames + ' 個畫面）。可以再加入一次，把字幕框小一點試試看。'; bar.style.width = '100%'; return; }
     vbox.hidden = true;
-    var text = lines.join('\n'), id = 'text:' + Date.now().toString(36), dn = name + '（影片字幕）';
+    var text = lines.map(function (l) { return l.t; }).join('\n'), id = 'text:' + Date.now().toString(36), dn = name + '（影片字幕）';
     lib.docs.push({ id: id, name: dn, type: 'text', size: text.length, added: Date.now(), opened: 0, folder: libTarget(), video: true });
     saveLib();
     try { localStorage.setItem(PDF_DOC_PREFIX + id, JSON.stringify({ text: text, src: { type: 'text', id: id, name: dn }, hl: [], strokes: [], boxes: [], nextId: 1 })); } catch (err) {}
@@ -45820,9 +46347,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
       e.preventDefault();
     } else if (mode === 'ink') {
-      active = { id: e.pointerId, kind: 'ink', t0: Date.now(), cx: e.clientX, cy: e.clientY, s: { w: toolPrefs.inkW, p: [toPage(e)] } };
+      active = { id: e.pointerId, kind: 'ink', pt: e.pointerType, t0: Date.now(), cx: e.clientX, cy: e.clientY, s: { w: toolPrefs.inkW, p: [toPage(e)] } };
       if (inkStrokeColor()) { active.s.c = inkStrokeColor(); }
       if (pdf) { var ipg = pageAtY(active.s.p[0][1]); active.g = ipg && ipg.ink.width ? pageInkCtx(ipg) : null; }
+      var g0 = pdf ? active.g : ctx();
+      if (g0) { g0.fillStyle = active.s.c || g0._inkDef || g0.fillStyle; g0.beginPath(); g0.arc(active.s.p[0][0], active.s.p[0][1], Math.max(active.s.w / 2, 1.3), 0, Math.PI * 2); g0.fill(); }
       try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
       e.preventDefault();
     } else if (mode === 'hl') {
@@ -45833,7 +46362,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       e.preventDefault();
       renderText(snapRange(i, i));
     } else {
-      active = { id: e.pointerId, kind: mode, x: e.clientX, y: e.clientY };
+      active = { id: e.pointerId, kind: mode, pt: e.pointerType, x: e.clientX, y: e.clientY };
     }
   });
 
@@ -45867,7 +46396,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     active = null;
     if (a.kind === 'erase') { if (a.hit) { save(); } return; }
     if (a.kind === 'ink') {
-      if (Date.now() - a.t0 < 350 && Math.abs(e.clientX - a.cx) + Math.abs(e.clientY - a.cy) < 8) {
+      if (a.pt === 'touch' && Date.now() - a.t0 < 350 && Math.abs(e.clientX - a.cx) + Math.abs(e.clientY - a.cy) < 8) {
         var ti = indexByGeometry(e.clientX, e.clientY), ts = ti >= 0 ? segAt(ti) : null;
         if (ts && ts.w && /[\u0E01-\u0E2E]/.test(ts.t)) { redrawInk(); tapSel = [ts.i, ts.i + ts.n]; renderText(); showPop(ts); return; }
       }
@@ -45902,6 +46431,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       } else if (a.kind === 'box') {
         var bi = indexByGeometry(e.clientX, e.clientY);
         var ws = (bi >= 0 && lastD <= 9) ? segAt(bi) : null;
+        if (ws && ws.w && a.pt !== 'pen' && /[\u0E01-\u0E2E]/.test(ws.t)) { tapSel = [ws.i, ws.i + ws.n]; renderText(); showPop(ws); return; }
         snapshot();
         var b;
         if (ws && ws.w) {
@@ -46245,8 +46775,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   var VIEW_KEY = 'thai-view', PROG_KEY = 'thai-progress';
   var viewPrefs = { zoom: 'fit', paged: false };
   try { Object.assign(viewPrefs, JSON.parse(localStorage.getItem(VIEW_KEY) || '{}')); } catch (err) {}
+  /* 1.13 起百分比改成「實際大小」的倍數（以前是符合寬度的倍數）：舊的數字設定回到符合寬度 */
+  if (viewPrefs.zv !== 2) { if (typeof viewPrefs.zoom === 'number') { viewPrefs.zoom = 'width'; } viewPrefs.zv = 2; }
   var viewCur = 0, lastDocId = null, pinch = null;
-  var ZOOM_OPTS = [['fit', '符合螢幕'], ['width', '符合寬度'], [1.25, '125%'], [1.5, '150%'], [2, '200%']];
+  var ZOOM_OPTS = [['fit', '符合螢幕'], ['width', '符合寬度'], [1, '100%'], [1.25, '125%'], [1.5, '150%'], [2, '200%']];
   function saveView() { try { localStorage.setItem(VIEW_KEY, JSON.stringify(viewPrefs)); } catch (err) {} }
   function availH() { return Math.max(320, window.innerHeight - 120); }
   function maxPageH() { var m = 0; if (pdf) { pdf.pages.forEach(function (pg) { m = Math.max(m, pg.h); }); } return m || 900; }
@@ -46254,9 +46786,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   function computeScale(avail) {
     var wfit = avail / PAGE_W, z = effZoom();
     if (z === 'fit') { return pdf ? Math.min(wfit, availH() / maxPageH()) : wfit; }
-    if (typeof z === 'number' && isFinite(z)) { return wfit * Math.max(0.5, Math.min(4, z)); }
+    if (typeof z === 'number' && isFinite(z)) { return Math.max(wfit * 0.5, Math.min(wfit * 4, realBase() * Math.max(0.25, Math.min(4, z)))); }
     return wfit;
   }
+  /* 100%＝實際大小：PDF 照紙本尺寸（1 點＝1/72 英吋），文字文件是預設的頁寬 */
+  function realBase() { return pdf && pdf.pages && pdf.pages[0] ? (4 / 3) / pdf.pages[0].s : 1; }
   function pagedOn() { return !!(viewPrefs.paged && pdf && pdf.pages && pdf.pages.length); }
   function applyPageTransform() {
     var w = $('wrap'), avail = w.clientWidth, x = Math.max(0, (avail - PAGE_W * scale) / 2), y = 0;
@@ -46467,7 +47001,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var avail = wrapEl.clientWidth, wfit = avail / PAGE_W, z = p.s / wfit;
     if (Math.abs(z - 1) < 0.04) { viewPrefs.zoom = 'width'; }
     else if (pdf && Math.abs(p.s - Math.min(wfit, availH() / maxPageH())) < wfit * 0.03) { viewPrefs.zoom = 'fit'; }
-    else { viewPrefs.zoom = Math.round(z * 100) / 100; }
+    else { viewPrefs.zoom = Math.round(p.s / realBase() * 100) / 100; }
     saveView();
     layout();
     var r = $('page').getBoundingClientRect(), ax = r.left + p.px * scale, ay = r.top + p.py * scale;
@@ -46627,6 +47161,353 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   })();
   renderToolOpts(); syncUndoButtons();
 
+
+  /* ---------- 雲端同步（Google 雲端硬碟）----------
+     資料存在使用者自己的 Google 雲端硬碟裡「這個 App 專用的隱藏資料夾」（appDataFolder），
+     不會出現在雲端硬碟的檔案清單，也看不到使用者其他的檔案。
+     同步單位：每份文件（清單資訊＋筆記）、每張生字卡、每個設定，各自記「最後修改時間」，兩邊合併時新的贏；
+     刪掉的東西會記一筆「刪除時間」，另一台同步時也會跟著刪。PDF 原檔各自存成一個檔案。 */
+  var SYNC_CLIENT_ID = '';
+  var SYNC_SCOPE = 'https://www.googleapis.com/auth/drive.appdata email';
+  var SYNC_META = 'thai-sync-meta', SYNC_TOK = 'thai-sync-token', SYNC_ON = 'thai-sync-on';
+  var SYNC_SET = ['thai-level', 'thai-show-rom', 'thai-gloss-lang', 'thai-show-ents', 'thai-theme', 'thai-tone-mode', 'thai-font', 'thai-tools', 'thai-my-names', 'thai-progress', 'thai-home-view'];
+  var SYNC_QUIET = ['thai-progress'];
+  var DRV = 'https://www.googleapis.com/drive/v3/files', DRV_UP = 'https://www.googleapis.com/upload/drive/v3/files';
+  var sync = { client: null, busy: false, again: false, timer: null, suspend: 0, status: '', err: '', last: 0, email: '' };
+  function syncNow() { return Date.now(); }
+  function syncLoadMeta() {
+    var m = null; try { m = JSON.parse(localStorage.getItem(SYNC_META) || 'null'); } catch (err) {}
+    m = m || {};
+    ['d', 'c', 's'].forEach(function (k) { m[k] = m[k] || {}; });
+    m.del = m.del || {}; m.del.d = m.del.d || {}; m.del.c = m.del.c || {};
+    m.lf = m.lf || 0; m.cf = m.cf || 0;
+    return m;
+  }
+  var syncMeta = syncLoadMeta();
+  var rawSet = Storage.prototype.setItem, rawRemove = Storage.prototype.removeItem;
+  function syncSaveMeta() { try { rawSet.call(localStorage, SYNC_META, JSON.stringify(syncMeta)); } catch (err) {} }
+  function syncOn() { try { return localStorage.getItem(SYNC_ON) === '1'; } catch (err) { return false; } }
+  function syncParse(v) { try { return JSON.parse(v); } catch (err) { return null; } }
+  function syncDocKey(d) { var x = Object.assign({}, d); delete x.opened; return JSON.stringify(x); }
+  /* 記錄每樣東西什麼時候改過：攔下寫進瀏覽器儲存的動作 */
+  var syncPrevLib = syncParse(localStorage.getItem(LIB_KEY)) || { docs: [], folders: [] };
+  var syncPrevCards = syncParse(localStorage.getItem(CARD_KEY)) || { cards: [], folders: [] };
+  function syncTrack(k, v) {
+    if (sync.suspend) { return; }
+    var now = syncNow(), hit = false;
+    if (k.indexOf(PDF_DOC_PREFIX) === 0) { syncMeta.d[k.slice(PDF_DOC_PREFIX.length)] = now; hit = true; }
+    else if (k === LIB_KEY) {
+      var nl = syncParse(v) || { docs: [], folders: [] }, old = {};
+      (syncPrevLib.docs || []).forEach(function (d) { old[d.id] = syncDocKey(d); });
+      (nl.docs || []).forEach(function (d) { if (old[d.id] !== syncDocKey(d)) { syncMeta.d[d.id] = now; hit = true; } delete old[d.id]; });
+      Object.keys(old).forEach(function (id) { syncMeta.del.d[id] = now; hit = true; });
+      if (JSON.stringify(nl.folders || []) !== JSON.stringify(syncPrevLib.folders || [])) { syncMeta.lf = now; hit = true; }
+      syncPrevLib = nl;
+    } else if (k === CARD_KEY) {
+      var nc = syncParse(v) || { cards: [], folders: [] }, oc = {};
+      (syncPrevCards.cards || []).forEach(function (c) { oc[c.id] = JSON.stringify(c); });
+      (nc.cards || []).forEach(function (c) { if (oc[c.id] !== JSON.stringify(c)) { syncMeta.c[c.id] = now; hit = true; } delete oc[c.id]; });
+      Object.keys(oc).forEach(function (id) { syncMeta.del.c[id] = now; hit = true; });
+      if (JSON.stringify(nc.folders || []) !== JSON.stringify(syncPrevCards.folders || [])) { syncMeta.cf = now; hit = true; }
+      syncPrevCards = nc;
+    } else if (SYNC_SET.indexOf(k) >= 0) { syncMeta.s[k] = now; hit = true; }
+    if (hit) { syncSaveMeta(); syncSoon(); }
+  }
+  Storage.prototype.setItem = function (k, v) {
+    var mine = this === localStorage, old = null;
+    if (mine) { try { old = this.getItem(k); } catch (err) {} }
+    rawSet.call(this, k, v);
+    /* 寫進去的內容跟原本一樣就不算修改 */
+    if (mine && old !== String(v)) { try { syncTrack(String(k), String(v)); } catch (err) {} }
+  };
+  Storage.prototype.removeItem = function (k) {
+    rawRemove.call(this, k);
+    if (this === localStorage && SYNC_SET.indexOf(String(k)) >= 0 && !sync.suspend) { syncMeta.s[k] = syncNow(); syncSaveMeta(); }
+  };
+  /* 這台裝置目前的資料，整理成同步用的樣子 */
+  function syncLocal() {
+    var L = { v: 1, docs: {}, cards: {}, s: {}, lf: null, cf: null, del: JSON.parse(JSON.stringify(syncMeta.del)) };
+    var lb = syncParse(localStorage.getItem(LIB_KEY)) || { docs: [], folders: [] };
+    (lb.docs || []).forEach(function (d) {
+      var st = null; try { st = localStorage.getItem(PDF_DOC_PREFIX + d.id); } catch (err) {}
+      L.docs[d.id] = { t: syncMeta.d[d.id] || d.added || 1, meta: d, st: st };
+    });
+    L.lf = { t: syncMeta.lf || 1, v: lb.folders || [] };
+    var cd = syncParse(localStorage.getItem(CARD_KEY)) || { cards: [], folders: [] };
+    (cd.cards || []).forEach(function (c) { L.cards[c.id] = { t: syncMeta.c[c.id] || c.added || 1, c: c }; });
+    L.cf = { t: syncMeta.cf || 1, v: cd.folders || [] };
+    SYNC_SET.forEach(function (k) { var v = null; try { v = localStorage.getItem(k); } catch (err) {} if (v !== null || syncMeta.s[k]) { L.s[k] = { t: syncMeta.s[k] || 1, v: v }; } });
+    return L;
+  }
+  /* 合併兩邊：每一樣東西新的贏；刪除時間比較新就刪掉 */
+  function syncMerge(L, R) {
+    R = R || { docs: {}, cards: {}, s: {}, del: { d: {}, c: {} } };
+    var M = { v: 1, docs: {}, cards: {}, s: {}, del: { d: {}, c: {} } };
+    ['d', 'c'].forEach(function (k) {
+      var a = (L.del && L.del[k]) || {}, b = (R.del && R.del[k]) || {};
+      Object.keys(a).concat(Object.keys(b)).forEach(function (id) { M.del[k][id] = Math.max(a[id] || 0, b[id] || 0); });
+    });
+    function pick(l, r) { if (!l) { return r; } if (!r) { return l; } return r.t > l.t ? r : l; }
+    function each(name, dk) {
+      var ids = {}; Object.keys(L[name] || {}).forEach(function (i) { ids[i] = 1; }); Object.keys(R[name] || {}).forEach(function (i) { ids[i] = 1; });
+      Object.keys(ids).forEach(function (id) {
+        var it = pick((L[name] || {})[id], (R[name] || {})[id]);
+        if (it && !((M.del[dk][id] || 0) >= it.t)) { M[name][id] = it; }
+      });
+    }
+    each('docs', 'd'); each('cards', 'c');
+    var sk = {}; Object.keys(L.s || {}).forEach(function (k) { sk[k] = 1; }); Object.keys(R.s || {}).forEach(function (k) { sk[k] = 1; });
+    Object.keys(sk).forEach(function (k) { M.s[k] = pick((L.s || {})[k], (R.s || {})[k]); });
+    /* 每台新裝置都會自動放一份一樣的範例文件：內容和名稱完全一樣的文字文件只留一份（兩台選同一份：編號小的） */
+    var byKey = {};
+    Object.keys(M.docs).sort().forEach(function (id) {
+      var d = M.docs[id]; if (!d.meta || d.meta.type !== 'text' || !d.st) { return; }
+      var st = syncParse(d.st), key = d.meta.name + '\u0001' + (st && st.text);
+      if (!st || (st.hl && st.hl.length) || (st.strokes && st.strokes.length) || (st.boxes && st.boxes.length)) { return; }
+      if (byKey[key]) { M.del.d[id] = Math.max(M.del.d[id] || 0, d.t); delete M.docs[id]; } else { byKey[key] = id; }
+    });
+    M.lf = pick(L.lf, R.lf) || { t: 1, v: [] };
+    M.cf = pick(L.cf, R.cf) || { t: 1, v: [] };
+    return M;
+  }
+  function syncSame(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  /* 把合併結果寫回這台裝置；回傳改了哪些 */
+  function syncApply(L, M) {
+    var ch = { docs: [], cards: false, settings: false, lib: false };
+    sync.suspend++;
+    try {
+      var lb = syncParse(localStorage.getItem(LIB_KEY)) || { docs: [], folders: [], cur: 'all' };
+      var docs = [], seen = {};
+      lb.docs.forEach(function (d) {
+        var m = M.docs[d.id];
+        if (!m) { ch.lib = true; ch.docs.push(d.id); rawRemove.call(localStorage, PDF_DOC_PREFIX + d.id); idbDel(d.id); idbDel('ocr:' + d.id); idbDel('thumb2:' + d.id); return; }
+        seen[d.id] = 1;
+        if (!syncSame(m, L.docs[d.id])) {
+          ch.lib = true; ch.docs.push(d.id);
+          if (m.st !== null && m.st !== undefined) { rawSet.call(localStorage, PDF_DOC_PREFIX + d.id, m.st); }
+          docs.push(Object.assign({}, m.meta, { opened: d.opened || m.meta.opened || 0 }));
+        } else { docs.push(d); }
+      });
+      Object.keys(M.docs).forEach(function (id) {
+        if (seen[id]) { return; }
+        var m = M.docs[id]; ch.lib = true; ch.docs.push(id);
+        if (m.st !== null && m.st !== undefined) { rawSet.call(localStorage, PDF_DOC_PREFIX + id, m.st); }
+        docs.push(Object.assign({}, m.meta));
+      });
+      docs.sort(function (a, b) { return (a.added || 0) - (b.added || 0); });
+      if (!syncSame(M.lf.v, lb.folders || [])) { ch.lib = true; }
+      if (ch.lib) {
+        var nl = { docs: docs, folders: M.lf.v, cur: lb.cur || 'all' };
+        if (nl.cur !== 'all' && nl.cur !== 'none' && !nl.folders.some(function (f) { return f.id === nl.cur; })) { nl.cur = 'all'; }
+        rawSet.call(localStorage, LIB_KEY, JSON.stringify(nl)); syncPrevLib = nl;
+      }
+      var cd = syncParse(localStorage.getItem(CARD_KEY)) || { cards: [], folders: [], cur: 'all' };
+      var mc = Object.keys(M.cards).map(function (id) { return M.cards[id].c; }).sort(function (a, b) { return (a.added || 0) - (b.added || 0); });
+      var lcIds = Object.keys(L.cards).sort().join(','), same = lcIds === Object.keys(M.cards).sort().join(',') && Object.keys(M.cards).every(function (id) { return syncSame(M.cards[id], L.cards[id]); });
+      if (!same || !syncSame(M.cf.v, cd.folders || [])) {
+        ch.cards = true;
+        var ncd = { cards: mc, folders: M.cf.v, cur: cd.cur || 'all' };
+        rawSet.call(localStorage, CARD_KEY, JSON.stringify(ncd)); syncPrevCards = ncd;
+      }
+      Object.keys(M.s).forEach(function (k) {
+        var m = M.s[k]; if (!m || syncSame(m, L.s[k])) { return; }
+        if (SYNC_QUIET.indexOf(k) < 0 && (!L.s[k] || L.s[k].v !== m.v)) { ch.settings = true; }
+        if (m.v === null) { rawRemove.call(localStorage, k); } else { rawSet.call(localStorage, k, m.v); }
+      });
+      /* 合併後的時間也記下來，下次比較才正確 */
+      Object.keys(M.docs).forEach(function (id) { syncMeta.d[id] = M.docs[id].t; });
+      Object.keys(M.cards).forEach(function (id) { syncMeta.c[id] = M.cards[id].t; });
+      Object.keys(M.s).forEach(function (k) { if (M.s[k]) { syncMeta.s[k] = M.s[k].t; } });
+      syncMeta.lf = M.lf.t; syncMeta.cf = M.cf.t; syncMeta.del = M.del;
+      syncSaveMeta();
+    } finally { sync.suspend--; }
+    return ch;
+  }
+  /* 改完之後畫面跟著更新 */
+  function syncRefresh(ch) {
+    if (ch.settings) { sync.status = '已同步，套用另一台裝置的設定…'; renderSync(); setTimeout(function () { location.reload(); }, 600); return; }
+    if (ch.lib) {
+      var nl = syncParse(localStorage.getItem(LIB_KEY)); if (nl) { lib = Object.assign({ docs: [], folders: [], cur: 'all' }, nl); }
+      renderHome();
+      if (state.src && ch.docs.indexOf(state.src.id) >= 0) {
+        if (docById(state.src.id)) { openDoc(state.src.id); }
+        else { teardownPdf(); state = { text: '', src: null, hl: [], strokes: [], boxes: [], nextId: 1, style: state.style }; segs = []; history = []; redoStack = []; tapSel = null; save(); syncDocView(); }
+      }
+    }
+    if (ch.cards) {
+      var nc = syncParse(localStorage.getItem(CARD_KEY));
+      if (nc) { cards = nc.cards || []; folders = nc.folders || []; }
+      updateCardButton(); if (curTab === 'cards') { renderCards(); }
+    }
+  }
+
+  /* ---------- 登入 Google（Google 官方的登入元件，只拿到「App 專用資料夾」和 email 的權限） ---------- */
+  var gisLoading = null;
+  function syncLoadGis() {
+    if (window.google && google.accounts && google.accounts.oauth2) { return Promise.resolve(); }
+    if (gisLoading) { return gisLoading; }
+    gisLoading = new Promise(function (res, rej) {
+      var s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+      s.onload = function () { res(); }; s.onerror = function () { gisLoading = null; rej(new Error('連不到 Google 登入服務（請確認有網路）')); };
+      document.head.appendChild(s);
+    });
+    return gisLoading;
+  }
+  function syncToken() {
+    var t = syncParse(localStorage.getItem(SYNC_TOK));
+    return t && t.exp > syncNow() + 60000 ? t.tok : null;
+  }
+  function syncClient() {
+    if (sync.client || !(window.google && google.accounts && google.accounts.oauth2)) { return sync.client; }
+    sync.client = google.accounts.oauth2.initTokenClient({
+      client_id: SYNC_CLIENT_ID, scope: SYNC_SCOPE, prompt: '',
+      callback: function (r) {
+        if (!r || r.error || !r.access_token) { sync.err = r && r.error === 'access_denied' ? '你取消了授權。' : '登入沒有成功' + (r && r.error ? '（' + r.error + '）' : '') + '。'; renderSync(); return; }
+        if (google.accounts.oauth2.hasGrantedAllScopes && !google.accounts.oauth2.hasGrantedAllScopes(r, 'https://www.googleapis.com/auth/drive.appdata')) { sync.err = '需要勾選「查看及管理這個應用程式的設定資料」才能同步，請再按一次並勾選。'; renderSync(); return; }
+        try { rawSet.call(localStorage, SYNC_TOK, JSON.stringify({ tok: r.access_token, exp: syncNow() + (Number(r.expires_in) || 3600) * 1000 })); rawSet.call(localStorage, SYNC_ON, '1'); } catch (err) {}
+        sync.err = '';
+        runSync();
+      },
+      error_callback: function (e) { sync.err = e && e.type === 'popup_closed' ? '登入視窗關掉了，還沒連結。' : '登入視窗打不開' + (e && e.type ? '（' + e.type + '）' : '') + '。'; renderSync(); }
+    });
+    return sync.client;
+  }
+  /* 按鈕按下去時呼叫（Safari 規定登入視窗一定要在點按的當下打開） */
+  function syncSignIn() {
+    var c = syncClient();
+    if (!c) { sync.err = 'Google 登入服務還在載入，請再按一次。'; renderSync(); syncLoadGis().then(function () { syncClient(); }); return; }
+    c.requestAccessToken({ prompt: syncOn() ? '' : 'consent' });
+  }
+  async function drv(url, opt, tok) {
+    opt = opt || {}; opt.headers = Object.assign({ Authorization: 'Bearer ' + tok }, opt.headers || {});
+    var r = await fetch(url, opt);
+    if (r.status === 401) { try { rawRemove.call(localStorage, SYNC_TOK); } catch (err) {} var e = new Error('登入過期了'); e.auth = true; throw e; }
+    if (!r.ok) { var tx = ''; try { tx = (await r.text()).slice(0, 160); } catch (err) {} throw new Error('Google 雲端硬碟回應錯誤 ' + r.status + (tx ? '：' + tx : '')); }
+    return r;
+  }
+  async function drvList(tok) {
+    var out = {}, pt = '';
+    do {
+      var r = await drv(DRV + '?spaces=appDataFolder&pageSize=1000&fields=nextPageToken,files(id,name,modifiedTime,size)' + (pt ? '&pageToken=' + encodeURIComponent(pt) : ''), {}, tok);
+      var j = await r.json();
+      (j.files || []).forEach(function (f) { out[f.name] = f; });
+      pt = j.nextPageToken || '';
+    } while (pt);
+    return out;
+  }
+  /* 上傳：小檔一次送；大檔（PDF）用可續傳的方式 */
+  async function drvPut(tok, name, blob, existing) {
+    if (existing) { return drv(DRV_UP + '/' + existing.id + '?uploadType=media', { method: 'PATCH', body: blob, headers: { 'Content-Type': blob.type || 'application/octet-stream' } }, tok); }
+    var meta = { name: name, parents: ['appDataFolder'] };
+    if (blob.size < 4 * 1048576) {
+      var fd = new FormData();
+      fd.append('metadata', new Blob([JSON.stringify(meta)], { type: 'application/json' }));
+      fd.append('file', blob);
+      return drv(DRV_UP + '?uploadType=multipart', { method: 'POST', body: fd }, tok);
+    }
+    var r = await drv(DRV_UP + '?uploadType=resumable', { method: 'POST', body: JSON.stringify(meta), headers: { 'Content-Type': 'application/json; charset=UTF-8', 'X-Upload-Content-Type': blob.type || 'application/octet-stream' } }, tok);
+    var loc = r.headers.get('Location');
+    if (!loc) { throw new Error('上傳大檔案時沒有拿到上傳位址'); }
+    return drv(loc, { method: 'PUT', body: blob }, tok);
+  }
+  async function drvGet(tok, f, asJson) { var r = await drv(DRV + '/' + f.id + '?alt=media', {}, tok); return asJson ? r.json() : r.arrayBuffer(); }
+  function syncFileName(kind, id) { return kind + ':' + id; }
+
+  /* ---------- 同步一次 ---------- */
+  async function runSync() {
+    if (!SYNC_CLIENT_ID || !syncOn()) { return; }
+    if (sync.busy) { sync.again = true; return; }
+    var tok = syncToken();
+    if (!tok) { sync.status = ''; renderSync(); return; }
+    sync.busy = true; sync.err = ''; sync.status = '同步中…'; renderSync();
+    try {
+      if (state.src) { try { save(); } catch (err) {} }
+      if (!sync.email) { try { var u = await (await drv('https://www.googleapis.com/oauth2/v3/userinfo', {}, tok)).json(); sync.email = u.email || ''; rawSet.call(localStorage, 'thai-sync-email', sync.email); } catch (err) { if (err.auth) { throw err; } } }
+      var files = await drvList(tok);
+      var R = files['state.json'] ? await drvGet(tok, files['state.json'], true) : null;
+      var L = syncLocal(), M = syncMerge(L, R);
+      var ch = syncApply(L, M);
+      if (!R || !syncSame(M, R)) {
+        sync.status = '上傳變更…'; renderSync();
+        M.at = new Date().toISOString();
+        await drvPut(tok, 'state.json', new Blob([JSON.stringify(M)], { type: 'application/json' }), files['state.json']);
+      }
+      /* PDF 原檔、文字辨識結果：雲端沒有的上傳，這台沒有的下載，刪掉的文件把雲端的檔也刪掉 */
+      var ids = Object.keys(M.docs).filter(function (id) { return M.docs[id].meta && M.docs[id].meta.type === 'pdf'; }), up = 0, down = 0, miss = 0;
+      for (var i = 0; i < ids.length; i++) {
+        var id = ids[i], fn = syncFileName('pdf', id), on = null;
+        try { on = await idbGet(id); } catch (err) {}
+        if (on && !files[fn]) {
+          sync.status = '上傳 PDF（' + (i + 1) + '／' + ids.length + '）…'; renderSync();
+          await drvPut(tok, fn, new Blob([on], { type: 'application/pdf' })); up++;
+        } else if (!on && files[fn]) {
+          sync.status = '下載 PDF（' + (i + 1) + '／' + ids.length + '）…'; renderSync();
+          var bytes = await drvGet(tok, files[fn], false); await idbPut(id, bytes); down++;
+        } else if (!on) { miss++; }
+        var on2 = null; try { on2 = await idbGet('ocr:' + id); } catch (err) {}
+        var fo = syncFileName('ocr', id);
+        if (on2 && on2.pages && !files[fo]) { await drvPut(tok, fo, new Blob([JSON.stringify(on2)], { type: 'application/json' })); }
+        else if (!(on2 && on2.pages) && files[fo]) { try { await idbPut('ocr:' + id, await drvGet(tok, files[fo], true)); } catch (err) {} }
+      }
+      var dels = Object.keys(M.del.d);
+      for (var j = 0; j < dels.length; j++) {
+        if (M.docs[dels[j]]) { continue; }
+        var f1 = files[syncFileName('pdf', dels[j])], f2 = files[syncFileName('ocr', dels[j])];
+        if (f1) { try { await drv(DRV + '/' + f1.id, { method: 'DELETE' }, tok); } catch (err) {} }
+        if (f2) { try { await drv(DRV + '/' + f2.id, { method: 'DELETE' }, tok); } catch (err) {} }
+      }
+      sync.last = syncNow(); rawSet.call(localStorage, 'thai-sync-last', String(sync.last));
+      sync.status = '';
+      sync.lastNote = (down ? '下載了 ' + down + ' 個 PDF。' : '') + (up ? '上傳了 ' + up + ' 個 PDF。' : '') + (miss ? miss + ' 份 PDF 只存在另一台裝置、還沒上傳，等那台同步後會自動下載。' : '');
+      syncRefresh(ch);
+      if (down && curTab === 'home') { renderHome(); }
+    } catch (err) {
+      sync.status = '';
+      sync.err = err && err.auth ? '登入過期了，按「立即同步」重新登入就好。' : '同步失敗：' + String(err && err.message || err).slice(0, 200);
+    } finally {
+      sync.busy = false; renderSync();
+      if (sync.again) { sync.again = false; setTimeout(runSync, 1000); }
+    }
+  }
+  function syncSoon() {
+    if (!SYNC_CLIENT_ID || !syncOn() || !syncToken()) { return; }
+    clearTimeout(sync.timer);
+    sync.timer = setTimeout(runSync, 15000);
+  }
+  function syncAgo(t) {
+    if (!t) { return '還沒同步過'; }
+    var s = Math.round((syncNow() - t) / 1000);
+    return s < 60 ? '剛剛' : s < 3600 ? Math.round(s / 60) + ' 分鐘前' : s < 86400 ? Math.round(s / 3600) + ' 小時前' : new Date(t).toLocaleDateString('zh-TW');
+  }
+  function renderSync() {
+    var row = $('syncRow'); if (!row) { return; }
+    row.hidden = !SYNC_CLIENT_ID;
+    if (!SYNC_CLIENT_ID) { return; }
+    var on = syncOn(), tok = syncToken(), st = $('syncState'), btns = $('syncBtns');
+    try { sync.last = sync.last || Number(localStorage.getItem('thai-sync-last') || 0); sync.email = sync.email || localStorage.getItem('thai-sync-email') || ''; } catch (err) {}
+    st.textContent = !on ? '還沒連結。' : (sync.status || ('已連結' + (sync.email ? ' ' + sync.email : '') + '・上次同步：' + syncAgo(sync.last) + (tok ? '' : '。要再同步時按「立即同步」（Google 的登入每小時要確認一次）')));
+    btns.replaceChildren();
+    function btn(t, cls, fn) { var b = document.createElement('button'); b.type = 'button'; if (cls) { b.className = cls; } b.textContent = t; b.disabled = sync.busy; b.addEventListener('click', fn); btns.appendChild(b); }
+    if (!on) { btn('連結 Google 帳號', 'primary', function () { syncSignIn(); }); }
+    else {
+      btn('立即同步', 'primary', function () { if (syncToken()) { runSync(); } else { syncSignIn(); } });
+      btn('取消連結', '', function () {
+        var t = syncParse(localStorage.getItem(SYNC_TOK));
+        try { rawRemove.call(localStorage, SYNC_ON); rawRemove.call(localStorage, SYNC_TOK); rawRemove.call(localStorage, 'thai-sync-email'); } catch (err) {}
+        if (window.google && google.accounts && google.accounts.oauth2 && t && t.tok) { try { google.accounts.oauth2.revoke(t.tok, function () {}); } catch (err) {} }
+        sync.email = ''; sync.err = ''; sync.lastNote = '已取消連結。這台裝置上的資料都還在；雲端上的資料也會保留，之後再連結會自動合併。'; renderSync();
+      });
+    }
+    $('syncMsg').textContent = sync.err || sync.lastNote || '';
+    $('syncMsg').className = 'label' + (sync.err ? ' syncerr' : '');
+  }
+  if (SYNC_CLIENT_ID) {
+    renderSync();
+    /* 預先載入 Google 登入元件，按按鈕時才能馬上打開登入視窗 */
+    var syncPre = function () { syncLoadGis().then(function () { syncClient(); renderSync(); }, function () {}); };
+    if (syncOn()) { syncPre(); setTimeout(runSync, 2500); } else { setTimeout(syncPre, 4000); }
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && syncOn() && syncToken() && syncNow() - sync.last > 60000) { runSync(); } });
+  }
 
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
