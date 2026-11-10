@@ -69,6 +69,7 @@ fs.mkdirSync(OUT, { recursive: true });
 
   // ---------- 主頁 ----------
   await shot('home-add', '.homeadd', ['.homeadd'], { pad: 16 });
+  await shot('reader', '#readerOpen', ['#readerOpen'], { pad: 16, union: '.homeadd' });
   await p.click('.viewtoggle [data-hv="grid"]'); await p.waitForTimeout(400);
   await shot('home-grid', '#view-home', ['.viewtoggle'], { pad: 10, maxH: 560 });
   await p.click('.viewtoggle [data-hv="list"]'); await p.waitForTimeout(200);

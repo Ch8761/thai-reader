@@ -8,7 +8,8 @@
       if (!line || line.charAt(0) === '#') { return; }
       var p = line.split('|');
       if (p.length < 3) { return; }
-      var ent = ['slang', p[1] || '', '', [p[3] || ''], [p[2]], 1];
+      /* 第 5 欄有詞性的是一般詞（補字典缺的詞），沒有的是網路用語 */
+      var ent = [p[4] ? p[4].trim() : 'slang', p[1] || '', '', [p[3] || ''], [p[2]], 1];
       DICT[p[0]] = [ent].concat(DICT[p[0]] || []); SLANG_SET[p[0]] = 1;
       SLANG_N++;
     });

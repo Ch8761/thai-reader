@@ -1003,6 +1003,29 @@ body.noscroll { overflow: hidden; }
 .ygconsent p { margin: 0; font-size: 14px; }
 .ygcredit { margin: 0; font-size: 12px; color: var(--muted); }
 .ygcredit a { color: var(--accent); }
+
+/* ---- v1.17 讀物庫 ---- */
+.readercard { display: flex; align-items: center; gap: 12px; width: 100%; margin: 12px 0 4px; padding: 10px 14px; min-height: 56px; text-align: left; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--fg); font-weight: 400; }
+.readercard > svg:first-child { flex: 0 0 auto; width: 26px; height: 26px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linejoin: round; }
+.readercard .rctx { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+.readercard .rct { font-weight: 700; font-size: 16px; }
+.readercard .rcs { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.readercard .rcchev { flex: 0 0 auto; width: 18px; height: 18px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rdsheet .cdscroll { display: flex; flex-direction: column; gap: 10px; }
+.rdsheet .vptitle { padding-right: 48px; }
+.rdtabs { display: flex; gap: 6px; }
+.rdtabs button { flex: 1 1 0; min-height: 36px; border-radius: 999px; padding: 0 10px; font-size: 15px; }
+.rdtabs button[aria-selected="true"] { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--accent-fill-fg); font-weight: 700; }
+.rdmsg { font-size: 14px; color: var(--muted); }
+.rdmsg[hidden] { display: none; }
+.rdlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rditem { display: flex; flex-direction: column; align-items: stretch; gap: 3px; width: 100%; text-align: left; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--fg); font-weight: 400; min-height: 0; }
+.rditem .rdtop { display: flex; align-items: center; gap: 8px; }
+.rditem .rdth { font-size: 18px; font-weight: 700; line-height: 1.5; }
+.rditem .rdbadge { margin-left: auto; flex: 0 0 auto; font-size: 12px; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 1px 8px; }
+.rditem .rdzh { font-size: 14px; }
+.rditem .rdmeta { font-size: 12px; color: var(--muted); }
+.rdcredit { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -1031,6 +1054,7 @@ body.noscroll { overflow: hidden; }
       <textarea id="input" lang="th" spellcheck="false"></textarea>
       <div class="btns"><button type="button" class="primary" id="addText">建立文件</button></div>
     </div>
+    <button type="button" id="readerOpen" class="readercard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg><span class="rctx"><span class="rct">讀物庫</span><span class="rcs">分級泰文短文，挑一篇開始讀</span></span><svg class="rcchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
     <div id="homeMsg" class="label" aria-live="polite"></div>
     <div id="homeFolders" class="cfolders"></div>
     <div class="homebar"><div id="homeTarget" class="label"></div>
@@ -1223,7 +1247,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.15.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.16.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -40734,7 +40758,17 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
 จัดเต็ม|jàt-tem|火力全開、全力以赴|all-out
 ออกกอง|ɔ̀ɔk-gɔɔng|出外景、去片場拍攝|to go on set
 น้า|náa|（句尾）＝นะ 的撒嬌說法|cute form of ná
-แมสก์|mɛ́t|口罩（mask）|face mask</script>
+แมสก์|mɛ́t|口罩（mask）|face mask
+# 一般詞（字典裡缺的常用詞；第 5 欄是詞性）
+ตกหนัก|tòk-nàk|（雨）下得很大|to rain heavily|verb
+ฟังออก|fang-ɔ̀ɔk|聽得懂|to understand by listening|verb
+ไซซ์|sai|尺寸、尺碼（英文 size）|size|noun
+คร่าว|khrâao|大概、粗略（常說 คร่าว ๆ）|rough, approximate|adj
+สบายใจ|sà-baai-jai|安心、放心、心情輕鬆|to feel at ease|adj
+เช้าตรู่|cháao-trùu|清晨、一大早|early morning|noun
+ตรู่|trùu|一大早（常說 เช้าตรู่）|very early|adv
+ติดตัว|tìt-tuua|隨身（帶著）|to carry with oneself|verb
+อารีย์|aa-rii|阿黎（曼谷的一區，咖啡廳很多）|Ari (area in Bangkok)|name</script>
 <script type="text/plain" id="lib-pdflib">!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t=t||self).PDFLib={})}(this,(function(t){"use strict";
 /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -42578,7 +42612,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       if (!line || line.charAt(0) === '#') { return; }
       var p = line.split('|');
       if (p.length < 3) { return; }
-      var ent = ['slang', p[1] || '', '', [p[3] || ''], [p[2]], 1];
+      /* 第 5 欄有詞性的是一般詞（補字典缺的詞），沒有的是網路用語 */
+      var ent = [p[4] ? p[4].trim() : 'slang', p[1] || '', '', [p[3] || ''], [p[2]], 1];
       DICT[p[0]] = [ent].concat(DICT[p[0]] || []); SLANG_SET[p[0]] = 1;
       SLANG_N++;
     });
@@ -44778,7 +44813,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.15.0';
+  var APP_VER = '正式版 v1.16.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45659,6 +45694,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ['主頁', [
       { t: '清單或方塊', s: '右邊的兩個小圖示切換排列', img: 'home-grid',
         d: ['「清單」：一行一份文件，看得到更多資訊。', '「方塊」：大縮圖、名稱在下面，像 Google 雲端硬碟。', '方塊模式點縮圖就打開；按「⋯」可以搬資料夾或刪除。'] },
+      { t: '讀物庫', s: '主頁按「讀物庫」，挑一篇短文', img: 'reader',
+        d: ['按主頁的「讀物庫」。', '上面選程度：入門、初級、中級（一開始會選你在設定裡的程度）。', '點一篇，就會加入「我的文件」並打開，可以點字查詞、畫螢光筆。', '已經加過的會標「已加入」，再點一次直接打開。'],
+        tip: '短文是原創的，句子由淺到深。不知道從哪裡開始時，先讀「入門」的第一篇。' },
       { t: '加文件', s: '按「＋ 加入 PDF」「＋ 圖片／影片」或「＋ 貼上文字」', img: 'home-add',
         d: ['PDF：按「＋ 加入 PDF」，從「檔案」App 選，可以一次選好幾個。', '照片或截圖：按「＋ 圖片／影片」，選好的幾張會合成一份文件。', '逐字稿、文章：先在別的 App 拷貝，按「＋ 貼上文字」，長按文字框選「貼上」，再按「建立文件」。'],
         tip: '新文件會放進目前選的資料夾。' },
@@ -48513,6 +48551,82 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     return b;
   }
   window.ygOpen = ygOpen;
+  /* ---------- 讀物庫：依程度分好的泰文短文，點一篇就加入「我的文件」並打開 ----------
+     短文放在 reader.json（打開讀物庫時才下載）。加入的文件記住 d.lib＝短文編號，避免重複加入。 */
+  var READER_URL = 'reader.json';
+  var rdItems = null, rdLoading = null, rdLevel = 'b';
+  var RD_LV = [['a', '入門'], ['b', '初級'], ['c', '中級']];
+  var rdWrap = document.createElement('div'); rdWrap.className = 'cdlayer rdlayer'; rdWrap.id = 'readerSheet'; rdWrap.hidden = true;
+  rdWrap.innerHTML = '<div class="cdback" id="rdBack"></div><div class="cdsheet rdsheet" role="dialog" aria-modal="true" aria-labelledby="rdTitle"><div class="cdscroll">' +
+    '<button type="button" class="cdx" id="rdClose" aria-label="關閉">×</button>' +
+    '<h2 class="vptitle" id="rdTitle">讀物庫</h2>' +
+    '<p class="vptip">依程度分好的短文。點一篇，就會加入「我的文件」並打開，可以點字查詞、做筆記。</p>' +
+    '<div class="rdtabs" role="tablist" aria-label="程度" id="rdTabs"></div>' +
+    '<div class="rdmsg" id="rdMsg" hidden></div>' +
+    '<ul class="rdlist" id="rdList"></ul>' +
+    '<p class="rdcredit">這些短文是 Claude（AI）為 ไทย Reader 寫的原創內容。讀到不自然的地方，歡迎到「設定 → 說明與回饋」告訴我們。</p>' +
+    '</div></div>';
+  document.body.appendChild(rdWrap);
+  RD_LV.forEach(function (L) {
+    var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('data-lv', L[0]); b.textContent = L[1];
+    b.addEventListener('click', function () { rdLevel = L[0]; rdRender(); });
+    $('rdTabs').appendChild(b);
+  });
+  function rdLoad() {
+    if (rdItems) { return Promise.resolve(rdItems); }
+    if (rdLoading) { return rdLoading; }
+    rdLoading = fetch(READER_URL).then(function (r) { if (!r.ok) { throw new Error(String(r.status)); } return r.json(); })
+      .then(function (j) { rdItems = j; return j; })
+      .catch(function (err) { rdLoading = null; throw err; });
+    return rdLoading;
+  }
+  function rdDocOf(id) { for (var i = 0; i < lib.docs.length; i++) { if (lib.docs[i].lib === id) { return lib.docs[i]; } } return null; }
+  function rdMinutes(n) { return Math.max(1, Math.round(n / 80)); }
+  function rdRender() {
+    Array.prototype.forEach.call($('rdTabs').children, function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-lv') === rdLevel)); });
+    var ul = $('rdList'); ul.innerHTML = '';
+    if (!rdItems) { return; }
+    rdItems.filter(function (it) { return it.lv === rdLevel; }).forEach(function (it) {
+      var li = document.createElement('li');
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'rditem'; b.setAttribute('data-id', it.id);
+      var have = rdDocOf(it.id);
+      var top = document.createElement('span'); top.className = 'rdtop';
+      var th = document.createElement('span'); th.className = 'rdth'; th.lang = 'th'; th.textContent = it.th;
+      top.appendChild(th);
+      if (have) { var bd = document.createElement('span'); bd.className = 'rdbadge'; bd.textContent = '已加入'; top.appendChild(bd); }
+      var zh = document.createElement('span'); zh.className = 'rdzh'; zh.textContent = it.zh + '｜' + it.sum;
+      var meta = document.createElement('span'); meta.className = 'rdmeta'; meta.textContent = it.topic + '・約 ' + it.n + ' 字・' + rdMinutes(it.n) + ' 分鐘';
+      b.appendChild(top); b.appendChild(zh); b.appendChild(meta);
+      b.addEventListener('click', function () { rdOpenItem(it); });
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+  function rdOpenItem(it) {
+    var have = rdDocOf(it.id);
+    rdClose();
+    if (have) { openDoc(have.id); return; }
+    var id = 'text:' + Date.now().toString(36), name = it.th + '｜' + it.zh;
+    lib.docs.push({ id: id, name: name, type: 'text', size: it.text.length, added: Date.now(), opened: 0, folder: libTarget(), lib: it.id });
+    saveLib();
+    try { localStorage.setItem(PDF_DOC_PREFIX + id, JSON.stringify({ text: it.text, src: { type: 'text', id: id, name: name }, hl: [], strokes: [], boxes: [], nextId: 1 })); } catch (err) {}
+    $('homeMsg').textContent = '';
+    openDoc(id);
+  }
+  function rdOpen() {
+    var lv = 'b'; try { lv = localStorage.getItem('thai-level') || 'b'; } catch (err) {}
+    rdLevel = lv === 'd' ? 'c' : (lv === 'a' || lv === 'c' ? lv : 'b');
+    rdWrap.hidden = false;
+    $('rdMsg').hidden = true; rdRender();
+    if (!rdItems) { $('rdMsg').textContent = '載入中…'; $('rdMsg').hidden = false; }
+    rdLoad().then(function () { $('rdMsg').hidden = true; rdRender(); })
+      .catch(function () { $('rdMsg').textContent = navigator.onLine ? '讀物庫載入失敗，等一下再試一次。' : '第一次打開讀物庫需要網路。連上網路後再試一次。'; $('rdMsg').hidden = false; });
+  }
+  function rdClose() { rdWrap.hidden = true; }
+  $('rdClose').addEventListener('click', rdClose);
+  $('rdBack').addEventListener('click', rdClose);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !rdWrap.hidden) { rdClose(); } });
+  if ($('readerOpen')) { $('readerOpen').addEventListener('click', rdOpen); }
+  window.readerOpen = rdOpen;
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
     btn.addEventListener('click', function () {
