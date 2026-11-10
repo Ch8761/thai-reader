@@ -973,6 +973,9 @@ body.noscroll { overflow: hidden; }
 .pasteor::before, .pasteor::after { content: ''; flex: 1; border-top: 1px solid var(--line); }
 .docsrc { display: inline-block; margin: -2px 0 8px; font-size: 14px; color: var(--accent); text-decoration: none; font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .docsrc[hidden] { display: none; }
+.urlfail { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 8px; font-size: 13px; color: var(--muted); }
+.urlfail[hidden] { display: none; }
+.urlfail button { min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 14px; }
 .phsheet .cdscroll { display: flex; flex-direction: column; gap: 10px; }
 .phbox { padding: 18px; margin: 0 -8px; touch-action: none; background: color-mix(in srgb, var(--fg) 6%, transparent); border-radius: 14px; }
 .phstage { position: relative; width: 100%; max-height: 52vh; margin: 0 auto; touch-action: none; }
@@ -1006,6 +1009,7 @@ body.noscroll { overflow: hidden; }
     <div id="pastebox" class="pastebox" hidden>
       <label class="label" for="urlInput">新聞、文章的網址：自動抓下內文</label>
       <div class="urlrow"><input type="url" id="urlInput" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://www.bbc.com/thai/…"><button type="button" class="primary" id="addUrl">讀取文章</button></div>
+      <div class="urlfail" id="urlFail" hidden><button type="button" id="urlReport">回報這個網址</button><span>讓我們知道哪些網站讀不到</span></div>
       <div class="pasteor"><span>或者直接貼上泰文</span></div>
       <label class="label" for="textTitle">標題（可不填，會用開頭幾個字）</label>
       <input type="text" id="textTitle" maxlength="60" placeholder="例如：Podcast 第 12 集逐字稿">
@@ -1205,7 +1209,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.2</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.3</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44759,7 +44763,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.14.2';
+  var APP_VER = '正式版 v1.14.3';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -48205,11 +48209,12 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     a.url = viaReader ? u : fin; a.via = r.headers.get('x-via') || (viaReader ? 'reader' : 'direct');
     return a;
   }
-  var urlBusy = false;
+  var urlBusy = false, urlLastFail = null;
   async function libAddUrl(raw) {
     if (urlBusy) { return; }
     var btn = $('addUrl'), msg = $('homeMsg');
     urlBusy = true; if (btn) { btn.disabled = true; btn.textContent = '讀取中…'; }
+    $('urlFail').hidden = true;
     msg.textContent = '正在讀取文章…（有些網站要等 10–20 秒）';
     try {
       var a = await urlFetchArticle(raw);
@@ -48224,6 +48229,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       openDoc(id);
     } catch (err) {
       msg.textContent = String(err && err.message || err);
+      /* 讀不到：可以一鍵回報這個網址（網址打錯的不用） */
+      if (!/有效的網址/.test(msg.textContent)) { urlLastFail = { url: String(raw).trim(), msg: msg.textContent }; $('urlFail').hidden = false; }
     } finally {
       urlBusy = false; if (btn) { btn.disabled = false; btn.textContent = '讀取文章'; }
     }
@@ -48234,6 +48241,16 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     libAddUrl(v);
   });
   $('urlInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('addUrl').click(); } });
+  /* 回報讀不到的網址：打開意見回饋，類型選「問題回報」，網址和錯誤訊息先填好，使用者確認後按送出 */
+  $('urlReport').addEventListener('click', function () {
+    var f = urlLastFail; if (!f) { return; }
+    showTab('settings'); if (typeof settingsOpen === 'function') { settingsOpen('help'); }
+    fbCat = 'bug'; renderFeedback();
+    $('fbText').value = '讀不到這個網址：' + f.url + '\n畫面上的訊息：' + f.msg + '\n\n（可以補充：這是什麼網站、想讀哪一類文章）';
+    $('fbStatus').textContent = '已經幫你填好網址和錯誤訊息，確認後按「送出回饋」就好。';
+    setTimeout(function () { var t = $('fbText'); t.scrollIntoView({ block: 'center' }); try { t.focus({ preventScroll: true }); } catch (err) {} }, 60);
+    $('urlFail').hidden = true;
+  });
   /* ---------- 照片匯入前：裁切、旋轉、把斜拍的拉正（招牌、菜單） ----------
      拖曳四個角框住要讀的地方，App 會把那個四邊形「攤平」成長方形（透視校正），文字辨識會準很多。 */
   var phWrap = document.createElement('div'); phWrap.className = 'cdlayer phlayer'; phWrap.id = 'photoEdit'; phWrap.hidden = true;
