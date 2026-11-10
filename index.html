@@ -964,6 +964,28 @@ body.noscroll { overflow: hidden; }
 /* 讀影片的進度：浮在下方，不會把主頁的東西擠下去 */
 .vidbox { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(78px + env(safe-area-inset-bottom, 0px)); width: min(560px, calc(100% - 32px)); z-index: 40; box-shadow: 0 8px 28px rgba(0, 0, 0, .18); }
 #vidStop[hidden], #vidRetry[hidden], #vidClose[hidden] { display: none; }
+
+/* ---- v1.14 貼上網址、照片調整 ---- */
+.urlrow { display: flex; gap: 8px; align-items: stretch; }
+.urlrow input { flex: 1 1 auto; min-width: 0; font-size: 16px; }
+.urlrow button { flex: 0 0 auto; white-space: nowrap; }
+.pasteor { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; margin: 14px 0 4px; }
+.pasteor::before, .pasteor::after { content: ''; flex: 1; border-top: 1px solid var(--line); }
+.docsrc { display: inline-block; margin: -2px 0 8px; font-size: 14px; color: var(--accent); text-decoration: none; font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.docsrc[hidden] { display: none; }
+.phsheet .cdscroll { display: flex; flex-direction: column; gap: 10px; }
+.phbox { padding: 18px; margin: 0 -8px; touch-action: none; background: color-mix(in srgb, var(--fg) 6%, transparent); border-radius: 14px; }
+.phstage { position: relative; width: 100%; max-height: 52vh; margin: 0 auto; touch-action: none; }
+.phstage canvas { display: block; width: 100%; height: 100%; border-radius: 6px; }
+.phsvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.phsvg polygon { fill: rgba(255, 212, 0, .12); stroke: #ffd400; stroke-width: 3; stroke-linejoin: round; }
+.phsvg .phh { fill: #ffd400; stroke: #1c2622; stroke-width: 2; }
+.phsvg .phh.on { fill: #fff; r: 16; }
+.phtools { display: flex; flex-wrap: wrap; gap: 8px; }
+.phtools button { min-height: 40px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.phtools svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.phact { flex-wrap: wrap; }
+@media (max-width: 360px) { .homeadd > * { padding-left: 8px; padding-right: 8px; font-size: 14px; } }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -979,9 +1001,12 @@ body.noscroll { overflow: hidden; }
     <div class="homeadd">
       <label class="filebtn">＋ 加入 PDF<input type="file" id="pdffile" class="vh" accept="application/pdf,.pdf" multiple></label>
       <label class="filebtn">＋ 圖片／影片<input type="file" id="imgfile" class="vh" accept="image/*,video/*" multiple></label>
-      <button type="button" id="openPaste" aria-expanded="false" aria-controls="pastebox">＋ 貼上文字</button>
+      <button type="button" id="openPaste" aria-expanded="false" aria-controls="pastebox">＋ 網址／文字</button>
     </div>
     <div id="pastebox" class="pastebox" hidden>
+      <label class="label" for="urlInput">新聞、文章的網址：自動抓下內文</label>
+      <div class="urlrow"><input type="url" id="urlInput" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://www.bbc.com/thai/…"><button type="button" class="primary" id="addUrl">讀取文章</button></div>
+      <div class="pasteor"><span>或者直接貼上泰文</span></div>
       <label class="label" for="textTitle">標題（可不填，會用開頭幾個字）</label>
       <input type="text" id="textTitle" maxlength="60" placeholder="例如：Podcast 第 12 集逐字稿">
       <label class="label" for="input">泰文內容：長按文字框選「貼上」</label>
@@ -1001,6 +1026,7 @@ body.noscroll { overflow: hidden; }
   </section>
   <section id="view-doc" class="view" aria-labelledby="h-docv" hidden>
     <header class="vhead"><button type="button" class="back" id="backHome">‹ 主頁</button><h1 id="h-docv">文件</h1><span class="vh-acts"><button type="button" class="iconbtn" id="ocrRedo" aria-label="重新辨識" title="重新辨識（用文字辨識再讀一次）" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4.5V9h-4.5"/></svg></button><button type="button" id="openExport" aria-expanded="false" aria-controls="exportp">匯出 PDF</button></span></header>
+    <a id="docSrc" class="docsrc" target="_blank" rel="noopener noreferrer" hidden></a>
     <div id="docempty" class="docempty" hidden><p>還沒有打開文件。</p><button type="button" class="primary" id="goHome">到主頁選一份文件</button></div>
     <div id="docbody" class="view">
   <section id="docsec" aria-labelledby="h-doc">
@@ -1179,7 +1205,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.13.12</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.14.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -44733,7 +44759,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.13.12';
+  var APP_VER = '正式版 v1.14.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45425,6 +45451,9 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var has = !!(state.src);
     $('docempty').hidden = has; $('docbody').hidden = !has; $('openExport').hidden = !has;
     $('h-docv').textContent = has ? state.src.name : '文件';
+    var srcD = has ? docById(state.src.id) : null, srcU = srcD && srcD.url;
+    $('docSrc').hidden = !srcU;
+    if (srcU) { var host = srcU; try { host = new URL(srcU).hostname.replace(/^www\./, ''); } catch (err) {} $('docSrc').href = srcU; $('docSrc').textContent = '原文：' + (srcD.site || host) + ' ↗'; }
     if (has && curTab === 'doc') { layout(); }
     if (typeof renderOcrBox === 'function') { renderOcrBox(); }
   }
@@ -45479,6 +45508,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   }
   function libAddText() {
     var t = $('input').value.replace(/\r/g, ''), name = $('textTitle').value.trim();
+    if (urlLooksLike(t)) { libAddUrl(t.trim()); return; }
     if (!t.trim()) { $('homeMsg').textContent = '文字框是空的，請先貼上泰文。'; $('input').focus(); return; }
     if (!name) { name = t.trim().replace(/\s+/g, ' ').slice(0, 24) + (t.trim().length > 24 ? '…' : ''); }
     var id = 'text:' + Date.now().toString(36);
@@ -45515,7 +45545,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   $('pdffile').addEventListener('change', function () { var fs = this.files; libAddPdfFiles(fs); this.value = ''; });
   $('openPaste').addEventListener('click', function () {
     var open = $('pastebox').hidden; $('pastebox').hidden = !open; $('openPaste').setAttribute('aria-expanded', String(open));
-    if (open) { setTimeout(function () { $('textTitle').focus(); }, 20); }
+    if (open) { setTimeout(function () { $('urlInput').focus(); }, 20); }
   });
   $('addText').addEventListener('click', libAddText);
   /* ---------- 外觀：跟隨系統／淺色（奶油白、卡其、深咖啡）／深色（黑、灰、藍） ---------- */
@@ -45613,6 +45643,10 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '加文件', s: '按「＋ 加入 PDF」「＋ 圖片／影片」或「＋ 貼上文字」', img: 'home-add',
         d: ['PDF：按「＋ 加入 PDF」，從「檔案」App 選，可以一次選好幾個。', '照片或截圖：按「＋ 圖片／影片」，選好的幾張會合成一份文件。', '逐字稿、文章：先在別的 App 拷貝，按「＋ 貼上文字」，長按文字框選「貼上」，再按「建立文件」。'],
         tip: '新文件會放進目前選的資料夾。' },
+      { t: '從網址匯入文章', s: '按「＋ 網址／文字」，貼上新聞網址，按「讀取文章」', img: 'url-panel',
+        d: ['在瀏覽器打開泰文新聞或文章，複製網址（分享 → 拷貝）。', '回到 App 主頁按「＋ 網址／文字」，把網址貼進最上面的格子，按「讀取文章」。', 'App 會自動抓下文章內文（去掉選單、廣告、留言），做成可以點詞查詞的文件；文件標題下面有「原文」連結可以回到原網頁。', '要登入或付費才看得到的文章、Facebook／IG／X 的貼文讀不到：改成複製文字，貼在下面的「貼上泰文」。'] },
+      { t: '拍招牌、菜單', s: '按「＋ 圖片／影片」拍照或選照片，拖曳四個角框住文字', img: 'photo-edit',
+        d: ['選好照片後會先出現「調整照片」：拖曳四個黃色圓點，框住要讀的招牌或菜單。', '斜斜拍的照片會自動拉正成長方形，文字辨識會準很多。', '照片方向不對就按「向左轉」「向右轉」；不需要調整就直接按「完成」。', '一次選好幾張時，每張都可以調整；按「其餘不調整」可以跳過後面的。'] },
       { t: '影片的字幕', s: '按「＋ 圖片／影片」選有泰文字幕的影片', img: 'vid-pick',
         d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會先找字幕在畫面的哪裡，用黃框框起來。框得不對，就用手指在畫面上重新框住字幕；拉下面的滑桿可以換一個有字幕的畫面看。', '按「開始讀字幕」。App 每秒看一次框裡的畫面，字幕換了就讀一次，最後整理成一份文字文件。', '同一句字幕只會留一次。進度會浮在畫面下方，中途可以按「停止」，已經讀到的會保留。', '沒讀到字幕時，按「重新框字幕」換個位置再試。', '讀出來的結果不滿意：打開那份影片文件，按右上角的「↻」，重新框字幕再讀一次（會取代原本的文字和筆記）。'],
         tip: 'IG、YouTube 的連結不能直接讀：先用 iPad 的「螢幕錄影」把影片錄下來，再加入那段錄影。' },
@@ -46116,7 +46150,11 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var d = new Date(), z = function (n) { return ('0' + n).slice(-2); };
     var stamp = d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
     var name = (/^(image|img_?\d*|photo|圖片)$/i.test(first) || list.length > 1 ? '圖片 ' + stamp : first) + '.pdf';
-    imagesToPdf(list, function (i) { $('homeMsg').textContent = '把圖片做成文件…（' + (i + 1) + ' / ' + list.length + '）'; }).then(function (bytes) {
+    photoEdit(list).then(function (edited) {
+      if (!edited) { throw { cancel: true }; }
+      list = edited;
+      return imagesToPdf(list, function (i) { $('homeMsg').textContent = '把圖片做成文件…（' + (i + 1) + ' / ' + list.length + '）'; });
+    }).then(function (bytes) {
       var id = name + '|' + bytes.length;
       return idbPut(id, bytes).then(function () {
         if (!docById(id)) { lib.docs.push({ id: id, name: name, type: 'pdf', size: bytes.length, pages: list.length, added: Date.now(), opened: 0, folder: libTarget(), img: true }); }
@@ -46127,7 +46165,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
         renderHome();
         openDoc(id);
       });
-    }).catch(function (err) { $('homeMsg').textContent = '加入圖片失敗：' + String(err && err.message || err); });
+    }).catch(function (err) { $('homeMsg').textContent = err && err.cancel ? '已取消加入圖片。' : '加入圖片失敗：' + String(err && err.message || err); });
   }
   $('imgfile').addEventListener('change', function () {
     var all = Array.prototype.slice.call(this.files || []);
@@ -48020,6 +48058,336 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && syncOn() && syncToken() && syncNow() - sync.last > 60000) { runSync(); } });
   }
 
+  /* ---------- 貼上網址就匯入：由網站上的小程式（/api/fetch）代抓網頁，App 自己找出文章內文，做成可點詞的文件 ---------- */
+  var URL_API = 'api/fetch';
+  function urlLooksLike(s) { return /^\s*https?:\/\/[^\s]+\s*$/i.test(s || ''); }
+  function urlThaiCount(s) { return (String(s).match(/[ก-๛]/g) || []).length; }
+  /* 編碼：先看伺服器說的，再看網頁裡寫的；泰文舊網站常用 TIS-620（windows-874） */
+  function urlDecode(buf, type) {
+    var bytes = new Uint8Array(buf), cs = (/charset=([\w-]+)/i.exec(type || '') || [])[1];
+    if (!cs) {
+      var head = new TextDecoder('latin1').decode(bytes.subarray(0, 4096));
+      cs = (/<meta[^>]+charset=["']?([\w-]+)/i.exec(head) || [])[1];
+    }
+    cs = (cs || 'utf-8').toLowerCase();
+    if (/tis-?620|iso-8859-11|x-windows-874/.test(cs)) { cs = 'windows-874'; }
+    try { return new TextDecoder(cs).decode(bytes); } catch (err) { return new TextDecoder('utf-8').decode(bytes); }
+  }
+  function urlClean(t) { return String(t || '').replace(/ /g, ' ').replace(/[ \t\f\v​]+/g, ' ').replace(/ *\n */g, '\n').trim(); }
+  /* 文章結構化資料（很多新聞網站有）：直接拿內文 */
+  var urlLdHead = '';
+  function urlLdBody(doc) {
+    var best = ''; urlLdHead = '';
+    Array.prototype.forEach.call(doc.querySelectorAll('script[type="application/ld+json"]'), function (s) {
+      var data = null; try { data = JSON.parse(s.textContent); } catch (err) { return; }
+      (function walk(o, depth) {
+        if (!o || depth > 6) { return; }
+        if (Array.isArray(o)) { o.forEach(function (x) { walk(x, depth + 1); }); return; }
+        if (typeof o === 'object') {
+          if (typeof o.articleBody === 'string' && o.articleBody.length > best.length) { best = o.articleBody; if (typeof o.headline === 'string') { urlLdHead = o.headline; } }
+          else if (!urlLdHead && typeof o.headline === 'string' && /Article|Posting/i.test(String(o['@type'] || ''))) { urlLdHead = o.headline; }
+          Object.keys(o).forEach(function (k) { if (o[k] && typeof o[k] === 'object') { walk(o[k], depth + 1); } });
+        }
+      })(data, 0);
+    });
+    if (best && /<\w+[^>]*>/.test(best)) { var d2 = new DOMParser().parseFromString(best, 'text/html'); best = d2.body.innerText || d2.body.textContent || ''; }
+    return urlClean(best);
+  }
+  var URL_JUNK = /(comment|share|social|related|recommend|advert|^ads?$|ads?[-_]|sponsor|promo|sidebar|footer|header|navbar|menu|breadcrumb|subscribe|newsletter|popup|modal|cookie|banner|widget|tags?$|author-box|read-?more|more-?news|trending|popular|login)/i;
+  /* 找出網頁裡的文章本文：泰文字最多的那一塊（像瀏覽器的「閱讀模式」） */
+  function urlArticle(html, pageUrl) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var meta = function (sel) { var m = doc.querySelector(sel); return m ? (m.getAttribute('content') || '').trim() : ''; };
+    var site = meta('meta[property="og:site_name"]');
+    var title = meta('meta[property="og:title"]') || meta('meta[name="twitter:title"]') || ((doc.querySelector('h1') || {}).textContent || '').trim() || (doc.title || '').trim();
+    title = urlClean(title).replace(/\s+/g, ' ');
+    if (site && title.length > site.length + 3) { title = title.replace(new RegExp('\\s*[|\\-–—:·•]\\s*' + site.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$'), ''); }
+    var ld = urlLdBody(doc);
+    /* 標題：文章結構化資料的標題最乾淨；沒有的話，網頁標題後面「 - 網站名稱」「 | 網站名稱」拿掉 */
+    if (urlLdHead && urlThaiCount(urlLdHead) >= 4) { title = urlClean(urlLdHead); }
+    else { var m2 = /^(.{8,}?)\s+[|\-–—]\s+[^|\-–—]{2,30}$/.exec(title); if (m2 && urlThaiCount(m2[1]) >= 4) { title = m2[1]; } }
+    ['script', 'style', 'noscript', 'iframe', 'svg', 'canvas', 'form', 'nav', 'header', 'footer', 'aside', 'button', 'select', 'template', 'object', 'video', 'audio'].forEach(function (t) {
+      Array.prototype.forEach.call(doc.querySelectorAll(t), function (e) { e.remove(); });
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('[aria-hidden="true"], [hidden], [role="navigation"], [role="banner"], [role="contentinfo"], [role="complementary"]'), function (e) { e.remove(); });
+    Array.prototype.slice.call(doc.body ? doc.body.querySelectorAll('*') : []).forEach(function (e) {
+      if (!e.isConnected) { return; }
+      var key = (e.className && typeof e.className === 'string' ? e.className : '') + ' ' + (e.id || '');
+      if (key.trim() && URL_JUNK.test(key) && !/article|content|story|entry|post-body|detail/i.test(key)) {
+        /* 被標成側欄、留言之類的，但裡面泰文很多的不刪（有些網站的類別名稱亂取） */
+        if (urlThaiCount(e.textContent) < 400) { e.remove(); }
+      }
+    });
+    /* 每一段（p、li…）的泰文字數加給上一層和上上一層，分數最高的就是本文的容器 */
+    var score = new Map();
+    Array.prototype.forEach.call(doc.querySelectorAll('p, li, blockquote, pre, td, h2, h3, div'), function (e) {
+      var own = '';
+      if (e.tagName === 'DIV') { Array.prototype.forEach.call(e.childNodes, function (n) { if (n.nodeType === 3) { own += n.textContent; } }); }
+      else { own = e.textContent; }
+      var n = urlThaiCount(own);
+      if (n < 20) { return; }
+      var bonus = e.tagName === 'P' ? 1.2 : 1;
+      var p1 = e.parentElement, p2 = p1 && p1.parentElement;
+      if (p1) { score.set(p1, (score.get(p1) || 0) + n * bonus); }
+      if (p2) { score.set(p2, (score.get(p2) || 0) + n * bonus / 2); }
+    });
+    var top = null, topS = 0;
+    score.forEach(function (s, e) {
+      var tag = e.tagName, k = (e.className || '') + ' ' + (e.id || '');
+      if (tag === 'ARTICLE' || /article|content|story|entry|detail|post/i.test(k)) { s *= 1.15; }
+      if (s > topS) { top = e; topS = s; }
+    });
+    /* 本文常被拆在幾個兄弟節點裡：分數夠高的兄弟一起收進來 */
+    var parts = [];
+    if (top) {
+      var par = top.parentElement;
+      if (par) {
+        Array.prototype.forEach.call(par.children, function (sib) {
+          if (sib === top || (score.get(sib) || 0) >= topS * 0.25) { parts.push(sib); }
+        });
+      } else { parts = [top]; }
+    }
+    var lines = [];
+    function grab(root) {
+      var blocks = root.querySelectorAll('h1, h2, h3, h4, p, li, blockquote, pre, figcaption, td');
+      if (!blocks.length) { lines.push(root.textContent); return; }
+      Array.prototype.forEach.call(blocks, function (b) {
+        if (b.querySelector('p, li, h2, h3, blockquote')) { return; } /* 外層的不重複收 */
+        var t = urlClean(b.innerText || b.textContent);
+        if (t) { lines.push(t); }
+      });
+      /* 沒有放在段落標籤裡、直接寫在 div 裡的文字 */
+      if (urlThaiCount(lines.join('')) < urlThaiCount(root.textContent) * 0.5) { lines = urlClean(root.innerText || root.textContent).split(/\n+/); }
+    }
+    parts.forEach(grab);
+    var text = lines.map(urlClean).filter(function (l, i, a) { return l && a.indexOf(l) === i; }).join('\n');
+    /* 結構化資料比較完整就用它 */
+    if (urlThaiCount(ld) > urlThaiCount(text) * 1.1) { text = ld; }
+    return { title: title, site: site, text: text, thai: urlThaiCount(text) };
+  }
+  var URL_ERR = {
+    forbidden: '讀取被拒絕了，請重新整理 App 再試一次。',
+    bad_url: '這不是一個有效的網址，請確認是以 https:// 開頭的完整網址。',
+    blocked: '這個網址不能讀取。',
+    timeout: '那個網站太久沒有回應，等一下再試，或改用複製貼上。',
+    network: '連不到那個網站，請確認網址正確，或改用複製貼上。',
+    status: '那個網站拒絕了讀取（可能需要登入、付費或擋掉了程式），請改用複製貼上。',
+    not_html: '這個網址不是一般網頁（可能是圖片或 PDF 檔）。PDF 可以先下載，再用「＋ 加入 PDF」。'
+  };
+  async function urlFetchArticle(raw) {
+    var u = String(raw || '').trim();
+    if (/\s/.test(u) || !/\./.test(u)) { throw new Error(URL_ERR.bad_url); }
+    if (!/^https?:\/\//i.test(u)) { u = 'https://' + u; }
+    try { u = new URL(u).toString(); } catch (err) { throw new Error(URL_ERR.bad_url); }
+    if (/(^|\.)(facebook|instagram|x|twitter|tiktok|threads)\.(com|net)$/i.test(new URL(u).hostname)) { throw new Error('Facebook、IG、X、TikTok 要登入才看得到內容，沒辦法直接讀取。可以複製貼文文字，用下面的「貼上泰文」加入。'); }
+    var r;
+    try { r = await fetch(URL_API + '?url=' + encodeURIComponent(u), { credentials: 'same-origin' }); }
+    catch (err) { throw new Error(navigator.onLine === false ? '現在沒有網路，連上網路後再試。' : '讀取失敗，請確認有網路後再試一次。'); }
+    if (r.status === 404 && !/json/.test(r.headers.get('content-type') || '')) { throw new Error('這個網址的 App 還不能讀取文章。請到新網址 thai-reader-enn.pages.dev 使用這個功能。'); }
+    if (/json/.test(r.headers.get('content-type') || '')) {
+      var j = {}; try { j = await r.json(); } catch (err) {}
+      throw new Error((URL_ERR[j.error] || '讀取失敗。') + (j.status ? '（網站回應 ' + j.status + '）' : ''));
+    }
+    var fin = u; try { fin = decodeURI(r.headers.get('x-final-url') || u); } catch (err) {}
+    var html = urlDecode(await r.arrayBuffer(), r.headers.get('x-source-type'));
+    var a = urlArticle(html, fin);
+    a.url = fin;
+    if (a.thai < 60) { throw new Error('這個網頁找不到泰文文章內容（可能是英文網頁、要登入才看得到，或內容是用程式載入的）。可以在瀏覽器打開文章、全選複製，再用下面的「貼上泰文」加入。'); }
+    return a;
+  }
+  var urlBusy = false;
+  async function libAddUrl(raw) {
+    if (urlBusy) { return; }
+    var btn = $('addUrl'), msg = $('homeMsg');
+    urlBusy = true; if (btn) { btn.disabled = true; btn.textContent = '讀取中…'; }
+    msg.textContent = '正在讀取文章…';
+    try {
+      var a = await urlFetchArticle(raw);
+      var name = (a.title || a.text.slice(0, 24)).slice(0, 60);
+      var id = 'text:' + Date.now().toString(36);
+      lib.docs.push({ id: id, name: name, type: 'text', size: a.text.length, added: Date.now(), opened: 0, folder: libTarget(), url: a.url, site: a.site || '' });
+      saveLib();
+      try { localStorage.setItem(PDF_DOC_PREFIX + id, JSON.stringify({ text: a.text, src: { type: 'text', id: id, name: name, url: a.url }, hl: [], strokes: [], boxes: [], nextId: 1 })); } catch (err) {}
+      $('urlInput').value = ''; $('input').value = ''; $('textTitle').value = ''; $('pastebox').hidden = true; $('openPaste').setAttribute('aria-expanded', 'false');
+      msg.textContent = '已匯入「' + name + '」' + (a.site ? '（' + a.site + '）' : '') + '。內文是自動整理的，開頭或結尾可能多了幾行網站的文字，可以忽略。';
+      setTimeout(function () { if (/^已匯入/.test(msg.textContent)) { msg.textContent = ''; } }, 12000);
+      openDoc(id);
+    } catch (err) {
+      msg.textContent = String(err && err.message || err);
+    } finally {
+      urlBusy = false; if (btn) { btn.disabled = false; btn.textContent = '讀取文章'; }
+    }
+  }
+  $('addUrl').addEventListener('click', function () {
+    var v = $('urlInput').value.trim();
+    if (!v) { $('homeMsg').textContent = '請先貼上文章的網址。'; $('urlInput').focus(); return; }
+    libAddUrl(v);
+  });
+  $('urlInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('addUrl').click(); } });
+  /* ---------- 照片匯入前：裁切、旋轉、把斜拍的拉正（招牌、菜單） ----------
+     拖曳四個角框住要讀的地方，App 會把那個四邊形「攤平」成長方形（透視校正），文字辨識會準很多。 */
+  var phWrap = document.createElement('div'); phWrap.className = 'cdlayer phlayer'; phWrap.id = 'photoEdit'; phWrap.hidden = true;
+  phWrap.innerHTML = '<div class="cdback"></div><div class="cdsheet phsheet" role="dialog" aria-modal="true" aria-labelledby="phTitle"><div class="cdscroll">' +
+    '<h2 class="vptitle" id="phTitle">調整照片</h2>' +
+    '<p class="vptip" id="phTip">拖曳四個角的圓點，框住要讀的文字（例如招牌、菜單）。斜斜拍的會自動拉正；不用很準。</p>' +
+    '<div class="phbox" id="phBox"><div class="phstage" id="phStage"><canvas id="phCanvas"></canvas><svg class="phsvg" id="phSvg" aria-hidden="true"><polygon id="phPoly"/></svg></div></div>' +
+    '<div class="phtools"><button type="button" id="phRotL" aria-label="向左轉"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg>向左轉</button>' +
+    '<button type="button" id="phRotR" aria-label="向右轉"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4.5h-4.5"/></svg>向右轉</button>' +
+    '<button type="button" id="phFull">選整張</button></div>' +
+    '<div class="vpact phact"><button type="button" id="phCancel">取消</button><button type="button" id="phSkipAll" hidden>其餘不調整</button><button type="button" class="primary" id="phOk">完成</button></div>' +
+    '</div></div>';
+  document.body.appendChild(phWrap);
+  /* 四個點對應到長方形的四個角：解出透視轉換（8 個未知數） */
+  function phHomography(src, dst) {
+    var A = [], b = [];
+    for (var i = 0; i < 4; i++) {
+      var x = src[i][0], y = src[i][1], u = dst[i][0], v = dst[i][1];
+      A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u);
+      A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v);
+    }
+    var n = 8;
+    for (var c = 0; c < n; c++) {
+      var p = c; for (var r = c + 1; r < n; r++) { if (Math.abs(A[r][c]) > Math.abs(A[p][c])) { p = r; } }
+      var t = A[c]; A[c] = A[p]; A[p] = t; var tb = b[c]; b[c] = b[p]; b[p] = tb;
+      if (Math.abs(A[c][c]) < 1e-12) { return null; }
+      for (r = 0; r < n; r++) {
+        if (r === c) { continue; }
+        var f = A[r][c] / A[c][c];
+        for (var k = c; k < n; k++) { A[r][k] -= f * A[c][k]; }
+        b[r] -= f * b[c];
+      }
+    }
+    var h = []; for (c = 0; c < n; c++) { h.push(b[c] / A[c][c]); }
+    h.push(1);
+    return h;
+  }
+  /* 把來源圖上的四邊形攤平成新的長方形圖 */
+  function phWarp(srcCanvas, quad) {
+    var W = srcCanvas.width, H = srcCanvas.height;
+    var P = quad.map(function (q) { return [q[0] * W, q[1] * H]; });
+    var d = function (a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); };
+    var ow = Math.max(d(P[0], P[1]), d(P[3], P[2])), oh = Math.max(d(P[0], P[3]), d(P[1], P[2]));
+    var k = Math.min(1, 2600 / Math.max(ow, oh));
+    ow = Math.max(8, Math.round(ow * k)); oh = Math.max(8, Math.round(oh * k));
+    /* 輸出座標 → 來源座標 */
+    var h = phHomography([[0, 0], [ow, 0], [ow, oh], [0, oh]], P);
+    if (!h) { return null; }
+    var sd = srcCanvas.getContext('2d').getImageData(0, 0, W, H).data;
+    var out = document.createElement('canvas'); out.width = ow; out.height = oh;
+    var og = out.getContext('2d'), im = og.createImageData(ow, oh), od = im.data;
+    for (var y = 0; y < oh; y++) {
+      for (var x = 0; x < ow; x++) {
+        var den = h[6] * x + h[7] * y + 1, sx = (h[0] * x + h[1] * y + h[2]) / den, sy = (h[3] * x + h[4] * y + h[5]) / den;
+        var o = (y * ow + x) * 4;
+        if (sx < 0 || sy < 0 || sx > W - 1 || sy > H - 1) { od[o] = od[o + 1] = od[o + 2] = 255; od[o + 3] = 255; continue; }
+        var x0 = sx | 0, y0 = sy | 0, x1 = Math.min(W - 1, x0 + 1), y1 = Math.min(H - 1, y0 + 1), fx = sx - x0, fy = sy - y0;
+        var i00 = (y0 * W + x0) * 4, i10 = (y0 * W + x1) * 4, i01 = (y1 * W + x0) * 4, i11 = (y1 * W + x1) * 4;
+        for (var ch = 0; ch < 3; ch++) {
+          var top = sd[i00 + ch] + (sd[i10 + ch] - sd[i00 + ch]) * fx, bot = sd[i01 + ch] + (sd[i11 + ch] - sd[i01 + ch]) * fx;
+          od[o + ch] = top + (bot - top) * fy;
+        }
+        od[o + 3] = 255;
+      }
+    }
+    og.putImageData(im, 0, 0);
+    return out;
+  }
+  function phRotate(c, dir) {
+    var r = document.createElement('canvas'); r.width = c.height; r.height = c.width;
+    var g = r.getContext('2d');
+    g.translate(r.width / 2, r.height / 2); g.rotate(dir * Math.PI / 2); g.drawImage(c, -c.width / 2, -c.height / 2);
+    return r;
+  }
+  var PH_FULL = [[0, 0], [1, 0], [1, 1], [0, 1]];
+  function phIsFull(q) { return q.every(function (p, i) { return Math.abs(p[0] - PH_FULL[i][0]) < 0.004 && Math.abs(p[1] - PH_FULL[i][1]) < 0.004; }); }
+  /* 一張一張調整；回傳調整好的檔案清單，按取消回傳 null */
+  function photoEdit(files) {
+    return new Promise(function (resolve) {
+      var out = [], idx = 0, base = null, quad = null, rot = 0;
+      var stage = $('phStage'), box = $('phBox'), cv = $('phCanvas'), svg = $('phSvg'), poly = $('phPoly'), handles = [];
+      for (var i = 0; i < 4; i++) {
+        var hc = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); hc.setAttribute('class', 'phh'); hc.setAttribute('r', '13');
+        svg.appendChild(hc); handles.push(hc);
+      }
+      function done(r) {
+        phWrap.hidden = true; document.body.classList.remove('noscroll');
+        handles.forEach(function (h) { h.remove(); });
+        ['phOk', 'phCancel', 'phSkipAll', 'phRotL', 'phRotR', 'phFull'].forEach(function (id) { $(id).onclick = null; });
+        box.onpointerdown = box.onpointermove = box.onpointerup = box.onpointercancel = null;
+        resolve(r);
+      }
+      function draw() {
+        var dw = Math.min(stage.clientWidth || 600, 1000), k = dw / base.width;
+        cv.width = Math.round(base.width * Math.min(1, 1400 / Math.max(base.width, base.height)));
+        cv.height = Math.round(cv.width * base.height / base.width);
+        cv.getContext('2d').drawImage(base, 0, 0, cv.width, cv.height);
+        stage.style.aspectRatio = base.width + ' / ' + base.height;
+        /* 直的照片不要太高：寬度跟著縮，整張都看得到 */
+        stage.style.width = 'min(100%, calc(52vh * ' + (base.width / base.height).toFixed(4) + '))';
+        paintQuad();
+      }
+      function paintQuad() {
+        var r = stage.getBoundingClientRect(), w = r.width, h = r.height;
+        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h); svg.setAttribute('width', w); svg.setAttribute('height', h);
+        poly.setAttribute('points', quad.map(function (p) { return (p[0] * w).toFixed(1) + ',' + (p[1] * h).toFixed(1); }).join(' '));
+        handles.forEach(function (hc, i) { hc.setAttribute('cx', (quad[i][0] * w).toFixed(1)); hc.setAttribute('cy', (quad[i][1] * h).toFixed(1)); });
+      }
+      async function load() {
+        var o = await ocrLoadImage(files[idx]), im = o.im;
+        var iw = im.naturalWidth || im.width, ih = im.naturalHeight || im.height, k = Math.min(1, 2600 / Math.max(iw, ih));
+        base = document.createElement('canvas'); base.width = Math.max(1, Math.round(iw * k)); base.height = Math.max(1, Math.round(ih * k));
+        var g = base.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, base.width, base.height); g.drawImage(im, 0, 0, base.width, base.height);
+        URL.revokeObjectURL(o.url);
+        quad = PH_FULL.map(function (p) { return p.slice(); }); rot = 0;
+        $('phTitle').textContent = files.length > 1 ? '調整照片（第 ' + (idx + 1) + '／' + files.length + ' 張）' : '調整照片';
+        $('phOk').textContent = idx + 1 < files.length ? '下一張' : '完成';
+        $('phSkipAll').hidden = !(files.length > 1 && idx + 1 < files.length);
+        draw();
+      }
+      var drag = null;
+      function pt(e) { var r = stage.getBoundingClientRect(); return [Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)), r]; }
+      box.onpointerdown = function (e) {
+        var p = pt(e), r = p[2], best = -1, bd = 1e9;
+        quad.forEach(function (q, i) { var dx = (q[0] - p[0]) * r.width, dy = (q[1] - p[1]) * r.height, dd = dx * dx + dy * dy; if (dd < bd) { bd = dd; best = i; } });
+        /* 手指點在圓點附近（44 點以內）才算抓住 */
+        if (best >= 0 && bd <= 44 * 44) { drag = { i: best, id: e.pointerId }; try { box.setPointerCapture(e.pointerId); } catch (err) {} handles[best].classList.add('on'); e.preventDefault(); }
+      };
+      box.onpointermove = function (e) {
+        if (!drag || e.pointerId !== drag.id) { return; }
+        var p = pt(e); quad[drag.i] = [p[0], p[1]]; paintQuad(); e.preventDefault();
+      };
+      box.onpointerup = box.onpointercancel = function () { if (drag) { handles[drag.i].classList.remove('on'); } drag = null; };
+      $('phRotL').onclick = function () { base = phRotate(base, -1); quad = PH_FULL.map(function (p) { return p.slice(); }); draw(); };
+      $('phRotR').onclick = function () { base = phRotate(base, 1); quad = PH_FULL.map(function (p) { return p.slice(); }); draw(); };
+      $('phFull').onclick = function () { quad = PH_FULL.map(function (p) { return p.slice(); }); paintQuad(); };
+      function finishOne() {
+        return new Promise(function (res) {
+          var c = phIsFull(quad) ? base : (phWarp(base, quad) || base);
+          c.toBlob(function (blob) {
+            var nm = (files[idx].name || '圖片.jpg').replace(/\.[^.]+$/, '') + '.jpg';
+            res(blob ? new File([blob], nm, { type: 'image/jpeg' }) : files[idx]);
+          }, 'image/jpeg', 0.92);
+        });
+      }
+      $('phOk').onclick = async function () {
+        $('phOk').disabled = true;
+        try { out.push(await finishOne()); } finally { $('phOk').disabled = false; }
+        idx++;
+        if (idx >= files.length) { done(out); return; }
+        try { await load(); } catch (err) { out.push(files[idx]); idx++; if (idx >= files.length) { done(out); } else { load(); } }
+      };
+      $('phSkipAll').onclick = async function () {
+        out.push(await finishOne());
+        for (var j = idx + 1; j < files.length; j++) { out.push(files[j]); }
+        done(out);
+      };
+      $('phCancel').onclick = function () { done(null); };
+      phWrap.querySelector('.cdback').onclick = function () { done(null); };
+      phWrap.hidden = false; document.body.classList.add('noscroll');
+      window.addEventListener('resize', function onR() { if (phWrap.hidden) { window.removeEventListener('resize', onR); return; } if (base) { paintQuad(); } });
+      load().catch(function () { done(files.slice()); });
+    });
+  }
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
     btn.addEventListener('click', function () {

@@ -1,5 +1,5 @@
 /* 泰文閱讀的離線程式。改版時把 VERSION 加一，iPad 會自動換成新版。 */
-const VERSION = 'thai-reader-v1.13.12';
+const VERSION = 'thai-reader-v1.14.0';
 const OCR_CACHE = 'thai-reader-ocr-5.1.1';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => {
@@ -19,6 +19,8 @@ self.addEventListener('fetch', (e) => {
       .catch(() => caches.match('./index.html')));
     return;
   }
+  /* 讀取文章的小程式：每次都上網，不存起來 */
+  if (url.origin === location.origin && url.pathname.indexOf('/api/') >= 0) { return; }
   if (url.origin === location.origin && url.pathname.indexOf('/ocr/') >= 0) {
     /* 文字辨識工具（約 8 MB）：存在另一個快取，改版時不用重新下載 */
     e.respondWith(caches.open(OCR_CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => { if (res && res.ok) { c.put(req, res.clone()); } return res; }))));
