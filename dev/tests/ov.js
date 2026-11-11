@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const OUT = process.argv[2], DIR = process.argv[3], F = process.argv[4] || 'B.pdf';
 (async () => {
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 }, deviceScaleFactor: 3 })).newPage();
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(600);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(600);
   await p.setInputFiles('#pdffile', DIR + '/' + F); await p.waitForFunction((f) => document.getElementById('docstatus').textContent.includes(f + '（'), F, { timeout: 60000 });
   await p.evaluate(() => document.body.classList.add('showtl'));
   await p.locator('#wrap').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500);

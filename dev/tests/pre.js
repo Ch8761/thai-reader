@@ -1,7 +1,7 @@
 const { chromium } = require('playwright'); const fs = require('fs');
 (async () => {
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 1024, height: 900 } })).newPage();
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(1200);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(1200);
   await p.addScriptTag({ path: 'vidpre.js' });
   const modes = (process.argv[2] || 'raw,gray,bright,outline').split(','), rx = JSON.parse(process.argv[3] || '[0,0,1,1]');
   for (const f of (process.env.FR || '0,7,13,19,25').split(',').map(Number)) {

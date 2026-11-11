@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-theme', 'light'); localStorage.setItem('thai-level', 'a'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme', 'light'); localStorage.setItem('thai-level', 'a'); }); await p.reload(); await p.waitForTimeout(1500);
   const E = c => p.evaluate(c => window.__ev(c), c);
   await p.screenshot({ path: 'tests/rd-home.png' });
   await p.click('#readerOpen'); await p.waitForTimeout(600);

@@ -14,7 +14,7 @@ const { chromium } = require('playwright');
   await ctx.route('https://accounts.google.com/**', r => { const u = r.request().url(); if (u.includes('/o/oauth2/v2/auth')) { googleNav = u; return r.fulfill({ body: 'google' }); } return r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{initTokenClient:function(){return{requestAccessToken:function(){}};}}}};' }); });
   const tokSeen = []; await ctx.route('https://www.googleapis.com/**', r => { tokSeen.push((r.request().headers().authorization || '').replace('Bearer ', '')); const u = new URL(r.request().url()); if (u.pathname.indexOf('userinfo') >= 0) return r.fulfill({ json: { email: 'me@gmail.com' } }); if (u.pathname === '/drive/v3/files' && r.request().method() === 'GET') return r.fulfill({ json: { files: [] } }); return r.fulfill({ json: { id: 'x1' } }); });
   const B = 'http://127.0.0.1:8765/';
-  await p.goto(B + 'index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); });
+  await p.goto(B + 'index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); });
   await p.reload(); await p.waitForTimeout(1500);
   await p.evaluate(() => window.__ev("showTab('settings'); settingsOpen('data')"));
   await p.waitForTimeout(300);

@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
   let ygReq = 0;
   await ctx.route('https://youglish.com/**', r => { ygReq++; r.abort(); });
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-theme', 'light'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme', 'light'); }); await p.reload(); await p.waitForTimeout(1500);
   const E = c => p.evaluate(c => window.__ev(c), c);
   await p.click('#openPaste'); await p.waitForTimeout(200); await p.fill('#input', 'เราไปกินข้าวที่ร้านอาหารไทย'); await p.click('#addText'); await p.waitForTimeout(800);
   await E("(function(){ showPop(segAt(state.text.indexOf('อาหาร'))); return 1; })()"); await p.waitForTimeout(300);

@@ -8,7 +8,7 @@ fs.mkdirSync(OUT, { recursive: true });
   const p = await (await b.newContext({ viewport: { width: 820, height: 1180 }, deviceScaleFactor: 2 })).newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
   await p.goto('http://127.0.0.1:8765/index.html');
-  await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-theme', 'light'); });
+  await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme', 'light'); });
   await p.reload(); await p.waitForTimeout(1200);
   await p.addStyleTag({ content: '*{transition:none!important;animation:none!important;caret-color:transparent!important}' });
 

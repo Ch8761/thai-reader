@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 820, height: 1180 }, deviceScaleFactor: 2 }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(600);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(600);
   await p.setInputFiles('#pdffile', 'pdfin/B.pdf'); await p.waitForFunction(() => /\.pdf（/.test(document.getElementById('docstatus').textContent), null, { timeout: 60000 });
   const pt = (word) => p.evaluate((word) => { for (const sp of document.querySelectorAll('#text .tl')) { const t = sp.textContent, i = t.indexOf(word); if (i < 0) continue; const w = document.createTreeWalker(sp, NodeFilter.SHOW_TEXT); let n, acc = 0; while ((n = w.nextNode())) { if (i + 1 < acc + n.nodeValue.length) { const rg = document.createRange(); rg.setStart(n, i + 1 - acc); rg.setEnd(n, i + 2 - acc); const r = rg.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; } acc += n.nodeValue.length; } } return null; }, word);
   for (const w of ['เตือน', 'อิทธิพล', 'แทรกซึม']) {

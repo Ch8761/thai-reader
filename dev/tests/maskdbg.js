@@ -1,7 +1,7 @@
 const { chromium } = require('playwright'); const fs = require('fs');
 (async () => {
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage();
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate((r) => { localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('dbgreg', r); }, process.env.REG || '[0,0,1,1]'); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate((r) => { localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('dbgreg', r); }, process.env.REG || '[0,0,1,1]'); await p.reload(); await p.waitForTimeout(1500);
   for (const f of process.argv.slice(2)) {
     const r = await p.evaluate(async (f) => {
       const REG = JSON.parse(localStorage.getItem('dbgreg') || '[0,0,1,1]'); const im = new Image(); im.src = 'bugfr/' + f; await im.decode();

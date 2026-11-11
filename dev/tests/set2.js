@@ -3,7 +3,7 @@ const { chromium, devices } = require('playwright');
   const b = await chromium.launch();
   for (const [nm, opt] of [['ipad', { viewport: { width: 820, height: 1180 } }], ['phone', devices['iPhone SE']]]) {
     const p = await (await b.newContext(opt)).newPage(); const errs = []; p.on('pageerror', e => errs.push(String(e)));
-    await p.goto('http://127.0.0.1:8766/'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+    await p.goto('http://127.0.0.1:8766/'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
     await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(300);
     await p.screenshot({ path: `tests/s2-${nm}-menu.png` });
     await p.click('.setmi[data-grp="read"]'); await p.waitForTimeout(300);

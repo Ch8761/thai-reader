@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
   const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
   await p.goto('http://127.0.0.1:8765/index.html');
-  await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1');  });
+  await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1');  });
   await p.reload(); await p.waitForTimeout(800);
   await p.setInputFiles('#imgfile', ['ocrtest/becky.png']);
   await p.waitForFunction(() => /由文字辨識讀出/.test(document.getElementById('ocrmsg').textContent), null, { timeout: 120000 });

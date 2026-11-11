@@ -36,7 +36,7 @@ async function setup(ctx) {
   const A = await b.newContext({ viewport: { width: 1024, height: 1100 } }), B = await b.newContext({ viewport: { width: 400, height: 860 } });
   await setup(A); await setup(B);
   const pa = await A.newPage(), pb = await B.newPage(); const errs = [];
-  for (const p of [pa, pb]) { p.on('pageerror', e => errs.push(String(e))); await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-theme', 'light'); }); await p.reload(); await p.waitForTimeout(1500); }
+  for (const p of [pa, pb]) { p.on('pageerror', e => errs.push(String(e))); await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme', 'light'); }); await p.reload(); await p.waitForTimeout(1500); }
   const EA = c => pa.evaluate(c => window.__ev(c), c), EB = c => pb.evaluate(c => window.__ev(c), c);
   const syncWait = async (p) => { await p.waitForFunction(() => window.__ev && !window.__ev('sync.busy'), null, { timeout: 60000 }); await p.waitForTimeout(300); };
   // A: content

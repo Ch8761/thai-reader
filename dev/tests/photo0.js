@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 (async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage(); p.on('pageerror', e => console.log('ERR', String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
   await p.setInputFiles('#imgfile', ['phototest/sign.jpg']); await p.waitForSelector('#photoEdit:not([hidden])'); await p.waitForTimeout(500);
   if (0) await p.evaluate(() => { const st = document.getElementById('phStage'); ['pointerdown','pointermove','pointerup'].forEach(t => document.addEventListener(t, e => { if (t !== 'pointermove' || e.buttons) console.log(t, e.target.id || e.target.tagName, Math.round(e.clientX), Math.round(e.clientY)); }, true)); });
   p.on('console', m => console.log('C', m.text()));

@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 820, height: 1180 }, deviceScaleFactor: 2, acceptDownloads: true }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(600);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(600);
   await p.setInputFiles('#pdffile', 'pdfin/B.pdf'); await p.waitForFunction(() => /\.pdf（/.test(document.getElementById('docstatus').textContent), null, { timeout: 60000 });
   const pt = (word, off = 1) => p.evaluate(([word, off]) => { for (const sp of document.querySelectorAll('#text .tl')) { const t = sp.textContent, i = t.indexOf(word); if (i < 0) continue; const w = document.createTreeWalker(sp, NodeFilter.SHOW_TEXT); let n, acc = 0; while ((n = w.nextNode())) { if (i + off < acc + n.nodeValue.length) { const rg = document.createRange(); rg.setStart(n, i + off - acc); rg.setEnd(n, i + off + 1 - acc); const r = rg.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; } acc += n.nodeValue.length; } } return null; }, [word, off]);
   // folders: create folder 新聞 and add cards
@@ -29,7 +29,7 @@ const { chromium } = require('playwright');
   const [dl2] = await Promise.all([p.waitForEvent('download', { timeout: 60000 }), p.click('#bkSave')]);
   const f2 = 'tests/out/backup.json'; await dl2.saveAs(f2); await p.waitForTimeout(200); console.log('bk:', await p.innerText('#bkStatus'));
   // wipe and restore
-  await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); indexedDB.deleteDatabase('thai-notes-files'); }); await p.reload(); await p.waitForTimeout(1200);
+  await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); indexedDB.deleteDatabase('thai-notes-files'); }); await p.reload(); await p.waitForTimeout(1200);
   console.log('after wipe cards:', await p.innerText('#cardBadge'), '|', await p.innerText('#docstatus'));
   await p.click('.tabbar [data-tab="settings"]'); await p.setInputFiles('#bkFile', f2); await p.waitForTimeout(400);
   console.log('confirm:', await p.innerText('#bkConfirmText')); await p.click('#bkDo');

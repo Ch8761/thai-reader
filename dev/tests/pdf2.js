@@ -4,7 +4,7 @@ const OUT = process.argv[2], DIR = process.argv[3];
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 820, height: 1180 }, deviceScaleFactor: 2 });
   const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(800);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(800);
   const open = async (f) => { await p.setInputFiles('#pdffile', DIR + '/' + f); await p.waitForFunction((f) => document.getElementById('docstatus').textContent.includes(f + '（'), f, { timeout: 60000 }); await p.waitForTimeout(1200); };
   const rep = async (k) => (await p.inputValue('#report')).split('\n').filter(l => k.some(x => l.startsWith(x))).join('\n');
   // find point of the n-th occurrence of word in state text (via spans)

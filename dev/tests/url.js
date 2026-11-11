@@ -11,7 +11,7 @@ const FX = { 'https://news.example.co.th/travel/1': ['news.html', 'text/html; ch
       const f = FX[u]; if (!f) return route.fulfill({ status: 502, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'network' }) });
       route.fulfill({ status: 200, headers: { 'content-type': 'application/octet-stream', 'x-final-url': encodeURI(u), 'x-source-type': f[1] }, body: fs.readFileSync('tests/urlfx/' + f[0]) });
     });
-    await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+    await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
     await p.screenshot({ path: `tests/url-${nm}-home.png` });
     await p.click('#openPaste'); await p.waitForTimeout(200); await p.screenshot({ path: `tests/url-${nm}-panel.png` });
     const run = async (u, viaTextarea) => {

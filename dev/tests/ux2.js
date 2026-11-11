@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const W = +(process.argv[2] || 390); const TH = process.argv[3] || 'light';
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: W, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(th => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-theme', th); }, TH); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(th => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme', th); }, TH); await p.reload(); await p.waitForTimeout(1500);
   const E = c => p.evaluate(c => window.__ev(c), c);
   console.log('today hidden at start', await p.evaluate(() => document.getElementById('todayBox').hidden));
   // make 4 due cards, yesterday streak

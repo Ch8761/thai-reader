@@ -643,7 +643,7 @@ Anki 格式內容	Anki format
 文件資料夾	Document folders
 再按一次確定（文件會移到未分類）	Tap again to confirm (documents move to Unsorted)
 這個資料夾還沒有文件。	This folder has no documents yet.
-還沒有文件。按上面的「加入檔案」選 PDF、照片或影片，或按「貼上網址／文字」開始。	No documents yet. Tap “Add file” above to choose a PDF, photo or video, or “Paste link / text” to start.
+還沒有文件。按上面的「加入檔案」選 PDF、照片或影片，或按「貼上網址／文字」開始。	No documents yet. Tap “Import” above to choose a PDF, photo or video, or paste a news link into the link bar.
 新加入的文件會放進：	New documents go to: 
 文字・	Text ·
  字	 chars
@@ -655,7 +655,7 @@ Anki 格式內容	Anki format
 文件	Document
 原文：	Original: 
 找不到「	Can't find the file for “
-」的檔案（可能是換了裝置或清除過資料）。請按「加入檔案」重新選同一個檔案，筆記會自動接回。	” (you may have switched devices or cleared data). Tap “Add file” and pick the same file again; your notes will reconnect automatically.
+」的檔案（可能是換了裝置或清除過資料）。請按「加入檔案」重新選同一個檔案，筆記會自動接回。	” (you may have switched devices or cleared data). Tap “Import” and pick the same file again; your notes will reconnect automatically.
 打不開「	Can't open “
 （文字，	(text,
  字）	 chars)
@@ -877,7 +877,7 @@ Google 雲端硬碟回應錯誤 	Google Drive error
 那個網站太久沒有回應，等一下再試，或改用複製貼上。	That site took too long; try again later, or copy and paste instead.
 連不到那個網站，請確認網址正確，或改用複製貼上。	Can't reach that site; check the address, or copy and paste instead.
 那個網站不讓 App 讀取（可能需要登入、付費，或擋掉了自動讀取），備用的讀取方式也失敗了。請在瀏覽器打開文章、全選複製，貼到下面的「貼上泰文」。	That site won't let the app read it (it may need a login or payment, or blocks automatic reading), and the backup reader failed too. Open the article in your browser, select all, copy, and paste it into “Paste Thai” below.
-這個網址不是一般網頁（可能是圖片或 PDF 檔）。PDF 可以先下載，再用「加入檔案」。	This address isn't a normal web page (maybe an image or PDF). Download a PDF first, then use “Add file”.
+這個網址不是一般網頁（可能是圖片或 PDF 檔）。PDF 可以先下載，再用「加入檔案」。	This address isn't a normal web page (maybe an image or PDF). Download a PDF first, then use “Import”.
 Facebook、IG、X、TikTok 要登入才看得到內容，沒辦法直接讀取。可以複製貼文文字，用下面的「貼上泰文」加入。	Facebook, IG, X and TikTok need a login, so they can't be read directly. Copy the post's text and use “Paste Thai” below.
 這個網頁找不到泰文文章內容（可能是英文網頁、要登入才看得到，或內容是用程式載入的）。可以在瀏覽器打開文章、全選複製，再用下面的「貼上泰文」加入。	No Thai article found on this page (it may be in English, need a login, or load its content with scripts). Open it in your browser, select all, copy, and use “Paste Thai” below.
 現在沒有網路，連上網路後再試。	You're offline; try again once you're connected.
@@ -941,7 +941,7 @@ YouGlish 還沒有收錄有人說「	YouGlish has no clips of anyone saying “
 再按一次確認清除	Tap again to clear
 已選取全部文字。請長按選取的文字，選「拷貝」。	All text selected. Long-press it and choose “Copy”.
 沒辦法打開上次的 PDF（	Can't open your last PDF (
-），請再按「開啟 PDF 檔」選一次；同一份檔案的筆記會接回來。	); tap “Add file” and pick it again; notes for the same file will reconnect.
+），請再按「開啟 PDF 檔」選一次；同一份檔案的筆記會接回來。	); tap “Import” and pick it again; notes for the same file will reconnect.
 泰文閱讀	Thai Reader
 我的文件	My documents
 加入檔案	Add file

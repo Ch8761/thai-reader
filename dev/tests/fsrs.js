@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
   const D = 864e5, now = Date.now();
   // one new card, one old (Leitner-era) card due today, one old card not due
   await p.evaluate(([now, D]) => {
-    localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-theme', 'light');
+    localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme', 'light');
     const t0 = new Date(); t0.setHours(0, 0, 0, 0);
     const cards = [
       { id: 'c1', w: 'อาหาร', zh: '食物', added: now - 1000, box: 1, due: t0.getTime() },

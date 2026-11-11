@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const p = await b.newPage(); const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:'+(process.env.PORT||8765)+'/index.html'); await p.evaluate(() => { localStorage.setItem('thai-welcome-v1', '1'); }); await p.reload(); await p.waitForTimeout(2000);
+  await p.goto('http://127.0.0.1:'+(process.env.PORT||8765)+'/index.html'); await p.evaluate(() => { localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(2000);
   const r = await p.evaluate(() => window.__grammarSelfTest());
   console.log('total', r.total, 'dups', r.duplicates.join(','), 'fails', r.fails.length); r.fails.forEach(f => console.log('  ', f));
   const lv = await p.evaluate(() => { var c = {}; window.GRAMMAR.forEach(function (g) { c[g.lv] = (c[g.lv] || 0) + 1; }); return JSON.stringify(c); }); console.log('levels', lv);

@@ -2,7 +2,7 @@ const { chromium, devices } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const ctx = await b.newContext({ ...devices['iPhone 13'] }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); localStorage.setItem('thai-tone-mode','1'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); localStorage.setItem('thai-tone-mode','1'); }); await p.reload(); await p.waitForTimeout(1500);
   const E = (c) => p.evaluate(c => window.__ev(c), c);
   await p.click('#openPaste'); await p.fill('#textTitle', 'ทดสอบ'); await p.fill('#input', 'เมื่อวานฉันไปตลาดกับแม่เพราะว่าต้องซื้อผักและผลไม้ที่สดมาก'); await p.click('#addText'); await p.waitForTimeout(800);
   await E("(function(){ showPop(segAt(state.text.indexOf('ตลาด') + 1)); return 1; })()"); await p.waitForTimeout(800);

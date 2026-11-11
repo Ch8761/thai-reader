@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 820, height: 1180 } }); const p = await ctx.newPage();
   const errs = [], langs = []; p.on('pageerror', e => errs.push(String(e))); ctx.on('request', r => { if (/traineddata/.test(r.url())) { langs.push(r.url().replace(/^.*\/ocr\//, '')); } });
-  await p.goto('http://127.0.0.1:8766/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8766/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(1500);
   await p.setInputFiles('#imgfile', [process.env.IMG || 'phototest/sign.jpg']); await p.waitForSelector('#photoEdit:not([hidden])'); await p.click('#phOk');
   await p.waitForFunction((w) => new RegExp(w).test(document.getElementById('text') ? document.getElementById('text').innerText : ''), process.env.WANT || 'ทุกวัน', { timeout: 180000 });
   console.log('text:', (await p.textContent('#text')).slice(0, 80));

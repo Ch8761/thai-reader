@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 }, deviceScaleFactor: 2 })).newPage();
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(600);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(600);
   await p.setInputFiles('#pdffile', 'pdfin/B.pdf'); await p.waitForFunction(() => /\.pdf（/.test(document.getElementById('docstatus').textContent), null, { timeout: 60000 });
   await p.locator('#wrap').scrollIntoViewIfNeeded(); await p.waitForTimeout(800);
   const q = await p.evaluate(() => { const sp = [...document.querySelectorAll('#text .tl')].find(s => s.textContent.includes('กระทรวงการต่างประเทศ')); const w = document.createTreeWalker(sp, NodeFilter.SHOW_TEXT); let n, acc = 0; const i = sp.textContent.indexOf('กระทรวงการต่างประเทศ') + 2; while ((n = w.nextNode())) { if (i < acc + n.nodeValue.length) { const rg = document.createRange(); rg.setStart(n, i - acc); rg.setEnd(n, i - acc + 1); const r = rg.getBoundingClientRect(); return { x: r.left, y: r.top }; } acc += n.nodeValue.length; } });

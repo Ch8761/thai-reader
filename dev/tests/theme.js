@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 820, height: 1180 }, colorScheme: 'dark' }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto(process.env.URL); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto(process.env.URL); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await p.reload(); await p.waitForTimeout(1500);
   await p.click('.tabbar [data-tab="settings"]'); await p.click('#themeGroup button:has-text("淺色")'); await p.waitForTimeout(300);
   const st = async () => p.evaluate(() => [document.documentElement.getAttribute('data-theme'), localStorage.getItem('thai-theme'), getComputedStyle(document.body).backgroundColor].join(' | '));
   console.log('after set:', await st());

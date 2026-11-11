@@ -3,7 +3,7 @@ const { chromium, devices } = require('playwright');
   const b = await chromium.launch(); const ctx = await b.newContext({ ...devices['iPhone 13'], deviceScaleFactor: 1 }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
   const U = process.env.U || 'http://127.0.0.1:8765/index.html';
-  await p.goto(U); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1000);
+  await p.goto(U); await p.evaluate(() => { localStorage.clear(); indexedDB.deleteDatabase('thai-notes-files'); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1000);
   const pre = process.env.P || 'ph';
   await p.screenshot({ path: `tests/${pre}-home.png`, fullPage: false });
   await p.setInputFiles('#pdffile', ['/mnt/user-data/uploads/B.pdf']);

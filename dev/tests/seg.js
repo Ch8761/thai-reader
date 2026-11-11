@@ -2,7 +2,7 @@ const { chromium, devices } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 820, height: 1180 } })).newPage();
   const errs = []; p.on('pageerror', e => errs.push(String(e)));
-  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto('http://127.0.0.1:8765/index.html'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
   const E = c => p.evaluate(c => window.__ev(c), c);
   await p.click('#openPaste'); await p.waitForTimeout(200); await p.fill('#textTitle', 'ig264（影片字幕）'); await p.fill('#input', 'แค่ตืนมาแล้วได้เจอ\nเราไปกินข้าวที่ร้านอาหารไทย'); await p.click('#addText'); await p.waitForTimeout(800);
   const segsS = () => E("segs.filter(function(x){return x.w;}).map(function(x){return x.t;}).join('|')");
@@ -43,7 +43,7 @@ const { chromium, devices } = require('playwright');
   console.log('undo btn', await p.textContent('#pop .segundo')); await p.click('#pop .segundo'); await p.waitForTimeout(200); console.log('after undo', await segsS());
   console.log('ERRORS:', errs.join(' | ') || 'none'); await b.close();
   const b2 = await chromium.launch(); const q = await (await b2.newContext(devices['iPhone 13'])).newPage();
-  await q.goto('http://127.0.0.1:8765/index.html'); await q.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); }); await q.reload(); await q.waitForTimeout(1500);
+  await q.goto('http://127.0.0.1:8765/index.html'); await q.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); }); await q.reload(); await q.waitForTimeout(1500);
   await q.click('#openPaste'); await q.waitForTimeout(200); await q.fill('#textTitle', 'ScreenRecording_11-10（影片字幕）'); await q.fill('#input', 'แค่ตืนมาแล้วได้เจอ'); await q.click('#addText'); await q.waitForTimeout(800);
   await q.evaluate(() => { document.getElementById('ocrRedo').hidden = false; });
   await q.screenshot({ path: 'tests/sg-head-phone.png', clip: { x: 0, y: 0, width: 390, height: 130 } }); await b2.close();

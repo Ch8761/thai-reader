@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const W = +(process.env.W || 820), H = +(process.env.H || 1180);
   const p = await (await b.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 })).newPage();
-  await p.goto(process.env.URL || 'http://127.0.0.1:8766/'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1','1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
+  await p.goto(process.env.URL || 'http://127.0.0.1:8766/'); await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); localStorage.setItem('thai-theme','light'); }); await p.reload(); await p.waitForTimeout(1500);
   const tag = process.env.TAG || 'a';
   await p.screenshot({ path: `tests/s-${tag}-home.png` });
   await p.click('#openPaste'); await p.fill('#textTitle', '測試'); await p.fill('#input', 'วันนี้ฟรีน สโรชา ไปกองถ่ายละครเรื่องใหม่ เหนื่อยมากกกก แต่สนุกมาก ขอบคุณทุกคนนะคะ'); await p.click('#addText'); await p.waitForTimeout(600);
