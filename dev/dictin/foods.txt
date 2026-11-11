@@ -1,0 +1,126 @@
+# 泰國菜名清單：泰文|中文|說明|英文（說明：泰國菜、泰國甜點、泰國飲料、泰國小吃）
+ต้มยำกุ้ง|冬蔭功（酸辣蝦湯）|泰國菜|Tom yum goong (spicy shrimp soup)
+ต้มยำ|冬蔭（酸辣湯）|泰國菜|Tom yum (hot and sour soup)
+ต้มยำน้ำข้น|奶香冬蔭湯|泰國菜|Creamy tom yum
+ต้มข่าไก่|椰奶南薑雞湯|泰國菜|Tom kha gai (coconut galangal chicken soup)
+ต้มแซ่บ|酸辣清湯|泰國菜|Tom saep (spicy sour soup)
+แกงเขียวหวาน|綠咖哩|泰國菜|Green curry
+แกงเขียวหวานไก่|綠咖哩雞|泰國菜|Green curry with chicken
+แกงแดง|紅咖哩|泰國菜|Red curry
+แกงเผ็ด|紅咖哩|泰國菜|Red curry
+แกงมัสมั่น|瑪莎曼咖哩|泰國菜|Massaman curry
+มัสมั่น|瑪莎曼咖哩|泰國菜|Massaman curry
+พะแนง|帕能咖哩|泰國菜|Panang curry
+แกงพะแนง|帕能咖哩|泰國菜|Panang curry
+แกงส้ม|酸咖哩湯|泰國菜|Kaeng som (sour curry)
+แกงจืด|清湯|泰國菜|Clear soup
+แกงไตปลา|魚腸咖哩|泰國菜|Kaeng tai pla (fish organ curry)
+แกงฮังเล|泰北豬肉咖哩|泰國菜|Hang lay curry
+แกงป่า|叢林咖哩|泰國菜|Jungle curry
+ผัดไทย|泰式炒河粉|泰國菜|Pad thai
+ผัดไทยกุ้งสด|鮮蝦泰式炒河粉|泰國菜|Pad thai with shrimp
+ผัดกะเพรา|打拋（九層塔炒肉）|泰國菜|Pad kra pao (holy basil stir-fry)
+กะเพราหมูสับ|打拋豬|泰國菜|Pad kra pao with minced pork
+ผัดกะเพราหมูสับ|打拋豬|泰國菜|Pad kra pao with minced pork
+ผัดกะเพราไก่|打拋雞|泰國菜|Pad kra pao with chicken
+ข้าวกะเพรา|打拋飯|泰國菜|Kra pao rice
+ข้าวผัด|炒飯|泰國菜|Fried rice
+ข้าวผัดกุ้ง|蝦仁炒飯|泰國菜|Shrimp fried rice
+ข้าวผัดปู|蟹肉炒飯|泰國菜|Crab fried rice
+ข้าวผัดสับปะรด|鳳梨炒飯|泰國菜|Pineapple fried rice
+ข้าวมันไก่|海南雞飯|泰國菜|Khao man gai (Hainanese chicken rice)
+ข้าวขาหมู|豬腳飯|泰國菜|Khao kha mu (stewed pork leg rice)
+ข้าวหมูแดง|叉燒飯|泰國菜|Red pork rice
+ข้าวหมูกรอบ|脆皮豬肉飯|泰國菜|Crispy pork rice
+ข้าวคลุกกะปิ|蝦醬拌飯|泰國菜|Khao kluk kapi (shrimp paste rice)
+ข้าวซอย|泰北咖哩麵|泰國菜|Khao soi (northern curry noodles)
+ข้าวต้ม|泰式粥（泡飯）|泰國菜|Khao tom (rice soup)
+ข้าวต้มกุ้ง|鮮蝦粥|泰國菜|Shrimp rice soup
+ข้าวเหนียวมะม่วง|芒果糯米飯|泰國甜點|Mango sticky rice
+ข้าวเหนียวหมูปิ้ง|糯米飯配烤豬肉串|泰國小吃|Sticky rice with grilled pork skewers
+ข้าวไข่เจียว|煎蛋飯|泰國菜|Omelette rice
+ส้มตำ|青木瓜沙拉|泰國菜|Som tam (green papaya salad)
+ส้มตำไทย|泰式青木瓜沙拉|泰國菜|Som tam thai
+ส้มตำปู|醃蟹青木瓜沙拉|泰國菜|Som tam with salted crab
+ตำปู|醃蟹青木瓜沙拉|泰國菜|Som tam with salted crab
+ตำซั่ว|米線青木瓜沙拉|泰國菜|Tam sua (papaya salad with noodles)
+ลาบ|拉帕（涼拌肉末）|泰國菜|Larb (minced meat salad)
+ลาบหมู|涼拌豬肉末|泰國菜|Larb with pork
+ลาบไก่|涼拌雞肉末|泰國菜|Larb with chicken
+น้ำตกหมู|涼拌烤豬肉|泰國菜|Nam tok mu (grilled pork salad)
+ไก่ย่าง|烤雞|泰國菜|Grilled chicken
+หมูปิ้ง|烤豬肉串|泰國小吃|Grilled pork skewers
+คอหมูย่าง|烤豬頸肉|泰國菜|Grilled pork neck
+หมูกระทะ|泰式烤肉鍋|泰國菜|Mu kratha (Thai barbecue hotpot)
+สุกี้|泰式壽喜燒（火鍋）|泰國菜|Thai suki (hotpot)
+สุกี้ยากี้|泰式壽喜燒（火鍋）|泰國菜|Thai suki (hotpot)
+ก๋วยเตี๋ยว|粿條（湯河粉）|泰國菜|Kuai tiao (noodle soup)
+ก๋วยเตี๋ยวเรือ|船麵|泰國菜|Boat noodles
+ก๋วยเตี๋ยวต้มยำ|冬蔭粿條|泰國菜|Tom yum noodle soup
+เย็นตาโฟ|紅湯粿條|泰國菜|Yen ta fo (pink noodle soup)
+บะหมี่|雞蛋麵|泰國菜|Egg noodles
+บะหมี่เกี๊ยว|餛飩麵|泰國菜|Wonton noodles
+ราดหน้า|燴河粉|泰國菜|Rat na (noodles in gravy)
+ผัดซีอิ๊ว|醬油炒河粉|泰國菜|Pad see ew
+ผัดขี้เมา|醉漢炒麵|泰國菜|Pad kee mao (drunken noodles)
+ขนมจีน|泰式米線|泰國菜|Khanom jeen (rice noodles)
+ขนมจีนน้ำยา|咖哩醬米線|泰國菜|Khanom jeen with curry sauce
+ผัดผักบุ้ง|炒空心菜|泰國菜|Stir-fried morning glory
+ผัดผักบุ้งไฟแดง|大火炒空心菜|泰國菜|Stir-fried morning glory
+ไข่เจียว|泰式煎蛋|泰國菜|Thai omelette
+ไข่พะโล้|滷蛋|泰國菜|Stewed eggs
+หมูพะโล้|滷豬肉|泰國菜|Stewed pork
+ทอดมันปลา|炸魚餅|泰國菜|Fried fish cakes
+ทอดมันกุ้ง|炸蝦餅|泰國菜|Fried shrimp cakes
+ห่อหมก|荷莫（蒸咖哩魚）|泰國菜|Hor mok (steamed curry fish)
+ปลาเผาเกลือ|鹽烤魚|泰國菜|Salt-crusted grilled fish
+ปลานึ่งมะนาว|檸檬蒸魚|泰國菜|Steamed fish with lime
+ปลาทอดน้ำปลา|魚露炸魚|泰國菜|Fried fish with fish sauce
+ปลาทับทิมทอด|炸紅羅非魚|泰國菜|Fried red tilapia
+กุ้งแช่น้ำปลา|魚露生蝦|泰國菜|Raw shrimp in fish sauce
+กุ้งอบวุ้นเส้น|蝦子烤冬粉|泰國菜|Baked shrimp with glass noodles
+ปูผัดผงกะหรี่|咖哩炒蟹|泰國菜|Curry crab
+หอยทอด|蚵仔煎|泰國菜|Hoi tod (oyster omelette)
+ยำวุ้นเส้น|涼拌冬粉|泰國菜|Yum woon sen (glass noodle salad)
+ยำทะเล|涼拌海鮮|泰國菜|Seafood salad
+ยำมาม่า|涼拌泡麵|泰國菜|Instant noodle salad
+พล่ากุ้ง|涼拌蝦|泰國菜|Pla goong (shrimp salad)
+หมูทอดกระเทียม|蒜香炸豬肉|泰國菜|Garlic fried pork
+หมูสะเต๊ะ|沙嗲豬肉|泰國小吃|Pork satay
+สะเต๊ะ|沙嗲|泰國小吃|Satay
+ไส้กรอกอีสาน|依善酸香腸|泰國小吃|Isan sausage
+แหนม|酸肉|泰國小吃|Naem (fermented pork)
+ลูกชิ้นปิ้ง|烤丸子|泰國小吃|Grilled meatballs
+ปอเปี๊ยะ|春捲|泰國小吃|Spring rolls
+ปอเปี๊ยะทอด|炸春捲|泰國小吃|Fried spring rolls
+กะหรี่ปั๊บ|咖哩餃|泰國小吃|Curry puffs
+ขนมปังสังขยา|班蘭醬麵包|泰國小吃|Bread with pandan custard
+โจ๊ก|粥|泰國菜|Jok (rice congee)
+โจ๊กหมู|豬肉粥|泰國菜|Pork congee
+ปาท่องโก๋|油條|泰國小吃|Pa thong ko (fried dough)
+น้ำพริก|辣椒醬（泰式沾醬）|泰國菜|Nam phrik (chili dip)
+น้ำพริกอ่อง|泰北番茄肉末醬|泰國菜|Nam phrik ong
+น้ำพริกหนุ่ม|泰北青辣椒醬|泰國菜|Nam phrik num
+แคบหมู|炸豬皮|泰國小吃|Pork rinds
+ไก่ห่อใบเตย|班蘭葉包雞|泰國菜|Pandan chicken
+โรตี|煎餅（羅提）|泰國甜點|Roti
+ขนมครก|椰奶小煎餅|泰國甜點|Khanom khrok (coconut pancakes)
+บัวลอย|椰奶湯圓|泰國甜點|Bua loi (rice balls in coconut milk)
+ทับทิมกรอบ|紅寶石（荸薺椰奶）|泰國甜點|Tub tim krob (water chestnut in coconut milk)
+ลอดช่อง|煎蕊|泰國甜點|Lod chong
+ขนมชั้น|千層糕|泰國甜點|Khanom chan (layered dessert)
+ทองหยิบ|金花蛋黃甜點|泰國甜點|Thong yip
+ฝอยทอง|蛋絲（金絲）|泰國甜點|Foi thong
+ข้าวหลาม|竹筒飯|泰國甜點|Khao lam (bamboo sticky rice)
+กล้วยทอด|炸香蕉|泰國甜點|Fried bananas
+กล้วยบวชชี|椰奶香蕉|泰國甜點|Bananas in coconut milk
+ไอติมกะทิ|椰奶冰淇淋|泰國甜點|Coconut ice cream
+ชาไทย|泰式奶茶|泰國飲料|Thai tea
+ชาเย็น|泰式冰奶茶|泰國飲料|Thai iced tea
+ชานมไข่มุก|珍珠奶茶|飲料|Bubble tea
+ชามะนาว|檸檬紅茶|泰國飲料|Lime tea
+กาแฟเย็น|冰咖啡|泰國飲料|Iced coffee
+โอเลี้ยง|泰式黑咖啡|泰國飲料|Oliang (Thai black iced coffee)
+น้ำลำไย|龍眼汁|泰國飲料|Longan juice
+น้ำกระเจี๊ยบ|洛神花茶|泰國飲料|Roselle juice
+น้ำแตงโมปั่น|西瓜冰沙|泰國飲料|Watermelon smoothie
