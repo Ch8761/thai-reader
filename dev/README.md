@@ -9,6 +9,8 @@
 2. 下載三個套件到工作資料夾（用 npm）：
    - `pdfjs/`：`npm install --prefix pdfjs pdfjs-dist@4.10.38 pdf-lib@1.17.1`
    - `ocrpkg/`：`npm install --prefix ocrpkg tesseract.js@5.1.1 tesseract.js-core@5.1.1 @tesseract.js-data/tha @tesseract.js-data/eng`
+   - `chi/`（1.20 起的中文辨識）：在 chi/ 裡 `npm pack @tesseract.js-data/chi_tra @tesseract.js-data/chi_sim`，各自解壓到 `chi/x_tesseract.js-data-chi_tra-1.0.0/`、`chi/x_tesseract.js-data-chi_sim-1.0.0/`
+   - `ocrmodel/tha.traineddata.gz`（1.18 起自己訓練的泰文模型）：從儲存庫的 `ocr/lang2/` 複製；重新訓練的方法見 `dev/ocrtrain/`
 3. 從正式網站（或儲存庫根目錄）複製 `examples.json`、`tones.json`、`help/*.webp`（放到 `helpimg/webp/`）。
    這幾個也可以用 `make_examples.py`、`make_tones.py`、`tests/helpshots.js` 重新產生。
 4. `bash build_all.sh` → 產生測試頁 `thai-notes-test.html` 與本機測試網站 `srv/`。
