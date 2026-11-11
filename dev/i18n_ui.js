@@ -37,15 +37,15 @@
     if (nums.length && i18nTpl[k] !== undefined) { return i18nPlural(i18nTpl[k], nums); }
     if (nums.length && i18nMap[k.replace(/\{n\}/g, '')] !== undefined) { /* 例如「3 天」以外的單位已在片段裡處理 */ }
     var m;
-    if ((m = t.match(/^(.+?)（(\d[\d,]*)）$/))) { var a = i18nCore(m[1]); if (!I18N_CJK.test(a)) { return a + ' (' + m[2] + ')'; } }
+    if ((m = t.match(/^(.+?)（(\d[\d,]*)）$/))) { var a = i18nCore(m[1]); if (a != null && !I18N_CJK.test(a)) { return a + ' (' + m[2] + ')'; } }
     if ((m = t.match(/^(.+?)（(.+)）$/))) { var a2 = i18nCore(m[1]), b2 = i18nCore(m[2]); if (a2 != null && b2 != null && !I18N_CJK.test(a2 + b2)) { return a2 + ' (' + b2.replace(/^\(|\)$/g, '') + ')'; } }
-    if ((m = t.match(/^「(.+)」是什麼？$/))) { var q = i18nCore(m[1]); if (!I18N_CJK.test(q)) { return 'What is “' + q + '”?'; } }
+    if ((m = t.match(/^「(.+)」是什麼？$/))) { var q = i18nCore(m[1]); if (q != null && !I18N_CJK.test(q)) { return 'What is “' + q + '”?'; } }
     /* 用分隔符號拆開分別翻 */
     var seps = [['｜', ' | '], ['・', ' · '], ['；', '; '], ['、', ', '], ['：', ': ']];
     for (var s = 0; s < seps.length; s++) {
       if (t.indexOf(seps[s][0]) > 0) {
         var parts = t.split(seps[s][0]).map(function (x) { return i18nCore(x.trim()); });
-        if (parts.every(function (x) { return !I18N_CJK.test(x); })) { return parts.join(seps[s][1]); }
+        if (parts.every(function (x) { return x != null && !I18N_CJK.test(x); })) { return parts.join(seps[s][1]); }
       }
     }
     /* 片段替換：換完沒有中文才採用 */

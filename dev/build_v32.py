@@ -11,12 +11,12 @@ ANCHOR = '  function armed(btn, label, confirmLabel, action) {\n'
 a = s.index('    <div class="homeadd">')
 b = s.index('id="readerOpen"', a); b = s.index('\n', b) + 1
 HOME = '''    <div id="questHost"></div>
-    <div class="hlist" id="homeList">
+    <div class="hpills" id="homeList">
       <div id="todayRows" class="hrows" hidden></div>
-      <button type="button" id="readerOpen" class="hrow hrlib"><svg class="hri" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg><span class="hrk">讀物庫</span><span class="hrv">分級泰文短文</span><svg class="hrchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button type="button" id="readerOpen" class="hpill hplib" aria-label="讀物庫：分級泰文短文"><svg class="hri" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg><span class="hpk">讀物庫</span><span class="hpsub">分級短文</span></button>
     </div>
     <div class="importbar">
-      <label class="filebtn impbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 14v4.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V14"/></svg><span>匯入</span><input type="file" id="anyfile" class="vh" accept="application/pdf,.pdf,image/*,video/*,.mp4,.mov,.m4v,.webm,.txt,.srt,.vtt,text/plain" multiple></label>
+      <label class="filebtn impbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 14v4.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V14"/></svg><span>匯入</span><input type="file" id="anyfile" class="vh" accept="application/pdf,.pdf,image/*,video/*,.mp4,.mov,.m4v,.webm,.txt,.srt,.vtt,text/plain" multiple></label>
       <div class="urlbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input type="url" id="urlInput" inputmode="url" enterkeyhint="go" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="貼上網址，直接讀文章" aria-label="新聞、文章的網址"><button type="button" class="primary urlgo" id="addUrl" hidden>讀取</button><button type="button" id="openPaste" class="urltext" aria-expanded="false" aria-controls="pastebox">貼文字<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div>
       <input type="file" id="pdffile" class="vh" accept="application/pdf,.pdf" multiple hidden tabindex="-1" aria-hidden="true"><input type="file" id="imgfile" class="vh" accept="image/*,video/*" multiple hidden tabindex="-1" aria-hidden="true">
     </div>
@@ -210,5 +210,54 @@ rep("    ['生字卡', [\n", """    ['生字卡', [
         d: ['手指在一個生字上往右滑放開：收藏（右邊的星星變黃）；再滑一次取消。', '往左滑放開：刪除。下方會出現「復原」，5 秒內按就能救回來。', '也可以直接點右邊的星星收藏。', '上面選「收藏」只看收藏的生字。', '右上角兩個小圖示切換「清單」和「方塊」排法，跟主頁一樣。'] },
 """)
 
+# ---------- 1.23 資料夾改成 LINE 那樣的分頁標籤 ----------
+rep("var opts = [['all', '全部（' + cards.length + '）'], ['none', '未分類（' + cards.filter(function (c) { return !c.folder; }).length + '）']]", "var opts = [['all', '全部 ' + cards.length], ['none', '未分類 ' + cards.filter(function (c) { return !c.folder; }).length]]")
+rep(".concat(folders.map(function (f) { return [f.id, f.name + '（' + cards.filter(function (c) { return c.folder === f.id; }).length + '）']; }));", ".concat(folders.map(function (f) { return [f.id, f.name + ' ' + cards.filter(function (c) { return c.folder === f.id; }).length]; }));")
+rep("var opts = [['all', '全部（' + lib.docs.length + '）'], ['none', '未分類（' + lib.docs.filter(function (d) { return !d.folder; }).length + '）']]", "var opts = [['all', '全部 ' + lib.docs.length], ['none', '未分類 ' + lib.docs.filter(function (d) { return !d.folder; }).length]]")
+rep(".concat(lib.folders.map(function (f) { return [f.id, f.name + '（' + lib.docs.filter(function (d) { return d.folder === f.id; }).length + '）']; }));", ".concat(lib.folders.map(function (f) { return [f.id, f.name + ' ' + lib.docs.filter(function (d) { return d.folder === f.id; }).length]; }));")
+rep("var add = el('button', 'fadd', '＋ 新資料夾'); add.type = 'button';", "var add = el('button', 'fadd', '＋'); add.type = 'button'; add.setAttribute('aria-label', '新資料夾'); add.title = '新資料夾';")
+rep("var add = mk('button', 'fadd', '＋ 新資料夾'); add.type = 'button';", "var add = mk('button', 'fadd', '＋'); add.type = 'button'; add.setAttribute('aria-label', '新資料夾'); add.title = '新資料夾';")
+rep('</style>', """
+/* 1.23 主頁上方更精簡：細長的關卡列＋一排兩顆膠囊按鈕 */
+.lqcard { min-height: 56px !important; padding: 8px 12px !important; gap: 12px !important; border: 0 !important; background: color-mix(in srgb, var(--accent) 9%, var(--card)) !important; border-radius: 14px !important; }
+.lqbadge { width: 34px !important; height: 34px !important; }
+.lqbadge .lqbn { font-size: 16px !important; }
+.lqline { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.lqline .lqk { flex: none; font-size: 12.5px; }
+.lqline .lqv { font-size: 15px; min-width: 0; }
+.lqtx .lqprow { margin-top: 5px; }
+.lqtx .lqbar { height: 4px; }
+.lqflame { flex-direction: row !important; gap: 2px !important; min-width: 0 !important; }
+.lqflame svg { width: 19px !important; height: 19px !important; }
+.hpills { display: flex; gap: 8px; margin: 0 0 10px; }
+.hpills > .hrows { display: contents; }
+.hpill { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--fg); font-size: 14.5px; min-width: 0; }
+.hpill:hover { background: var(--bg); }
+.hpill .hri { width: 18px; height: 18px; }
+.hpread { flex: 1 1 auto; }
+.hpread .hri { fill: var(--accent); stroke: none; width: 13px; height: 13px; }
+.hpk { flex: none; font-weight: 700; }
+.hpv { min-width: 0; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hplib { flex: none; }
+.hpsub { color: var(--muted); font-size: 13px; }
+.hpills:not(.hpone) .hpsub { display: none; }
+.hpone .hplib { flex: 1 1 auto; justify-content: flex-start; }
+/* 資料夾：像 LINE 的「朋友／群組」分頁，文字＋底線，不用按鈕框 */
+#homeFolders, #cardFolders { gap: 0 !important; margin: 10px 0 8px !important; padding-bottom: 0 !important; border-bottom: 0 !important; align-items: stretch !important; }
+#homeFolders > .seg, #cardFolders > .seg { display: flex !important; flex-wrap: nowrap !important; flex: 1 1 0;  min-width: 0; gap: 22px; overflow-x: auto; scrollbar-width: none; border: 0 !important; border-bottom: 1px solid var(--line) !important; border-radius: 0 !important; background: transparent !important; padding: 0 24px 0 2px !important; box-shadow: none !important; }
+#homeMsg:empty { display: none; }
+#homeFolders > .seg::-webkit-scrollbar, #cardFolders > .seg::-webkit-scrollbar { display: none; }
+#homeFolders > .seg > button, #cardFolders > .seg > button { flex: none; position: relative; min-height: 44px !important; min-width: 0 !important; padding: 0 1px !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; color: var(--muted) !important; font-size: 15px !important; font-weight: 500 !important; white-space: nowrap; }
+#homeFolders > .seg > button[aria-checked="true"], #cardFolders > .seg > button[aria-checked="true"] { color: var(--fg) !important; font-weight: 700 !important; }
+#homeFolders > .seg > button[aria-checked="true"]::after, #cardFolders > .seg > button[aria-checked="true"]::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--fg); }
+#homeFolders > .frow, #cardFolders > .frow { display: flex !important; align-items: center; border-bottom: 1px solid var(--line); }
+#homeFolders .frow > button.fadd, #cardFolders .frow > button.fadd { width: 36px; min-width: 36px; min-height: 36px !important; padding: 0 !important; border: 0 !important; border-radius: 50% !important; background: transparent !important; color: var(--muted) !important; font-size: 22px !important; line-height: 1; }
+#homeFolders .frow > button.fadd:hover, #cardFolders .frow > button.fadd:hover { background: var(--bg) !important; color: var(--fg) !important; }
+#cardFolders > .label { margin-top: 8px !important; }
+#homeFolders > .frow:has(.fname), #cardFolders > .frow:has(.fname) { flex-basis: 100%; border-bottom: 0; margin-top: 8px; gap: 6px; }
+</style>""")
+
+s = s.replace("按「＋ 新資料夾」，打名字，按「建立」。", "按分頁最右邊的「＋」，打名字，按「建立」。資料夾多的時候，分頁可以左右滑。")
+s = s.replace("點上面的分類切換，按「＋ 新資料夾」建新的", "點上面的分頁切換，按最右邊的「＋」建新的")
 open(src, 'w', encoding='utf-8').write(s)
 print('v32 ok')

@@ -71,12 +71,12 @@
     var done = qs.cur >= QUEST.length, q = QUEST[Math.min(qs.cur, QUEST.length - 1)];
     var badge = el('span', 'lqbadge' + (done ? ' lqall' : ''));
     badge.appendChild(el('span', 'lqbn', String(done ? QUEST.length : qs.cur + 1)));
-    badge.appendChild(el('span', 'lqbl', UI_LANG === 'en' ? 'STAGE' : '關'));
     b.appendChild(badge);
     var tx = el('span', 'lqtx');
-    var ch = QUEST_CH[Math.floor(Math.min(qs.cur, QUEST.length - 1) / 6)];
-    tx.appendChild(el('span', 'lqk', done ? '全部過關' : '第 ' + (qs.cur + 1) + ' 關・' + ch[0]));
-    tx.appendChild(el('span', 'lqv', done ? '你完成了 30 關，太厲害了' : questText(q)));
+    var line = el('span', 'lqline');
+    line.appendChild(el('span', 'lqk', done ? '全部過關' : '第 ' + (qs.cur + 1) + ' 關'));
+    line.appendChild(el('span', 'lqv', done ? '30 關全部完成了！' : questText(q)));
+    tx.appendChild(line);
     if (!done) {
       var have = Math.min(qs.st[q[0]] || 0, q[1]);
       var bar = el('span', 'lqbar'); var fill = el('span'); fill.style.width = Math.round(have / q[1] * 100) + '%'; bar.appendChild(fill);
@@ -108,18 +108,18 @@
     var qs = questState();
     qh.replaceChildren(questCard(qs));
     rows.replaceChildren();
-    var st = todayStats();
     var last = lib.docs.filter(function (d) { return d.opened; }).sort(function (a, b) { return b.opened - a.opened; })[0];
     /* 只有一份文件時，清單第一個就是它，不用重複 */
     if (last && lib.docs.length >= 2) {
-      var r1 = hrow('hrread', ICON_RESUME, '繼續讀', last.name, function () { openDoc(last.id); });
-      r1.querySelector('.hrv').lang = 'th'; rows.appendChild(r1);
-    }
-    if (st.due) {
-      var r2 = hrow('hrrev', ICON_CARDS, '今天複習', '還有 ' + st.due + ' 張', function () { if (!review) { cardFolder = 'all'; cardTab = 'review'; cardsOnlyDoc = false; saveCards(); startReview(false); } showTab('cards'); });
-      rows.appendChild(r2);
+      var r1 = el('button', 'hpill hpread'); r1.type = 'button'; r1.innerHTML = ICON_RESUME;
+      r1.appendChild(el('span', 'hpk', '繼續讀'));
+      var nm = el('span', 'hpv', last.name); nm.lang = 'th'; r1.appendChild(nm);
+      r1.setAttribute('aria-label', '繼續讀 ' + last.name);
+      r1.addEventListener('click', function () { openDoc(last.id); });
+      rows.appendChild(r1);
     }
     rows.hidden = !rows.childNodes.length;
+    $('homeList').classList.toggle('hpone', rows.hidden);
     if (celebrate) { questCelebrate(qs); } else if (lsGetJ(QSEEN_KEY, null) == null) { lsSetJ(QSEEN_KEY, qs.cur); }
   }
   /* ---- 過關：小小的慶祝（只出現一次） ---- */
@@ -200,8 +200,17 @@
   /* 開文件、複習都算「今天有學」；主頁出現時更新 */
   var _openDoc0 = openDoc;
   openDoc = function (id) { markDay(); markRead(id); return _openDoc0.apply(this, arguments); };
+  /* 資料夾分頁太多時可以左右滑；選中的那個自動捲進畫面 */
+  function tabIntoView(hostId) {
+    var seg = document.querySelector('#' + hostId + ' > .seg'), on = seg && seg.querySelector('[aria-checked="true"]');
+    if (!on || seg.scrollWidth <= seg.clientWidth) { return; }
+    var l = on.offsetLeft - seg.offsetLeft, r = l + on.offsetWidth;
+    if (l < seg.scrollLeft) { seg.scrollLeft = Math.max(0, l - 16); } else if (r > seg.scrollLeft + seg.clientWidth) { seg.scrollLeft = r - seg.clientWidth + 28; }
+  }
   var _renderHome0 = renderHome;
-  renderHome = function () { var r = _renderHome0.apply(this, arguments); renderToday(); return r; };
+  renderHome = function () { var r = _renderHome0.apply(this, arguments); renderToday(); tabIntoView('homeFolders'); return r; };
+  var _renderCards0 = renderCards;
+  renderCards = function () { var r = _renderCards0.apply(this, arguments); tabIntoView('cardFolders'); return r; };
   /* 過關慶祝只在「回到主頁」和「複習完成」時出現，不會蓋住照片調整、讀物庫等視窗 */
   var _showTab0 = showTab;
   showTab = function (t) { var r = _showTab0.apply(this, arguments); if (t === 'home') { setTimeout(function () { if (!$('view-home').hidden && !overlayOpen()) { renderToday(true); } }, 250); } return r; };
