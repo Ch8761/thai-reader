@@ -193,6 +193,50 @@
     var t = syncParse(localStorage.getItem(SYNC_TOK));
     return t && t.exp > syncNow() + 60000 ? t.tok : null;
   }
+  /* ---- 自動續登入（網站有設定 Google 用戶端密鑰時）：用 /api/auth 換可續期的鑰匙，之後登入過期就在背景自己續 ---- */
+  var SYNC_RT = 'thai-sync-rt';
+  function syncRt() { try { return localStorage.getItem(SYNC_RT) === '1'; } catch (err) { return false; } }
+  function syncSaveTok(j) { try { rawSet.call(localStorage, SYNC_TOK, JSON.stringify({ tok: j.access_token, exp: syncNow() + (Number(j.expires_in) || 3600) * 1000 })); rawSet.call(localStorage, SYNC_ON, '1'); } catch (err) {} }
+  function syncProbe() {
+    if (sync.probe) { return sync.probe; }
+    sync.probe = fetch('api/auth', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (j) { sync.codeOK = !!j.enabled; return sync.codeOK; }, function () { sync.codeOK = false; return false; });
+    return sync.probe;
+  }
+  async function syncAuthPost(o) {
+    var r = await fetch('api/auth', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(o), cache: 'no-store' });
+    var j = {}; try { j = await r.json(); } catch (err) {}
+    j.httpStatus = r.status; return j;
+  }
+  /* 拿一個還有效的登入；過期了就用鑰匙在背景換新的 */
+  async function syncEnsureToken() {
+    var t = syncToken();
+    if (t || !syncRt()) { return t; }
+    try {
+      var j = await syncAuthPost({ action: 'refresh' });
+      if (j.access_token) { syncSaveTok(j); return j.access_token; }
+      if (j.httpStatus === 401) { try { rawRemove.call(localStorage, SYNC_RT); } catch (err) {} }
+    } catch (err) {}
+    return null;
+  }
+  /* 整頁跳到 Google，拿「授權碼」（第一次要同意一次，之後就不用再登入） */
+  function syncSignInCode() {
+    var st = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    try { rawSet.call(localStorage, 'thai-sync-state', st); } catch (err) {}
+    var q = { client_id: SYNC_CLIENT_ID, redirect_uri: syncRedirectUri(), response_type: 'code', scope: SYNC_SCOPE, include_granted_scopes: 'true', access_type: 'offline', prompt: 'consent', state: st };
+    location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + Object.keys(q).map(function (k) { return k + '=' + encodeURIComponent(q[k]); }).join('&');
+  }
+  async function syncFromCode(code) {
+    sync.status = '正在完成連結…'; renderSync();
+    try {
+      var j = await syncAuthPost({ action: 'code', code: code, redirect_uri: syncRedirectUri() });
+      if (!j.access_token) { sync.status = ''; sync.err = '連結沒有成功（' + (j.error || j.httpStatus) + '），請再按一次。'; renderSync(); return; }
+      if (j.scope && j.scope.indexOf('drive.appdata') < 0) { sync.status = ''; sync.err = '需要勾選「查看及管理這個應用程式的設定資料」才能同步，請再按一次並勾選。'; renderSync(); return; }
+      syncSaveTok(j);
+      try { if (j.refresh) { rawSet.call(localStorage, SYNC_RT, '1'); } } catch (err) {}
+      sync.status = ''; sync.err = ''; renderSync();
+      runSync();
+    } catch (err) { sync.status = ''; sync.err = '連結沒有成功：' + String(err && err.message || err).slice(0, 100); renderSync(); }
+  }
   function syncClient() {
     if (sync.client || !(window.google && google.accounts && google.accounts.oauth2)) { return sync.client; }
     sync.client = google.accounts.oauth2.initTokenClient({
@@ -225,11 +269,23 @@
   }
   /* 從 Google 登入頁跳回來時，網址後面帶著登入結果 */
   function syncFromRedirect() {
+    var qs = location.search || '';
+    if (/[?&]code=/.test(qs) && /[?&]state=/.test(qs)) {
+      var pq = {}; qs.replace(/^\?/, '').split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) { pq[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' ')); } });
+      var want0 = null; try { want0 = localStorage.getItem('thai-sync-state'); rawRemove.call(localStorage, 'thai-sync-state'); } catch (err) {}
+      try { window.history.replaceState(null, '', location.pathname); } catch (err) {}
+      if (!want0 || pq.state !== want0) { sync.err = '登入結果對不上（可能是舊的連結），請再按一次「連結 Google 帳號」。'; return true; }
+      sync.pendingCode = pq.code; return true;
+    }
+    if (/[?&]error=/.test(qs) && /[?&]state=/.test(qs)) {
+      try { window.history.replaceState(null, '', location.pathname); } catch (err) {}
+      sync.err = /access_denied/.test(qs) ? '你取消了授權。' : '登入沒有成功。'; return true;
+    }
     var h = location.hash || '';
     if (!/access_token=|error=/.test(h) || !/state=/.test(h)) { return false; }
     var p = {}; h.replace(/^#/, '').split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) { p[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' ')); } });
     var want = null; try { want = localStorage.getItem('thai-sync-state'); rawRemove.call(localStorage, 'thai-sync-state'); } catch (err) {}
-    try { history.replaceState(null, '', location.pathname + location.search); } catch (err) { location.hash = ''; }
+    try { window.history.replaceState(null, '', location.pathname + location.search); } catch (err) { location.hash = ''; }
     if (!want || p.state !== want) { sync.err = '登入結果對不上（可能是舊的連結），請再按一次「連結 Google 帳號」。'; return true; }
     if (p.error || !p.access_token) { sync.err = p.error === 'access_denied' ? '你取消了授權。' : '登入沒有成功' + (p.error ? '（' + p.error + '）' : '') + '。'; return true; }
     if (p.scope && p.scope.indexOf('drive.appdata') < 0) { sync.err = '需要勾選「查看及管理這個應用程式的設定資料」才能同步，請再按一次並勾選。'; return true; }
@@ -238,6 +294,7 @@
     return true;
   }
   function syncSignIn() {
+    if (sync.codeOK) { syncSignInCode(); return; }
     if (syncStandalone()) { syncSignInRedirect(); return; }
     var c = syncClient();
     if (!c) { sync.err = 'Google 登入服務還在載入，請再按一次。'; renderSync(); syncLoadGis().then(function () { syncClient(); }); return; }
@@ -282,9 +339,9 @@
   async function runSync() {
     if (!SYNC_CLIENT_ID || !syncOn()) { return; }
     if (sync.busy) { sync.again = true; return; }
-    var tok = syncToken();
-    if (!tok) { sync.status = ''; renderSync(); return; }
-    sync.busy = true; sync.err = ''; sync.status = '同步中…'; renderSync();
+    sync.busy = true;
+    var tok = await syncEnsureToken();
+    if (!tok) { sync.busy = false; sync.status = ''; renderSync(); return; } sync.err = ''; sync.status = '同步中…'; renderSync();
     try {
       if (state.src) { try { save(); } catch (err) {} }
       if (!sync.email) { try { var u = await (await drv('https://www.googleapis.com/oauth2/v3/userinfo', {}, tok)).json(); sync.email = u.email || ''; rawSet.call(localStorage, 'thai-sync-email', sync.email); } catch (err) { if (err.auth) { throw err; } } }
@@ -328,14 +385,16 @@
       if (down && curTab === 'home') { renderHome(); }
     } catch (err) {
       sync.status = '';
-      sync.err = err && err.auth ? '登入過期了，按「立即同步」重新登入就好。' : '同步失敗：' + String(err && err.message || err).slice(0, 200);
+      if (err && err.auth && syncRt() && !sync.retried) { sync.retried = true; sync.again = true; }
+      else { sync.err = err && err.auth ? '登入過期了，按「立即同步」重新登入就好。' : '同步失敗：' + String(err && err.message || err).slice(0, 200); }
     } finally {
       sync.busy = false; renderSync();
+      if (!sync.again) { sync.retried = false; }
       if (sync.again) { sync.again = false; setTimeout(runSync, 1000); }
     }
   }
   function syncSoon() {
-    if (!SYNC_CLIENT_ID || !syncOn() || !syncToken()) { return; }
+    if (!SYNC_CLIENT_ID || !syncOn() || !(syncToken() || syncRt())) { return; }
     clearTimeout(sync.timer);
     sync.timer = setTimeout(runSync, 15000);
   }
@@ -350,15 +409,18 @@
     if (!SYNC_CLIENT_ID) { return; }
     var on = syncOn(), tok = syncToken(), st = $('syncState'), btns = $('syncBtns');
     try { sync.last = sync.last || Number(localStorage.getItem('thai-sync-last') || 0); sync.email = sync.email || localStorage.getItem('thai-sync-email') || ''; } catch (err) {}
-    st.textContent = !on ? '還沒連結。' : (sync.status || ('已連結' + (sync.email ? ' ' + sync.email : '') + '・上次同步：' + syncAgo(sync.last) + (tok ? '' : '。要再同步時按「立即同步」（Google 的登入每小時要確認一次）')));
+    st.textContent = !on ? '還沒連結。' : (sync.status || ('已連結' + (sync.email ? ' ' + sync.email : '') + '・上次同步：' + syncAgo(sync.last) + (tok || syncRt() ? (syncRt() ? '・會自動保持登入' : '') : '。要再同步時按「立即同步」（Google 的登入每小時要確認一次）')));
     btns.replaceChildren();
     function btn(t, cls, fn) { var b = document.createElement('button'); b.type = 'button'; if (cls) { b.className = cls; } b.textContent = t; b.disabled = sync.busy; b.addEventListener('click', fn); btns.appendChild(b); }
     if (!on) { btn('連結 Google 帳號', 'primary', function () { syncSignIn(); }); }
     else {
-      btn('立即同步', 'primary', function () { if (syncToken()) { runSync(); } else { syncSignIn(); } });
+      btn('立即同步', 'primary', function () { if (syncToken() || syncRt()) { runSync(); } else { syncSignIn(); } });
+      /* 已經連結、但還是每小時要登入的：網站開了自動續登入時，提供升級 */
+      if (sync.codeOK && !syncRt()) { btn('改成自動保持登入', '', function () { syncSignInCode(); }); }
       btn('取消連結', '', function () {
         var t = syncParse(localStorage.getItem(SYNC_TOK));
-        try { rawRemove.call(localStorage, SYNC_ON); rawRemove.call(localStorage, SYNC_TOK); rawRemove.call(localStorage, 'thai-sync-email'); } catch (err) {}
+        try { rawRemove.call(localStorage, SYNC_ON); rawRemove.call(localStorage, SYNC_TOK); rawRemove.call(localStorage, 'thai-sync-email'); rawRemove.call(localStorage, SYNC_RT); } catch (err) {}
+        syncAuthPost({ action: 'logout' }).catch(function () {});
         if (window.google && google.accounts && google.accounts.oauth2 && t && t.tok) { try { google.accounts.oauth2.revoke(t.tok, function () {}); } catch (err) {} }
         sync.email = ''; sync.err = ''; sync.lastNote = '已取消連結。這台裝置上的資料都還在；雲端上的資料也會保留，之後再連結會自動合併。'; renderSync();
       });
@@ -369,9 +431,10 @@
   if (SYNC_CLIENT_ID) {
     var fromGoogle = syncFromRedirect();
     renderSync();
-    if (fromGoogle) { showTab('settings'); if (typeof settingsOpen === 'function') { settingsOpen('data'); } if (sync.justLinked) { setTimeout(runSync, 300); } }
+    syncProbe().then(function () { renderSync(); });
+    if (fromGoogle) { showTab('settings'); if (typeof settingsOpen === 'function') { settingsOpen('data'); } if (sync.pendingCode) { var pc = sync.pendingCode; sync.pendingCode = null; syncFromCode(pc); } else if (sync.justLinked) { setTimeout(runSync, 300); } }
     /* 預先載入 Google 登入元件，按按鈕時才能馬上打開登入視窗 */
     var syncPre = function () { syncLoadGis().then(function () { syncClient(); renderSync(); }, function () {}); };
     if (syncOn()) { syncPre(); setTimeout(runSync, 2500); } else { setTimeout(syncPre, 4000); }
-    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && syncOn() && syncToken() && syncNow() - sync.last > 60000) { runSync(); } });
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && syncOn() && (syncToken() || syncRt()) && syncNow() - sync.last > 60000) { runSync(); } });
   }

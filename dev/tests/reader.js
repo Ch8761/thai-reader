@@ -8,7 +8,7 @@ const { chromium } = require('playwright');
   await p.click('#readerOpen'); await p.waitForTimeout(600);
   console.log('tab selected:', await p.getAttribute('#rdTabs [aria-selected="true"]', 'data-lv'), 'items:', await p.locator('#rdList .rditem').count());
   await p.screenshot({ path: 'tests/rd-sheet.png' });
-  await p.click('#rdTabs [data-lv="c"]'); await p.waitForTimeout(200);
+  await p.click('#rdTabs [data-lv="d"]'); await p.waitForTimeout(200);
   console.log('c items:', await p.locator('#rdList .rditem').count());
   await p.click('#rdTabs [data-lv="a"]'); await p.waitForTimeout(200);
   await p.locator('#rdList .rditem').first().click(); await p.waitForTimeout(1200);

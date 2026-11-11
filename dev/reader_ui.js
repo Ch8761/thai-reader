@@ -2,7 +2,7 @@
      短文放在 reader.json（打開讀物庫時才下載）。加入的文件記住 d.lib＝短文編號，避免重複加入。 */
   var READER_URL = 'reader.json';
   var rdItems = null, rdLoading = null, rdLevel = 'b';
-  var RD_LV = [['a', '入門'], ['b', '初級'], ['c', '中級']];
+  var RD_LV = [['a', '入門'], ['b', '初級'], ['c', '中級'], ['d', '高級']];
   var rdWrap = document.createElement('div'); rdWrap.className = 'cdlayer rdlayer'; rdWrap.id = 'readerSheet'; rdWrap.hidden = true;
   rdWrap.innerHTML = '<div class="cdback" id="rdBack"></div><div class="cdsheet rdsheet" role="dialog" aria-modal="true" aria-labelledby="rdTitle"><div class="cdscroll">' +
     '<button type="button" class="cdx" id="rdClose" aria-label="關閉">×</button>' +

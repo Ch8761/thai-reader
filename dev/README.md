@@ -25,6 +25,8 @@
 - `make_*.py`：產生資料（字典、專有名詞、聲調、例句、錯字對照表）。
 - `make_pwa.py`：把測試頁轉成正式版、寫 sw.js、manifest、README、NOTICES。
 - `cf_fetch.js`：網址匯入用的 Cloudflare 小程式（發布成 functions/api/fetch.js）。
+- `cf_auth.js`（1.21）：雲端同步「自動保持登入」的 Cloudflare 小程式（發布成 functions/api/auth.js）。需要在 Cloudflare 的環境變數設定 `GOOGLE_CLIENT_SECRET`；沒設定時 App 自動改回每小時登入一次。
+- `i18n/`（1.21）：英文介面。`en1.tsv`、`en2.tsv` 是「中文⇥英文」對照表（建置時由 build_v31.py 轉成程式），`help_en.js` 是英文使用說明，`extract.js` 用來列出程式裡所有中文字串（要先 `npm install acorn acorn-walk`）。加新功能時，新的中文字串要補進 tsv（注意：值的結尾空白要保留）。
 - `dictin/`：字典與名單的原始資料。
 - `tests/`：自動測試腳本（測試用的私人截圖、影片、PDF 沒有放上來）。
 - `check_dupes.py`：所有模組共用同一個範圍，同名函式會互相蓋掉，建置時檢查。

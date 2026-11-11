@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.20.0'
+VER = '1.21.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
@@ -22,6 +22,8 @@ shutil.copyfile(os.path.join(D, 'examples.json'), os.path.join(OUT, 'examples.js
 # 「貼上網址就匯入」：Cloudflare Pages 的小程式，放在 functions/api/fetch.js（網址 /api/fetch）
 os.makedirs(os.path.join(OUT, 'functions', 'api'), exist_ok=True)
 shutil.copyfile(os.path.join(D, 'cf_fetch.js'), os.path.join(OUT, 'functions', 'api', 'fetch.js'))
+# 雲端同步的自動續登入（網址 /api/auth；需要 Cloudflare 環境變數 GOOGLE_CLIENT_SECRET）
+shutil.copyfile(os.path.join(D, 'cf_auth.js'), os.path.join(OUT, 'functions', 'api', 'auth.js'))
 # 隱私權政策（Google 登入的同意畫面要用）
 shutil.copyfile(os.path.join(D, 'privacy.html'), os.path.join(OUT, 'privacy.html'))
 rep("TONE_URL = 'https://ch8761.github.io/thai-reader/tones.json';", "TONE_URL = 'tones.json';")

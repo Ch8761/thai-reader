@@ -5,3 +5,4 @@ cd $S && cp *.py *.js *.sh privacy.html thai-notes-test.v17.html srs_old_block.t
 [ -d reader ] && mkdir -p $D/reader && cp reader/*.py reader/*.txt reader/*.json $D/reader/ 2>/dev/null
 [ -d ocrtrain ] && mkdir -p $D/ocrtrain && cp ocrtrain/*.py ocrtrain/*.sh ocrtrain/*.md $D/ocrtrain/ 2>/dev/null
 P=$(cat $S/.private_pattern 2>/dev/null); [ -n "$P" ] && grep -rIl "$P" $D && echo "PRIVATE INFO FOUND" || true
+[ -d i18n ] && mkdir -p $D/i18n && cp i18n/*.tsv i18n/help_en.js i18n/extract.js $D/i18n/ 2>/dev/null
