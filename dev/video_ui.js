@@ -196,15 +196,18 @@
           var tk = t.split(' '), tc = vidTokConf(ln, tk);
           /* 被空格切開的詞（「จิบกา แฟหอมๆ」）黏回去能多拼出詞的，不是亂碼 */
           function glues(k) { var nb = k > 0 ? tk[k - 1] : tk[k + 1], g = k > 0 ? nb + tk[k] : tk[k] + nb; return nb && vidKnownN(g) > vidKnownN(nb) + 1; }
-          function junk(k) { var x = tk[k]; if (/[\u0E01-\u0E2E]/.test(x) && glues(k)) { return false; } if (!/[\u0E01-\u0E2E]/.test(x)) { return !/^[0-9.,\-–+%:\/()]+$/.test(x) && tc[k] < 90; } return vidKnown(x) < 0.34 || (vidKnown2(x) < 0.34 && tc[k] < 88); }
+          function junk(k) { var x = tk[k]; if (/[\u0E01-\u0E2E]/.test(x) && glues(k)) { return false; } if (/[\u3400-\u9FFF]/.test(x) && !/[\u0E01-\u0E2E]/.test(x)) { return tc[k] < 60; } if (!/[\u0E01-\u0E2E]/.test(x)) { return !/^[0-9.,\-–+%:\/()]+$/.test(x) && tc[k] < 90; } return vidKnown(x) < 0.34 || (vidKnown2(x) < 0.34 && tc[k] < 88); }
           while (tk.length > 1 && junk(tk.length - 1) && vidKnown(tk.slice(0, -1).join(' ')) >= 0.5) { tk.pop(); tc.pop(); }
           while (tk.length > 1 && junk(0) && vidKnown(tk.slice(1).join(' ')) >= 0.5) { tk.shift(); tc.shift(); }
           var trimmed = tk.length < t.split(' ').length;
           t = tk.join(' ');
           /* 去掉亂碼之後，用留下來那幾段的信心當這一行的信心 */
           var lc = trimmed && tc.length ? tc.reduce(function (a2, b2) { return a2 + b2; }, 0) / tc.length : ln.confidence;
-          t = t.replace(/^[^ก-๛A-Za-z0-9]+/, '').replace(/[^ก-๛A-Za-z0-9!?.]+$/, '');
-          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/[\s0-9.,\-–+%:\/()]/g, '').length;
+          t = t.replace(/^[^ก-๛A-Za-z0-9\u3400-\u9FFF]+/, '').replace(/[^ก-๛A-Za-z0-9!?.\u3400-\u9FFF]+$/, '');
+          /* 中文字幕（開了「辨識中文」時）：大部分是中文字的行直接留下，當作泰文那句的翻譯 */
+          var cj = (t.match(/[\u3400-\u9FFF]/g) || []).length, nsp = t.replace(/[\s0-9.,\-–+%:\/()!?，。！？、「」]/g, '').length;
+          if (cj >= 2 && !/[\u0E01-\u0E2E]/.test(t) && cj / Math.max(1, nsp) >= 0.7) { if (lc >= 65) { out.push({ t: t.replace(/\s+/g, ''), c: lc, kn: 1, zh: true, q: lc + 40 }); } return; }
+          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/[\s0-9.,\-–+%:\/()\u3400-\u9FFF]/g, '').length;
           if (th < 2 || thAll / Math.max(1, all) < 0.6 || lc < minConf) { return; }
           var f = typeof ocrFixText === 'function' ? ocrFixText(vidDigits(t)) : { t: vidDigits(t) };
           f.t = vidMarksFix(f.t);

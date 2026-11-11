@@ -1026,6 +1026,9 @@ body.noscroll { overflow: hidden; }
 .rditem .rdzh { font-size: 14px; }
 .rditem .rdmeta { font-size: 12px; color: var(--muted); }
 .rdcredit { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+
+/* ---- v1.20 點到中文字 ---- */
+.pop .zhnote { margin: 6px 0 2px; font-size: 14px; color: var(--muted); }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
 </head>
@@ -1206,6 +1209,10 @@ body.noscroll { overflow: hidden; }
       <div class="setlabel">標示專有名詞<span class="sethelp">用淡色底標出推測的人名、機構、計畫、作品、地名與外來語。<span class="entlegend"><span class="ent-person">人名</span><span class="ent-org">機構</span><span class="ent-plan">計畫／政策</span><span class="ent-work">作品</span><span class="ent-place">地名</span><span class="ent-other">其他名稱</span><span class="ent-foreign">外來語</span></span></span></div>
       <div class="seg" role="radiogroup" aria-label="標示專有名詞" id="entGroup"></div>
     </div>
+    <div class="setrow">
+      <div class="setlabel">辨識中文<span class="sethelp">圖片、掃描頁、影片字幕裡的中文字也一起認出來（泰文和英文一定會認）。字幕是泰文加中文的影片，中文那行會留在泰文下面當翻譯。台灣的字幕選「繁體」，中國的字幕組選「簡體」。不需要就選「不辨識」，辨識會快一點。</span></div>
+      <div class="seg" role="radiogroup" aria-label="辨識中文" id="ocrZhGroup"></div>
+    </div>
     <div class="setrow fbrow">
       <div class="setlabel">我的專有名詞<span class="sethelp">字典沒收錄的明星、劇名、品牌等。查詞時按「這是名字？」就能加進來，之後所有文件都會把它當成一個詞。<br><span id="myNamesCount"></span></span></div>
       <ul class="mynames" id="myNamesList" hidden></ul>
@@ -1247,7 +1254,7 @@ body.noscroll { overflow: hidden; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.19.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.20.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -42873,6 +42880,19 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   renderSettings();
   function hidePop() { $('pop').hidden = true; if (gramSel) { gramSel = null; renderText(); } }
   function showPop(seg) {
+    if (seg && /[\u3400-\u9FFF]/.test(seg.t) && !/[\u0E01-\u0E5B]/.test(seg.t)) {
+      lastPopSeg = null;
+      var pz = $('pop'); pz.replaceChildren();
+      var xz = document.createElement('button'); xz.type = 'button'; xz.className = 'x'; xz.textContent = '×'; xz.setAttribute('aria-label', '關閉');
+      xz.addEventListener('click', function () { hidePop(); tapSel = null; renderText(); });
+      var hz = document.createElement('div'); hz.className = 'head'; var wz = document.createElement('div'); wz.className = 'pw'; wz.lang = 'zh-Hant'; wz.textContent = seg.t; hz.appendChild(wz);
+      var nz = document.createElement('p'); nz.className = 'zhnote'; nz.textContent = '這是中文（字幕或畫面上的中文字）。查詞只查泰文，點旁邊的泰文看看。';
+      pz.appendChild(xz); pz.appendChild(hz); pz.appendChild(nz);
+      pz.hidden = false;
+      var rz = clientRectOf(seg.i, seg.i + seg.n), mz = document.querySelector('main').getBoundingClientRect();
+      pz.style.left = Math.max(0, Math.min(rz.left - mz.left, mz.width - pz.offsetWidth)) + 'px'; pz.style.top = (rz.bottom - mz.top + 10) + 'px';
+      return;
+    }
     lastPopSeg = seg;
     if (gramSel && !gramFocus) { gramSel = null; renderText(); }
     var pop = $('pop');
@@ -44848,7 +44868,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.19.0';
+  var APP_VER = '正式版 v1.20.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -45740,7 +45760,8 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
       { t: '拍招牌、菜單', s: '按「＋ 圖片／影片」拍照或選照片，拖曳四個角框住文字', img: 'photo-edit',
         d: ['選好照片後會先出現「調整照片」：黃底、紅底這類顏色鮮豔的招牌或菜單，App 會自動框好；不對就拖曳四個黃色圓點重新框。', '斜斜拍的照片會自動拉正成長方形，文字辨識會準很多。', '照片方向不對就按「向左轉」「向右轉」；不需要調整就直接按「完成」。', '一次選好幾張時，每張都可以調整；按「其餘不調整」可以跳過後面的。'] },
       { t: '影片的字幕', s: '按「＋ 圖片／影片」選有泰文字幕的影片', img: 'vid-pick',
-        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會先找字幕在畫面的哪裡，用黃框框起來；字幕會換位置的影片（例如廣告的大字）會框大一點。IG 的帳號名、說明文字這些一直不變的介面文字會自動略過。框得不對，就用手指在畫面上重新框住字幕；拉下面的滑桿可以換一個有字幕的畫面看。', '按「開始讀字幕」。App 每半秒到一秒看一次框裡的畫面，字幕換了就讀一次，最後整理成一份文字文件。白字、黃底黑字、鮮豔的黃色大字都讀得到；夾在字幕裡的中文字會略過。', '同一句字幕只會留一次。進度會浮在畫面下方，中途可以按「停止」，已經讀到的會保留。', '沒讀到字幕時，按「重新框字幕」換個位置再試。', '讀出來的結果不滿意：打開那份影片文件，按右上角的「↻」，重新框字幕再讀一次（會取代原本的文字和筆記）。'],
+        d: ['選一部影片（照片 App 或「檔案」App 裡的都可以）。', 'App 會先找字幕在畫面的哪裡，用黃框框起來；字幕會換位置的影片（例如廣告的大字）會框大一點。IG 的帳號名、說明文字這些一直不變的介面文字會自動略過。框得不對，就用手指在畫面上重新框住字幕；拉下面的滑桿可以換一個有字幕的畫面看。', '按「開始讀字幕」。App 每半秒到一秒看一次框裡的畫面，字幕換了就讀一次，最後整理成一份文字文件。白字、黃底黑字、鮮豔的黃色大字都讀得到。',
+          '泰文加中文的雙語字幕：中文那行會一起留下來，放在泰文旁邊當翻譯（設定 → 閱讀與查詞 → 辨識中文，可選繁體或簡體）。', '同一句字幕只會留一次。進度會浮在畫面下方，中途可以按「停止」，已經讀到的會保留。', '沒讀到字幕時，按「重新框字幕」換個位置再試。', '讀出來的結果不滿意：打開那份影片文件，按右上角的「↻」，重新框字幕再讀一次（會取代原本的文字和筆記）。'],
         tip: 'IG、YouTube 的連結不能直接讀：先用 iPad 的「螢幕錄影」把影片錄下來，再加入那段錄影。' },
       { t: '圖片會自動認字', s: '照片、截圖加進來，App 會自己讀出泰文', img: 'home-img',
         d: ['按「＋ 圖片／影片」，選照片或截圖。', 'App 會打開這份文件，自動開始文字辨識（每張約 5–20 秒）。', '完成後就能點字查詞。'],
@@ -45945,7 +45966,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     ocr.engine = '載入中';
     ocr.ready = (window.Tesseract ? Promise.resolve() : ocrScript(u.lib)).then(function () {
       if (!window.Tesseract) { throw new Error('文字辨識工具沒有載入成功'); }
-      return window.Tesseract.createWorker(['tha', 'eng'], 1, {
+      return window.Tesseract.createWorker(ocrLangs(), 1, {
         workerPath: u.worker, corePath: u.core, langPath: u.lang, cachePath: 'm2', gzip: true, workerBlobURL: u.cross,
         logger: function (m) { if (ocr.onlog) { ocr.onlog(m); } },
         errorHandler: function (e) { ocr.lastError = String(e && e.message || e).slice(0, 120); }
@@ -46472,15 +46493,18 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
           var tk = t.split(' '), tc = vidTokConf(ln, tk);
           /* 被空格切開的詞（「จิบกา แฟหอมๆ」）黏回去能多拼出詞的，不是亂碼 */
           function glues(k) { var nb = k > 0 ? tk[k - 1] : tk[k + 1], g = k > 0 ? nb + tk[k] : tk[k] + nb; return nb && vidKnownN(g) > vidKnownN(nb) + 1; }
-          function junk(k) { var x = tk[k]; if (/[\u0E01-\u0E2E]/.test(x) && glues(k)) { return false; } if (!/[\u0E01-\u0E2E]/.test(x)) { return !/^[0-9.,\-–+%:\/()]+$/.test(x) && tc[k] < 90; } return vidKnown(x) < 0.34 || (vidKnown2(x) < 0.34 && tc[k] < 88); }
+          function junk(k) { var x = tk[k]; if (/[\u0E01-\u0E2E]/.test(x) && glues(k)) { return false; } if (/[\u3400-\u9FFF]/.test(x) && !/[\u0E01-\u0E2E]/.test(x)) { return tc[k] < 60; } if (!/[\u0E01-\u0E2E]/.test(x)) { return !/^[0-9.,\-–+%:\/()]+$/.test(x) && tc[k] < 90; } return vidKnown(x) < 0.34 || (vidKnown2(x) < 0.34 && tc[k] < 88); }
           while (tk.length > 1 && junk(tk.length - 1) && vidKnown(tk.slice(0, -1).join(' ')) >= 0.5) { tk.pop(); tc.pop(); }
           while (tk.length > 1 && junk(0) && vidKnown(tk.slice(1).join(' ')) >= 0.5) { tk.shift(); tc.shift(); }
           var trimmed = tk.length < t.split(' ').length;
           t = tk.join(' ');
           /* 去掉亂碼之後，用留下來那幾段的信心當這一行的信心 */
           var lc = trimmed && tc.length ? tc.reduce(function (a2, b2) { return a2 + b2; }, 0) / tc.length : ln.confidence;
-          t = t.replace(/^[^ก-๛A-Za-z0-9]+/, '').replace(/[^ก-๛A-Za-z0-9!?.]+$/, '');
-          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/[\s0-9.,\-–+%:\/()]/g, '').length;
+          t = t.replace(/^[^ก-๛A-Za-z0-9\u3400-\u9FFF]+/, '').replace(/[^ก-๛A-Za-z0-9!?.\u3400-\u9FFF]+$/, '');
+          /* 中文字幕（開了「辨識中文」時）：大部分是中文字的行直接留下，當作泰文那句的翻譯 */
+          var cj = (t.match(/[\u3400-\u9FFF]/g) || []).length, nsp = t.replace(/[\s0-9.,\-–+%:\/()!?，。！？、「」]/g, '').length;
+          if (cj >= 2 && !/[\u0E01-\u0E2E]/.test(t) && cj / Math.max(1, nsp) >= 0.7) { if (lc >= 65) { out.push({ t: t.replace(/\s+/g, ''), c: lc, kn: 1, zh: true, q: lc + 40 }); } return; }
+          var th = (t.match(/[ก-ฮ]/g) || []).length, thAll = (t.match(/[\u0E01-\u0E5B]/g) || []).length, all = t.replace(/[\s0-9.,\-–+%:\/()\u3400-\u9FFF]/g, '').length;
           if (th < 2 || thAll / Math.max(1, all) < 0.6 || lc < minConf) { return; }
           var f = typeof ocrFixText === 'function' ? ocrFixText(vidDigits(t)) : { t: vidDigits(t) };
           f.t = vidMarksFix(f.t);
@@ -47781,7 +47805,7 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     var host = $('settings'); if (!host) { return; }
     var GROUPS = [
       ['look', '外觀與字體', ['themeGroup', 'fontGroup']],
-      ['read', '閱讀與查詞', ['levelGroup', 'romGroup', 'glossGroup', 'entGroup', 'toneGroup']],
+      ['read', '閱讀與查詞', ['levelGroup', 'romGroup', 'glossGroup', 'entGroup', 'toneGroup', 'ocrZhGroup']],
       ['words', '我的詞庫', ['myNamesList', 'mySegList']],
       ['data', '資料與同步', ['syncBtns', 'bkSave']],
       ['help', '說明與回饋', ['openHelp', 'reWelcome', 'fbCat']]
@@ -48850,6 +48874,21 @@ Yes or No 2 รักไม่รักอย่ากั๊กเลย|work|�
     } finally { await w.setParameters({ tessedit_pageseg_mode: '3' }); }
     return best;
   }
+  /* 文字辨識要認哪些語言：泰文＋（繁體或簡體中文）＋英文；設定改了就關掉辨識工具，下次用時照新設定重開 */
+  function ocrZh() { try { var z = localStorage.getItem('thai-ocr-zh'); return z === 'sim' || z === 'off' ? z : 'tra'; } catch (err) { return 'tra'; } }
+  function ocrLangs() { var z = ocrZh(); return z === 'off' ? ['tha', 'eng'] : ['tha', z === 'sim' ? 'chi_sim' : 'chi_tra', 'eng']; }
+  (function () {
+    var g = $('ocrZhGroup'); if (!g) { return; }
+    function draw() {
+      segButtons(g, [['tra', '繁體'], ['sim', '簡體'], ['off', '不辨識']], ocrZh(), function (v) {
+        try { localStorage.setItem('thai-ocr-zh', v); } catch (err) {}
+        var r = ocr.ready; ocr.ready = null; ocr.worker = null;
+        if (r) { r.then(function (w) { try { w.terminate(); } catch (err) {} }, function () {}); }
+        draw();
+      });
+    }
+    draw();
+  })();
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
     btn.addEventListener('click', function () {
