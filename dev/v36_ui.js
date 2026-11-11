@@ -41,7 +41,7 @@
     if (typeof Intl === 'undefined' || !Intl.Segmenter) { return null; }
     if (!rrSegr) { rrSegr = new Intl.Segmenter('th', { granularity: 'word' }); }
     var out = [];
-    Array.from(rrSegr.segment(String(text).slice(0, 12000))).forEach(function (x) { if (x.isWordLike && /[ก-ฮ]/.test(x.segment)) { out.push(x.segment); } });
+    Array.from(rrSegr.segment(String(text).slice(0, 12000))).forEach(function (x) { if (x.isWordLike && x.segment.length >= 2 && /[ก-ฮ]/.test(x.segment)) { out.push(x.segment); } });
     return out;
   }
   /* 認得率 = 這篇的泰文詞裡，你大概認得的比例。
