@@ -28,7 +28,7 @@ const URL = 'http://127.0.0.1:8765/index.html';
   await p.screenshot({ path: 'shots/v24-en-home.png' });
   await p.locator('#homeFolders > .seg > button', { hasText: 'Reading library' }).click(); await p.waitForTimeout(300); await grab(p, 'folder');
   console.log('target:', await p.textContent('#homeTarget'));
-  await p.click('#homeFolderBar .cdel'); await p.waitForTimeout(200); await grab(p, 'folder-del'); console.log('del:', await p.textContent('#homeFolderBar .cdel'));
+  await p.locator('#homeFolders > .seg > button[aria-checked="true"]').click(); await p.waitForTimeout(200); await grab(p, 'folder-menu'); await p.click('.fmenu .cdel'); await p.waitForTimeout(200); await grab(p, 'folder-del'); console.log('del:', await p.textContent('.fmenu .cdel'));
   await p.locator('#docList .cmove').first().focus(); console.log('move opts:', (await p.locator('#docList .cmove').first().locator('option').allTextContents()).join(' | '));
   await p.click('#questCard'); await p.waitForTimeout(400); await grab(p, 'record'); await p.screenshot({ path: 'shots/v24-en-record.png' });
   console.log('record:', (await p.textContent('#qsBody')).replace(/\s+/g, ' ').slice(0, 260)); await p.click('#qsClose');

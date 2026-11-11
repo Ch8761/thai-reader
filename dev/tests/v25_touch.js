@@ -1,0 +1,26 @@
+const { chromium, devices } = require('playwright');
+const URL = 'http://127.0.0.1:8765/index.html';
+(async () => {
+  const b = await chromium.launch(); const d = devices['iPhone 13'];
+  const ctx = await b.newContext(Object.assign({}, d)); const p = await ctx.newPage(); p.setDefaultTimeout(5000);
+  const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  await p.goto(URL);
+  await p.evaluate(() => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1');
+    const docs = ['A', 'B', 'C'].map((n, i) => ({ id: 'text:' + n, name: 'Doc' + n, type: 'text', size: 10, added: 10 - i, opened: 0, folder: '' }));
+    localStorage.setItem('thai-docs-v1', JSON.stringify({ docs, folders: [], cur: 'all' }));
+    docs.forEach(x => localStorage.setItem('thai-notes-doc:' + x.id, JSON.stringify({ text: 'วันนี้', src: { type: 'text', id: x.id, name: x.name }, hl: [], strokes: [], boxes: [], nextId: 1 }))); });
+  await p.reload(); await p.waitForTimeout(1200);
+  const cdp = await ctx.newCDPSession(p);
+  const bb = await p.locator('#docList .doccard:nth-child(1) .dopen').boundingBox(); const x = bb.x + 60, y = bb.y + 20;
+  const touch = (type, pts) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: pts });
+  await touch('touchStart', [{ x, y }]); await p.waitForTimeout(700); await touch('touchEnd', []); await p.waitForTimeout(300);
+  console.log('touch long-press selecting:', await p.locator('#docList.selecting .doccard.picked').count(), '| tab still home:', await p.evaluate(() => window.__ev('curTab')));
+  const bb2 = await p.locator('#docList .doccard:nth-child(2) .dopen').boundingBox();
+  await p.touchscreen.tap(bb2.x + 60, bb2.y + 20); await p.waitForTimeout(300);
+  console.log('tap second → picked:', await p.locator('.doccard.picked').count(), '| count text:', (await p.textContent('#selBar .selcount')).trim());
+  await p.touchscreen.tap(bb2.x + 60, bb2.y + 20); await p.waitForTimeout(300);
+  await touch('touchStart', [{ x: bb.x + 60, y: bb.y + 20 }]); await touch('touchMove', [{ x: bb.x + 60, y: bb.y + 60 }]); await p.waitForTimeout(700); await touch('touchEnd', []); await p.waitForTimeout(200);
+  console.log('scroll-ish drag does not start/alter selection, picked =', await p.locator('.doccard.picked').count());
+  console.log('errors:', errs.join('|') || 'none');
+  await b.close();
+})();

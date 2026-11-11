@@ -37,10 +37,11 @@ const ok = (name, cond, extra) => { if (!cond) { fails++; } console.log((cond ? 
   await p.locator('#homeFolders > .seg > button', { hasText: '讀物庫' }).click(); await p.waitForTimeout(300);
   ok('選讀物庫：提示新文件會放進讀物庫', (await p.textContent('#homeTarget')).includes('讀物庫'), await p.textContent('#homeTarget'));
   await p.screenshot({ path: 'shots/v24-home-folders.png' });
-  await p.click('#homeFolderBar .cdel'); await p.waitForTimeout(200);
-  const delTxt = await p.textContent('#homeFolderBar .cdel');
+  await p.locator('#homeFolders > .seg > button[aria-checked="true"]').click(); await p.waitForTimeout(200);
+  await p.click('.fmenu .cdel'); await p.waitForTimeout(200);
+  const delTxt = await p.textContent('.fmenu .cdel');
   ok('刪資料夾說明文件不會被刪', delTxt.includes('不會刪') && !delTxt.includes('未分類'), delTxt);
-  await p.click('#homeFolderBar .cdel'); await p.waitForTimeout(300);
+  await p.click('.fmenu .cdel'); await p.waitForTimeout(300);
   ok('刪掉資料夾後文件還在「全部」', await E(p, "lib.docs.filter(function(d){return d.lib}).length") >= 1 && await E(p, "lib.cur") === 'all');
   await p.locator('#docList .cmove').first().selectOption({ index: 0 });
   ok('搬移選單第一項是「不放資料夾」', (await p.locator('#docList .cmove').first().locator('option').first().textContent()) === '不放資料夾');

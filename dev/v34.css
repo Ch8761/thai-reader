@@ -1,0 +1,54 @@
+
+/* 1.25 資料夾分頁的下拉選單、長按多選、篩選鈕、匯出 */
+#homeFolders, #cardFolders { position: relative; }
+#homeFolders > .seg > button.hasmenu, #cardFolders > .seg > button.hasmenu { display: inline-flex !important; align-items: center; gap: 1px; }
+.fchev { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+button[aria-expanded="true"] > .fchev { transform: rotate(180deg); }
+.fmenu { position: absolute; z-index: 30; min-width: 170px; max-width: min(260px, calc(100% - 8px)); display: flex; flex-direction: column; padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: 0 10px 28px rgba(0, 0, 0, .18); }
+.fmenu button { justify-content: flex-start; text-align: left; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; white-space: normal; font-size: 15px; font-weight: 500; }
+.fmenu button:hover { background: var(--bg); }
+.fmenu .cdel { color: #c62828; }
+
+.doccard.selable img { pointer-events: none; -webkit-user-drag: none; }
+.doccard.selable { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.dchk { display: none; position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--muted); background: var(--card); color: #fff; align-items: center; justify-content: center; z-index: 2; pointer-events: none; }
+.dchk svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+#docList.selecting .dchk { display: flex; }
+#docList.selecting .dside, #docList.selecting .dmore { display: none !important; }
+#docList.selecting .doccard { padding-right: 46px; cursor: pointer; }
+#docList.selecting.grid .doccard { padding-right: 0; }
+.doccard.picked { outline: 2px solid var(--accent); outline-offset: -2px; }
+.doccard.picked .dchk { background: var(--accent); border-color: var(--accent); }
+.doccard.picked .dchk svg { opacity: 1; }
+#docList.grid .dchk { top: 6px; right: 6px; }
+#docList.grid.selecting .doccard.picked { outline: 0; }
+#docList.grid.selecting .doccard.picked .dicon { box-shadow: 0 0 0 3px var(--accent); }
+body.selmode #view-home { padding-bottom: 96px; }
+.selbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--tabh, 64px) + 12px + env(safe-area-inset-bottom)); z-index: 40; width: min(680px, calc(100% - 24px)); display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 8px 30px rgba(0, 0, 0, .22); }
+.selbar[hidden] { display: none; }
+.selbar button { min-height: 40px; font-size: 14px; }
+.selbar .selx { width: 40px; min-width: 40px; height: 40px; padding: 0; border-radius: 50%; font-size: 22px; line-height: 1; }
+.selbar .selcount { flex: 1 1 auto; min-width: 0; font-weight: 700; font-size: 15px; }
+.selmenu { position: absolute; left: 0; right: 0; bottom: calc(100% + 8px); max-height: min(50vh, 360px); overflow-y: auto; display: flex; flex-direction: column; padding: 6px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(0, 0, 0, .22); }
+.selmenu > button { justify-content: flex-start; text-align: left; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; white-space: normal; font-size: 15px; font-weight: 500; }
+.selmenu > button:hover { background: var(--bg); }
+.selnew { display: flex; gap: 6px; padding: 6px; border-top: 1px solid var(--line); margin-top: 4px; }
+.selnew input { flex: 1 1 120px; min-width: 0; min-height: 40px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font-size: 16px; }
+
+.clbar2 { margin-bottom: 8px; }
+.clchip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; max-width: 100%; padding: 0 14px 0 10px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--muted); font-size: 14px; }
+.clchip svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.clchip[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 600; background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.clchip .cldoc { max-width: 11em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: 2px; padding-left: 8px; border-left: 1px solid currentColor; font-weight: 500; }
+.clchip:disabled { opacity: .45; }
+.clast { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); }
+
+.cexport { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--accent); font-size: 15px; }
+.cexport svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.exfmt { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; min-height: 60px; margin-top: 8px; padding: 10px 14px; text-align: left; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.exfmt b { font-size: 16px; }
+.exfmt span { font-size: 13px; font-weight: 400; color: var(--muted); }
+.exfmt:disabled { opacity: .5; }
+.cxcopy { margin-top: 10px; }
+#cxMsg { min-height: 1.4em; margin-top: 10px; }
+.cxseg { margin: 4px 0 6px; }
