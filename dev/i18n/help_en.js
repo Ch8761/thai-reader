@@ -2,8 +2,8 @@
   var HELP_EN = [
     ['Home', [
       { t: 'Learning stages', s: 'The card at the top of Home: this stage’s goal and progress', img: '',
-        d: ['There are 5 chapters and 30 stages, cleared in order: read articles, save words, review, keep a streak, master words.', 'The card shows the current goal and a progress bar; the flame on the right is your streak in days.', 'Tap the card to open your 「Learning record」: articles read, words saved (and mastered), streak, reviews, and every chapter’s stages.', 'When you clear a stage, a small celebration appears when you return to Home. Breaking a streak never takes back stages you’ve cleared.'],
-        tip: 'Any day you open a document or review counts as a learning day.' },
+        d: ['There are 5 chapters and 30 stages, cleared in order: read articles, save words, review, total days studied, master words.', 'The card shows the current goal and a progress bar; on the right is how many days you studied this week (the goal starts at 4 days a week).', 'Tap the card to open your 「Learning record」: articles read, words saved (and mastered), days studied this week, reviews, and every chapter’s stages. You can change the weekly goal (3 to 6 days) there too.', 'When you clear a stage, a small celebration appears when you return to Home. Missing a day or a weekly goal never costs you anything, and never takes back stages you’ve cleared.'],
+        tip: 'Any day you open a document or review counts as a learning day. The week restarts on Monday.' },
       { t: 'List or grid', s: 'The two small icons on the right switch the layout', img: 'home-grid',
         d: ['「List」: one document per row, with more details.', '「Grid」: large thumbnails with names below, like Google Drive.', 'In grid view, tap a thumbnail to open it; tap 「⋯」 to move it to a folder or delete it.'] },
       { t: 'Reading library', s: 'Tap 「Reading library」 on Home and pick a short text', img: 'reader',
@@ -24,11 +24,11 @@
         d: ['Tap 「Import」 and choose photos or screenshots.', 'The app opens the document and starts text recognition (about 5–20 seconds per image).', 'When it’s done you can tap words to look them up.'],
         tip: 'The first time, about 8 MB of recognition tools are downloaded, so stay online.' },
       { t: 'Folders', s: 'Tap a tab at the top; 「＋」 at the far right makes a new folder', img: 'home-folders',
-        d: ['Tap 「All」, 「Unsorted」 or one of your folders to list only its documents.', 'Tap 「＋」 at the right end of the tabs, type a name and tap 「Create」. With many folders, swipe the tabs sideways.'] },
+        d: ['Tap 「All」 or one of your folders to list only its documents. Articles from the reading library go into the 「Reading library」 folder automatically.', 'Tap 「＋」 at the right end of the tabs, type a name and tap 「Create」. With many folders, swipe the tabs sideways.'] },
       { t: 'Move documents', s: 'Use the menu on the right of a document and choose a folder', img: 'home-move',
         d: ['On a document card, tap the menu showing the folder name.', 'Choose the folder to move it to; that’s it.'] },
       { t: 'Rename or delete a folder', s: 'Open the folder first, then tap 「Rename」 or 「Delete folder」', img: 'home-folderbar',
-        d: ['Tap one of your folders at the top.', 'Its name appears above the document list, with 「Rename」 and 「Delete folder」 next to it.', 'Delete needs two taps; the documents inside aren’t deleted but move to 「Unsorted」.'] }]],
+        d: ['Tap one of your folders at the top.', 'Its name appears above the document list, with 「Rename」 and 「Delete folder」 next to it.', 'Delete needs two taps; the documents inside aren’t deleted; they stay in 「All」.'] }]],
     ['Lookup', [
       { t: 'Tap to look up', s: 'Choose 「Tap」, then tap any Thai word', img: 'tap-tool',
         d: ['Make sure the toolbar has 「Tap」 selected (green).', 'Tap any word in the document and the lookup window opens.', 'Tap another word to look that one up; tap 「×」 at the top right to close.'] },

@@ -41,7 +41,7 @@
     if ((m = t.match(/^(.+?)（(.+)）$/))) { var a2 = i18nCore(m[1]), b2 = i18nCore(m[2]); if (a2 != null && b2 != null && !I18N_CJK.test(a2 + b2)) { return a2 + ' (' + b2.replace(/^\(|\)$/g, '') + ')'; } }
     if ((m = t.match(/^「(.+)」是什麼？$/))) { var q = i18nCore(m[1]); if (q != null && !I18N_CJK.test(q)) { return 'What is “' + q + '”?'; } }
     /* 用分隔符號拆開分別翻 */
-    var seps = [['｜', ' | '], ['・', ' · '], ['；', '; '], ['、', ', '], ['：', ': ']];
+    var seps = [['｜', ' | '], ['・', ' · '], ['；', '; '], ['、', ', '], ['：', ': '], ['，', ', ']];
     for (var s = 0; s < seps.length; s++) {
       if (t.indexOf(seps[s][0]) > 0) {
         var parts = t.split(seps[s][0]).map(function (x) { return i18nCore(x.trim()); });
