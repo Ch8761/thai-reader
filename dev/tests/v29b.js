@@ -22,8 +22,8 @@ const READER = JSON.parse(fs.readFileSync(__dirname + '/../reader.json', 'utf8')
     const lists = {}; for (const lv of ['a', 'b', 'c', 'd']) { lists[lv] = await J("goalsFor('" + lv + "').map(function(o){return o.id})"); }
     ok(lang + ' 入門：打好基礎／看懂菜單／升級／先不設', lists.a.join() === 'a_base,a_eat,up,free', lists.a.join());
     ok(lang + ' 初級：升級／旅行／生活資訊／先不設', lists.b.join() === 'up,b_travel,b_life,free', lists.b.join());
-    ok(lang + ' 中級：升級／新聞／社群口語／先不設', lists.c.join() === 'up,c_news,c_social,free', lists.c.join());
-    ok(lang + ' 高級：新聞評論／公告公文／文學歷史／先不設（沒有「升級」）', lists.d.join() === 'd_news,d_formal,d_lit,free', lists.d.join());
+    ok(lang + ' 中級：升級／新聞／字幕看影集／先不設', lists.c.join() === 'up,c_news,c_sub,free', lists.c.join());
+    ok(lang + ' 高級：文學作品／專業文章／正式公文／先不設（沒有「升級」）', lists.d.join() === 'd_lit,d_pro,d_formal,free', lists.d.join());
     const all = [].concat(...['a', 'b', 'c', 'd'].map(l => lists[l].filter(x => x !== 'free' && x !== 'up')));
     ok(lang + ' 每一級各自的目標都不重複', new Set(all).size === all.length);
     ok(lang + ' 「全部」程度當高級、不認得的程度當初級', (await J("(function(){ level='all'; var a = goalsFor(lv4()).map(function(o){return o.id}).join(); level='zzz'; var b = goalsFor(lv4()).map(function(o){return o.id}).join(); level='b'; return [a,b]; })()")).join('|') === lists.d.join() + '|' + lists.b.join());
@@ -32,15 +32,15 @@ const READER = JSON.parse(fs.readFileSync(__dirname + '/../reader.json', 'utf8')
     const cat = await J("GOAL_CATALOG");
     const rid = new Set(READER.map(x => x.id)); let bad = [];
     Object.keys(cat.goals).forEach(g => (cat.goals[g].stages || []).forEach(sp => { (sp.ids || []).forEach(i => { if (!rid.has(i)) bad.push(g + ':' + i); }); }));
-    ok(lang + ' 指定短文的編號在讀物庫裡都找得到', bad.length === 0, bad.join());
+    ok(lang + ' 指定短文的編號（若有用到）在讀物庫裡都找得到', bad.length === 0, bad.join());
     const bossKeys = await J("Object.keys(BOSS)"); let badBoss = [];
     Object.keys(cat.goals).forEach(g => (cat.goals[g].stages || []).forEach(sp => { if (sp.k === 'boss') { (typeof sp.boss === 'string' ? [sp.boss] : Object.values(sp.boss)).forEach(k => { if (!bossKeys.includes(k)) badBoss.push(g + ':' + k); }); } }));
     ok(lang + ' 魔王關的代號都存在', badBoss.length === 0, badBoss.join());
     const sizes = await J("(function(){ var o = {}; ['a','b','c','d'].forEach(function(lv){ goalIds(lv).forEach(function(g){ if (g==='free') return; o[lv+':'+g] = mapStages({g:g}, lv).length; }); }); return o; })()");
     ok(lang + ' 每個目標每個程度都排得出 4～7 關', Object.values(sizes).every(n => n >= 4 && n <= 7), JSON.stringify(sizes));
     ok(lang + ' 只有入門有聲調關', (await J("['a','b','c','d'].map(function(lv){ return mapStages({g:'up'}, lv).some(function(s){return s.k==='tone'}) })")).join() === 'true,false,false,false');
-    ok(lang + ' 高級沒有「升級」：就算硬排也不會多一個下一級的關', (await J("mapStages({g:'up'}, 'd').filter(function(s){return s.k==='read'}).length")) === 1);
-    ok(lang + ' 沒有魔王關的目標（打好基礎、文學歷史）不會硬塞一個', (await J("[mapStages({g:'a_base'},'a'), mapStages({g:'d_lit'},'d')].map(function(x){return x.some(function(s){return s.k==='boss'})})")).join() === 'false,false');
+    ok(lang + ' 高級沒有「升級」：就算硬排也不會多一個下一級的關', (await J("mapStages({g:'up'}, 'd').filter(function(s){return s.k==='read'}).length")) === 0);
+    ok(lang + ' 沒有魔王關的目標（打好基礎、字幕、文學、專業文章）不會硬塞一個', (await J("[mapStages({g:'a_base'},'a'), mapStages({g:'c_sub'},'c'), mapStages({g:'d_lit'},'d'), mapStages({g:'d_pro'},'d')].map(function(x){return x.some(function(s){return s.k==='boss'})})")).join() === 'false,false,false,false');
     // 完成過的排後面
     await E("lsSetJ('thai-goal-done', {'a_base:a': 1}); 1");
     ok(lang + ' 完成過的目標往後排並標記，推薦換下一個', (await J("goalsFor('a').map(function(o){return o.id + (o.rec?'*':'') + (o.finished?'!':'')}).join()")) === 'a_eat*,up,a_base!,free');
@@ -50,23 +50,34 @@ const READER = JSON.parse(fs.readFileSync(__dirname + '/../reader.json', 'utf8')
     ok(lang + ' 舊目標對應：入門「看懂菜單」→ a_eat', (await mig('menu', 'a')) === 'a_eat');
     ok(lang + ' 舊目標對應：初級「社群貼文」→ b_travel', (await mig('social', 'b')) === 'b_travel');
     ok(lang + ' 舊目標對應：中級「新聞」→ c_news', (await mig('news', 'c')) === 'c_news');
-    ok(lang + ' 舊目標對應：高級「新聞」→ d_news', (await mig('news', 'd')) === 'd_news');
+    ok(lang + ' 舊目標對應：高級「新聞」→ d_pro', (await mig('news', 'd')) === 'd_pro');
+    ok(lang + ' 舊目標對應：1.29 的 d_news → d_pro、c_social → c_sub', (await mig('d_news', 'd')) === 'd_pro' && (await mig('c_social', 'c')) === 'c_sub');
     ok(lang + ' 舊目標對應：初級「菜單」沒有對應 → 第一個（升級）', (await mig('menu', 'b')) === 'up');
     ok(lang + ' 舊目標「升到下一級」不變', (await mig('up', 'c')) === 'up');
 
-    // ===== J. 地圖分頁：指定短文、程度改了 =====
+    // ===== J. 地圖分頁：自己想讀的東西、程度改了 =====
     await fresh();
     await E("level='b'; goalSave('b_travel', 10); showTab('map'); 1"); await p.waitForTimeout(500);
-    ok(lang + ' 地圖第 1 關：讀 2 篇「旅行」短文，下面有 3 個短文按鈕', (await p.locator('#mapBody .lqcur .mapchip').count()) === 3 && (await p.locator('#mapBody .lqcur .lqpt').innerText()).includes(T('旅行', 'Travel')));
-    await p.waitForTimeout(600);
-    ok(lang + ' 短文按鈕顯示篇名（讀物庫載入後）', (await p.locator('#mapBody .lqcur .mapchip').allTextContents()).join('|').includes(T('搭捷運', 'นั่งรถไฟฟ้า')));
-    await p.screenshot({ path: 'shots/v29-chips-' + lang + '.png' });
-    await p.locator('#mapBody .lqcur .mapchip').first().click(); await p.waitForTimeout(1500);
-    ok(lang + ' 點短文按鈕：打開那一篇（b1 搭捷運）', (await J("lib.docs.filter(function(d){return d.lib==='b1'}).length")) === 1 && (await E("curTab")) === 'doc');
-    await E("showTab('map'); 1"); await p.waitForTimeout(500);
-    ok(lang + ' 讀過的那篇打勾、進度 1 / 2', (await p.locator('#mapBody .lqcur .mapchip.on').count()) === 1 && (await p.locator('#mapBody .lqcur .lqnum').innerText()).includes('1 / 2'));
-    await p.locator('#mapBody .lqcur .mapgo').click(); await p.waitForTimeout(1500);
-    ok(lang + ' 「讀下一篇」會開還沒讀的（b3），不會重複開 b1', (await J("lib.docs.filter(function(d){return d.lib==='b3'}).length")) === 1);
+    ok(lang + ' 地圖第 1 關：讀 2 則你想去的地方的介紹（不是讀物庫短文）', (await p.locator('#mapBody .lqcur .lqpt').innerText()).includes(T('你想去的地方', 'places you want to visit')) && (await p.locator('#mapBody .lqcur .mapchip').count()) === 0);
+    ok(lang + ' 這一關有說明和兩個按鈕（匯入、貼上網址），沒有讀物庫鈕', (await p.locator('#mapBody .lqcur .maphint').innerText()).length > 10 && (await p.locator('#mapBody .lqcur .mapown button').count()) === 2);
+    await p.screenshot({ path: 'shots/v30-own-' + lang + '.png' });
+    await E("lib.docs.push({id:'u1',name:'x',type:'text',added:Date.now(),opened:Date.now(),url:'http://a.th'}); lib.docs.push({id:'u2',name:'y',type:'text',added:Date.now(),opened:Date.now()}); 1");
+    ok(lang + ' 只有網址的文件算（貼上的文字不算）：進度 1 / 2', (await J("mapState().have[0]")) === 1);
+    await E("lib.docs.push({id:'u3',name:'z',type:'text',added:Date.now(),opened:Date.now(),url:'http://b.th'}); 1");
+    ok(lang + ' 第二則網址讀完：第 1 關過了', (await J("mapState().done[0]")) === true && (await J("mapState().cur")) === 1);
+    await E("showTab('home'); showTab('map'); 1"); await p.waitForTimeout(300);
+    ok(lang + ' 換到第 2 關：存生字，沒有「匯入」按鈕', (await p.locator('#mapBody .lqcur .mapown').count()) === 0 && (await p.locator('#mapBody .lqcur .mapgo').count()) === 1);
+    // 「匯入」會打開檔案選擇、「貼上網址」會到網址列
+    await E("lib.docs.splice(0); goalSave('a_eat', 10); level='a'; showTab('map'); renderMapTab(); 1");
+    await E("(function(){ var g = lsGetJ('thai-goal',{}); g.p = {}; lsSetJ('thai-goal', g); renderMapTab(); return 1; })()"); await p.waitForTimeout(300);
+    const own = await J("(function(){ var m = mapState(); return m.stg.map(function(s){return s.k + ':' + (s.src||'')}); })()");
+    ok(lang + ' 菜單目標的關卡：聲調、自己讀、生字、複習、記熟、魔王關', own.join() === 'tone:,own:any,words:,rev:,known:,boss:', own.join());
+    await E("(function(){ var g = lsGetJ('thai-goal',{}); var m = mapState(); g.p = g.p||{}; g.p[m.stg[0].key] = 1; lsSetJ('thai-goal', g); renderMapTab(); return 1; })()"); await p.waitForTimeout(300);
+    ok(lang + ' 菜單目標第 2 關：三個按鈕（匯入、貼上、從讀物庫挑）', (await p.locator('#mapBody .lqcur .mapown button').count()) === 3);
+    await p.locator('#mapBody .lqcur .mapown button').nth(2).click(); await p.waitForTimeout(500);
+    ok(lang + ' 「從讀物庫挑一篇」：打開讀物庫', await p.locator('#readerBox, #rdBox, .rdwrap').first().isVisible().catch(() => false) || (await E("typeof rdIsOpen === 'function' ? rdIsOpen() : true")));
+    await E("(function(){ try { rdClose(); } catch (e) {} showTab('map'); return 1; })()");
+    await E("(function(){ try { rdClose(); } catch (e) {} localStorage.removeItem('thai-goal'); level='b'; localStorage.setItem('thai-level','b'); goalSave('b_travel', 10); showTab('map'); renderMapTab(); return 1; })()"); await p.waitForTimeout(300);
     // 程度改了：提示換目標，地圖不變
     await E("showTab('map'); level='c'; localStorage.setItem('thai-level','c'); renderMapTab(); 1"); await p.waitForTimeout(300);
     ok(lang + ' 程度改成中級：這張地圖照初級不變，並提示換目標', (await J("mapState().lv")) === 'b' && (await p.locator('#mapBody .mapnote2').count()) === 1 && (await p.locator('#mapBody .mapnote2 button').count()) === 1);
@@ -84,9 +95,9 @@ const READER = JSON.parse(fs.readFileSync(__dirname + '/../reader.json', 'utf8')
     await E("level='c'; goalSave('c_news', 10); 1");
     const g2 = await J("lsGetJ('thai-goal',{})");
     ok(lang + ' 走完後選新目標：起點重算、舊的過關記錄清掉', g2.t0 > t0 && Object.keys(g2.p).length === 0 && g2.g === 'c_news' && g2.l0 === 'c', JSON.stringify({ t0: g2.t0 - t0, p: g2.p, g: g2.g }));
-    await E("level='c'; goalSave('c_social', 15); 1");
+    await E("level='c'; goalSave('c_sub', 15); 1");
     const g3 = await J("lsGetJ('thai-goal',{})");
-    ok(lang + ' 中途換目標：起點不變（做過的不白費）', g3.t0 === g2.t0 && g3.g === 'c_social');
+    ok(lang + ' 中途換目標：起點不變（做過的不白費）', g3.t0 === g2.t0 && g3.g === 'c_sub');
 
     // ===== K. 主頁小列 =====
     await E("showTab('home'); 1"); await p.waitForTimeout(400);

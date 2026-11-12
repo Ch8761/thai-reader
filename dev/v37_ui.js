@@ -5,51 +5,77 @@
     a: '認得字母和一些單字',
     b: '會簡單基本句子',
     c: '能稍微讀懂 YT、IG 貼文和一些短文，但卡在一些句型',
-    d: '能讀懂生活大部分內容，但正式書面用法有困難，像是正式新聞、皇室公告、論文'
+    d: '能讀懂生活大部分內容，但正式書面用法有困難'
   };
   function L2(zh, en) { return UI_LANG === 'en' ? en : zh; }
   function lv4() { return level === 'all' ? 'd' : (LV4.indexOf(level) >= 0 ? level : 'b'); }
 
   /* ---- 目標清單（資料）：每個程度有自己的一組目標；每個目標 = 一串關卡的設計圖 ----
      levels：每個程度能選的目標，第一個是推薦的；「先不設目標」每一級都會自動加在最後。
-     goals：目標本身（title、sub 是顯示的文字；legacy 是舊版 1.28 的目標代號，升級時用來對應）。
+     goals：目標本身（title、sub 是顯示的文字；legacy 是舊版的目標代號，升級時用來對應）。
      stages 的每一項：
-       { k:'read', n:3, from:'level' }                 讀 n 篇「自己程度」的短文
-       { k:'read', n:3, from:'next' }                  讀 n 篇「下一級」的短文（高級沒有下一級，會自動略過）
-       { k:'read', n:2, ids:['a4','a2'], label:'飲食' } 讀 n 篇指定短文中的任何幾篇（讀物庫的編號）
-       { k:'words'|'rev'|'known', n:… }                存生字／複習／記熟
+       { k:'own', n:2, src:'any', txt:'讀 {n} 篇…', hint:'怎麼做' }  讀「自己想讀的東西」：n 份文件。src＝來源：
+                                                         any 都算（貼上、網址、檔案、照片、字幕、讀物庫）／url 網址／photo 照片／sub 字幕或影片。
+                                                         同一個目標裡第二次出現時 n 要寫「累積」的數字（有算進前面讀過的）
+       { k:'read', n:3, from:'next' }                  讀 n 篇「下一級」的讀物庫短文（高級沒有下一級，會自動略過）
+       { k:'read', n:3, from:'level' }                 讀 n 篇「自己程度」的讀物庫短文（舊版用，現在沒有目標用到）
+       { k:'words'|'rev'|'known', n:…, txt? }          存生字／複習／記熟；txt 可以換成這個目標的說法
        { k:'tone', n:1, lv:['a'] }                      聲調練習；lv 限制只在這些程度出現
        { k:'boss', boss:'menu' }                        魔王關；boss 也可以依程度挑：{ a:'menu', b:'social' }，挑不到就不出現 */
   var GOAL_CATALOG = {
-    v: 1,
+    v: 2,
     levels: {
       a: ['a_base', 'a_eat', 'up'],
       b: ['up', 'b_travel', 'b_life'],
-      c: ['up', 'c_news', 'c_social'],
-      d: ['d_news', 'd_formal', 'd_lit']
+      c: ['up', 'c_news', 'c_sub'],
+      d: ['d_lit', 'd_pro', 'd_formal']
     },
     goals: {
       up: { title: '升到下一級', sub: '一步一步練到下一級', stages: [
-        { k: 'tone', n: 1, lv: ['a'] }, { k: 'read', n: 3, from: 'level' }, { k: 'words', n: 10 }, { k: 'rev', n: 30 },
-        { k: 'read', n: 3, from: 'next' }, { k: 'known', n: 6 }, { k: 'boss', boss: { a: 'menu', b: 'social', c: 'notice' } }] },
+        { k: 'tone', n: 1, lv: ['a'] },
+        { k: 'own', n: 3, src: 'any', txt: '讀 {n} 篇你想讀的泰文', hint: '想讀什麼都可以：貼上文字或網址、匯入檔案或照片，或從讀物庫挑。' },
+        { k: 'words', n: 10 }, { k: 'rev', n: 30 },
+        { k: 'read', n: 3, from: 'next' }, { k: 'known', n: 6 },
+        { k: 'boss', boss: { a: 'menu', b: 'social', c: 'notice' } }] },
       a_base: { title: '打好基礎：聲調與日常短句', sub: '先把聲調和最常用的字練熟，再讀簡單短文', stages: [
-        { k: 'tone', n: 1 }, { k: 'read', n: 3, ids: ['a1', 'a3', 'a5', 'a6'], label: '日常' }, { k: 'words', n: 15 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }] },
+        { k: 'tone', n: 1 },
+        { k: 'own', n: 3, src: 'any', txt: '讀 {n} 篇你想讀的短句或短文', hint: '短一點的比較輕鬆：貼上一句泰文、匯入照片，或從讀物庫挑一篇入門短文。' },
+        { k: 'words', n: 15 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }] },
       a_eat: { title: '看懂菜單和點餐', sub: '點餐、看招牌，不用一直查字典', legacy: ['menu'], stages: [
-        { k: 'tone', n: 1 }, { k: 'read', n: 2, ids: ['a4', 'a2', 'b2'], label: '飲食與市場' }, { k: 'words', n: 10 }, { k: 'rev', n: 30 }, { k: 'known', n: 6 }, { k: 'boss', boss: 'menu' }] },
+        { k: 'tone', n: 1 },
+        { k: 'own', n: 2, src: 'any', txt: '讀 {n} 份你想看的菜單或招牌', hint: '拍下真的菜單或招牌（用「匯入」選照片），或貼上菜名；找不到，就去讀物庫挑飲食短文。' },
+        { k: 'words', n: 10, txt: '存 {n} 個菜名和食物的生字' }, { k: 'rev', n: 30 }, { k: 'known', n: 6 }, { k: 'boss', boss: 'menu' }] },
       b_travel: { title: '自己去泰國玩', sub: '搭車、問路、安排行程、看旅遊貼文', legacy: ['social'], stages: [
-        { k: 'read', n: 2, ids: ['b1', 'b3', 'b7'], label: '旅行' }, { k: 'words', n: 12 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }, { k: 'boss', boss: 'social' }] },
+        { k: 'own', n: 2, src: 'url', txt: '讀 {n} 則你想去的地方的介紹', hint: '貼上景點、旅遊部落格或社群貼文的網址就能讀。' },
+        { k: 'words', n: 12, txt: '存 {n} 個旅行會用到的生字' },
+        { k: 'own', n: 1, src: 'photo', txt: '拍 {n} 張路標、站牌或告示來讀', hint: '下次出門看到泰文，拍下來用「匯入」加進來。' },
+        { k: 'rev', n: 40 }, { k: 'known', n: 8 }, { k: 'boss', boss: 'social' }] },
       b_life: { title: '看懂生活資訊', sub: '網購、看醫生、室友訊息和公告', stages: [
-        { k: 'read', n: 2, ids: ['b5', 'b6', 'b8'], label: '生活' }, { k: 'words', n: 12 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }, { k: 'boss', boss: 'notice' }] },
-      c_news: { title: '看懂新聞', sub: '空汙、環保這類新聞風格的短文', legacy: ['news'], stages: [
-        { k: 'read', n: 2, ids: ['c1', 'c6', 'd5'], label: '新聞與環境' }, { k: 'words', n: 15 }, { k: 'rev', n: 50 }, { k: 'known', n: 10 }, { k: 'boss', boss: 'news' }] },
-      c_social: { title: '看懂社群和口語', sub: 'IG 貼文、Podcast、網路用語', legacy: ['social'], stages: [
-        { k: 'read', n: 2, ids: ['c2', 'c3', 'c4'], label: '社群與口語' }, { k: 'words', n: 15 }, { k: 'rev', n: 50 }, { k: 'known', n: 10 }, { k: 'boss', boss: 'social' }] },
-      d_news: { title: '讀懂新聞評論與科普', sub: '社會、經濟、科學這類長一點的文章', legacy: ['news'], stages: [
-        { k: 'read', n: 2, ids: ['d1', 'd2', 'd5'], label: '評論與科普' }, { k: 'words', n: 20 }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }, { k: 'boss', boss: 'news' }] },
-      d_formal: { title: '看懂公告與公文', sub: '大學公告、政府通知這類正式書面', stages: [
-        { k: 'read', n: 2, ids: ['d6', 'd1'], label: '正式書面' }, { k: 'words', n: 20 }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }, { k: 'boss', boss: 'notice' }] },
-      d_lit: { title: '讀文學與歷史短文', sub: '小說片段和歷史故事，詞彙更豐富', stages: [
-        { k: 'read', n: 2, ids: ['d3', 'd4'], label: '文學與歷史' }, { k: 'words', n: 20 }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }] },
+        { k: 'own', n: 2, src: 'any', txt: '讀 {n} 份生活中的泰文訊息', hint: '購物頁、診所說明、室友訊息、公告…你實際會遇到的，貼上文字或拍照都可以。' },
+        { k: 'words', n: 12, txt: '存 {n} 個生活用得到的生字' }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }, { k: 'boss', boss: 'notice' }] },
+      c_news: { title: '看懂新聞', sub: '挑你有興趣的話題，一則一則讀', legacy: ['news'], stages: [
+        { k: 'own', n: 2, src: 'url', txt: '讀 {n} 則你有興趣的新聞', hint: '挑你本來就想知道的話題，貼上新聞網址就能讀。' },
+        { k: 'words', n: 15 },
+        { k: 'own', n: 4, src: 'url', txt: '累積讀 {n} 則新聞（換個主題）', hint: '換個主題（體育、娛樂、財經…），詞彙會不一樣。' },
+        { k: 'rev', n: 50 }, { k: 'known', n: 10 }, { k: 'boss', boss: 'news' }] },
+      c_sub: { title: '可以用泰文字幕看影集電影', sub: '用泰文字幕看自己愛的影集和電影，不用一直暫停查字', legacy: ['social', 'c_social'], stages: [
+        { k: 'own', n: 1, src: 'sub', txt: '加入 {n} 份你想看的影集或電影的字幕', hint: '匯入 .srt 或 .vtt 字幕檔；沒有字幕檔，也可以匯入影片，讓 App 辨識畫面上的字幕。' },
+        { k: 'words', n: 20, txt: '存 {n} 個台詞裡的生字' },
+        { k: 'own', n: 3, src: 'sub', txt: '累積讀 {n} 份字幕（換集數或換一部）', hint: '匯入 .srt 或 .vtt 字幕檔；沒有字幕檔，也可以匯入影片，讓 App 辨識畫面上的字幕。' },
+        { k: 'rev', n: 60 }, { k: 'known', n: 12 }] },
+      d_lit: { title: '讀懂文學作品', sub: '小說、散文、詩，一小段一小段慢慢讀', legacy: ['d_lit'], stages: [
+        { k: 'own', n: 2, src: 'any', txt: '讀 {n} 段你想讀的文學作品', hint: '貼上一段小說、散文或詩，或匯入電子書文字、PDF 或照片；想不到的話，讀物庫有文學與歷史短文。' },
+        { k: 'words', n: 25, txt: '存 {n} 個文學裡的詞' }, { k: 'rev', n: 60 },
+        { k: 'own', n: 4, src: 'any', txt: '累積讀 {n} 段文學作品', hint: '每一段貼成一份文件，累積起來就算；同一本書分幾段、或換作者都可以。' },
+        { k: 'known', n: 12 }] },
+      d_pro: { title: '能讀專業文章', sub: '你工作或有興趣領域的文章', legacy: ['news', 'd_news'], stages: [
+        { k: 'own', n: 2, src: 'any', txt: '讀 {n} 篇你專業領域的文章', hint: '貼上網址、匯入 PDF 或拍照都可以；挑你平常會讀的主題。' },
+        { k: 'words', n: 25, txt: '存 {n} 個專業術語' }, { k: 'rev', n: 60 },
+        { k: 'own', n: 4, src: 'any', txt: '累積讀 {n} 篇專業文章', hint: '同一個領域讀多幾篇，術語會一直重複出現，記得特別快。' },
+        { k: 'known', n: 15 }] },
+      d_formal: { title: '看懂正式公文', sub: '比較書面、正式的用語', stages: [
+        { k: 'own', n: 2, src: 'any', txt: '讀 {n} 份正式公告或公文', hint: '政府或學校的公告、申請表、合約說明；貼上網址、匯入 PDF 或拍照都可以。' },
+        { k: 'words', n: 25, txt: '存 {n} 個書面用語' }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }, { k: 'boss', boss: 'notice' }] },
       free: { title: '先不設目標', sub: '自己隨意讀。之後想設定，到「地圖」分頁就能補上', stages: [] }
     }
   };
@@ -121,23 +147,25 @@
   var BOSS_BY_ID = {}; Object.keys(BOSS).forEach(function (k) { BOSS[k].key = k; BOSS_BY_ID[BOSS[k].id] = BOSS[k]; });
 
   /* ---- 依「目標＋程度」排出關卡：照目標的設計圖（stages）一項一項轉成關卡 ---- */
-  function mkStage(k, n, o) { var s = { k: k, n: n }; if (o) { Object.keys(o).forEach(function (x) { s[x] = o[x]; }); } s.key = k + ':' + n + ':' + (s.lv || (s.ids ? s.ids.join('+') : '') || s.boss || ''); return s; }
+  function mkStage(k, n, o) { var s = { k: k, n: n }; if (o) { Object.keys(o).forEach(function (x) { if (o[x] !== undefined) { s[x] = o[x]; } }); } s.key = k + ':' + n + ':' + (s.lv || (s.ids ? s.ids.join('+') : '') || s.boss || (k === 'own' ? s.src + '#' + s.ix : '')); return s; }
   function mapStages(g, lv) {
     var goal = GOAL_CATALOG.goals[g.g] || GOAL_CATALOG.goals.up, nx = LV4[LV4.indexOf(lv) + 1], out = [];
-    goal.stages.forEach(function (sp) {
+    goal.stages.forEach(function (sp, ix) {
       if (sp.lv && sp.lv.indexOf(lv) < 0) { return; }
-      if (sp.k === 'read') {
+      if (sp.k === 'own') { out.push(mkStage('own', sp.n, { src: sp.src || 'any', txt: sp.txt, hint: sp.hint, ix: ix })); }
+      else if (sp.k === 'read') {
         if (sp.ids) { out.push(mkStage('read', Math.min(sp.n, sp.ids.length), { ids: sp.ids, label: sp.label })); }
         else if (sp.from === 'next') { if (nx) { out.push(mkStage('read', sp.n, { lv: nx })); } }
         else { out.push(mkStage('read', sp.n, { lv: lv })); }
       } else if (sp.k === 'boss') {
         var bk = typeof sp.boss === 'string' ? sp.boss : sp.boss[lv];
         if (bk && BOSS[bk]) { out.push(mkStage('boss', 1, { boss: bk })); }
-      } else { out.push(mkStage(sp.k, sp.n)); }
+      } else { out.push(mkStage(sp.k, sp.n, { txt: sp.txt })); }
     });
     return out;
   }
   function stageText(s) {
+    if (s.txt) { return s.txt.replace('{n}', s.n); }
     if (s.k === 'tone') { return '完成一次聲調練習'; }
     if (s.k === 'read') { return s.lv ? '讀 ' + s.n + ' 篇「' + LV4_NAME[s.lv] + '」短文' : '讀 ' + s.n + ' 篇「' + s.label + '」短文'; }
     if (s.k === 'words') { return '存 ' + s.n + ' 個生字'; }
@@ -155,6 +183,14 @@
     return g;
   }
   function goalGet() { var g = lsGetJ(GOAL_KEY, null); return g && typeof g === 'object' && g.g && g.g !== 'free' && g.t0 ? goalMigrate(g) : null; }
+  /* 「自己想讀的東西」算哪些文件：魔王關的樣本文章不算；src 限制來源 */
+  function ownMatch(d, src) {
+    if (d.lib && /^x-/.test(d.lib)) { return false; }
+    if (src === 'url') { return !!d.url; }
+    if (src === 'photo') { return !!d.img; }
+    if (src === 'sub') { return !!(d.sub || d.video); }
+    return true;
+  }
   function mapHave(s, g) {
     var st = lsGetJ(STAT_KEY, {}), b = g.b || {};
     if (s.k === 'tone') { return Math.max(0, (st.tone || 0) - (b.tone || 0)); }
@@ -162,6 +198,9 @@
     if (s.k === 'words') { return cards.filter(function (c) { return c.added >= g.t0; }).length; }
     if (s.k === 'known') { return Math.max(0, knownCount() - (b.known || 0)); }
     if (s.k === 'boss') { return g.bt && g.bt[s.boss] ? 1 : 0; }
+    if (s.k === 'own') {
+      return lib.docs.filter(function (d) { return ownMatch(d, s.src) && d.opened >= g.t0; }).length;
+    }
     var seen = {};
     lib.docs.forEach(function (d) {
       if (!d.lib || !(d.opened >= g.t0)) { return; }
@@ -169,7 +208,7 @@
     });
     return Object.keys(seen).length;
   }
-  var UNIT_MIN = { tone: 8, read: 9, words: 0.8, rev: 0.3, known: 1, boss: 12 };
+  var UNIT_MIN = { tone: 8, read: 9, own: 10, words: 0.8, rev: 0.3, known: 1, boss: 12 };
   function mapEta(stg, have, mins) {
     var rem = 0, knownLeft = false;
     stg.forEach(function (s, i) { var left = Math.max(0, s.n - (have ? have[i] : 0)); if (s.k === 'known' && left > 0) { knownLeft = true; } rem += left * UNIT_MIN[s.k]; });
@@ -243,6 +282,7 @@
       showTab('cards'); cardTab = 'tone'; tq = null; renderCards(); return;
     }
     if (s.k === 'rev' || s.k === 'known') { showTab('cards'); return; }
+    if (s.k === 'own') { showTab('home'); try { $('homeMsg').textContent = s.hint || ''; } catch (err) {} return; }
     if (s.k === 'read' && s.ids) {
       var nx = s.ids.filter(function (id) { var d = rdDocOf(id); return !(d && d.opened >= m.g.t0); })[0] || s.ids[0];
       showTab('home'); mapOpenText(nx); return;
@@ -330,6 +370,26 @@
     if (!rdItems) { rdLoad().then(function () { if (curTab === 'map') { renderMapTab(); } }, function () {}); }
     return wrap;
   }
+  /* 「自己想讀的東西」那一關的三個入口：匯入、貼上、讀物庫 */
+  function mapOwnBtns(s) {
+    var row = el('div', 'mapown');
+    var b1 = el('button', 'mapgo', s.src === 'sub' ? '匯入字幕檔或影片' : (s.src === 'photo' ? '匯入照片' : '匯入檔案或照片')); b1.type = 'button';
+    b1.addEventListener('click', function () { showTab('home'); try { $('anyfile').click(); } catch (err) {} });
+    row.appendChild(b1);
+    if (s.src !== 'photo' && s.src !== 'sub') {
+      var b2 = el('button', 'mapgo', s.src === 'url' ? '貼上網址' : '貼上文字或網址'); b2.type = 'button';
+      b2.addEventListener('click', function () {
+        showTab('home');
+        try { if (s.src === 'url') { $('urlInput').focus(); } else { if ($('pastebox').hidden) { $('openPaste').click(); } setTimeout(function () { try { $('input').focus(); } catch (err) {} }, 50); } } catch (err) {}
+      });
+      row.appendChild(b2);
+    }
+    if (s.src === 'any') {
+      var b3 = el('button', 'mapgo', '從讀物庫挑一篇'); b3.type = 'button'; b3.addEventListener('click', function () { openReaderAt(lv4()); });
+      row.appendChild(b3);
+    }
+    return row;
+  }
   function mapSection(m) {
     var sec = el('section', 'mapsec');
     var hd = el('div', 'maphd'); hd.appendChild(el('h2', 'maph', '我的地圖'));
@@ -358,7 +418,10 @@
         var have = Math.min(m.have[i], s.n), bar = el('span', 'lqbar'), f = el('span'); f.style.width = Math.round(have / s.n * 100) + '%'; bar.appendChild(f);
         var pr = el('span', 'lqprow'); pr.appendChild(bar); pr.appendChild(el('span', 'lqnum', have + ' / ' + s.n)); tx.appendChild(pr);
         if (s.k === 'read' && s.ids) { tx.appendChild(mapChips(s, m)); }
-        var go = el('button', 'mapgo', s.k === 'read' && s.ids ? '讀下一篇' : '去做這一關'); go.type = 'button'; go.addEventListener('click', function () { mapGo(s, m); }); tx.appendChild(go);
+        if (s.k === 'own') { tx.appendChild(el('span', 'maphint', s.hint || '')); tx.appendChild(mapOwnBtns(s)); }
+        else {
+          var go = el('button', 'mapgo', s.k === 'read' && s.ids ? '讀下一篇' : '去做這一關'); go.type = 'button'; go.addEventListener('click', function () { mapGo(s, m); }); tx.appendChild(go);
+        }
       }
       if (s.k === 'boss' && !isDone) { tx.appendChild(bossBox(m, s, isCur)); }
       li.appendChild(tx);
@@ -604,8 +667,12 @@
     if (wz.quiz) { wizQuizRender(body); $('wzDots').hidden = true; return; }
     dots.hidden = false;
     if (key === 'hi') {
-      var hh = wzHead('歡迎來到 ไทย Reader！', 'ไทย Reader 是一款讓讀泰文變輕鬆的 App：點一個詞就看到意思，再存成生字卡慢慢記。接下來問你幾個小問題，幫你排一條適合你的學習路線，大約 1 分鐘。選項之後都能在設定修改。');
-      body.appendChild(hh);
+      body.appendChild(wzHead('歡迎來到 ไทย Reader！'));
+      var bl = el('ul', 'wzbul');
+      ['ไทย Reader 是讓讀泰文變輕鬆的 App', '點一個泰文詞，馬上看到意思和拼音', '存成生字卡，每天複習幾張就記得住', '接下來問你幾個小問題，大約一分鐘，幫你排一條學習路線', '選項之後都能在設定裡改'].forEach(function (t) {
+        var li = el('li', '', t); bl.appendChild(li);
+      });
+      body.appendChild(bl);
     } else if (key === 'how') {
       body.appendChild(wzHead('這樣學泰文'));
       var ul = el('ol', 'wzhow');
@@ -680,7 +747,7 @@
   }
   function wizQuizRender(body) {
     var Q = wz.quiz;
-    $('wBack').hidden = false; $('wSkip').hidden = true; $('wNext').hidden = true; $('wDone').hidden = true;
+    $('wBack').hidden = false; $('wSkip').hidden = false; $('wNext').hidden = true; $('wDone').hidden = true;
     if (Q.done) {
       var lv = lqLevel(Q);
       body.appendChild(wzHead('小測驗結果', '看起來你大概是這個程度。這只是粗略的參考，覺得不準就自己選。'));

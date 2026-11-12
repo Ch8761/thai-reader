@@ -11,11 +11,14 @@ ANCHOR = '  function armed(btn, label, confirmLabel, action) {\n'
 m = re.search(r'(<div id="welcome" class="modal" role="dialog" aria-modal="true" aria-labelledby="h-welcome" hidden>\n    <div class="mcard">)(.*?)(\n    </div>\n  </div>\n</main>)', s, re.S)
 assert m
 NEW_W = """
-      <div class="wzdots" id="wzDots"></div>
+      <div class="wzhead">
+        <span></span>
+        <div class="wzdots" id="wzDots"></div>
+        <button type="button" class="linkbtn wzskip" id="wSkip" aria-label="略過，之後再設定">略過</button>
+      </div>
       <div id="wzBody"></div>
       <div class="wzfoot">
         <button type="button" class="linkbtn" id="wBack" hidden>‹ 上一步</button>
-        <button type="button" class="linkbtn" id="wSkip">略過，之後再設定</button>
         <span class="wzgrow"></span>
         <button type="button" class="primary" id="wNext">開始</button>
         <button type="button" class="primary" id="wDone" hidden>開始使用</button>
@@ -33,7 +36,7 @@ rep("'thai-rr-show', 'thai-rev-cap', 'thai-lookups',", "'thai-rr-show', 'thai-re
 # 4. 說明
 rep("      { t: '學習關卡', s: '主頁最上面的卡片：這一關的目標和進度', img: '',",
     "      { t: '目標與專屬地圖', s: '第一次打開會問幾個小問題，排出你的闖關地圖', img: '',\n"
-    "        d: ['第一次從主畫面打開，會一頁一個問題：怎麼學、你的程度、想達成的目標、每天花多少時間，最後產生專屬地圖。每一頁都有預選的推薦項，可以直接按「繼續」，也可以「略過」之後再設定。', '不確定程度，可以做 1 分鐘的小測驗，只是粗略參考，最後還是你自己選。', '地圖是一串關卡：讀短文、存生字、複習、記熟生字，最後是「魔王關」：一篇像菜單、社群貼文或新聞短訊的真實樣本文章。', '魔王關要認得率到 85% 才解鎖，讀完答 3 題，答對 2 題就過關。認得率還不夠時，會列出該記熟的詞，可以一次存成生字卡。', '地圖會算出預計到達的日期，但沒有截止日：落後了日期會自己往後延，不會「失敗」。', '想改目標或每天時間：點主頁的關卡卡片打開「學習紀錄」，按「我的地圖」旁的「修改目標」。以前就在用的人，會在那裡看到「設定你的目標」。'],\n"
+    "        d: ['第一次從主畫面打開，會一頁一個問題：怎麼學、你的程度、想達成的目標、每天花多少時間，最後產生專屬地圖。每一頁都有預選的推薦項，可以直接按「繼續」，也可以「略過」之後再設定。', '不確定程度，可以做 1 分鐘的小測驗，只是粗略參考，最後還是你自己選。', '地圖是一串關卡：讀你自己想讀的東西、存生字、複習、記熟生字；有些目標最後是「魔王關」：一篇像菜單、社群貼文或新聞短訊的真實樣本文章。', '魔王關要認得率到 85% 才解鎖，讀完答 3 題，答對 2 題就過關。認得率還不夠時，會列出該記熟的詞，可以一次存成生字卡。', '地圖會算出預計到達的日期，但沒有截止日：落後了日期會自己往後延，不會「失敗」。', '想改目標或每天時間：點主頁的關卡卡片打開「學習紀錄」，按「我的地圖」旁的「修改目標」。以前就在用的人，會在那裡看到「設定你的目標」。'],\n"
     "        tip: '改程度（設定 → 閱讀與查詞）後，地圖會自動換成新程度的關卡，已經過的關會保留。' },\n"
     "      { t: '學習關卡', s: '主頁最上面的卡片：這一關的目標和進度', img: '',")
 rep("'過關時回到主頁會跳出慶祝；某一天沒學、這週沒達標，都不會扣任何東西，也不會把已經過的關收回。'],",

@@ -16,10 +16,12 @@
   function addTextFile(f) {
     var rd = new FileReader();
     rd.onload = function () {
-      var s = String(rd.result || '');
-      if (/\.(srt|vtt)$/i.test(f.name)) { s = addSubText(s); }
+      var s = String(rd.result || ''), isSub = /\.(srt|vtt)$/i.test(f.name);
+      if (isSub) { s = addSubText(s); }
       $('input').value = s; $('textTitle').value = f.name.replace(/\.[^.]+$/, '').slice(0, 60);
+      var n0 = lib.docs.length;
       libAddText();
+      if (isSub && lib.docs.length > n0) { var nd = lib.docs[lib.docs.length - 1]; if (nd && nd.type === 'text') { nd.sub = true; saveLib(); } }
     };
     rd.onerror = function () { $('homeMsg').textContent = '讀不到「' + f.name + '」。'; };
     rd.readAsText(f);
