@@ -93,7 +93,7 @@
   }
   var _openDoc2 = openDoc;
   openDoc = function (id) { var r = _openDoc2.apply(this, arguments); rrTry(id, 0); return r; };
-  function rrRefresh() { if (curTab === 'doc' && state.src) { rrShow(state.src.id); } else { rrBox.hidden = true; } }
+  function rrRefresh() { if (!rrBox) { return; } if (curTab === 'doc' && state.src) { rrShow(state.src.id); } else { rrBox.hidden = true; } }
 
   /* --- 每天複習上限：只先排出一部分到期的卡，其餘明天再出現 --- */
   function revCap() { var v = 20; try { var s = localStorage.getItem(RR_CAP_KEY); if (s !== null) { v = parseInt(s, 10); } } catch (err) {} return isNaN(v) ? 20 : v; }

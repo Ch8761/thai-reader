@@ -206,7 +206,7 @@ fs.mkdirSync(OUT, { recursive: true });
   await p.click('#cardbody button:has-text("開始測驗")'); await p.waitForTimeout(300);
   await p.click('#cardbody .qopt >> nth=0'); await p.waitForTimeout(300);
   await shot('cards-quiz', '#cardbody', ['#cardbody .qopts'], { pad: 12, maxH: 640 });
-  await p.click('#cardTabs button:has-text("全部")'); await p.waitForTimeout(300);
+  await p.click('#cardTabs button:has-text("清單")'); await p.waitForTimeout(300);
   await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(900);
   await shot('cards-detail', '.cdsheet', ['.cdsheet .cdlife'], { pad: 0, maxH: 1000 });
   await p.click('#cdClose'); await p.waitForTimeout(200);

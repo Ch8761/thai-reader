@@ -14,7 +14,7 @@ const { chromium, devices } = require('playwright');
   await p.click('#pop .x');
   await p.click('.tabbar [data-tab="cards"]'); await p.click('#cardTabs button:has-text("聲調")'); await p.waitForTimeout(500);
   await p.screenshot({ path: 'tests/np-tone.png', fullPage: true });
-  await p.click('#cardTabs button:has-text("全部")'); await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(1500);
+  await p.click('#cardTabs button:has-text("清單")'); await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(1500);
   await p.evaluate(() => { const c = document.querySelector('#cdBody .credit.one'); if (c) c.scrollIntoView(); });
   await p.screenshot({ path: 'tests/np-detail.png' });
   console.log('credit', await p.evaluate(() => { const c = document.querySelector('#cdBody .credit.one'); return c ? c.offsetHeight + ' ' + c.textContent : 'none'; }));

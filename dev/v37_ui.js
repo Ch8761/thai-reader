@@ -10,19 +10,69 @@
   function L2(zh, en) { return UI_LANG === 'en' ? en : zh; }
   function lv4() { return level === 'all' ? 'd' : (LV4.indexOf(level) >= 0 ? level : 'b'); }
 
-  /* ---- 目標選項（依程度）：每級第一個是「升到下一級」，其餘是內容型 ---- */
-  var GOAL_OPTS = { a: ['up', 'menu', 'free'], b: ['up', 'menu', 'social', 'free'], c: ['up', 'social', 'news', 'menu', 'free'], d: ['news', 'social', 'menu', 'free'] };
-  var GOAL_INFO = {
-    menu: ['看懂菜單', '點餐、看招牌，不用一直查字典'],
-    social: ['看懂社群貼文', 'IG、Facebook 上的貼文和留言'],
-    news: ['看懂新聞短訊', '天氣、社會、生活的快訊'],
-    free: ['先不設目標', '自己隨意讀。之後想設定，到學習紀錄就能補上']
+  /* ---- 目標清單（資料）：每個程度有自己的一組目標；每個目標 = 一串關卡的設計圖 ----
+     levels：每個程度能選的目標，第一個是推薦的；「先不設目標」每一級都會自動加在最後。
+     goals：目標本身（title、sub 是顯示的文字；legacy 是舊版 1.28 的目標代號，升級時用來對應）。
+     stages 的每一項：
+       { k:'read', n:3, from:'level' }                 讀 n 篇「自己程度」的短文
+       { k:'read', n:3, from:'next' }                  讀 n 篇「下一級」的短文（高級沒有下一級，會自動略過）
+       { k:'read', n:2, ids:['a4','a2'], label:'飲食' } 讀 n 篇指定短文中的任何幾篇（讀物庫的編號）
+       { k:'words'|'rev'|'known', n:… }                存生字／複習／記熟
+       { k:'tone', n:1, lv:['a'] }                      聲調練習；lv 限制只在這些程度出現
+       { k:'boss', boss:'menu' }                        魔王關；boss 也可以依程度挑：{ a:'menu', b:'social' }，挑不到就不出現 */
+  var GOAL_CATALOG = {
+    v: 1,
+    levels: {
+      a: ['a_base', 'a_eat', 'up'],
+      b: ['up', 'b_travel', 'b_life'],
+      c: ['up', 'c_news', 'c_social'],
+      d: ['d_news', 'd_formal', 'd_lit']
+    },
+    goals: {
+      up: { title: '升到下一級', sub: '一步一步練到下一級', stages: [
+        { k: 'tone', n: 1, lv: ['a'] }, { k: 'read', n: 3, from: 'level' }, { k: 'words', n: 10 }, { k: 'rev', n: 30 },
+        { k: 'read', n: 3, from: 'next' }, { k: 'known', n: 6 }, { k: 'boss', boss: { a: 'menu', b: 'social', c: 'notice' } }] },
+      a_base: { title: '打好基礎：聲調與日常短句', sub: '先把聲調和最常用的字練熟，再讀簡單短文', stages: [
+        { k: 'tone', n: 1 }, { k: 'read', n: 3, ids: ['a1', 'a3', 'a5', 'a6'], label: '日常' }, { k: 'words', n: 15 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }] },
+      a_eat: { title: '看懂菜單和點餐', sub: '點餐、看招牌，不用一直查字典', legacy: ['menu'], stages: [
+        { k: 'tone', n: 1 }, { k: 'read', n: 2, ids: ['a4', 'a2', 'b2'], label: '飲食與市場' }, { k: 'words', n: 10 }, { k: 'rev', n: 30 }, { k: 'known', n: 6 }, { k: 'boss', boss: 'menu' }] },
+      b_travel: { title: '自己去泰國玩', sub: '搭車、問路、安排行程、看旅遊貼文', legacy: ['social'], stages: [
+        { k: 'read', n: 2, ids: ['b1', 'b3', 'b7'], label: '旅行' }, { k: 'words', n: 12 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }, { k: 'boss', boss: 'social' }] },
+      b_life: { title: '看懂生活資訊', sub: '網購、看醫生、室友訊息和公告', stages: [
+        { k: 'read', n: 2, ids: ['b5', 'b6', 'b8'], label: '生活' }, { k: 'words', n: 12 }, { k: 'rev', n: 40 }, { k: 'known', n: 8 }, { k: 'boss', boss: 'notice' }] },
+      c_news: { title: '看懂新聞', sub: '空汙、環保這類新聞風格的短文', legacy: ['news'], stages: [
+        { k: 'read', n: 2, ids: ['c1', 'c6', 'd5'], label: '新聞與環境' }, { k: 'words', n: 15 }, { k: 'rev', n: 50 }, { k: 'known', n: 10 }, { k: 'boss', boss: 'news' }] },
+      c_social: { title: '看懂社群和口語', sub: 'IG 貼文、Podcast、網路用語', legacy: ['social'], stages: [
+        { k: 'read', n: 2, ids: ['c2', 'c3', 'c4'], label: '社群與口語' }, { k: 'words', n: 15 }, { k: 'rev', n: 50 }, { k: 'known', n: 10 }, { k: 'boss', boss: 'social' }] },
+      d_news: { title: '讀懂新聞評論與科普', sub: '社會、經濟、科學這類長一點的文章', legacy: ['news'], stages: [
+        { k: 'read', n: 2, ids: ['d1', 'd2', 'd5'], label: '評論與科普' }, { k: 'words', n: 20 }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }, { k: 'boss', boss: 'news' }] },
+      d_formal: { title: '看懂公告與公文', sub: '大學公告、政府通知這類正式書面', stages: [
+        { k: 'read', n: 2, ids: ['d6', 'd1'], label: '正式書面' }, { k: 'words', n: 20 }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }, { k: 'boss', boss: 'notice' }] },
+      d_lit: { title: '讀文學與歷史短文', sub: '小說片段和歷史故事，詞彙更豐富', stages: [
+        { k: 'read', n: 2, ids: ['d3', 'd4'], label: '文學與歷史' }, { k: 'words', n: 20 }, { k: 'rev', n: 60 }, { k: 'known', n: 12 }] },
+      free: { title: '先不設目標', sub: '自己隨意讀。之後想設定，到「地圖」分頁就能補上', stages: [] }
+    }
   };
+  var GOALDONE_KEY = 'thai-goal-done';
+  /* 判斷邏輯：依程度給出可選的目標。
+     1) 程度先整理成 a/b/c/d（「全部」當高級、不認得的當初級）；
+     2) 取這一級的目標清單，「先不設目標」固定放最後；
+     3) 以前完成過的目標排到後面、標「完成過」，推薦的是第一個還沒完成的；
+     4) 高級沒有「升到下一級」（資料裡就沒放）。 */
+  function goalsFor(lv) {
+    lv = LV4.indexOf(lv) >= 0 ? lv : 'b';
+    var hist = lsGetJ(GOALDONE_KEY, {}), ids = (GOAL_CATALOG.levels[lv] || GOAL_CATALOG.levels.b).slice();
+    var fresh = ids.filter(function (id) { return !hist[id + ':' + lv]; }), old = ids.filter(function (id) { return hist[id + ':' + lv]; });
+    var out = fresh.concat(old).map(function (id, i) { return { id: id, goal: GOAL_CATALOG.goals[id], rec: i === 0 && !!fresh.length, finished: !!hist[id + ':' + lv] }; });
+    out.push({ id: 'free', goal: GOAL_CATALOG.goals.free, rec: false, finished: false });
+    return out;
+  }
+  function goalIds(lv) { return goalsFor(lv).map(function (o) { return o.id; }); }
   function goalTitle(g, lv) {
     if (g === 'up') { var nx = LV4[LV4.indexOf(lv) + 1]; return '升到「' + LV4_NAME[nx || 'd'] + '」'; }
-    return (GOAL_INFO[g] || GOAL_INFO.free)[0];
+    return (GOAL_CATALOG.goals[g] || GOAL_CATALOG.goals.free).title;
   }
-  function goalSub(g) { return g === 'up' ? '一步一步練到下一級' : (GOAL_INFO[g] || GOAL_INFO.free)[1]; }
+  function goalSub(g) { return (GOAL_CATALOG.goals[g] || GOAL_CATALOG.goals.free).sub; }
 
   /* ---- 魔王關：三篇樣本文章（菜單、社群貼文、新聞短訊），讀完答 3 題 ---- */
   var BOSS_THR = 85;
@@ -68,35 +118,43 @@
       ]
     }
   };
-  var UP_BOSS = { a: 'social', b: 'menu', c: 'notice' };
   var BOSS_BY_ID = {}; Object.keys(BOSS).forEach(function (k) { BOSS[k].key = k; BOSS_BY_ID[BOSS[k].id] = BOSS[k]; });
-  var TOPIC_IDS = { menu: ['a4', 'b2', 'c5'], social: ['c2'], news: ['c1'] };
 
-  /* ---- 依「目標＋程度」排出關卡 ---- */
+  /* ---- 依「目標＋程度」排出關卡：照目標的設計圖（stages）一項一項轉成關卡 ---- */
   function mkStage(k, n, o) { var s = { k: k, n: n }; if (o) { Object.keys(o).forEach(function (x) { s[x] = o[x]; }); } s.key = k + ':' + n + ':' + (s.lv || (s.ids ? s.ids.join('+') : '') || s.boss || ''); return s; }
   function mapStages(g, lv) {
-    var i = LV4.indexOf(lv), nx = LV4[i + 1], out = [], kind = g.g;
-    if (kind === 'up' && !nx) { kind = 'news'; }
-    if (lv === 'a') { out.push(mkStage('tone', 1)); }
-    out.push(mkStage('read', 3, { lv: lv }));
-    out.push(mkStage('words', 10));
-    out.push(mkStage('rev', 30));
-    if (kind === 'up') { out.push(mkStage('read', 3, { lv: nx })); }
-    else { out.push(mkStage('read', 1, { ids: TOPIC_IDS[kind] || TOPIC_IDS.news, topic: kind })); }
-    out.push(mkStage('known', 6));
-    out.push(mkStage('boss', 1, { boss: kind === 'up' ? UP_BOSS[lv] : kind }));
+    var goal = GOAL_CATALOG.goals[g.g] || GOAL_CATALOG.goals.up, nx = LV4[LV4.indexOf(lv) + 1], out = [];
+    goal.stages.forEach(function (sp) {
+      if (sp.lv && sp.lv.indexOf(lv) < 0) { return; }
+      if (sp.k === 'read') {
+        if (sp.ids) { out.push(mkStage('read', Math.min(sp.n, sp.ids.length), { ids: sp.ids, label: sp.label })); }
+        else if (sp.from === 'next') { if (nx) { out.push(mkStage('read', sp.n, { lv: nx })); } }
+        else { out.push(mkStage('read', sp.n, { lv: lv })); }
+      } else if (sp.k === 'boss') {
+        var bk = typeof sp.boss === 'string' ? sp.boss : sp.boss[lv];
+        if (bk && BOSS[bk]) { out.push(mkStage('boss', 1, { boss: bk })); }
+      } else { out.push(mkStage(sp.k, sp.n)); }
+    });
     return out;
   }
   function stageText(s) {
     if (s.k === 'tone') { return '完成一次聲調練習'; }
-    if (s.k === 'read') { return s.lv ? '讀 ' + s.n + ' 篇「' + LV4_NAME[s.lv] + '」短文' : '讀 ' + s.n + ' 篇' + { menu: '飲食', social: '社群', news: '新聞' }[s.topic] + '短文'; }
+    if (s.k === 'read') { return s.lv ? '讀 ' + s.n + ' 篇「' + LV4_NAME[s.lv] + '」短文' : '讀 ' + s.n + ' 篇「' + s.label + '」短文'; }
     if (s.k === 'words') { return '存 ' + s.n + ' 個生字'; }
     if (s.k === 'rev') { return '複習 ' + s.n + ' 次'; }
     if (s.k === 'known') { return '記熟 ' + s.n + ' 個生字'; }
     return '魔王關：' + BOSS[s.boss].title;
   }
   function knownCount() { return cards.filter(function (c) { srsInit(c); return c.fs && c.fs.s >= 21; }).length; }
-  function goalGet() { var g = lsGetJ(GOAL_KEY, null); return g && typeof g === 'object' && g.g && g.g !== 'free' && g.t0 ? g : null; }
+  /* 1.28 的目標代號（menu／social／news）換成 1.29 每個程度各自的目標；對不上的就用那一級的第一個 */
+  function goalMigrate(g) {
+    if (GOAL_CATALOG.goals[g.g]) { return g; }
+    var lv = LV4.indexOf(g.l0) >= 0 ? g.l0 : lv4(), ids = GOAL_CATALOG.levels[lv] || GOAL_CATALOG.levels.b, hit = ids[0];
+    ids.forEach(function (id) { var gl = GOAL_CATALOG.goals[id]; if (hit === ids[0] && gl.legacy && gl.legacy.indexOf(g.g) >= 0) { hit = id; } });
+    g.g = hit; g.l0 = lv; lsSetJ(GOAL_KEY, g);
+    return g;
+  }
+  function goalGet() { var g = lsGetJ(GOAL_KEY, null); return g && typeof g === 'object' && g.g && g.g !== 'free' && g.t0 ? goalMigrate(g) : null; }
   function mapHave(s, g) {
     var st = lsGetJ(STAT_KEY, {}), b = g.b || {};
     if (s.k === 'tone') { return Math.max(0, (st.tone || 0) - (b.tone || 0)); }
@@ -137,7 +195,7 @@
   }
   function mapState() {
     var g = goalGet(); if (!g) { return null; }
-    var lv = lv4(), stg = mapStages(g, lv), p = g.p || {}, changed = false;
+    var lv = LV4.indexOf(g.l0) >= 0 ? g.l0 : lv4(), stg = mapStages(g, lv), p = g.p || {}, changed = false;
     var have = stg.map(function (s) { return mapHave(s, g); });
     var done = stg.map(function (s, i) {
       var ok = have[i] >= s.n;
@@ -155,15 +213,18 @@
     }
     m.nDone = done.filter(Boolean).length;
     m.eta = mapEta(stg, have, g.m || 10);
+    m.stale = lv !== lv4();
+    if (m.cur >= stg.length) { var hist = lsGetJ(GOALDONE_KEY, {}); if (!hist[g.g + ':' + lv]) { hist[g.g + ':' + lv] = Date.now(); lsSetJ(GOALDONE_KEY, hist); } }
     return m;
   }
   function goalSave(goal, mins) {
-    var st = lsGetJ(STAT_KEY, {}), prev = lsGetJ(GOAL_KEY, null) || {};
+    var st = lsGetJ(STAT_KEY, {}), prev = lsGetJ(GOAL_KEY, null) || {}, pm = prev.t0 ? mapState() : null;
+    var keep = prev.t0 && !(pm && pm.cur >= pm.stg.length);
     var o = {
       g: goal, m: mins, l0: lv4(),
-      t0: prev.t0 || Date.now(),
-      b: prev.t0 ? (prev.b || {}) : { rev: st.rev || 0, tone: st.tone || 0, known: knownCount() },
-      p: prev.p || {}, bt: prev.bt || {}
+      t0: keep ? prev.t0 : Date.now(),
+      b: keep ? (prev.b || {}) : { rev: st.rev || 0, tone: st.tone || 0, known: knownCount() },
+      p: keep ? (prev.p || {}) : {}, bt: keep ? (prev.bt || {}) : {}
     };
     lsSetJ(GOAL_KEY, o);
     if (goal === 'free') { lsSetJ(GOALSKIP_KEY, 1); }
@@ -182,7 +243,11 @@
       showTab('cards'); cardTab = 'tone'; tq = null; renderCards(); return;
     }
     if (s.k === 'rev' || s.k === 'known') { showTab('cards'); return; }
-    if (s.k === 'read') { showTab('home'); var pick = s.ids && (s.ids.filter(function (x) { return x.charAt(0) === lv4(); })[0] || s.ids[0]); openReaderAt(s.lv || (pick && pick.charAt(0)) || lv4()); return; }
+    if (s.k === 'read' && s.ids) {
+      var nx = s.ids.filter(function (id) { var d = rdDocOf(id); return !(d && d.opened >= m.g.t0); })[0] || s.ids[0];
+      showTab('home'); mapOpenText(nx); return;
+    }
+    if (s.k === 'read') { showTab('home'); openReaderAt(s.lv || lv4()); return; }
     if (s.k === 'words') { showTab('home'); openReaderAt(lv4()); return; }
     if (s.k === 'boss') { bossRead(s.boss); }
   }
@@ -200,49 +265,42 @@
     return n;
   }
 
-  /* ---- 主頁那一條關卡細條：有目標就顯示地圖的這一關 ---- */
-  var _questCard0 = questCard;
+  /* ---- 主頁上的一小列：有目標才出現，點下去到「地圖」分頁 ---- */
+  var ICON_MAP = '<svg class="hri" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5v13L9 17l6 3 6-2.5v-13L15 7z"/><path d="M9 4v13M15 7v13"/></svg>';
+  function mapProgress(m) {
+    var all = m.cur >= m.stg.length, s = m.stg[Math.min(m.cur, m.stg.length - 1)], have, tot, label;
+    if (all) { return { all: true, s: s, have: 1, tot: 1, label: '' }; }
+    if (s.k === 'boss') {
+      if (!m.allPrev) { have = 0; tot = 1; label = '先完成前面的關卡'; }
+      else if (!m.unlocked) { have = m.rate || 0; tot = BOSS_THR; label = '認得率 ' + have + '% / ' + BOSS_THR + '%'; }
+      else { have = 1; tot = 1; label = '已解鎖，去挑戰'; }
+    } else { have = Math.min(m.have[m.cur], s.n); tot = s.n; label = have + ' / ' + tot; }
+    return { all: false, s: s, have: have, tot: tot, label: label };
+  }
   function mapCard(m) {
-    var b = el('button', 'lqcard mapcard'); b.type = 'button'; b.id = 'questCard';
-    var all = m.cur >= m.stg.length, s = m.stg[Math.min(m.cur, m.stg.length - 1)];
-    var badge = el('span', 'lqbadge' + (all ? ' lqall' : ''));
-    badge.appendChild(el('span', 'lqbn', String(all ? m.stg.length : m.cur + 1)));
-    b.appendChild(badge);
-    var tx = el('span', 'lqtx'), line = el('span', 'lqline');
-    line.appendChild(el('span', 'lqk', all ? '地圖完成' : '第 ' + (m.cur + 1) + ' 關'));
-    line.appendChild(el('span', 'lqv', all ? '目標達成：' + goalTitle(m.g.g, m.lv) : stageText(s)));
-    tx.appendChild(line);
-    if (!all) {
-      var have, tot, label;
-      if (s.k === 'boss') {
-        if (!m.allPrev) { have = 0; tot = 1; label = '先完成前面的關卡'; }
-        else if (!m.unlocked) { have = m.rate || 0; tot = BOSS_THR; label = '認得率 ' + have + '% / ' + BOSS_THR + '%'; }
-        else { have = 1; tot = 1; label = '已解鎖，去挑戰'; }
-      } else { have = Math.min(m.have[m.cur], s.n); tot = s.n; label = have + ' / ' + tot; }
-      var bar = el('span', 'lqbar'), fill = el('span'); fill.style.width = Math.round(Math.min(have, tot) / tot * 100) + '%'; bar.appendChild(fill);
-      bar.setAttribute('role', 'progressbar'); bar.setAttribute('aria-valuemin', '0'); bar.setAttribute('aria-valuemax', String(tot)); bar.setAttribute('aria-valuenow', String(Math.min(have, tot))); bar.setAttribute('aria-label', '這一關的進度');
-      var row = el('span', 'lqprow'); row.appendChild(bar); row.appendChild(el('span', 'lqnum', label)); tx.appendChild(row);
-    }
-    b.appendChild(tx);
-    var wg = weekGoal(), wk = learnStats().week, fl = el('span', 'lqweek' + (wk >= wg ? ' on' : ''));
-    fl.appendChild(el('span', 'lqwk', '本週'));
-    var wn = el('span', 'lqwn'); wn.appendChild(el('b', '', String(wk))); wn.appendChild(document.createTextNode('/' + wg)); fl.appendChild(wn);
-    fl.setAttribute('aria-label', '本週學習 ' + wk + ' 天，目標 ' + wg + ' 天');
-    b.appendChild(fl);
-    b.addEventListener('click', openQuest);
+    var pr = mapProgress(m), b = el('button', 'mapbar'); b.type = 'button'; b.id = 'questCard';
+    b.setAttribute('aria-label', pr.all ? '我的地圖：目標達成' : '我的地圖：第 ' + (m.cur + 1) + ' 關，' + stageText(pr.s));
+    var ic = el('span', 'mbic'); ic.innerHTML = ICON_MAP; b.appendChild(ic);
+    b.appendChild(el('span', 'mbk', pr.all ? '地圖完成' : '第 ' + (m.cur + 1) + ' 關'));
+    b.appendChild(el('span', 'mbv', pr.all ? '目標達成：' + goalTitle(m.g.g, m.lv) : stageText(pr.s)));
+    if (!pr.all) { b.appendChild(el('span', 'mbn', pr.label)); }
+    b.insertAdjacentHTML('beforeend', ICON_CHEV);
+    var bar = el('span', 'mbbar'), fill = el('span'); fill.style.width = Math.round(Math.min(pr.have, pr.tot) / pr.tot * 100) + '%'; bar.appendChild(fill); b.appendChild(bar);
+    b.addEventListener('click', function () { showTab('map'); });
     return b;
   }
-  questCard = function (qs) { var m = mapState(); return m ? mapCard(m) : _questCard0(qs); };
+  /* 沒設目標就什麼都不放；30 關的「一般關卡」已經拿掉，功能由「我的地圖」取代 */
+  questCard = function () { var m = mapState(); mapDot(); return m ? mapCard(m) : document.createDocumentFragment(); };
+  openQuest = function () { showTab('map'); };
   /* 過一關的小慶祝 */
-  var _questCelebrate0 = questCelebrate;
-  questCelebrate = function (qs) {
-    var m = mapState(); if (!m) { return _questCelebrate0(qs); }
+  questCelebrate = function () {
+    var m = mapState(); if (!m) { return; }
     var seen = lsGetJ(MAPSEEN_KEY, null);
     if (seen == null) { lsSetJ(MAPSEEN_KEY, m.nDone); return; }
     try { if (localStorage.getItem('thai-quest-quiet') === '1') { return; } } catch (err) {}
     if (m.nDone <= seen) { if (m.nDone < seen) { lsSetJ(MAPSEEN_KEY, m.nDone); } return; }
-    var hv = $('view-home'), cv = $('view-cards');
-    if (!((hv && !hv.hidden) || (cv && !cv.hidden)) || overlayOpen()) { return; }
+    var hv = $('view-home'), cv = $('view-cards'), mv = $('view-map');
+    if (!((hv && !hv.hidden) || (cv && !cv.hidden) || (mv && !mv.hidden)) || overlayOpen()) { return; }
     lsSetJ(MAPSEEN_KEY, m.nDone);
     var n = m.nDone - seen, last = Math.min(m.nDone, m.stg.length) - 1;
     $('qcT').textContent = n > 1 ? '過了 ' + n + ' 關！' : '過關！';
@@ -252,14 +310,43 @@
     setTimeout(function () { $('qcOk').focus(); }, 30);
   };
 
-  /* ---- 學習紀錄裡的「我的地圖」 ---- */
+  /* ====== 「地圖」分頁：我的地圖＋學習紀錄 ====== */
+  var MAPVISIT_KEY = 'thai-map-visit';
+  /* 指定短文的名字（讀物庫載入後才有；還沒載入先放編號，載入完整頁重畫一次） */
+  function mapTextOf(id) { var r = null; (rdItems || []).forEach(function (x) { if (x.id === id) { r = x; } }); return r; }
+  function mapOpenText(id) {
+    rdLoad().then(function (items) { var it = null; items.forEach(function (x) { if (x.id === id) { it = x; } }); if (it) { rdOpenItem(it); } else { openReaderAt(id.charAt(0)); } }, function () { openReaderAt(id.charAt(0)); });
+  }
+  function mapChips(s, m) {
+    var wrap = el('div', 'mapchips');
+    s.ids.forEach(function (id) {
+      var d = rdDocOf(id), seen = !!(d && d.opened >= m.g.t0), it = mapTextOf(id);
+      var c = el('button', 'mapchip' + (seen ? ' on' : '')); c.type = 'button';
+      if (seen) { c.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9"/></svg>'); }
+      var t = el('span', '', it ? (UI_LANG === 'en' ? it.th : it.zh) : id.toUpperCase()); if (it && UI_LANG === 'en') { t.lang = 'th'; } c.appendChild(t);
+      c.addEventListener('click', function () { mapOpenText(id); });
+      wrap.appendChild(c);
+    });
+    if (!rdItems) { rdLoad().then(function () { if (curTab === 'map') { renderMapTab(); } }, function () {}); }
+    return wrap;
+  }
   function mapSection(m) {
     var sec = el('section', 'mapsec');
-    var hd = el('div', 'maphd'); hd.appendChild(el('h3', 'maph', '我的地圖'));
-    var ch = el('button', 'linkbtn', '修改目標'); ch.type = 'button'; ch.addEventListener('click', function () { closeQuest(); wizOpen('goal'); }); hd.appendChild(ch);
+    var hd = el('div', 'maphd'); hd.appendChild(el('h2', 'maph', '我的地圖'));
+    var ch = el('button', 'linkbtn', '修改目標'); ch.type = 'button'; ch.addEventListener('click', function () { wizOpen('goal'); }); hd.appendChild(ch);
     sec.appendChild(hd);
     sec.appendChild(el('p', 'mapsub', goalTitle(m.g.g, m.lv) + '・每天 ' + m.g.m + ' 分鐘'));
+    var fin = m.cur >= m.stg.length;
     sec.appendChild(el('p', 'mapeta', etaText(m.eta)));
+    if (fin) {
+      var fb = el('div', 'mapnote2'); fb.appendChild(el('p', '', '這張地圖走完了，恭喜！要不要挑下一個目標？'));
+      var nb = el('button', 'primary', '挑下一個目標'); nb.type = 'button'; nb.addEventListener('click', function () { wizOpen('goal'); }); fb.appendChild(nb); sec.appendChild(fb);
+    } else if (m.stale) {
+      var sb = el('div', 'mapnote2'), sp = el('p', '');
+      [['你的程度已經改成「'], [LV4_NAME[lv4()]], ['」，這張地圖還是照「'], [LV4_NAME[m.lv]], ['」排的。要換一個適合的目標嗎？']].forEach(function (x) { sp.appendChild(el('span', '', x[0])); });
+      sb.appendChild(sp);
+      var sb2 = el('button', '', '換目標'); sb2.type = 'button'; sb2.addEventListener('click', function () { wizOpen('goal'); }); sb.appendChild(sb2); sec.appendChild(sb);
+    }
     var ol = el('ol', 'lqpath');
     m.stg.forEach(function (s, i) {
       var isDone = m.done[i], isCur = i === m.cur, li = el('li', isDone ? 'lqdone' : (isCur ? 'lqcur' : 'lqlock'));
@@ -270,7 +357,8 @@
       if (isCur && s.k !== 'boss') {
         var have = Math.min(m.have[i], s.n), bar = el('span', 'lqbar'), f = el('span'); f.style.width = Math.round(have / s.n * 100) + '%'; bar.appendChild(f);
         var pr = el('span', 'lqprow'); pr.appendChild(bar); pr.appendChild(el('span', 'lqnum', have + ' / ' + s.n)); tx.appendChild(pr);
-        var go = el('button', 'mapgo', '去做這一關'); go.type = 'button'; go.addEventListener('click', function () { mapGo(s, m); }); tx.appendChild(go);
+        if (s.k === 'read' && s.ids) { tx.appendChild(mapChips(s, m)); }
+        var go = el('button', 'mapgo', s.k === 'read' && s.ids ? '讀下一篇' : '去做這一關'); go.type = 'button'; go.addEventListener('click', function () { mapGo(s, m); }); tx.appendChild(go);
       }
       if (s.k === 'boss' && !isDone) { tx.appendChild(bossBox(m, s, isCur)); }
       li.appendChild(tx);
@@ -280,6 +368,50 @@
     sec.appendChild(ol);
     return sec;
   }
+  function mapEmpty() {
+    var sec = el('section', 'mapsec mapnew');
+    sec.appendChild(el('h2', 'maph', '我的地圖'));
+    sec.appendChild(el('p', 'mapsub', '選一個目標和每天的時間，產生專屬的學習地圖，還會算出大概哪天能到達。'));
+    var row = el('div', 'btns');
+    var go = el('button', 'primary', '設定我的目標'); go.type = 'button'; go.addEventListener('click', function () { wizOpen('goal'); });
+    row.appendChild(go); sec.appendChild(row);
+    return sec;
+  }
+  function recordSection() {
+    var st = learnStats(), sec = el('section', 'mapsec recsec');
+    sec.appendChild(el('h2', 'maph', '學習紀錄'));
+    var grid = el('div', 'lqstats');
+    [[st.read, '篇文章', '讀過'], [st.words, '個生字', '記熟 ' + st.known + ' 個'], [st.week, '/ ' + weekGoal() + ' 天', '本週學習・連續 ' + st.streak + ' 天'], [st.rev, '次', '複習']].forEach(function (x) {
+      var t = el('div', 'lqstat'); var n = el('div', 'lqsn'); n.appendChild(el('b', '', String(x[0]))); n.appendChild(el('span', '', x[1])); t.appendChild(n); t.appendChild(el('div', 'lqsl', x[2])); grid.appendChild(t);
+    });
+    sec.appendChild(grid);
+    var wkTile = grid.children[2];
+    var gr = el('div', 'lqgoal'); gr.appendChild(el('span', 'lqgl', '每週目標'));
+    var gs = el('div', 'seg'); gs.setAttribute('role', 'radiogroup'); gs.setAttribute('aria-label', '每週目標'); gr.appendChild(gs);
+    function goalSeg() {
+      segButtons(gs, [['3', '3 天'], ['4', '4 天'], ['5', '5 天'], ['6', '6 天']], String(weekGoal()), function (v) {
+        lsSetJ(WEEKGOAL_KEY, +v); goalSeg();
+        var u = wkTile && wkTile.querySelector('.lqsn span'); if (u) { u.textContent = '/ ' + weekGoal() + ' 天'; }
+        renderToday();
+      });
+    }
+    goalSeg(); sec.appendChild(gr);
+    sec.appendChild(el('p', 'lqsfoot', '讀文章：打開過的不同文件。記熟：複習後預估能記住 21 天以上的生字。學習天數：那天有打開文件或複習就算，每週一重新計算本週。'));
+    return sec;
+  }
+  function mapDot() {
+    var d = $('mapDot'); if (!d) { return; }
+    d.hidden = !(goalGet() && !lsGetJ(MAPVISIT_KEY, null));
+  }
+  function renderMapTab() {
+    var host = $('mapBody'); if (!host) { return; }
+    host.replaceChildren();
+    var m = mapState();
+    host.appendChild(m ? mapSection(m) : mapEmpty());
+    host.appendChild(recordSection());
+    lsSetJ(MAPVISIT_KEY, 1); mapDot();
+  }
+  setTimeout(mapDot, 0);
   function bossBox(m, s, isCur) {
     var b = BOSS[s.boss], box = el('div', 'mapboss');
     if (!m.allPrev) {
@@ -298,43 +430,17 @@
         add.disabled = true; add.textContent = n ? '已存 ' + n + ' 個' : '都已經在生字卡裡了';
         renderToday();
       });
-      var rd = el('button', '', '先看看這篇'); rd.type = 'button'; rd.addEventListener('click', function () { closeQuest(); bossRead(s.boss); });
+      var rd = el('button', '', '先看看這篇'); rd.type = 'button'; rd.addEventListener('click', function () { bossRead(s.boss); });
       row.appendChild(add); row.appendChild(rd); box.appendChild(row);
       return box;
     }
     box.appendChild(el('p', 'mapnote', '已解鎖！先讀完這篇，再答 3 題，答對 2 題就過關。'));
     var row2 = el('div', 'btns mapbtns');
-    var r1 = el('button', '', '讀這篇'); r1.type = 'button'; r1.addEventListener('click', function () { closeQuest(); bossRead(s.boss); });
-    var r2 = el('button', 'primary', '答 3 題'); r2.type = 'button'; r2.addEventListener('click', function () { closeQuest(); bossQuiz(s.boss); });
+    var r1 = el('button', '', '讀這篇'); r1.type = 'button'; r1.addEventListener('click', function () { bossRead(s.boss); });
+    var r2 = el('button', 'primary', '答 3 題'); r2.type = 'button'; r2.addEventListener('click', function () { bossQuiz(s.boss); });
     row2.appendChild(r1); row2.appendChild(r2); box.appendChild(row2);
     return box;
   }
-  var _openQuest0 = openQuest;
-  openQuest = function () {
-    _openQuest0.apply(this, arguments);
-    var body = $('qsBody'), m = mapState(), first = body.querySelector('.lqchap'), sec = null;
-    if (m) { sec = mapSection(m); }
-    else if (!lsGetJ(GOALSKIP_KEY, null)) {
-      sec = el('section', 'mapsec mapnew');
-      sec.appendChild(el('h3', 'maph', '設定你的目標'));
-      sec.appendChild(el('p', 'mapsub', '選一個目標和每天的時間，產生專屬的學習地圖，還會算出大概哪天能到達。'));
-      var row = el('div', 'btns');
-      var go = el('button', 'primary', '開始設定'); go.type = 'button'; go.addEventListener('click', function () { closeQuest(); wizOpen('goal'); });
-      var no = el('button', '', '不用了'); no.type = 'button'; no.addEventListener('click', function () { lsSetJ(GOALSKIP_KEY, 1); sec.remove(); });
-      row.appendChild(go); row.appendChild(no); sec.appendChild(row);
-    } else {
-      sec = el('section', 'mapsec');
-      var b1 = el('button', 'linkbtn', '設定我的目標'); b1.type = 'button'; b1.addEventListener('click', function () { closeQuest(); wizOpen('goal'); }); sec.appendChild(b1);
-    }
-    if (first) { body.insertBefore(sec, first); } else { body.appendChild(sec); }
-    if (m) {
-      /* 原本 30 關的章節收進「一般關卡」 */
-      var det = el('details', 'lqmore'); det.appendChild(el('summary', '', '一般關卡（30 關）'));
-      Array.prototype.slice.call(body.querySelectorAll('.lqchap, .lqsfoot')).forEach(function (x) { det.appendChild(x); });
-      body.appendChild(det);
-      var cur = body.querySelector('.mapsec .lqcur'); if (cur) { setTimeout(function () { cur.scrollIntoView({ block: 'center' }); }, 60); }
-    }
-  };
 
   /* ---- 魔王關答題視窗 ---- */
   var bq = document.createElement('div'); bq.id = 'bossQ'; bq.className = 'modal'; bq.hidden = true;
@@ -347,7 +453,7 @@
     bqs = { b: b, k: 0, right: 0, picked: -1, opts: b.qs.map(function (q) { return shuffle(q.o.map(function (x, i) { return i; })); }) };
     bq.hidden = false; bqRender();
   }
-  function bqClose() { bq.hidden = true; bqs = null; renderToday(true); }
+  function bqClose() { bq.hidden = true; bqs = null; renderToday(true); if (curTab === 'map') { renderMapTab(); } }
   function bqRender() {
     var body = $('bqBody'), b = bqs.b; body.replaceChildren();
     var h = el('h2', '', '魔王關：' + b.title); h.id = 'bqT'; body.appendChild(h);
@@ -358,7 +464,7 @@
       var row = el('div', 'btns');
       if (pass) {
         var g = lsGetJ(GOAL_KEY, null); if (g && (!g.bt || !g.bt[b.key])) { g.bt = g.bt || {}; g.bt[b.key] = Date.now(); lsSetJ(GOAL_KEY, g); }
-        var ok = el('button', 'primary', '回到地圖'); ok.type = 'button'; ok.addEventListener('click', function () { bq.hidden = true; bqs = null; openQuest(); }); row.appendChild(ok);
+        var ok = el('button', 'primary', '回到地圖'); ok.type = 'button'; ok.addEventListener('click', function () { bq.hidden = true; bqs = null; showTab('map'); renderMapTab(); }); row.appendChild(ok);
         var cl = el('button', '', '關閉'); cl.type = 'button'; cl.addEventListener('click', bqClose); row.appendChild(cl);
       } else {
         var rd = el('button', '', '再讀一次原文'); rd.type = 'button'; rd.addEventListener('click', function () { var key2 = b.key; bqClose(); bossRead(key2); });
@@ -404,6 +510,7 @@
   bsBar.innerHTML = '<div class="rrrow"><span class="bossbtx" id="bossTx"></span><button type="button" class="bossgo" id="bossGo"></button></div>';
   $('docSrc').parentNode.insertBefore(bsBar, $('docSrc'));
   function bossBarShow() {
+    if (!bsBar) { return; }
     bsBar.hidden = true;
     var d = state.src && lib.docs.filter(function (x) { return x.id === state.src.id; })[0], b = d && d.lib && BOSS_BY_ID[d.lib];
     if (!b || curTab !== 'doc') { return; }
@@ -455,15 +562,16 @@
     return head.concat(wz.goal === 'free' ? ['done'] : ['time', 'map']);
   }
   function wizSetLevel(v) {
+    var changed = v !== lv4();
     level = v; try { localStorage.setItem('thai-level', v); } catch (err) {}
     rrMemo = {}; rrMemoN = 0;
     try { renderSettings(); renderReport(); } catch (err) {}
-    var opts = GOAL_OPTS[lv4()]; if (opts.indexOf(wz.goal) < 0) { wz.goal = opts[0]; }
+    var opts = goalIds(lv4()); if (changed || opts.indexOf(wz.goal) < 0) { wz.goal = opts[0]; }
   }
   function wizOpen(from) {
     var g0 = lsGetJ(GOAL_KEY, null) || {};
     wz = { from: from === 'goal' ? 'goal' : 'new', i: 0, quiz: null, goal: g0.g || null, mins: g0.m || 10 };
-    if (!wz.goal || GOAL_OPTS[lv4()].indexOf(wz.goal) < 0) { wz.goal = GOAL_OPTS[lv4()][0]; }
+    if (!wz.goal || goalIds(lv4()).indexOf(wz.goal) < 0) { wz.goal = goalIds(lv4())[0]; }
     welcomeFrom = document.activeElement;
     wizRender();
     $('welcome').hidden = false;
@@ -519,8 +627,8 @@
     } else if (key === 'goal') {
       body.appendChild(wzHead('你想達成什麼？', '選一個目標，地圖會朝它排關卡。'));
       var g2 = el('div', 'wzlist'); g2.setAttribute('role', 'radiogroup'); g2.setAttribute('aria-label', '你想達成什麼？');
-      GOAL_OPTS[lv].forEach(function (g, i) {
-        g2.appendChild(wzOpt(goalTitle(g, lv), goalSub(g), wz.goal === g, i === 0 ? '推薦' : '', function () { wz.goal = g; wizRender(); }));
+      goalsFor(lv).forEach(function (o) {
+        g2.appendChild(wzOpt(goalTitle(o.id, lv), goalSub(o.id), wz.goal === o.id, o.rec ? '推薦' : (o.finished ? '完成過' : ''), function () { wz.goal = o.id; wizRender(); }));
       });
       body.appendChild(g2);
     } else if (key === 'time') {
@@ -542,7 +650,7 @@
       body.appendChild(el('p', 'mapeta wzeta', etaText(eta)));
       body.appendChild(el('p', 'wnote', '沒有截止日。落後了，日期會自己往後延，不會「失敗」。'));
     } else if (key === 'done') {
-      body.appendChild(wzHead('都設定好了', '你可以直接開始讀。想要一條有關卡的學習路線，隨時到「學習紀錄」設定目標。'));
+      body.appendChild(wzHead('都設定好了', '你可以直接開始讀。想要一條有關卡的學習路線，隨時到「地圖」分頁設定目標。'));
     }
     $('wBack').hidden = wz.i === 0;
     $('wSkip').hidden = last;
@@ -605,13 +713,15 @@
   $('wDone').addEventListener('click', function () {
     if (!wz) { return; }
     var steps = wizSteps(), key = steps[wz.i];
-    if (wz.goal === 'free' || key === 'done') { goalSave('free', wz.mins); wz = null; return; }
+    if (wz.goal === 'free' || key === 'done') { var fe = wz.from === 'goal'; goalSave('free', wz.mins); wz = null; if (fe) { showTab('map'); renderMapTab(); } return; }
     var firstTone = lv4() === 'a' && localStorage.getItem(TONE_KEY) === null;
     if (firstTone) { toneMode = true; try { localStorage.setItem(TONE_KEY, '1'); } catch (err) {} loadTones().catch(function () {}); if (typeof renderToneSetting === 'function') { renderToneSetting(); } }
+    var fromEdit = wz.from === 'goal';
     goalSave(wz.goal, wz.mins);
     var m = mapState(); wz = null;
     renderHome();
-    if (m) { setTimeout(function () { mapGo(m.stg[Math.min(m.cur, m.stg.length - 1)], m); }, 120); }
+    if (fromEdit) { showTab('map'); renderMapTab(); }
+    else if (m) { setTimeout(function () { mapGo(m.stg[Math.min(m.cur, m.stg.length - 1)], m); }, 120); }
   });
   renderWelcome = function () { if (wz && !$('welcome').hidden) { wizRender(); } };
   openWelcome = function () { wizOpen('new'); };

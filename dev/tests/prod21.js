@@ -8,7 +8,7 @@ const { chromium } = require('playwright');
   const has = await p.locator('#pop .cardbtn').count();
   if (has) { await p.click('#pop .cardbtn'); }
   console.log('badge', await p.evaluate(() => document.getElementById('cardBadge').textContent + ' hidden=' + document.getElementById('cardBadge').hidden));
-  await p.click('.tabbar [data-tab="cards"]'); await p.click('#cardTabs button:has-text("全部")'); await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(1500);
+  await p.click('.tabbar [data-tab="cards"]'); await p.click('#cardTabs button:has-text("清單")'); await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(1500);
   console.log(await p.evaluate(() => document.querySelector('.cdlife').innerText.replace(/\s+/g, ' ').slice(0, 160)));
   console.log('ERRORS:', errs.join(' | ') || 'none'); await b.close();
 })();

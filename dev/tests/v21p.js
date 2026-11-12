@@ -47,7 +47,7 @@ const { chromium } = require('playwright');
   await p.click('#cardbody .grade.g2'); console.log('after grade', await E("cards.map(c => c.w + ':' + c.ivl + ':' + c.box).join(' ')"));
   await p.click('#cardTabs button:has-text("測驗")'); await p.click('#cardbody button:has-text("開始測驗")');
   await p.click('#cardbody .qopt >> nth=0'); await p.screenshot({ path: 'tests/zp-quiz.png' });
-  await p.click('#cardTabs button:has-text("全部")'); await p.waitForTimeout(100);
+  await p.click('#cardTabs button:has-text("清單")'); await p.waitForTimeout(100);
   await p.screenshot({ path: 'tests/zp-list.png' });
   await p.click('#cardbody .crow >> nth=0'); await p.waitForTimeout(800);
   console.log('detail', await p.evaluate(() => document.getElementById('cdBody').innerText.replace(/\s+/g, ' ').slice(0, 300)));

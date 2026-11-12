@@ -34,7 +34,7 @@ rep("'<div class=\"rdtabs\" role=\"tablist\" aria-label=\"程度\" id=\"rdTabs\"
 rep("    var ul = $('rdList'); ul.innerHTML = '';", "    var ul = $('rdList'); ul.innerHTML = ''; $('rdNote').hidden = !rrOn();")
 EN['標籤「約 82%」是認得率：依你選的程度、查過的字和記熟的生字，推算你大概認得這篇多少比例的詞。'] = 'The “About 82%” tag is your recognition rate: an estimate of how many of this text’s words you probably know, from your chosen level, the words you looked up and your mastered flashcards.'
 # 5. 切到文件頁時更新
-rep("curTab = t; docSel = null; docMoveOpen = false; docSelRefresh();", "curTab = t; docSel = null; docMoveOpen = false; docSelRefresh(); if (typeof rrRefresh === 'function') { rrRefresh(); }")
+rep("curTab = t; docSel = null; docMoveOpen = false; docSelRefresh();", "curTab = t; docSel = null; docMoveOpen = false; docSelRefresh(); try { rrRefresh(); } catch (err) {}")
 # 6. 設定列
 rep('    <div class="setrow">\n      <div class="setlabel">辨識中文<',
     '    <div class="setrow">\n      <div class="setlabel">顯示認得率<span class="sethelp">在讀物庫清單和打開文章時，顯示「約 82%」這類標籤：依你選的程度、查過的字和記熟的生字，推算你大概認得多少比例的詞。只是估計。</span></div>\n      <div class="seg" role="radiogroup" aria-label="顯示認得率" id="rrShowGroup"></div>\n    </div>\n'
