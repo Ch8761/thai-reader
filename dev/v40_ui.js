@@ -1,4 +1,4 @@
-  /* ====== 1.31：「成就」分頁（我的任務、學習紀錄、成長圖）＋小火苗 ======
+  /* ====== 1.31：「成就」分頁（我的任務、學習紀錄＋成長）＋小火苗 ======
      原則：不考試、不扣分。用「投入的時間」和「做了的事」給鼓勵（參考 Leafy 的做法）。
      每日任務不顯示在畫面上，達成時只冒出一朵小火苗（一個小圖示動畫，沒有文字）；任務完成、記熟里程碑、連續學習、達成週目標時，火苗大一點。 */
   var TASK_KEY = 'thai-tasks', FLAME_KEY = 'thai-flame', HIST_KEY = 'thai-hist', RWD_KEY = 'thai-rwd';
@@ -35,6 +35,7 @@
   ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'].forEach(function (ev) { document.addEventListener(ev, function () { act.last = Date.now(); }, { passive: true, capture: true }); });
   function timeTick() {
     if (document.visibilityState !== 'visible' || Date.now() - act.last > 60000) { return; }
+    visit(); pagesTick();
     act.acc += 5;
     if (act.acc >= 120) { flushTime(); }
     var m = Math.floor(todaySecs() / 60); if (m !== act.lastMin) { act.lastMin = m; if (m >= 10) { flameSoon(); } }
@@ -161,8 +162,8 @@
   var ICON_CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.2 4.2L18.5 7.5"/></svg>';
   function taskRow(t, host, rerender) {
     var li = el('li', 'achtask' + (t.done ? ' done' : '')), multi = t.n > 1;
-    var b = el('button', 'achchk' + (t.done ? ' on' : '')); b.type = 'button';
-    if (t.done) { b.innerHTML = ICON_CHECK; } else if (multi) { b.textContent = '+1'; }
+    var b = el('button', 'achchk' + (t.done ? ' on' : '') + (multi && !t.done ? ' plus' : '')); b.type = 'button';
+    var cc = el('span', 'achc'); if (t.done) { cc.innerHTML = ICON_CHECK; } else if (multi) { cc.textContent = '+1'; } b.appendChild(cc);
     b.setAttribute('aria-label', t.done ? L2('取消完成：', 'Undo: ') + t.t : (multi ? L2('做了一次：', 'Did it once: ') + t.t : L2('完成：', 'Done: ') + t.t));
     b.addEventListener('click', function () { taskBump(t.id); rerender(); });
     li.appendChild(b);
@@ -203,16 +204,15 @@
     li.appendChild(form);
     setTimeout(function () { try { inp.focus(); inp.select(); } catch (err) {} }, 30);
   }
-  var achOpen = { done: false, more: false };
+  var achOpen = { more: false, mins: false };
   function taskSection() {
     var sec = el('section', 'mapsec achsec');
     var hd = el('div', 'maphd'); hd.appendChild(el('h2', 'maph', '我的任務')); sec.appendChild(hd);
-    sec.appendChild(el('p', 'mapsub', '小小的就好，沒有期限。做完打勾，會冒出一朵小火苗鼓勵你。'));
-    function rerender() { var nx = taskSection(); sec.replaceWith(nx); }
+    var rerender = renderAchTab;
     var form = el('form', 'achadd');
     var inp = el('input', 'achin'); inp.type = 'text'; inp.maxLength = 80; inp.placeholder = '例如：讀一篇文章'; inp.setAttribute('aria-label', '新增任務'); form.appendChild(inp);
     var add = el('button', 'primary', '加入'); add.type = 'submit'; form.appendChild(add);
-    form.addEventListener('submit', function (e) { e.preventDefault(); if (!taskAdd(inp.value, 1)) { inp.focus(); return; } var nx = taskSection(); sec.replaceWith(nx); try { nx.querySelector('.achin').focus(); } catch (err) {} });
+    form.addEventListener('submit', function (e) { e.preventDefault(); if (!taskAdd(inp.value, 1)) { inp.focus(); return; } renderAchTab(); try { $('achBody').querySelector('.achin').focus(); } catch (err) {} });
     sec.appendChild(form);
     var o = tasksGet(), pend = o.list.filter(function (t) { return !t.done; }), fin = o.list.filter(function (t) { return t.done; }).sort(function (a, b) { return b.done - a.done; });
     if (pend.length) {
@@ -243,22 +243,22 @@
         sec.appendChild(chips);
       }
     }
-    if (fin.length) {
-      var d2 = el('details', 'achmore'); d2.open = achOpen.done; d2.addEventListener('toggle', function () { achOpen.done = d2.open; });
-      d2.appendChild(el('summary', '', '完成的任務（' + fin.length + '）'));
-      var ul3 = el('ul', 'achlist'); fin.forEach(function (t) { ul3.appendChild(taskRow(t, ul3, rerender)); }); d2.appendChild(ul3); sec.appendChild(d2);
-    }
     return sec;
   }
 
-  /* ====== 學習紀錄：進度條（往下一個里程碑）====== */
+  /* ====== 學習紀錄（合併「我的成長」）：連續天數＋火苗、三個區塊（點開看細節）、每週目標、月曆 ====== */
   var REC = [
-    ['read', '讀過的文章', '篇', [1, 3, 5, 10, 20, 40, 80, 150, 300, 600]],
-    ['words', '存下的生字', '個', [5, 10, 20, 50, 100, 200, 400, 800, 1500, 3000]],
-    ['known', '記熟的生字', '個', [3, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]],
-    ['rev', '複習次數', '次', [20, 50, 100, 300, 1000, 3000, 10000]],
-    ['days', '累計學習天數', '天', [3, 7, 14, 30, 60, 100, 200, 365]]
+    ['read', [1, 3, 5, 10, 20, 40, 80, 150, 300, 600]],
+    ['words', [5, 10, 20, 50, 100, 200, 400, 800, 1500, 3000]],
+    ['known', [3, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]],
+    ['rev', [20, 50, 100, 300, 1000, 3000, 10000]]
   ];
+  function recNext(key, have) {
+    var ms = [1]; REC.forEach(function (r) { if (r[0] === key) { ms = r[1]; } });
+    var next = ms[ms.length - 1];
+    for (var i = 0; i < ms.length; i++) { if (have < ms[i]) { next = ms[i]; break; } }
+    return next;
+  }
   function recBar(label, have, next) {
     var row = el('div', 'achrec'), top = el('div', 'achrt');
     top.appendChild(el('span', 'achrl', label));
@@ -269,31 +269,50 @@
     var pr = el('span', 'lqprow'); pr.appendChild(bar); pr.appendChild(el('span', 'lqnum', Math.min(have, next) + ' / ' + next)); row.appendChild(pr);
     return row;
   }
-  function recordSection() {
-    var st = learnStats(), sec = el('section', 'mapsec achsec recsec');
-    sec.appendChild(el('h2', 'maph', '學習紀錄'));
-    REC.forEach(function (r) {
-      var have = st[r[0]] || 0, ms = r[3], next = ms[ms.length - 1];
-      for (var i = 0; i < ms.length; i++) { if (have < ms[i]) { next = ms[i]; break; } }
-      sec.appendChild(recBar(r[1], have, next));
-    });
-    var wg = weekGoal();
-    sec.appendChild(recBar('本週學習', st.week, wg));
-    if (st.streak > 1) { sec.appendChild(el('p', 'achstreak', '連續 ' + st.streak + ' 天')); }
-    var gr = el('div', 'lqgoal'); gr.appendChild(el('span', 'lqgl', '每週目標'));
-    var gs = el('div', 'seg'); gs.setAttribute('role', 'radiogroup'); gs.setAttribute('aria-label', '每週目標'); gr.appendChild(gs);
-    function goalSeg() {
-      segButtons(gs, [['3', '3 天'], ['4', '4 天'], ['5', '5 天'], ['6', '6 天']], String(weekGoal()), function (v) {
-        lsSetJ(WEEKGOAL_KEY, +v); var nx = recordSection(); sec.replaceWith(nx); try { renderToday(); } catch (err) {}
-      });
-    }
-    goalSeg(); sec.appendChild(gr);
-    sec.appendChild(el('p', 'lqsfoot', '讀文章：打開過的不同文件。記熟：複習後預估能記住 21 天以上的生字。學習天數：那天有打開文件或複習就算，每週一重新計算本週。'));
-    return sec;
+
+  /* ---- 進入應用程式的日子：每天打開（或回到）App 就記一天 ---- */
+  var visitKey = '';
+  function visit() { var k = dayKey(); if (k !== visitKey) { visitKey = k; try { markDay(); } catch (err) {} } }
+  visit();
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') { visit(); } });
+
+  /* ---- 讀過的頁數：PDF／照片，畫面停在某一頁（每 5 秒抽樣一次）就算讀過那一頁 ---- */
+  function pagesTick() {
+    try {
+      var vd = $('view-doc');
+      if (!pdf || !pdf.id || !vd || vd.hidden || typeof currentPageIndex !== 'function') { return; }
+      var i = currentPageIndex(); if (!(i >= 0)) { return; }
+      var h = histGet(); if (!h.p) { h.p = {}; }
+      var a = h.p[pdf.id] || (h.p[pdf.id] = []);
+      if (a.indexOf(i) >= 0) { return; }
+      a.push(i);
+      var ks = Object.keys(h.p); if (ks.length > 300) { ks.slice(0, ks.length - 300).forEach(function (k) { delete h.p[k]; }); }
+      histSave(h);
+    } catch (err) {}
+  }
+  function pagesRead() { var h = histGet(), n = 0; Object.keys(h.p || {}).forEach(function (k) { n += (h.p[k] || []).length; }); return n; }
+  function wordsRead() { var h = histGet(), n = 0; Object.keys(h.c || {}).forEach(function (k) { n += h.c[k] || 0; }); return n; }
+
+  /* ---- 連續天數的火苗圖案：連續越久，火苗越旺 ---- */
+  function streakTier(n) { return n >= 100 ? 6 : n >= 30 ? 5 : n >= 14 ? 4 : n >= 7 ? 3 : n >= 3 ? 2 : 1; }
+  var FL_OUT = 'M12 2c.6 3.2-1.8 5-3.2 7C7.4 11 6.5 12.6 6.5 14.6A5.5 5.5 0 0 0 12 20.5a5.5 5.5 0 0 0 5.5-5.6c0-2.5-1.3-4.2-2.5-5.5.1 1.5-.4 2.7-1.5 3.2.3-3.2-.5-6.8-1.5-10.6z';
+  var FL_IN = 'M12 20.5a3.3 3.3 0 0 1-3.3-3.4c0-1.6 1-2.6 1.8-3.6.6-.8 1-1.6 1-2.6 1.4 1.3 3.8 2.8 3.8 6a3.3 3.3 0 0 1-3.3 3.6z';
+  var FL_COL = [null, ['#ffb347', '#ffe08a'], ['#ff8a1f', '#ffd23f'], ['#ff6a1a', '#ffc83d'], ['#ff3d2e', '#ffb020'], ['#2f7dff', '#9be0ff'], ['#e0243a', '#ffd23f']];
+  function spark(x, y, r, c) { return '<path d="M' + x + ' ' + (y - r) + 'Q' + x + ' ' + y + ' ' + (x + r) + ' ' + y + 'Q' + x + ' ' + y + ' ' + x + ' ' + (y + r) + 'Q' + x + ' ' + y + ' ' + (x - r) + ' ' + y + 'Q' + x + ' ' + y + ' ' + x + ' ' + (y - r) + 'Z" fill="' + c + '"/>'; }
+  function streakIcon(n) {
+    var t = streakTier(n), c = FL_COL[t];
+    var s = '<svg viewBox="0 0 24 24" aria-hidden="true" class="achfl t' + t + '">';
+    if (t >= 6) { s += '<circle cx="12" cy="13" r="10.5" fill="#ffd23f" opacity=".3"/>'; }
+    s += '<path d="' + FL_OUT + '" fill="' + c[0] + '"/><path d="' + FL_IN + '" fill="' + c[1] + '"/>';
+    if (t >= 3) { s += '<path d="M4.2 20.4a2.5 2.5 0 0 1-1.9-2.4c0-1.2.9-1.9 1.4-2.8.3.9 1 1.4 1.7 1.9a2.6 2.6 0 0 1-1.2 3.3z" fill="' + c[0] + '" opacity=".9"/>'; }
+    if (t >= 4) { s += spark(19.5, 6, 2.2, c[1]); }
+    if (t >= 5) { s += spark(4.5, 7, 1.7, c[1]); }
+    if (t >= 6) { s += spark(12, 1.6, 1.6, '#fff3b0'); }
+    return s + '</svg>';
   }
 
-  /* ====== 成長圖：記熟的生字（折線）、每天學了幾分鐘（長條）、累計讀過的字數（折線）====== */
-  var achMetric = 'k', ACH_DAYS = 30;
+  /* ---- 成長圖（區塊點開後看）：記熟的生字（折線）、讀過的字數（累計折線）、學習分鐘（長條）---- */
+  var ACH_DAYS = 30;
   function niceMax(v) { if (v <= 4) { return 4; } var p = Math.pow(10, Math.floor(Math.log(v) / Math.LN10)), f = v / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
   function histSeries(metric) {
     var h = histGet(), keys = [], t = new Date(); t.setHours(12, 0, 0, 0);
@@ -334,53 +353,164 @@
     }
     return s + '</svg>';
   }
-  function growthSection() {
-    var sec = el('section', 'mapsec achsec');
-    sec.appendChild(el('h2', 'maph', '我的成長'));
-    var tabs = el('div', 'seg achmet'); tabs.setAttribute('role', 'radiogroup'); tabs.setAttribute('aria-label', '成長圖');
-    var chartBox = el('div', 'achchart');
-    function draw() {
-      segButtons(tabs, [['k', '記熟的生字'], ['s', '學習分鐘'], ['w', '讀過的字數']], achMetric, function (v) { achMetric = v; draw(); });
-      var ser = histSeries(achMetric), vals = ser.vals, last = vals[vals.length - 1], first = null;
-      vals.forEach(function (v) { if (first == null && v != null) { first = v; } });
-      chartBox.replaceChildren();
-      var sum = el('div', 'achsum'), big = el('b', '', String(achMetric === 's' ? (Math.round((last || 0) * 10) / 10) : (last || 0))); sum.appendChild(big);
-      sum.appendChild(el('span', 'achunit', achMetric === 'k' ? '個記熟的生字' : achMetric === 's' ? '分鐘（今天）' : '個詞（累計）'));
-      chartBox.appendChild(sum);
-      var enough = achMetric === 's' ? vals.some(function (v) { return v > 0; }) : vals.filter(function (v) { return v != null; }).length >= 2;
-      if (achMetric !== 's' && last != null && first != null && last !== first) { var dl = el('div', 'achdelta'); dl.appendChild(el('span', '', '最近一個月')); dl.appendChild(el('b', '', '+' + (last - first))); chartBox.appendChild(dl); }
-      var holder = el('div', 'achplot'); holder.innerHTML = chartSvg(achMetric, ser); chartBox.appendChild(holder);
-      var lbl = achMetric === 'k' ? L2('記熟的生字：從 ' + (first == null ? 0 : first) + ' 個到 ' + (last || 0) + ' 個', 'Mastered words: from ' + (first == null ? 0 : first) + ' to ' + (last || 0)) : achMetric === 's' ? L2('每天學習分鐘', 'Minutes studied each day') : L2('累計讀過的字數：', 'Total words read: ') + (last || 0);
-      holder.setAttribute('role', 'img'); holder.setAttribute('aria-label', lbl);
-      if (!enough) { chartBox.appendChild(el('p', 'achhint', achMetric === 's' ? '學習時間會自己算：只算畫面開著、有在操作的時間。' : '再多學幾天，這裡就會畫出你的成長線。')); }
+  function growthChart(metric) {
+    var box = el('div', 'achchart');
+    var ser = histSeries(metric), vals = ser.vals, last = vals[vals.length - 1], first = null;
+    vals.forEach(function (v) { if (first == null && v != null) { first = v; } });
+    var sum = el('div', 'achsum'); sum.appendChild(el('b', '', String(metric === 's' ? (Math.round((last || 0) * 10) / 10) : (last || 0))));
+    sum.appendChild(el('span', 'achunit', metric === 'k' ? L2('個記熟的生字', 'mastered words') : metric === 's' ? L2('分鐘（今天）', 'minutes today') : L2('個詞（累計）', 'words in total')));
+    box.appendChild(sum);
+    var enough = metric === 's' ? vals.some(function (v) { return v > 0; }) : vals.filter(function (v) { return v != null; }).length >= 2;
+    if (metric !== 's' && last != null && first != null && last !== first) { var dl = el('div', 'achdelta'); dl.appendChild(el('span', '', L2('最近一個月', 'Last month'))); dl.appendChild(el('b', '', '+' + (last - first))); box.appendChild(dl); }
+    var holder = el('div', 'achplot'); holder.innerHTML = chartSvg(metric, ser); box.appendChild(holder);
+    var lbl = metric === 'k' ? L2('記熟的生字：從 ' + (first == null ? 0 : first) + ' 個到 ' + (last || 0) + ' 個', 'Mastered words: from ' + (first == null ? 0 : first) + ' to ' + (last || 0)) : metric === 's' ? L2('每天學習分鐘', 'Minutes studied each day') : L2('累計讀過的字數：', 'Total words read: ') + (last || 0);
+    holder.setAttribute('role', 'img'); holder.setAttribute('aria-label', lbl);
+    if (!enough) { box.appendChild(el('p', 'achhint', metric === 's' ? L2('學習時間會自己算：只算畫面開著、有在操作的時間。', 'Study time is counted automatically: only while the screen is open and you are active.') : L2('再多學幾天，這裡就會畫出你的成長線。', 'Study a few more days and your growth line will appear here.'))); }
+    return box;
+  }
+
+  /* ---- 三個區塊：點一下才展開細節 ---- */
+  var achBlock = '', calM = null;
+  var ICO = {
+    doc: '<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 12h5M9.5 16h5"/></svg>',
+    wd: '<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-3.6L6 21z"/><path d="M9.5 9h5"/></svg>',
+    task: '<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.5 2.5 4.5-5"/></svg>'
+  };
+  function kv(label, val) { var r = el('div', 'achkv'); r.appendChild(el('span', '', label)); r.appendChild(el('b', '', String(val))); return r; }
+  function blockPanel(kind) {
+    var st = learnStats(), p = el('div', 'achpanel'); p.id = 'achPanel'; p.setAttribute('role', 'region');
+    if (kind === 'doc') {
+      p.setAttribute('aria-label', L2('文件的紀錄', 'Document record'));
+      p.appendChild(recBar(L2('讀過的文件', 'Documents read'), st.read, recNext('read', st.read)));
+      p.appendChild(kv(L2('讀過的頁數（PDF、照片）', 'Pages read (PDF, photos)'), pagesRead()));
+      p.appendChild(kv(L2('讀過的字數（文字文件）', 'Words read (text documents)'), wordsRead()));
+      p.appendChild(growthChart('w'));
+    } else if (kind === 'wd') {
+      p.setAttribute('aria-label', L2('生字的紀錄', 'Word record'));
+      p.appendChild(recBar(L2('存下的生字卡', 'Flashcards saved'), st.words, recNext('words', st.words)));
+      p.appendChild(recBar(L2('記熟的生字', 'Words mastered'), st.known, recNext('known', st.known)));
+      p.appendChild(recBar(L2('複習次數', 'Reviews'), st.rev, recNext('rev', st.rev)));
+      p.appendChild(growthChart('k'));
+    } else {
+      p.setAttribute('aria-label', L2('任務的紀錄', 'Task record'));
+      var o = tasksGet(), fin = o.list.filter(function (t) { return t.done; }).sort(function (a, b) { return b.done - a.done; });
+      var wk = fin.filter(function (t) { return t.done >= Date.now() - 7 * 864e5; }).length;
+      p.appendChild(kv(L2('最近 7 天完成', 'Done in the last 7 days'), wk));
+      p.appendChild(kv(L2('進行中', 'In progress'), o.list.length - fin.length));
+      if (fin.length) {
+        p.appendChild(el('p', 'achsgt', L2('完成的任務（點圓圈可以取消）', 'Completed tasks (tap the circle to undo)')));
+        var ul = el('ul', 'achlist'); fin.slice(0, 30).forEach(function (t) { ul.appendChild(taskRow(t, ul, renderAchTab)); }); p.appendChild(ul);
+      } else { p.appendChild(el('p', 'achhint', L2('完成的任務會記在這裡。', 'Finished tasks will be listed here.'))); }
     }
-    draw();
-    sec.appendChild(tabs); sec.appendChild(chartBox);
-    sec.appendChild(el('p', 'lqsfoot', '只記數量，不打分數。「讀過的字數」是貼上的文字、網址、字幕這類文字文件，第一次打開時算一次；PDF 和照片不算。'));
+    return p;
+  }
+
+  /* ---- 月曆：有進入應用程式的日子畫實心圓，今天是橘色 ---- */
+  var MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function calendarBox() {
+    var box = el('div', 'achcal'), now = new Date(), set = {}, first = null;
+    daysLog().forEach(function (k) { set[k] = 1; var t = keyTime(k); if (first == null || t < first) { first = t; } });
+    var cur = now.getFullYear() * 12 + now.getMonth(), fd = first == null ? now : new Date(first), min = Math.min(cur, fd.getFullYear() * 12 + fd.getMonth());
+    if (!calM) { calM = cur; }
+    calM = Math.max(min, Math.min(cur, calM));
+    var y = Math.floor(calM / 12), m = calM % 12;
+    var hd = el('div', 'achcalhd');
+    var pv = el('button', 'achnav', '‹'); pv.type = 'button'; pv.disabled = calM <= min; pv.setAttribute('aria-label', L2('上一個月', 'Previous month'));
+    var nx = el('button', 'achnav', '›'); nx.type = 'button'; nx.disabled = calM >= cur; nx.setAttribute('aria-label', L2('下一個月', 'Next month'));
+    var ttl = el('span', 'achcalt', L2(y + ' 年 ' + (m + 1) + ' 月', MONTHS_EN[m] + ' ' + y)); ttl.setAttribute('aria-live', 'polite');
+    pv.addEventListener('click', function () { calM--; box.replaceWith(calendarBox()); });
+    nx.addEventListener('click', function () { calM++; box.replaceWith(calendarBox()); });
+    hd.appendChild(pv); hd.appendChild(ttl); hd.appendChild(nx); box.appendChild(hd);
+    var wd = el('div', 'achwdays'); wd.setAttribute('aria-hidden', 'true');
+    L2('一,二,三,四,五,六,日', 'Mon,Tue,Wed,Thu,Fri,Sat,Sun').split(',').forEach(function (x) { wd.appendChild(el('span', '', x)); });
+    box.appendChild(wd);
+    var lead = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate(), rows = Math.ceil((lead + dim) / 7), grid = el('div', 'achdays'), tk = dayKey();
+    grid.setAttribute('role', 'group'); grid.setAttribute('aria-label', L2('這個月進入應用程式的日子', 'Days you opened the app this month'));
+    for (var i = 0; i < rows * 7; i++) {
+      var d = new Date(y, m, 1 - lead + i, 12), k = dayKey(d.getTime()), inM = d.getMonth() === m, on = !!set[k], isT = k === tk;
+      var c = el('span', 'achday' + (inM ? '' : ' out') + (on ? ' on' : '') + (isT ? ' today' : ''), String(d.getDate()));
+      if (on && inM) { c.setAttribute('aria-label', L2((d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日，有進入應用程式', MONTHS_EN[d.getMonth()] + ' ' + d.getDate() + ': opened the app')); }
+      grid.appendChild(c);
+    }
+    box.appendChild(grid);
+    return box;
+  }
+
+  /* ---- 每週目標（月曆上面）：本週進度＋小小的選項 ---- */
+  function weekRow() {
+    var wg = weekGoal(), wd = weekDays(), row = el('div', 'achwk');
+    var top = el('div', 'achwt'), lt = el('span', 'achwl'); lt.appendChild(document.createTextNode(L2('本週學習 ', 'This week ') )); lt.appendChild(el('b', '', Math.min(wd, wg) + ' / ' + wg)); lt.appendChild(document.createTextNode(L2(' 天', ' days')));
+    top.appendChild(lt);
+    var lab = el('label', 'achsel'); lab.appendChild(el('span', '', L2('每週目標', 'Weekly goal')));
+    var sel = el('select', 'achsl'); sel.setAttribute('aria-label', L2('每週目標', 'Weekly goal'));
+    var opts = [3, 4, 5, 6]; if (opts.indexOf(wg) < 0) { opts.push(wg); opts.sort(); }
+    opts.forEach(function (n) { var o = el('option', '', L2(n + ' 天', n + ' days')); o.value = String(n); if (n === wg) { o.selected = true; } sel.appendChild(o); });
+    sel.addEventListener('change', function () { lsSetJ(WEEKGOAL_KEY, +sel.value); row.replaceWith(weekRow()); try { renderToday(); } catch (err) {} });
+    lab.appendChild(sel); top.appendChild(lab); row.appendChild(top);
+    var bar = el('span', 'lqbar'), f = el('span'); f.style.width = Math.round(Math.min(wd, wg) / wg * 100) + '%'; bar.appendChild(f);
+    bar.setAttribute('role', 'progressbar'); bar.setAttribute('aria-valuemin', '0'); bar.setAttribute('aria-valuemax', String(wg)); bar.setAttribute('aria-valuenow', String(Math.min(wd, wg))); bar.setAttribute('aria-label', L2('本週學習', 'This week'));
+    row.appendChild(bar);
+    return row;
+  }
+
+  function minutesBox() {
+    var d = el('details', 'achmore'); d.open = !!achOpen.mins;
+    d.appendChild(el('summary', '', L2('學習時間', 'Study time')));
+    var inner = el('div', 'achmin'); d.appendChild(inner);
+    function fill() { inner.replaceChildren(); inner.appendChild(growthChart('s')); }
+    d.addEventListener('toggle', function () { achOpen.mins = d.open; if (d.open) { fill(); } });
+    if (d.open) { fill(); }
+    return d;
+  }
+
+  function recordSection() {
+    var st = learnStats(), sec = el('section', 'mapsec achsec recsec');
+    var hd = el('div', 'achhd'); hd.appendChild(el('h2', 'maph', L2('學習紀錄', 'Learning record')));
+    var sn = streakDays(), sk = el('span', 'achstreak'), stx = L2('連續 ' + sn + ' 天', 'A ' + sn + '-day streak');
+    sk.setAttribute('aria-label', stx); sk.appendChild(el('span', 'achstx', stx)); sk.insertAdjacentHTML('beforeend', streakIcon(Math.max(sn, 1)));
+    hd.appendChild(sk); sec.appendChild(hd);
+    var o = tasksGet(), nfin = o.list.filter(function (t) { return t.done; }).length;
+    var BK = [
+      ['doc', st.read, L2('文件', 'Documents'), L2('讀過 ' + pagesRead() + ' 頁', pagesRead() + (pagesRead() === 1 ? ' page' : ' pages') + ' read')],
+      ['wd', st.words, L2('生字卡', 'Flashcards'), L2('記熟 ' + st.known + ' 個', st.known + ' mastered')],
+      ['task', nfin, L2('完成的任務', 'Tasks done'), L2('進行中 ' + (o.list.length - nfin) + ' 個', (o.list.length - nfin) + ' in progress')]
+    ];
+    var grid = el('div', 'achblocks'), btns = {};
+    function paint() {
+      var old = sec.querySelector('#achPanel'); if (old) { old.remove(); }
+      Object.keys(btns).forEach(function (k) { btns[k].setAttribute('aria-expanded', achBlock === k ? 'true' : 'false'); });
+      if (achBlock) { grid.after(blockPanel(achBlock)); }
+    }
+    BK.forEach(function (b) {
+      var btn = el('button', 'achblk'); btn.type = 'button'; btn.setAttribute('aria-controls', 'achPanel'); btn.setAttribute('data-blk', b[0]);
+      btn.insertAdjacentHTML('beforeend', ICO[b[0]]);
+      btn.appendChild(el('span', 'bn', String(b[1]))); btn.appendChild(el('span', 'bl', b[2])); btn.appendChild(el('span', 'bs', b[3]));
+      btn.addEventListener('click', function () { achBlock = achBlock === b[0] ? '' : b[0]; paint(); });
+      btns[b[0]] = btn; grid.appendChild(btn);
+    });
+    sec.appendChild(grid); paint();
+    sec.appendChild(weekRow());
+    sec.appendChild(calendarBox());
+    sec.appendChild(minutesBox());
     return sec;
   }
 
-  /* ====== 小火苗設定 ====== */
-  function rewardSection() {
-    var sec = el('section', 'mapsec achsec');
-    var det = el('details', 'achmore achset'); det.appendChild(el('summary', '', '小火苗設定'));
-    det.appendChild(el('p', 'lqsfoot', '學習時偶爾會冒出一朵小火苗鼓勵你，不用特別做什麼。'));
-    [['flame', '小火苗'], ['anim', '動畫']].forEach(function (x) {
-      var r = el('div', 'lqgoal'); r.appendChild(el('span', 'lqgl', x[1]));
-      var g = el('div', 'seg'); g.setAttribute('role', 'radiogroup'); g.setAttribute('aria-label', x[1]); r.appendChild(g);
-      function draw() { segButtons(g, [['1', '開'], ['0', '關']], rwdGet()[x[0]] ? '1' : '0', function (v) { rwdSet(x[0], v === '1'); draw(); }); }
-      draw(); det.appendChild(r);
-    });
-    det.appendChild(el('p', 'lqsfoot', '手機設定裡開了「減少動態效果」的話，動畫會自動關掉。'));
-    sec.appendChild(det);
-    return sec;
-  }
+  /* ====== 設定裡的「小火苗」：動態／靜態／關 ====== */
+  function flameMode() { var r = rwdGet(); return !r.flame ? 'off' : (r.anim ? 'on' : 'still'); }
+  function flameModeSet(v) { var o = lsGetJ(RWD_KEY, {}) || {}; o.flame = v === 'off' ? 0 : 1; o.anim = v === 'on' ? 1 : 0; lsSetJ(RWD_KEY, o); }
+  (function () {
+    var g = $('flameGroup'); if (!g) { return; }
+    function draw() { segButtons(g, [['on', L2('動態', 'Animated')], ['still', L2('靜態', 'Still')], ['off', L2('關', 'Off')]], flameMode(), function (v) { flameModeSet(v); draw(); }); }
+    draw();
+  })();
 
   /* ====== 分頁 ====== */
   function renderAchTab() {
     var host = $('achBody'); if (!host) { return; }
+    var y = window.scrollY;
     host.replaceChildren();
-    host.appendChild(taskSection()); host.appendChild(recordSection()); host.appendChild(growthSection()); host.appendChild(rewardSection());
+    host.appendChild(taskSection()); host.appendChild(recordSection());
+    try { window.scrollTo(0, y); } catch (err) {}
   }
 
   /* ---- 主頁最上面：有任務時顯示第一個，點一下到「成就」；沒有任務就什麼都不放 ---- */

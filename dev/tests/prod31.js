@@ -15,7 +15,7 @@ let fails = 0; const ok = (n, c, x) => { if (!c) fails++; console.log((c ? 'PASS
   await p.click('#wDone'); await p.waitForTimeout(1200);
   await p.keyboard.press('Escape'); await p.waitForTimeout(200);
   await p.evaluate(() => document.querySelector('.tabbar [data-tab="ach"]').click()); await p.waitForTimeout(500);
-  ok('成就分頁：我的任務、學習紀錄、成長圖', (await p.locator('#achBody > section').count()) === 4 && (await p.locator('#achBody .recsec').count()) === 1 && (await p.locator('#achBody .achchart').count()) === 1);
+  ok('成就分頁：我的任務、學習紀錄（三個區塊＋每週目標＋月曆）', (await p.locator('#achBody > section').count()) === 2 && (await p.locator('#achBody .recsec').count()) === 1 && (await p.locator('#achBody .achblk').count()) === 3 && (await p.locator('#achBody .achwk select').count()) === 1 && (await p.locator('#achBody .achday.today.on').count()) === 1);
   ok('底部 5 個分頁、沒有地圖', (await p.locator('.tabbar [data-tab]').count()) === 5 && (await p.locator('.tabbar [data-tab="map"]').count()) === 0);
   await p.fill('.achadd .achin', '正式版測試任務'); await p.click('.achadd button'); await p.waitForTimeout(200);
   await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(500);

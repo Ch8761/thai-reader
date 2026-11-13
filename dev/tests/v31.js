@@ -1,5 +1,6 @@
-// 1.31：成就頁（任務、學習紀錄進度條、成長圖、貼紙）、小火苗、舊目標轉任務、精靈只剩三步
+// 1.31：成就頁（任務；學習紀錄＋成長：連續天數火苗、三個區塊、每週目標、月曆）、小火苗（設定在「設定」頁）、舊目標轉任務、精靈只剩三步
 const { chromium } = require('playwright');
+const fs = require('fs');
 let fails = 0; const ok = (n, c, x) => { if (!c) fails++; console.log((c ? 'PASS ' : 'FAIL ') + n + (x !== undefined ? '  → ' + x : '')); };
 const ZH = /[㐀-鿿]/;
 const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยมเลย', 'เจ๋งมาก', 'ไปต่อเลย', 'สู้ ๆ', 'ทำได้แล้ว', 'ว้าว'];
@@ -35,7 +36,9 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     await goAch();
     ok(lang + ' 成就頁顯示、標題', await vis('#view-ach') && (await p.locator('#h-achv').innerText()).trim() === T('成就', 'Achievements'));
     const secs = await p.$$eval('#achBody h2', a => a.map(x => x.textContent.trim()));
-    ok(lang + ' 三個區塊：任務、學習紀錄、成長（沒有貼紙）', secs.length === 3 && (await p.locator('#achBody .achalbum, #rwdPop').count()) === 0, secs.join('|'));
+    ok(lang + ' 兩個區塊：我的任務、學習紀錄（成長併進學習紀錄，沒有貼紙）', secs.length === 2 && (await p.locator('#achBody .achalbum, #rwdPop').count()) === 0, secs.join('|'));
+    const vtxt = await p.locator('#view-ach').innerText();
+    ok(lang + ' 成就頁沒有「小火苗」的字樣、沒有小火苗設定、沒有底部說明', !/小火苗|flame/i.test(vtxt) && (await p.locator('#view-ach .achset').count()) === 0 && (await p.locator('#achBody .lqsfoot, #achBody .mapsub').count()) === 0, vtxt.slice(0, 120));
     await E("localStorage.setItem('thai-tab','map'); 1"); await p.reload(); await p.waitForTimeout(1300);
     ok(lang + ' 以前停在「地圖」分頁的人，打開會到成就頁', await vis('#view-ach'));
 
@@ -53,8 +56,10 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     await p.waitForTimeout(200);
     ok(lang + ' 自己輸入：加進任務、輸入框清空並保留焦點', (await J("tasksGet().list")).length === 2 && (await p.inputValue('.achadd .achin')) === '' && await p.evaluate(() => document.activeElement.classList.contains('achin')));
     for (let i = 0; i < 3; i++) { await p.fill('.achadd .achin', 'T' + i); await p.press('.achadd .achin', 'Enter'); await p.waitForTimeout(120); }
-    const rows = await p.locator('#achBody .achtask').count(), mre = await p.locator('.achmore:not(.achset) > summary').first().innerText();
+    const rows = await p.locator('#achBody .achtask').count(), mre = await p.locator('.achmore > summary').first().innerText();
     ok(lang + ' 5 個任務：外面只放 3 個，其餘折起來', (await p.locator('#achBody > section').first().locator('> .achlist > .achtask').count()) === 3 && /2/.test(mre), rows + ' / ' + mre);
+    const cb = await p.locator('#achBody .achchk').first().boundingBox(), cc = await p.locator('#achBody .achc').first().boundingBox();
+    ok(lang + ' 任務前面的圓圈變小（畫出來的 ≤ 34×28px，觸控範圍仍有 44px）', cc.width <= 34 && cc.height <= 28 && cb.width >= 44 && cb.height >= 44, JSON.stringify([cc.width, cc.height, cb.width]));
     await p.screenshot({ path: 'shots/v31-tasks-' + lang + '.png' });
 
     // ===== 3. 任務完成：進度條、+1、小火苗、取消 =====
@@ -74,13 +79,13 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     if (lang === 'en') { ok('en 小火苗沒有中文', !ZH.test(await p.locator('#flame').innerText()), await p.locator('#flame').innerText()); }
     await p.waitForTimeout(3300);
     ok(lang + ' 約 3 秒後自己消失', !(await vis('#flame')));
-    ok(lang + ' 完成的任務收進摺疊區', (await p.locator('.achmore:not(.achset) > summary').last().innerText()).includes('1'));
+    await p.locator('.achblk[data-blk="task"]').click(); await p.waitForTimeout(150);
+    ok(lang + ' 完成的任務在「完成的任務」區塊裡（點開才看得到）', (await p.locator('#achPanel .achtask.done').count()) === 1 && (await p.locator('.achblk[data-blk="task"] .bn').innerText()).trim() === '1');
     await p.locator('#achBody .achtask').nth(0).locator('.achchk').click(); await p.waitForTimeout(400);
     ok(lang + ' 完成第二個：又冒一朵', await vis('#flame'));
     await p.click('#flame'); await p.waitForTimeout(150);
     ok(lang + ' 點一下火苗就收起', !(await vis('#flame')));
-    await p.locator('.achmore:not(.achset) > summary').last().click(); await p.waitForTimeout(150);
-    await p.locator('.achmore .achtask.done .achchk').first().click(); await p.waitForTimeout(400);
+    await p.locator('#achPanel .achtask.done .achchk').first().click(); await p.waitForTimeout(400);
     const lst = await J("tasksGet().list");
     ok(lang + ' 已完成的任務按圓圈：取消完成（不冒火苗）', lst.filter(t => !t.done).length === 1 && !(await vis('#flame')));
     ok(lang + ' 沒有貼紙的資料', (await LS('thai-stk')) === null);
@@ -117,21 +122,74 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     await p.click('.tabbar [data-tab="home"]'); await p.waitForTimeout(300);
     ok(lang + ' 做了一次：主頁小列跟著變成 1 / 2', (await p.locator('#questCard').innerText()).includes('1 / 2'));
 
-    // ===== 6. 學習紀錄：往下一個里程碑的進度條 =====
-    await fresh({ level: 'b', ls: { 'thai-read': { a: 1, b: 2, c: 3, d: 4 }, 'thai-days': ['2026-11-11', '2026-11-12', '2026-11-13'] } });
+    // ===== 6. 學習紀錄：連續天數＋火苗、三個區塊（點開才看細節） =====
+    const dkOf = n => { const d = new Date(); d.setDate(d.getDate() - n); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
+    const dd7 = []; for (let i = 6; i >= 0; i--) { dd7.push(dkOf(i)); }
+    await fresh({ level: 'b', ls: { 'thai-read': { a: 1, b: 2, c: 3, d: 4 }, 'thai-days': dd7, 'thai-hist': { d: {}, c: { x1: 120, x2: 80 }, p: { x1: [0, 1, 2], x2: [0] } } } });
     await addCards(7, false); await addCards(3, true); await E("renderAchTab(); 1");
     await goAch();
-    const bars = await p.$$eval('.recsec .achrec', a => a.map(r => [r.querySelector('.achrl').textContent.trim(), r.querySelector('.achrv').textContent.trim(), r.querySelector('.lqnum').textContent.trim(), r.querySelector('[role=progressbar]').getAttribute('aria-valuenow')]));
-    ok(lang + ' 讀過 4 篇 → 下一個 5', bars[0][1] === '4' && bars[0][2] === '4 / 5', JSON.stringify(bars[0]));
-    ok(lang + ' 存下 10 個 → 下一個 20；記熟 3 個 → 下一個 5', bars[1][1] === '10' && bars[1][2] === '10 / 20' && bars[2][1] === '3' && bars[2][2] === '3 / 5', JSON.stringify(bars.slice(1, 3)));
-    ok(lang + ' 六條進度條（文章、生字、記熟、複習、天數、本週）', bars.length === 6, bars.map(x => x[0]).join('|'));
-    ok(lang + ' 進度條有無障礙數值', bars.every(x => x[3] !== null));
-    const w4 = await p.$eval('.recsec .achrec .lqbar > span', e => e.style.width);
-    ok(lang + ' 4/5 的進度條寬 80%', w4 === '80%', w4);
-    await p.locator('.recsec .lqgoal .seg button').nth(3).click(); await p.waitForTimeout(150);
-    ok(lang + ' 每週目標改 6 天：本週進度條跟著變', (await p.locator('.recsec .achrec').last().locator('.lqnum').innerText()).includes('/ 6'));
+    ok(lang + ' 標題「學習紀錄」右邊：連續 7 天＋火苗圖案', (await p.locator('.recsec .achhd h2').innerText()).trim() === T('學習紀錄', 'Learning record') && (await p.locator('.achstreak').innerText()).includes(T('連續 7 天', '7-day')) && (await p.locator('.achstreak .achfl.t3').count()) === 1);
+    ok(lang + ' 連續天數的火苗圖案有六個等級（1、3、7、14、30、100 天都不一樣）', (await E("[1,2,3,6,7,13,14,29,30,99,100].map(streakTier).join()")) === '1,1,2,2,3,3,4,4,5,5,6' && (await E("[1,3,7,14,30,100].map(streakIcon).filter(function(x,i,a){return a.indexOf(x)===i}).length")) === 6);
+    const blk = await p.$$eval('.achblk', a => a.map(b => [b.getAttribute('data-blk'), b.querySelector('.bn').textContent.trim(), b.querySelector('.bl').textContent.trim(), b.querySelector('.bs').textContent.trim(), b.getAttribute('aria-expanded')]));
+    ok(lang + ' 三個區塊：文件、生字卡、完成的任務', blk.map(x => x[0]).join() === 'doc,wd,task' && blk[0][2] === T('文件', 'Documents') && blk[1][2] === T('生字卡', 'Flashcards') && blk[2][2] === T('完成的任務', 'Tasks done'), JSON.stringify(blk));
+    ok(lang + ' 文件區塊：讀過 4 份文件、4 頁', blk[0][1] === '4' && blk[0][3].includes('4'), JSON.stringify(blk[0]));
+    ok(lang + ' 生字卡區塊：存了 10 張、記熟 3 個', blk[1][1] === '10' && blk[1][3].includes('3'), JSON.stringify(blk[1]));
+    ok(lang + ' 完成的任務區塊：0 個', blk[2][1] === '0');
+    ok(lang + ' 一開始都收著（沒有細節）', blk.every(x => x[4] === 'false') && (await p.locator('#achPanel').count()) === 0);
+    await p.locator('.achblk[data-blk="doc"]').click(); await p.waitForTimeout(150);
+    ok(lang + ' 點「文件」：展開細節（讀過 4 / 5、頁數 4、字數 200）', (await p.locator('#achPanel').count()) === 1 && (await p.locator('#achPanel .lqnum').first().innerText()).trim() === '4 / 5' && (await p.locator('#achPanel .achkv b').allTextContents()).join() === '4,200' && (await p.locator('.achblk[data-blk="doc"]').getAttribute('aria-expanded')) === 'true', (await p.locator('#achPanel').innerText()).replace(/\n/g, ' '));
+    ok(lang + ' 文件細節有讀過的字數成長圖', (await p.locator('#achPanel .achplot svg').count()) === 1);
+    await p.locator('.achblk[data-blk="wd"]').click(); await p.waitForTimeout(150);
+    const wb = await p.$$eval('#achPanel .achrec', a => a.map(r => r.querySelector('.lqnum').textContent.trim()));
+    ok(lang + ' 點「生字卡」：換成生字的細節（存 10 / 20、記熟 3 / 5、複習），同時只開一個', (await p.locator('#achPanel').count()) === 1 && wb[0] === '10 / 20' && wb[1] === '3 / 5' && wb.length === 3 && (await p.locator('.achblk[aria-expanded="true"]').count()) === 1, JSON.stringify(wb));
+    ok(lang + ' 生字細節：記熟的生字折線圖、進度條有無障礙數值', (await p.locator('#achPanel .achplot svg').count()) === 1 && (await p.$$eval('#achPanel [role=progressbar]', a => a.every(x => x.getAttribute('aria-valuenow') !== null))));
+    await p.locator('.achblk[data-blk="wd"]').click(); await p.waitForTimeout(150);
+    ok(lang + ' 再點一下：收起來', (await p.locator('#achPanel').count()) === 0);
+    await p.locator('.achblk[data-blk="task"]').click(); await p.waitForTimeout(150);
+    ok(lang + ' 沒有完成的任務：細節寫一句提示', (await p.locator('#achPanel .achhint').count()) === 1);
+    await p.locator('.achblk[data-blk="task"]').click();
 
-    // ===== 7. 成長圖 =====
+    // ===== 6b. 每週目標（月曆上面）、月曆 =====
+    const ys = await p.evaluate(() => { const n = new Date(); return [n.getFullYear(), n.getMonth() + 1]; });
+    const MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const ttlNow = T(ys[0] + ' 年 ' + ys[1] + ' 月', MON[ys[1] - 1] + ' ' + ys[0]);
+    const yB = async sel => (await p.locator(sel).first().boundingBox()).y;
+    ok(lang + ' 由上到下：區塊 → 每週目標 → 月曆', (await yB('.achblocks')) < (await yB('.achwk')) && (await yB('.achwk')) < (await yB('.achcal')));
+    const sel0 = await p.locator('.achsl').boundingBox();
+    ok(lang + ' 每週目標是小小的選項（下拉選單，高度 ≤ 36px），選項 3～6 天', (await p.locator('.achwk select').count()) === 1 && sel0.height <= 36 && (await p.$$eval('.achsl option', a => a.map(x => x.value).join())) === '3,4,5,6', sel0.height);
+    const wdN = await E('weekDays()'), mn = (g) => Math.min(wdN, g);
+    ok(lang + ' 預設每週目標 4 天：本週 ' + mn(4) + ' / 4，進度條寬度吻合', (await p.locator('.achwl b').innerText()).trim() === mn(4) + ' / 4' && (await p.locator('.achwk .lqbar > span').evaluate(e => e.style.width)) === Math.round(mn(4) / 4 * 100) + '%', wdN);
+    await p.selectOption('.achsl', '6'); await p.waitForTimeout(150);
+    ok(lang + ' 改成 6 天：存起來、本週 ' + mn(6) + ' / 6、進度條跟著變', (await LS('thai-week-goal')) === 6 && (await p.locator('.achwl b').innerText()).trim() === mn(6) + ' / 6' && (await p.locator('.achwk [role=progressbar]').getAttribute('aria-valuemax')) === '6');
+    await p.selectOption('.achsl', '3'); await p.waitForTimeout(120);
+    ok(lang + ' 改成 3 天：本週 ' + mn(3) + ' / 3', (await p.locator('.achwl b').innerText()).trim() === mn(3) + ' / 3');
+    ok(lang + ' 月曆標題是這個月', (await p.locator('.achcalt').innerText()).trim() === ttlNow, await p.locator('.achcalt').innerText());
+    ok(lang + ' 月曆上面一列是週一到週日', (await p.locator('.achwdays span').allTextContents()).join() === T('一,二,三,四,五,六,日', 'Mon,Tue,Wed,Thu,Fri,Sat,Sun'));
+    const keys7 = dd7.map(k => k.split('-').map(Number)), expOn = keys7.filter(k => k[0] === ys[0] && k[1] === ys[1]).length;
+    ok(lang + ' 有進入 App 的日子畫實心圓（這個月內的天數吻合）', (await p.locator('.achday.on:not(.out)').count()) === expOn && expOn >= 1, expOn);
+    const tdc = p.locator('.achday.today');
+    ok(lang + ' 今天是橘色的實心圓', (await tdc.count()) === 1 && (await tdc.getAttribute('class')).includes('on') && (await tdc.evaluate(e => getComputedStyle(e).backgroundColor)) === 'rgb(194, 98, 43)');
+    ok(lang + ' 沒進來的日子不畫圓', (await p.locator('.achday:not(.on)').count()) > 10);
+    ok(lang + ' 實心的日子有無障礙文字', (await p.locator('.achday.on:not(.out)').first().getAttribute('aria-label')).includes(T('有進入應用程式', 'opened the app')));
+    ok(lang + ' 這個月：下一個月的箭頭是灰的；沒有更早的紀錄時上一個月也是灰的', (await p.locator('.achnav').nth(1).isDisabled()) && (await p.locator('.achnav').nth(0).isDisabled() === (dd7.every(k => { const a = k.split('-').map(Number); return a[0] === ys[0] && a[1] === ys[1]; }))));
+    // 有更早的紀錄：可以往前翻
+    const oldDays = []; for (let i = 0; i < 3; i++) { const d = new Date(); d.setMonth(d.getMonth() - 2, 10 + i); oldDays.push(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()); }
+    await E("localStorage.setItem('thai-days', '" + JSON.stringify(oldDays.concat(dd7)) + "'); renderAchTab(); 1");
+    await p.locator('.achnav').nth(0).click(); await p.waitForTimeout(120);
+    const t1m = await p.locator('.achcalt').innerText();
+    ok(lang + ' 按左箭頭：翻到上個月（標題換了、右箭頭可以按）', t1m.trim() !== ttlNow && !(await p.locator('.achnav').nth(1).isDisabled()), t1m);
+    await p.locator('.achnav').nth(0).click(); await p.waitForTimeout(120);
+    ok(lang + ' 再翻到兩個月前：那幾天有實心圓；最早的月份後左箭頭灰掉', (await p.locator('.achday.on:not(.out)').count()) === 3 && (await p.locator('.achnav').nth(0).isDisabled()), await p.locator('.achcalt').innerText());
+    await p.locator('.achnav').nth(1).click(); await p.locator('.achnav').nth(1).click(); await p.waitForTimeout(120);
+    ok(lang + ' 往後翻回這個月', (await p.locator('.achcalt').innerText()).trim() === ttlNow && (await p.locator('.achnav').nth(1).isDisabled()));
+    await p.screenshot({ path: 'shots/v32-record-' + lang + '.png' });
+    // 打開 App 就算進入一天
+    await fresh({ level: 'b' });
+    ok(lang + ' 打開 App 就記一天（什麼都沒做也算）', (await E("daysLog().indexOf(dayKey())>=0")) === true && (await E("streakDays()")) === 1);
+    await goAch();
+    ok(lang + ' 只有今天：連續 1 天，火苗最小一級', (await p.locator('.achstreak .achfl.t1').count()) === 1 && (await p.locator('.achstreak').innerText()).includes(T('連續 1 天', '1-day')));
+
+    // ===== 7. 成長圖（區塊點開後）、學習時間 =====
     const days = []; for (let i = 20; i >= 1; i--) { const d = new Date(); d.setDate(d.getDate() - i); days.push(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()); }
     const hist = { d: {}, c: {} }; days.forEach((k, i) => { hist.d[k] = { k: Math.floor(i / 2), s: i % 3 === 0 ? 0 : 600 + i * 30, w: 100 }; });
     await fresh({ level: 'b', ls: { 'thai-hist': hist } });
@@ -140,23 +198,54 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     const k0 = await J("histSeries('k')");
     ok(lang + ' 記熟序列：30 天', k0.vals.length === 30);
     ok(lang + ' 序列最後一天 = 目前記熟數', k0.vals[29] === (await E('knownCount()')), JSON.stringify(k0.vals.slice(-3)));
-    ok(lang + ' 預設畫折線：有線、有最後一個點', (await p.locator('.achplot .achline').count()) === 1 && (await p.locator('.achplot .achdot').count()) === 1);
+    await p.locator('.achblk[data-blk="wd"]').click(); await p.waitForTimeout(150);
+    ok(lang + ' 生字區塊：畫折線，有線、有最後一個點', (await p.locator('.achplot .achline').count()) === 1 && (await p.locator('.achplot .achdot').count()) === 1);
     ok(lang + ' 有變化：大數字旁寫「最近一個月 +N」', (await J("histSeries('k').vals.filter(function(v){return v!=null})")).length < 2 || (await p.locator('.achdelta').count()) === 1);
-    await p.locator('.achmet button').nth(1).click(); await p.waitForTimeout(150);
-    const nb = await p.locator('.achplot .achbar').count();
-    ok(lang + ' 切到「學習分鐘」：畫長條（只畫有學的天）', nb >= 10 && nb <= 20, nb);
-    await p.locator('.achmet button').nth(2).click(); await p.waitForTimeout(150);
+    await p.locator('.achblk[data-blk="doc"]').click(); await p.waitForTimeout(150);
     const wv = await J("histSeries('w').vals");
-    ok(lang + ' 切到「讀過的字數」：累計（單調增加）', wv.every((v, i) => i === 0 || v >= wv[i - 1]) && wv[29] >= 2000, JSON.stringify(wv.slice(-2)));
-    await p.screenshot({ path: 'shots/v31-growth-' + lang + '.png', fullPage: true });
+    ok(lang + ' 文件區塊：讀過的字數累計折線（單調增加）', wv.every((v, i) => i === 0 || v >= wv[i - 1]) && wv[29] >= 2000 && (await p.locator('.achplot .achline').count()) === 1, JSON.stringify(wv.slice(-2)));
+    await p.locator('.achblk[data-blk="doc"]').click();
+    const mdet = p.locator('.achmore > summary').last();
+    ok(lang + ' 「學習時間」在月曆下面，收著；點開才畫長條圖', (await mdet.innerText()).trim() === T('學習時間', 'Study time') && (await p.locator('.achmin .achbar').count()) === 0 && (await yB('.achcal')) < (await yB('.achmore > summary')));
+    await mdet.click(); await p.waitForTimeout(150);
+    const nb = await p.locator('.achmin .achbar').count();
+    ok(lang + ' 學習時間：畫長條（只畫有學的天）', nb >= 10 && nb <= 20, nb);
+    await p.screenshot({ path: 'shots/v32-growth-' + lang + '.png', fullPage: true });
     await fresh({ level: 'b' }); await goAch();
-    ok(lang + ' 沒有紀錄：圖是空的，有一句提示（不是壞掉）', (await p.locator('.achhint').count()) === 1);
+    await p.locator('.achblk[data-blk="wd"]').click(); await p.waitForTimeout(120);
+    ok(lang + ' 沒有紀錄：圖是空的，有一句提示（不是壞掉）', (await p.locator('#achPanel .achhint').count()) === 1);
+
+    // ===== 7b. 讀過的頁數：PDF 停留過的頁，每頁只算一次 =====
+    await fresh({ level: 'b' });
+    const PDFP = '/mnt/user-data/uploads/A.pdf';
+    if (fs.existsSync(PDFP)) {
+      await p.click('.tabbar [data-tab="home"]'); await p.waitForTimeout(300);
+      await p.setInputFiles('#anyfile', PDFP); await p.waitForTimeout(3500);
+      ok(lang + ' 匯入 PDF 後打開了文件', (await E("!!pdf")) === true && await vis('#view-doc'));
+      await E("pagesTick(); 1");
+      const pg1 = await E("pagesRead()");
+      ok(lang + ' 停在第 1 頁：算讀過 1 頁', pg1 === 1, pg1);
+      await E("pagesTick(); pagesTick(); 1");
+      ok(lang + ' 同一頁再抽樣：不重複算', (await E("pagesRead()")) === 1);
+      if ((await E("pdf.pages.length")) > 1) { await E("goPage(1); 1"); await p.waitForTimeout(500); await E("pagesTick(); 1"); ok(lang + ' 翻到第 2 頁：變成 2 頁', (await E("pagesRead()")) === 2); }
+      await goAch();
+      ok(lang + ' 文件區塊顯示讀過的頁數', (await p.locator('.achblk[data-blk="doc"] .bs').innerText()).includes(String(await E("pagesRead()"))));
+      if ((await E("pdf.pages.length")) > 2) {
+        const before = await E("pagesRead()");
+        await p.click('.tabbar [data-tab="doc"]'); await p.waitForTimeout(200); await E("goPage(2, true); 1"); await p.waitForTimeout(300);
+        await p.click('.tabbar [data-tab="cards"]'); await p.waitForTimeout(200);
+        await E("pagesTick(); 1");
+        ok(lang + ' 不在文件頁（在別的分頁）：不算頁數', (await E("pagesRead()")) === before, before + ' → ' + await E("pagesRead()"));
+      }
+    }
 
     // ===== 8. 學習時間、讀過的字數 =====
     await fresh({ level: 'b' });
+    const tk = await E('dayKey()'); let h = await LS('thai-hist');
+    const s0 = (h && h.d && h.d[tk] && h.d[tk].s) || 0;
     await E("act.acc = 130; flushTime(); 1");
-    let h = await LS('thai-hist'); const tk = await E('dayKey()');
-    ok(lang + ' 累積 130 秒：寫進今天的紀錄', h.d[tk] && h.d[tk].s === 130, JSON.stringify(h.d[tk]));
+    h = await LS('thai-hist');
+    ok(lang + ' 累積 130 秒：寫進今天的紀錄', h.d[tk] && h.d[tk].s === s0 + 130, JSON.stringify(h.d[tk]));
     ok(lang + ' 計時：畫面開著＋最近一分鐘有操作才算（閒置不算）', await p.evaluate(() => window.__ev("(function(){var a=act.acc;act.last=Date.now()-120000;timeTick();var b=act.acc;act.last=Date.now();timeTick();return b===a && act.acc===a+5})()")));
     await E("var d=lib.docs.filter(function(x){return x.type==='text'})[0]; openDoc(d.id); 1"); await p.waitForTimeout(500);
     h = await LS('thai-hist');
@@ -220,26 +309,48 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     await p.reload(); await p.waitForTimeout(2200);
     ok(lang + ' 沒有紀錄的舊使用者：已經達成的里程碑不會一次噴出來', !(await vis('#flame')) && (await LS('thai-flame')).once.includes('k10'));
 
-    // ===== 11. 減少動態效果、設定 =====
+    // ===== 11. 小火苗設定：在「設定」頁（動態／靜態／關） =====
     await fresh({ level: 'b', loud: true });
+    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250);
+    await p.click('.setmi[data-grp="look"]'); await p.waitForTimeout(250);
+    const fbt = await p.locator('#flameGroup button').allTextContents();
+    ok(lang + ' 設定 → 外觀與字體：有「小火苗」一列，三個選項（動態、靜態、關）', fbt.map(x => x.trim()).join() === T('動態,靜態,關', 'Animated,Still,Off') && await vis('#flameGroup'), fbt.join());
+    ok(lang + ' 預設是「動態」', (await p.locator('#flameGroup button').nth(0).getAttribute('aria-checked')) === 'true');
+    const fbh = await p.locator('#flameGroup button').first().boundingBox(), fth = await p.locator('#fontGroup button').first().boundingBox();
+    ok(lang + ' 按鈕大小和旁邊的設定一樣（不特別大）', fbh.height <= fth.height + 1, JSON.stringify([fbh.height, fth.height]));
+    await p.locator('#flameGroup').locator('xpath=ancestor::div[contains(@class,"setrow")]').locator('.qhelp').click(); await p.waitForTimeout(150);
+    const shb = await p.locator('#shBody').innerText();
+    ok(lang + ' 「?」說明：寫了選項（動態、靜態、關）' + (lang === 'en' ? '，沒有中文' : ''), shb.length > 20 && (lang === 'zh' || !ZH.test(shb)), shb);
+    await p.click('#shClose'); await p.waitForTimeout(100);
+    await E("taskAdd('x', 1); taskAdd('y', 1); taskAdd('z', 1); 1");
+    // 靜態：還是會出現，但不會動
+    await p.locator('#flameGroup button').nth(1).click(); await p.waitForTimeout(100);
+    ok(lang + ' 選「靜態」：存起來（開、不動）', JSON.stringify(await LS('thai-rwd')) === JSON.stringify({ flame: 1, anim: 0 }), JSON.stringify(await LS('thai-rwd')));
+    await goAch(); await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(400);
+    ok(lang + ' 靜態：小火苗出現，但沒有動畫', await vis('#flame') && (await p.locator('#flame').getAttribute('class')).includes('still') && (await p.locator('#flame .flic svg').evaluate(e => getComputedStyle(e).animationName)) === 'none');
+    await p.click('#flame'); await p.waitForTimeout(100);
+    // 關：不冒
+    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250);
+    if (!(await vis('#flameGroup'))) { await p.click('.setmi[data-grp="look"]'); await p.waitForTimeout(250); }
+    await p.locator('#flameGroup button').nth(2).click(); await p.waitForTimeout(100);
+    ok(lang + ' 選「關」：存起來', (await LS('thai-rwd')).flame === 0, JSON.stringify(await LS('thai-rwd')));
+    await goAch(); await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(500);
+    ok(lang + ' 關掉小火苗：任務完成也不冒', !(await vis('#flame')));
+    await p.reload(); await p.waitForTimeout(1300);
+    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250);
+    if (!(await vis('#flameGroup'))) { await p.click('.setmi[data-grp="look"]'); await p.waitForTimeout(250); }
+    ok(lang + ' 重新打開：設定還是「關」', (await p.locator('#flameGroup button').nth(2).getAttribute('aria-checked')) === 'true');
+    await p.locator('#flameGroup button').nth(0).click(); await p.waitForTimeout(100);
+    ok(lang + ' 選回「動態」：小火苗開、動畫開', JSON.stringify(await LS('thai-rwd')) === JSON.stringify({ flame: 1, anim: 1 }), JSON.stringify(await LS('thai-rwd')));
+    await goAch(); await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(400);
+    ok(lang + ' 動態：小火苗在動（有動畫）', await vis('#flame') && !(await p.locator('#flame').getAttribute('class')).includes('still') && (await p.locator('#flame .flic svg').evaluate(e => getComputedStyle(e).animationName)) !== 'none');
+    await p.click('#flame');
+    // 手機開了「減少動態效果」：動態也會變靜態
     await p.emulateMedia({ reducedMotion: 'reduce' });
-    await E("taskAdd('x', 1); 1"); await goAch();
+    await E("taskAdd('w', 1); renderAchTab(); 1");
     await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(400);
     ok(lang + ' 手機開了「減少動態效果」：小火苗是靜態的（還是會出現）', await vis('#flame') && (await p.locator('#flame').getAttribute('class')).includes('still') && (await p.locator('#flame .flic svg').evaluate(e => getComputedStyle(e).animationName)) === 'none');
     await p.click('#flame'); await p.emulateMedia({ reducedMotion: 'no-preference' });
-    await p.locator('.achset > summary').click(); await p.waitForTimeout(150);
-    const sets = await p.locator('.achset .lqgoal').count();
-    await p.locator('.achset .lqgoal').nth(1).locator('button').nth(1).click(); await p.waitForTimeout(100);
-    ok(lang + ' 小火苗設定兩項：小火苗、動畫；改了會存起來', sets === 2 && (await LS('thai-rwd')).anim === 0, JSON.stringify(await LS('thai-rwd')));
-    await E("taskAdd('y', 1); renderAchTab(); 1");
-    await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(400);
-    ok(lang + ' 動畫關掉：小火苗靜態', (await p.locator('#flame').getAttribute('class')).includes('still'));
-    await p.click('#flame');
-    await p.locator('.achset > summary').click().catch(() => {});
-    await p.evaluate(() => localStorage.setItem('thai-rwd', JSON.stringify({ flame: 0 })));
-    await E("taskAdd('z', 1); renderAchTab(); 1");
-    await p.locator('#achBody .achchk').first().click(); await p.waitForTimeout(500);
-    ok(lang + ' 關掉小火苗：任務完成也不冒', !(await vis('#flame')));
 
     // ===== 12. 舊的目標變成一個任務 =====
     await fresh({ level: 'c', ls: { 'thai-goal': { g: 'c_news', m: 10, l0: 'c', t0: Date.now() - 5e8, b: { rev: 0 }, p: { a: 1, b: 2 }, bt: {} }, 'thai-map-seen': 2, 'thai-goal-done': { x: 1 }, 'thai-map-visit': 1, 'thai-goal-skip': 1 } });
@@ -274,7 +385,10 @@ const PHR = ['เก่งมาก', 'สุดยอด', 'เยี่ยม�
     if (lang === 'en') {
       await fresh({ level: 'c' });
       await E("taskAdd('Read news', 3); taskAdd('Done one', 1); var o=tasksGet(); o.list[1].done=Date.now(); o.list[1].c=1; tasksSave(o); 1");
-      await goAch(); await p.locator('.achset > summary').click();
+      await goAch();
+      for (const k of ['doc', 'wd', 'task']) { await p.locator('.achblk[data-blk="' + k + '"]').click(); await p.waitForTimeout(120); const t0 = await p.locator('#view-ach').innerText(); ok('en 成就頁（' + k + ' 區塊展開）沒有中文殘留', !ZH.test(t0), (t0.match(/.*[㐀-鿿].*/g) || []).join(' | ')); }
+      await p.locator('.achmore > summary').last().click(); await p.waitForTimeout(150);
+      await p.locator('.achnav').nth(0).click().catch(() => {});
       const txt = await p.locator('#view-ach').innerText();
       ok('en 成就頁：沒有中文殘留', !ZH.test(txt), (txt.match(/.*[㐀-鿿].*/g) || []).join(' | '));
       const aria = await p.$$eval('#view-ach [aria-label], #view-ach [placeholder]', a => a.map(x => (x.getAttribute('aria-label') || '') + (x.getAttribute('placeholder') || '')));

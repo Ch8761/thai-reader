@@ -59,10 +59,10 @@ const ok = (name, cond, extra) => { if (!cond) { fails++; } console.log((cond ? 
   await E(p, "showTab('ach'); 1"); await p.waitForTimeout(400);
   const sheet = (await p.textContent('#achBody')).replace(/\s+/g, ' ');
   ok('1.31：學習紀錄在「成就」分頁，有「本週學習」和「每週目標」', sheet.includes('本週學習') && sheet.includes('每週目標'), sheet.slice(0, 120));
-  ok('本週天數顯示（week=' + wk + '）', await p.evaluate(() => /\/ 4$/.test(Array.from(document.querySelectorAll('.recsec .achrec')).pop().querySelector('.lqnum').textContent.trim())));
+  ok('本週天數顯示（week=' + wk + '）', (await p.textContent('.achwl b')).trim() === Math.min(wk, 4) + ' / 4');
   await p.screenshot({ path: 'shots/v24-home-week.png' });
-  await p.locator('.lqgoal .seg button', { hasText: '3 天' }).click(); await p.waitForTimeout(200);
-  ok('改成 3 天', await E(p, "weekGoal()") === 3 && (await p.locator('.recsec .achrec').last().locator('.lqnum').textContent()).includes('/ 3'));
+  await p.selectOption('.achsl', '3'); await p.waitForTimeout(200);
+  ok('改成 3 天', await E(p, "weekGoal()") === 3 && (await p.textContent('.achwl b')).trim() === Math.min(wk, 3) + ' / 3');
   await p.screenshot({ path: 'shots/v24-record.png' });
   await E(p, "(function(){ localStorage.setItem('thai-days', JSON.stringify(['2020-1-1','2020-1-2','2020-1-3'])); return 1; })()");
   ok('累計天數關卡（3 天過第 4 關的條件）', await E(p, "learnStats().days") === 3 && (await E(p, "questText(QUEST[3])")) === '累計學 3 天');
