@@ -56,13 +56,13 @@ const ok = (name, cond, extra) => { if (!cond) { fails++; } console.log((cond ? 
   p = await mk(); await fresh(p);
   await E(p, "(function(){ var a=[], t=new Date(); t.setHours(12,0,0,0); var back=(t.getDay()+6)%7; for (var i=0;i<=Math.min(back,1);i++){ var d=new Date(t.getTime()); d.setDate(d.getDate()-i); a.push(dayKey(d.getTime())); } localStorage.setItem('thai-days', JSON.stringify(a)); renderToday(); return a.length; })()");
   const wk = await E(p, "weekDays()");
-  await E(p, "showTab('map'); 1"); await p.waitForTimeout(400);
-  const sheet = (await p.textContent('#mapBody')).replace(/\s+/g, ' ');
-  ok('1.29：學習紀錄搬到「地圖」分頁，有「本週學習」和「每週目標」', sheet.includes('本週學習') && sheet.includes('每週目標'), sheet.slice(0, 120));
-  ok('本週天數顯示（week=' + wk + '）', await p.evaluate(() => /\/ 4 天/.test(document.querySelector('.lqstat:nth-child(3) .lqsn').textContent)));
+  await E(p, "showTab('ach'); 1"); await p.waitForTimeout(400);
+  const sheet = (await p.textContent('#achBody')).replace(/\s+/g, ' ');
+  ok('1.31：學習紀錄在「成就」分頁，有「本週學習」和「每週目標」', sheet.includes('本週學習') && sheet.includes('每週目標'), sheet.slice(0, 120));
+  ok('本週天數顯示（week=' + wk + '）', await p.evaluate(() => /\/ 4$/.test(Array.from(document.querySelectorAll('.recsec .achrec')).pop().querySelector('.lqnum').textContent.trim())));
   await p.screenshot({ path: 'shots/v24-home-week.png' });
   await p.locator('.lqgoal .seg button', { hasText: '3 天' }).click(); await p.waitForTimeout(200);
-  ok('改成 3 天', await E(p, "weekGoal()") === 3 && (await p.textContent('.lqstat:nth-child(3) .lqsn')).includes('/ 3'));
+  ok('改成 3 天', await E(p, "weekGoal()") === 3 && (await p.locator('.recsec .achrec').last().locator('.lqnum').textContent()).includes('/ 3'));
   await p.screenshot({ path: 'shots/v24-record.png' });
   await E(p, "(function(){ localStorage.setItem('thai-days', JSON.stringify(['2020-1-1','2020-1-2','2020-1-3'])); return 1; })()");
   ok('累計天數關卡（3 天過第 4 關的條件）', await E(p, "learnStats().days") === 3 && (await E(p, "questText(QUEST[3])")) === '累計學 3 天');

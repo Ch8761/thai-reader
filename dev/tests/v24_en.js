@@ -24,14 +24,13 @@ const URL = 'http://127.0.0.1:8765/index.html';
     ['ตลาด','เพื่อน'].forEach(function(w){ addCard({t:w,i:0}); }); cards.forEach(function(c){ c.due = today0() - 86400000; c.last = Date.now() - 3*86400000; c.seen = 2; }); saveCards(); renderHome(); renderToday(); return 1; })()`);
   await p.waitForTimeout(500); await grab(p, 'home');
   console.log('tabs:', (await p.locator('#homeFolders > .seg > button').allTextContents()).join(' | '));
-  console.log('quest:', (await p.textContent('#questCard')).replace(/\s+/g, ' '), '| aria:', await p.getAttribute('#questCard .lqweek', 'aria-label'));
   await p.screenshot({ path: 'shots/v24-en-home.png' });
   await p.locator('#homeFolders > .seg > button', { hasText: 'Reading library' }).click(); await p.waitForTimeout(300); await grab(p, 'folder');
   console.log('target:', await p.textContent('#homeTarget'));
   await p.locator('#homeFolders > .seg > button[aria-checked="true"]').click(); await p.waitForTimeout(200); await grab(p, 'folder-menu'); await p.click('.fmenu .cdel'); await p.waitForTimeout(200); await grab(p, 'folder-del'); console.log('del:', await p.textContent('.fmenu .cdel'));
   await p.locator('#docList .cmove').first().focus(); console.log('move opts:', (await p.locator('#docList .cmove').first().locator('option').allTextContents()).join(' | '));
-  await p.click('#questCard'); await p.waitForTimeout(400); await grab(p, 'record'); await p.screenshot({ path: 'shots/v24-en-record.png' });
-  console.log('record:', (await p.textContent('#qsBody')).replace(/\s+/g, ' ').slice(0, 260)); await p.click('#qsClose');
+  await E(p, "showTab('ach'); 1"); await p.waitForTimeout(400); await grab(p, 'record'); await p.screenshot({ path: 'shots/v24-en-record.png' });
+  console.log('record:', (await p.textContent('#achBody')).replace(/\s+/g, ' ').slice(0, 260));
   await E(p, "openDoc('text:s1')"); await p.waitForTimeout(1200); await grab(p, 'soft'); console.log('soft:', (await p.textContent('#softHint')).replace(/\s+/g, ' ')); await p.screenshot({ path: 'shots/v24-en-soft.png' });
   const iphone = devices['iPhone 13'];
   const g = async (tag, ua, evt) => {
