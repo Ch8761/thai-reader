@@ -25,7 +25,7 @@ async function grab(url, headers, ms) {
   const ctl = new AbortController();
   const timer = setTimeout(function () { ctl.abort(); }, ms);
   try {
-    const res = await fetch(url, { redirect: 'follow', signal: ctl.signal, headers: headers, cf: { cacheTtl: 600, cacheEverything: true } });
+    const res = await fetch(url, { redirect: 'follow', signal: ctl.signal, headers: headers, cf: { cacheEverything: true, cacheTtlByStatus: { '200-299': 600, '300-599': 0 } } });
     const out = { status: res.status, type: res.headers.get('content-type') || '', finalUrl: res.url || url };
     if (!res.ok) { try { await res.body.cancel(); } catch (e) {} return out; }
     const reader = res.body.getReader(), chunks = [];
@@ -94,14 +94,29 @@ export async function onRequestGet(context) {
     if (key && (r2.status === 401 || r2.status === 402 || r2.status === 403)) { r2 = await grab(jurl, jh, 30000); }
     /* 太多人同時用（429）：等兩秒再試一次 */
     if (r2.status === 429) { await new Promise(function (ok) { setTimeout(ok, 2000); }); r2 = await grab(jurl, key ? Object.assign({ authorization: 'Bearer ' + key }, jh) : jh, 30000); }
+    /* 還是不行：請閱讀服務直接交回整理好的純文字（不經過 HTML），再不行就換一種方式直接讀一次 */
+    if (r2.error || looksBlocked(r2)) {
+      const jt = { 'accept': 'text/plain', 'x-timeout': '25', 'x-no-cache': 'true' };
+      const r3 = await grab(jurl, key ? Object.assign({ authorization: 'Bearer ' + key }, jt) : jt, 35000);
+      if (!r3.error && !looksBlocked(r3) && r3.body && r3.body.byteLength > 200) { r2 = r3; r2.type = 'text/markdown; charset=utf-8'; r2.viaName = 'reader-text'; }
+    }
+    if ((r2.error || looksBlocked(r2)) && !viaReader) {
+      const r4 = await grab(target.toString(), {
+        'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'accept-language': 'th-TH,th;q=0.9,en;q=0.7',
+        'referer': 'https://www.google.com/'
+      }, TIMEOUT_MS);
+      if (!r4.error && !looksBlocked(r4)) { r2 = r4; r2.viaName = 'direct'; }
+    }
     if (r2.error || looksBlocked(r2)) {
       const e = firstErr || r2;
       return json({ ok: false, error: e.error || 'status', status: e.status || r2.status || 0, reader: r2.status || r2.error || 0 }, 502);
     }
-    got = r2; got.via = 'reader'; got.finalUrl = target.toString();
+    got = r2; got.via = r2.viaName || 'reader'; got.finalUrl = target.toString();
   }
   if (got.finalUrl) { try { if (blockedHost(new URL(got.finalUrl).hostname)) { return json({ ok: false, error: 'blocked' }, 400); } } catch (e) {} }
-  if (got.type && !/text\/html|application\/xhtml|text\/plain/i.test(got.type)) { return json({ ok: false, error: 'not_html', type: got.type.split(';')[0] }, 415); }
+  if (got.type && !/text\/html|application\/xhtml|text\/plain|text\/markdown/i.test(got.type)) { return json({ ok: false, error: 'not_html', type: got.type.split(';')[0] }, 415); }
   const body = got.body, cut = got.cut, type = got.type || '', finalUrl = got.finalUrl || target.toString();
   /* 原始內容直接交回（編碼由 App 判斷，泰文舊網站可能是 TIS-620） */
   return new Response(body, {
