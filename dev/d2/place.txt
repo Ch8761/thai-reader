@@ -1,0 +1,156 @@
+# 地名（府、熱門地點）：泰文|羅馬拼音(可空)|中文|英文|詞性
+กรุงเทพ||曼谷|Bangkok|name
+กรุงเทพฯ||曼谷|Bangkok|name
+กรุงเทพมหานคร||曼谷（正式名稱）|Bangkok (official name)|name
+เชียงใหม่||清邁|Chiang Mai|name
+เชียงราย||清萊|Chiang Rai|name
+ลำปาง||南邦|Lampang|name
+ลำพูน||南奔|Lamphun|name
+แม่ฮ่องสอน||湄宏順|Mae Hong Son|name
+น่าน||楠府|Nan|name
+พะเยา||帕堯|Phayao|name
+แพร่||帕府|Phrae|name
+อุตรดิตถ์||程逸|Uttaradit|name
+ตาก||達府|Tak|name
+สุโขทัย||素可泰|Sukhothai|name
+พิษณุโลก||彭世洛|Phitsanulok|name
+พิจิตร||披集|Phichit|name
+กำแพงเพชร||甘烹碧|Kamphaeng Phet|name
+เพชรบูรณ์||碧差汶|Phetchabun|name
+นครสวรรค์||那空沙旺（北欖坡）|Nakhon Sawan|name
+อุทัยธานี||烏泰他尼|Uthai Thani|name
+ชัยนาท||猜納|Chai Nat|name
+สิงห์บุรี||信武里|Sing Buri|name
+ลพบุรี||華富里|Lopburi|name
+อ่างทอง||紅統|Ang Thong|name
+สระบุรี||北標|Saraburi|name
+พระนครศรีอยุธยา||大城（阿瑜陀耶）|Phra Nakhon Si Ayutthaya|name
+อยุธยา||大城（阿瑜陀耶）|Ayutthaya|name
+นนทบุรี||暖武里|Nonthaburi|name
+ปทุมธานี||巴吞他尼|Pathum Thani|name
+สมุทรปราการ||北欖|Samut Prakan|name
+สมุทรสาคร||龍仔厝|Samut Sakhon|name
+สมุทรสงคราม||夜功|Samut Songkhram|name
+นครปฐม||佛統|Nakhon Pathom|name
+สุพรรณบุรี||素攀武里|Suphan Buri|name
+กาญจนบุรี||北碧|Kanchanaburi|name
+ราชบุรี||叻丕|Ratchaburi|name
+เพชรบุรี||佛丕|Phetchaburi|name
+ประจวบคีรีขันธ์||巴蜀|Prachuap Khiri Khan|name
+นครนายก||那空那育|Nakhon Nayok|name
+ปราจีนบุรี||巴真|Prachin Buri|name
+สระแก้ว||沙繳|Sa Kaeo|name
+ฉะเชิงเทรา||北柳|Chachoengsao|name
+ชลบุรี||春武里|Chonburi|name
+ระยอง||羅勇|Rayong|name
+จันทบุรี||尖竹汶|Chanthaburi|name
+ตราด||達叻|Trat|name
+นครราชสีมา||呵叻（那空叻差是瑪）|Nakhon Ratchasima|name
+โคราช||呵叻|Korat|name
+บุรีรัมย์||武里南|Buriram|name
+สุรินทร์||素林|Surin|name
+ศรีสะเกษ||四色菊|Sisaket|name
+อุบลราชธานี||烏汶|Ubon Ratchathani|name
+ยโสธร||益梭通|Yasothon|name
+อำนาจเจริญ||安納乍能|Amnat Charoen|name
+ชัยภูมิ||猜也奔|Chaiyaphum|name
+ขอนแก่น||孔敬|Khon Kaen|name
+มหาสารคาม||瑪哈沙拉堪|Maha Sarakham|name
+ร้อยเอ็ด||黎逸|Roi Et|name
+กาฬสินธุ์||加拉信|Kalasin|name
+สกลนคร||色軍|Sakon Nakhon|name
+นครพนม||那空帕農|Nakhon Phanom|name
+มุกดาหาร||莫拉限|Mukdahan|name
+อุดรธานี||烏隆|Udon Thani|name
+หนองคาย||廊開|Nong Khai|name
+หนองบัวลำภู||廊磨喃蒲|Nong Bua Lamphu|name
+เลย||黎府|Loei|name
+บึงกาฬ||汶干|Bueng Kan|name
+ชุมพร||春蓬|Chumphon|name
+ระนอง||拉廊|Ranong|name
+สุราษฎร์ธานี||素叻他尼|Surat Thani|name
+พังงา||攀牙|Phang Nga|name
+ภูเก็ต||普吉|Phuket|name
+กระบี่||喀比|Krabi|name
+นครศรีธรรมราช||洛坤（那空是貪瑪叻）|Nakhon Si Thammarat|name
+ตรัง||董里|Trang|name
+พัทลุง||博他侖|Phatthalung|name
+สตูล||沙敦|Satun|name
+สงขลา||宋卡|Songkhla|name
+ปัตตานี||北大年|Pattani|name
+ยะลา||也拉|Yala|name
+นราธิวาส||陶公|Narathiwat|name
+พัทยา||芭達雅|Pattaya|name
+หัวหิน||華欣|Hua Hin|name
+ชะอำ||七岩|Cha-am|name
+เกาะสมุย||蘇美島|Ko Samui|name
+สมุย||蘇美島|Samui|name
+เกาะพะงัน||帕岸島|Ko Pha-ngan|name
+เกาะเต่า||龜島|Ko Tao|name
+เกาะพีพี||皮皮島|Ko Phi Phi|name
+เกาะช้าง||象島|Ko Chang|name
+เกาะเสม็ด||沙美島|Ko Samet|name
+เกาะหลีเป๊ะ||麗貝島|Ko Lipe|name
+เกาะล้าน||格蘭島|Ko Lan|name
+เกาะลันตา||蘭塔島|Ko Lanta|name
+หาดใหญ่||合艾|Hat Yai|name
+ปาย||拜縣|Pai|name
+เขาใหญ่||考艾（國家公園）|Khao Yai|name
+เขาหลัก||考拉|Khao Lak|name
+ดอยสุเทพ||素帖山|Doi Suthep|name
+ดอยอินทนนท์||因他暖山（泰國最高峰）|Doi Inthanon|name
+แม่สาย||美塞|Mae Sai|name
+แม่สอด||美索|Mae Sot|name
+สามเหลี่ยมทองคำ||金三角|Golden Triangle|name
+อัมพวา||安帕瓦（水上市場）|Amphawa|name
+ดำเนินสะดวก||丹能莎朵（水上市場）|Damnoen Saduak|name
+สุวรรณภูมิ||蘇凡納布（機場）|Suvarnabhumi (airport)|name
+ดอนเมือง||廊曼（機場）|Don Mueang (airport)|name
+สยาม||暹羅；曼谷暹羅商圈|Siam|name
+สุขุมวิท||素坤逸（路）|Sukhumvit|name
+สีลม||是隆（路）|Silom|name
+สาทร||沙吞（路）|Sathon|name
+อโศก||阿索克|Asok|name
+ทองหล่อ||通羅|Thong Lo|name
+เอกมัย||伊卡邁|Ekkamai|name
+อารีย์||阿黎|Ari|name
+จตุจักร||恰圖恰（週末市集）|Chatuchak|name
+เยาวราช||耀華力路（曼谷中國城）|Yaowarat (Chinatown)|name
+ข้าวสาร||考山路|Khao San (Road)|name
+ประตูน้ำ||水門（市場）|Pratunam|name
+รัชดา||拉差達|Ratchada|name
+ลาดพร้าว||拉拋|Lat Phrao|name
+บางนา||邦納|Bang Na|name
+บางกอก||曼谷（舊稱）|Bangkok (old name)|name
+ธนบุรี||吞武里|Thonburi|name
+เจ้าพระยา||昭披耶河|Chao Phraya (River)|name
+แม่น้ำเจ้าพระยา||昭披耶河|Chao Phraya River|name
+แม่น้ำโขง||湄公河|Mekong River|name
+วัดพระแก้ว||玉佛寺|Wat Phra Kaew (Emerald Buddha Temple)|name
+วัดโพธิ์||臥佛寺|Wat Pho|name
+วัดอรุณ||鄭王廟（黎明寺）|Wat Arun|name
+พระบรมมหาราชวัง||大皇宮|Grand Palace|name
+วัดร่องขุ่น||白廟（清萊）|Wat Rong Khun (White Temple)|name
+ไอคอนสยาม||暹羅天地（ICONSIAM）|ICONSIAM|name
+สยามพารากอน||暹羅百麗宮|Siam Paragon|name
+เซ็นทรัลเวิลด์||中央世界購物中心|CentralWorld|name
+เอ็มบีเค||MBK 購物中心|MBK Center|name
+เทอร์มินอล 21||Terminal 21 購物中心|Terminal 21|name
+เอเชียทีค||河濱碼頭夜市|Asiatique|name
+ภาคเหนือ||泰北|Northern Thailand|noun
+ภาคอีสาน||泰國東北（伊善）|Isan (Northeast)|noun
+อีสาน||泰國東北（伊善）|Isan (Northeast)|noun
+ภาคใต้||泰南|Southern Thailand|noun
+ภาคกลาง||泰國中部|Central Thailand|noun
+ไต้หวัน||台灣|Taiwan|name
+ไทเป||台北|Taipei|name
+ญี่ปุ่น||日本|Japan|name
+เกาหลี||韓國|Korea|name
+เกาหลีใต้||南韓|South Korea|name
+สิงคโปร์||新加坡|Singapore|name
+มาเลเซีย||馬來西亞|Malaysia|name
+เวียดนาม||越南|Vietnam|name
+ลาว||寮國|Laos|name
+กัมพูชา||柬埔寨|Cambodia|name
+เมียนมา||緬甸|Myanmar|name
+ฮ่องกง||香港|Hong Kong|name

@@ -2,3 +2,4 @@
 grep -c "window.__ev" srv/index.html
 mkdir -p srv/ocr/ot2 && cp ocrx/det.onnx ocrx/rec.onnx ocrx/rec_dict.txt ocrx/ort.min.js ocrx/ort-wasm-simd-threaded.wasm ocrx/ort-wasm-simd-threaded.mjs ocrx/thaiocr.js srv/ocr/ot2/
 mkdir -p srv/fonts && cp thfonts/* srv/fonts/
+cp d2/dict2.txt srv/dict2.txt

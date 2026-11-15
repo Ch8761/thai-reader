@@ -1,0 +1,190 @@
+# 菜名與食材：泰文|羅馬拼音(可空)|中文|英文|詞性
+ผัดไทย||泰式炒河粉|pad thai|noun
+ผัดกะเพรา||打拋（羅勒葉炒肉）|stir-fry with holy basil|noun
+กะเพราหมูสับ||打拋豬（羅勒炒豬絞肉）|minced pork with holy basil|noun
+กะเพราไก่||打拋雞|chicken with holy basil|noun
+ข้าวกะเพรา||打拋飯|rice with holy-basil stir-fry|noun
+ไข่ดาว||荷包蛋|fried egg|noun
+ไข่เจียว||泰式煎蛋|Thai omelette|noun
+ข้าวไข่เจียว||煎蛋飯|omelette on rice|noun
+ข้าวผัด||炒飯|fried rice|noun
+ข้าวผัดกุ้ง||蝦仁炒飯|shrimp fried rice|noun
+ข้าวผัดปู||蟹肉炒飯|crab fried rice|noun
+ข้าวผัดสับปะรด||鳳梨炒飯|pineapple fried rice|noun
+ข้าวมันไก่||海南雞飯|chicken rice|noun
+ข้าวมันไก่ทอด||炸雞飯|fried chicken rice|noun
+ข้าวหมูแดง||叉燒飯|red BBQ pork on rice|noun
+ข้าวหมูกรอบ||脆皮豬肉飯|crispy pork on rice|noun
+ข้าวขาหมู||豬腳飯|stewed pork leg on rice|noun
+ข้าวหน้าเป็ด||鴨肉飯|duck on rice|noun
+ข้าวต้ม||稀飯|rice soup|noun
+โจ๊ก||粥（廣東粥）|congee|noun
+ข้าวเหนียว||糯米飯|sticky rice|noun
+ข้าวเหนียวมะม่วง||芒果糯米飯|mango sticky rice|noun
+ข้าวสวย||白飯|steamed rice|noun
+ข้าวเปล่า||白飯|plain rice|noun
+ข้าวซอย||泰北咖哩麵|khao soi (northern curry noodles)|noun
+ข้าวแกง||咖哩飯（自助配菜飯）|rice with curry|noun
+ข้าวราดแกง||咖哩蓋飯|rice topped with curry|noun
+ข้าวคลุกกะปิ||蝦醬拌飯|rice mixed with shrimp paste|noun
+ข้าวยำ||泰南香草拌飯|southern rice salad|noun
+ต้มยำ||酸辣湯|tom yam|noun
+ต้มยำกุ้ง||酸辣蝦湯（冬蔭功）|tom yam kung|noun
+ต้มข่าไก่||椰奶南薑雞湯|chicken in coconut-galangal soup|noun
+ต้มแซ่บ||東北酸辣湯|spicy Isan soup|noun
+ต้มจืด||清湯|clear soup|noun
+แกงเขียวหวาน||綠咖哩|green curry|noun
+แกงเผ็ด||紅咖哩|red curry|noun
+แกงมัสมั่น||瑪莎曼咖哩|massaman curry|noun
+แกงพะแนง||帕能咖哩|panang curry|noun
+พะแนง||帕能咖哩|panang curry|noun
+แกงส้ม||酸咖哩湯|sour curry|noun
+แกงจืด||清湯|clear soup|noun
+แกงกะหรี่||黃咖哩|yellow curry|noun
+แกงป่า||叢林咖哩（無椰奶）|jungle curry|noun
+แกงไตปลา||泰南魚內臟咖哩|southern fish-innards curry|noun
+แกงฮังเล||泰北豬肉咖哩|northern hang-le curry|noun
+ส้มตำ||青木瓜沙拉|green papaya salad|noun
+ส้มตำไทย||泰式青木瓜沙拉（不加醃魚）|Thai-style papaya salad|noun
+ตำปูปลาร้า||螃蟹醃魚青木瓜沙拉|papaya salad with crab and fermented fish|noun
+ปลาร้า||醃魚醬|fermented fish|noun
+ลาบ||東北涼拌碎肉|larb|noun
+ลาบหมู||涼拌豬絞肉|pork larb|noun
+น้ำตก||東北涼拌烤肉|nam tok (grilled meat salad)|noun
+ยำ||涼拌|spicy salad|noun
+ยำวุ้นเส้น||涼拌冬粉|glass noodle salad|noun
+ยำทะเล||涼拌海鮮|seafood salad|noun
+ยำมะม่วง||涼拌青芒果|green mango salad|noun
+ไก่ย่าง||烤雞|grilled chicken|noun
+ไก่ทอด||炸雞|fried chicken|noun
+หมูปิ้ง||烤豬肉串|grilled pork skewers|noun
+หมูกรอบ||脆皮豬肉|crispy pork|noun
+หมูแดง||叉燒|red BBQ pork|noun
+หมูสับ||豬絞肉|minced pork|noun
+หมูกระทะ||泰式烤肉火鍋|Thai BBQ hot pot|noun
+คอหมูย่าง||烤豬頸肉|grilled pork neck|noun
+ไส้อั่ว||泰北香腸|northern Thai sausage|noun
+แหนม||酸肉（發酵豬肉）|fermented pork|noun
+หมูยอ||越式豬肉捲|pork roll|noun
+ลูกชิ้น||丸子|meatball|noun
+ลูกชิ้นปิ้ง||烤丸子|grilled meatballs|noun
+สะเต๊ะ||沙嗲|satay|noun
+หมูสะเต๊ะ||豬肉沙嗲|pork satay|noun
+ปอเปี๊ยะ||春捲|spring roll|noun
+ปอเปี๊ยะทอด||炸春捲|fried spring roll|noun
+ทอดมัน||炸魚餅|fried fish cake|noun
+ทอดมันกุ้ง||炸蝦餅|fried shrimp cake|noun
+กุ้งเผา||烤蝦|grilled prawns|noun
+กุ้งอบวุ้นเส้น||冬粉蝦煲|baked prawns with glass noodles|noun
+ปลาทอด||炸魚|fried fish|noun
+ปลาเผา||鹽烤魚|salt-grilled fish|noun
+ปลากะพง||鱸魚|sea bass|noun
+ปลากะพงนึ่งมะนาว||檸檬蒸鱸魚|steamed sea bass with lime|noun
+ปลาหมึก||魷魚；花枝|squid|noun
+ปูผัดผงกะหรี่||咖哩炒蟹|crab in curry powder|noun
+หอยทอด||蚵仔煎（酥脆版）|crispy oyster/mussel pancake|noun
+ออส่วน||蚵仔煎（軟版）|oyster omelette|noun
+ผัดผัก||炒青菜|stir-fried vegetables|noun
+ผัดผักบุ้ง||炒空心菜|stir-fried morning glory|noun
+ผักบุ้งไฟแดง||大火炒空心菜|flash-fried morning glory|noun
+ผัดซีอิ๊ว||醬油炒粿條|pad see ew|noun
+ผัดขี้เมา||醉漢炒麵|drunken noodles|noun
+ราดหน้า||勾芡粿條|noodles in gravy|noun
+ผัดพริกแกง||紅咖哩醬炒肉|stir-fry with curry paste|noun
+ผัดเปรี้ยวหวาน||糖醋炒|sweet and sour stir-fry|noun
+ผัดกระเทียม||蒜炒|stir-fried with garlic|noun
+หมูทอดกระเทียม||蒜香炸豬肉|fried pork with garlic|noun
+ไก่ผัดเม็ดมะม่วง||腰果雞丁|chicken with cashew nuts|noun
+ก๋วยเตี๋ยว||粿條；麵|noodles|noun
+ก๋วยเตี๋ยวเรือ||船麵|boat noodles|noun
+ก๋วยเตี๋ยวต้มยำ||酸辣湯麵|tom yam noodles|noun
+ก๋วยจั๊บ||粿汁（捲粉湯）|rolled rice noodle soup|noun
+เส้นเล็ก||細粿條|thin rice noodles|noun
+เส้นใหญ่||寬粿條|wide rice noodles|noun
+เส้นหมี่||米粉|rice vermicelli|noun
+บะหมี่||雞蛋麵|egg noodles|noun
+บะหมี่เกี๊ยว||餛飩麵|wonton noodles|noun
+เกี๊ยว||餛飩|wonton|noun
+วุ้นเส้น||冬粉|glass noodles|noun
+เย็นตาโฟ||釀豆腐（粉紅湯麵）|yen ta fo (pink noodle soup)|noun
+ขนมจีน||泰式米線|khanom chin (rice noodles)|noun
+ขนมจีนน้ำยา||魚咖哩米線|rice noodles with fish curry|noun
+น้ำพริก||辣椒醬（沾醬）|chilli dip|noun
+น้ำพริกกะปิ||蝦醬辣椒醬|shrimp-paste chilli dip|noun
+น้ำพริกหนุ่ม||泰北青辣椒醬|northern green chilli dip|noun
+น้ำพริกอ่อง||泰北番茄肉醬|northern tomato-pork dip|noun
+น้ำจิ้ม||沾醬|dipping sauce|noun
+น้ำจิ้มแจ่ว||東北辣沾醬|Isan chilli dipping sauce|noun
+น้ำปลา||魚露|fish sauce|noun
+พริกน้ำปลา||辣椒魚露|chillies in fish sauce|noun
+กะปิ||蝦醬|shrimp paste|noun
+กะทิ||椰奶|coconut milk|noun
+ซีอิ๊ว||醬油|soy sauce|noun
+น้ำมันหอย||蠔油|oyster sauce|noun
+พริกป่น||辣椒粉|chilli flakes|noun
+ผงชูรส||味精|MSG|noun
+กะเพรา||打拋葉（聖羅勒）|holy basil|noun
+โหระพา||九層塔（甜羅勒）|Thai sweet basil|noun
+ตะไคร้||香茅|lemongrass|noun
+ข่า||南薑|galangal|noun
+ใบมะกรูด||檸檬葉|kaffir lime leaf|noun
+ผักชี||香菜|coriander|noun
+ต้นหอม||蔥|spring onion|noun
+ถั่วงอก||豆芽菜|bean sprouts|noun
+มะนาว||檸檬（萊姆）|lime|noun
+มะม่วง||芒果|mango|noun
+ทุเรียน||榴槤|durian|noun
+มังคุด||山竹|mangosteen|noun
+เงาะ||紅毛丹|rambutan|noun
+ลำไย||龍眼|longan|noun
+ลิ้นจี่||荔枝|lychee|noun
+มะพร้าว||椰子|coconut|noun
+แตงโม||西瓜|watermelon|noun
+สับปะรด||鳳梨|pineapple|noun
+ฝรั่ง||芭樂；西方人|guava; Westerner|noun
+มะละกอ||木瓜|papaya|noun
+ส้มโอ||柚子|pomelo|noun
+ขนุน||波羅蜜|jackfruit|noun
+ชมพู่||蓮霧|rose apple|noun
+แก้วมังกร||火龍果|dragon fruit|noun
+ชาไทย||泰式奶茶|Thai tea|noun
+ชาเย็น||泰式冰奶茶|Thai iced tea|noun
+ชานม||奶茶|milk tea|noun
+ชานมไข่มุก||珍珠奶茶|bubble tea|noun
+ชาเขียว||綠茶|green tea|noun
+ชามะนาว||檸檬茶|lime tea|noun
+กาแฟเย็น||冰咖啡|iced coffee|noun
+โอเลี้ยง||泰式黑冰咖啡|Thai iced black coffee|noun
+นมเย็น||粉紅冰牛奶|pink iced milk|noun
+น้ำเปล่า||白開水|plain water|noun
+น้ำแข็ง||冰塊|ice|noun
+น้ำส้ม||柳橙汁|orange juice|noun
+น้ำมะพร้าว||椰子水|coconut water|noun
+น้ำอัดลม||汽水|soft drink|noun
+น้ำปั่น||冰沙|blended fruit drink|noun
+น้ำใบเตย||香蘭葉茶|pandan drink|noun
+น้ำอัญชัน||蝶豆花茶|butterfly-pea drink|noun
+น้ำเก๊กฮวย||菊花茶|chrysanthemum tea|noun
+น้ำกระเจี๊ยบ||洛神花茶|roselle drink|noun
+ขนม||點心；零食|snack; sweet|noun
+ขนมครก||椰奶小煎餅|coconut pancakes|noun
+ขนมเบื้อง||泰式脆餅|crispy pancakes|noun
+ขนมถ้วย||椰奶碗糕|coconut custard cups|noun
+ขนมชั้น||千層糕|layered sweet|noun
+ทองหยิบ||金花糕（蛋黃甜點）|golden egg-yolk sweet|noun
+ทองหยอด||金球（蛋黃甜點）|golden egg-yolk drops|noun
+ฝอยทอง||金絲（蛋黃甜點）|golden egg-yolk threads|noun
+บัวลอย||椰奶湯圓|rice balls in coconut milk|noun
+ลอดช่อง||椰奶粉條|pandan noodles in coconut milk|noun
+ทับทิมกรอบ||紅寶石（椰奶馬蹄）|red rubies dessert|noun
+กล้วยทอด||炸香蕉|fried banana|noun
+กล้วยบวชชี||椰奶香蕉|banana in coconut milk|noun
+โรตี||印度煎餅|roti|noun
+สังขยา||卡士達醬（椰奶蛋）|Thai custard|noun
+ขนมปังสังขยา||卡士達麵包|bread with pandan custard|noun
+ปาท่องโก๋||油條|Chinese doughnut|noun
+ซาลาเปา||包子|steamed bun|noun
+ขนมจีบ||燒賣|shumai|noun
+ติ่มซำ||港式點心|dim sum|noun
+หมาล่า||麻辣（燙、烤串）|mala|noun
+หม่าล่า||麻辣|mala|noun

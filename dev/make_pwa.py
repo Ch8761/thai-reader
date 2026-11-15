@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.35.0'
+VER = '1.36.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
@@ -35,6 +35,8 @@ for fn in os.listdir(os.path.join(D, 'helpimg', 'webp')):
 os.makedirs(os.path.join(OUT, 'ocr', 'ot2'), exist_ok=True)
 for fn in ('det.onnx', 'rec.onnx', 'rec_dict.txt', 'ort.min.js', 'ort-wasm-simd-threaded.wasm', 'ort-wasm-simd-threaded.mjs', 'thaiocr.js', 'NOTICE-OpenThai.txt'):
     shutil.copyfile(os.path.join(D, 'ocrx', fn), os.path.join(OUT, 'ocr', 'ot2', fn))
+# 補充詞彙（外來語、菜名、地名）
+shutil.copyfile(os.path.join(D, 'd2', 'dict2.txt'), os.path.join(OUT, 'dict2.txt'))
 # 泰文字體（設定裡可選；SIL OFL 1.1）
 os.makedirs(os.path.join(OUT, 'fonts'), exist_ok=True)
 for fn in sorted(os.listdir(os.path.join(D, 'thfonts'))):

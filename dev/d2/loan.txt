@@ -1,0 +1,314 @@
+# 外來語（多為英語音譯）：泰文|羅馬拼音(可空)|中文|英文|詞性
+โฟกัส||專注；焦點|focus|verb
+ไลฟ์||直播|live (stream)|verb
+ไลฟ์สด||現場直播|live stream|verb
+คอนเทนต์||內容（影片、貼文等）|content|noun
+ช็อปปิ้ง||購物|shopping|verb
+ช้อปปิ้ง||購物|shopping|verb
+ช็อป||購物；商店|shop|verb
+ฟีเจอร์||功能|feature|noun
+ฟีดแบ็ก||回饋意見|feedback|noun
+ฟีด||動態消息|feed|noun
+โพสต์||貼文；發文|post|verb
+แชร์||分享|share|verb
+คอมเมนต์||留言；評論|comment|verb
+คอมเมนท์||留言；評論|comment|verb
+ไลก์||按讚|like|verb
+ไลค์||按讚|like|verb
+ฟอลโลว์||追蹤（帳號）|follow|verb
+ฟอล||追蹤（口語）|follow (short)|verb
+แท็ก||標記|tag|verb
+แฮชแท็ก||主題標籤|hashtag|noun
+สตอรี่||限時動態；故事|story|noun
+รีวิว||評論；開箱心得|review|verb
+รีแอค||反應；做反應影片|react|verb
+รีแอคชั่น||反應|reaction|noun
+ไวรัล||爆紅；病毒式傳播|viral|adj
+เทรนด์||趨勢；流行|trend|noun
+แบรนด์||品牌|brand|noun
+โปรโมชั่น||促銷活動|promotion|noun
+โปร||優惠；專業|promo; pro|noun
+โปรโมต||宣傳|promote|verb
+ดีล||交易；優惠|deal|noun
+เซล||特賣|sale|noun
+เซลส์||業務員|salesperson|noun
+ออเดอร์||訂單|order|noun
+พรีออเดอร์||預購|pre-order|verb
+สต็อก||庫存|stock|noun
+แคมเปญ||（行銷）活動|campaign|noun
+อีเวนต์||活動|event|noun
+อีเว้นท์||活動|event|noun
+คอนเสิร์ต||演唱會|concert|noun
+แฟนมีต||粉絲見面會|fan meeting|noun
+แฟนมีตติ้ง||粉絲見面會|fan meeting|noun
+แฟนคลับ||粉絲（團）|fan club; fan|noun
+แฟนด้อม||粉絲圈|fandom|noun
+ไอดอล||偶像|idol|noun
+เซเลบ||名人|celebrity|noun
+อินฟลูเอนเซอร์||網紅|influencer|noun
+ยูทูบเบอร์||YouTuber|YouTuber|noun
+ครีเอเตอร์||創作者|creator|noun
+สตรีมเมอร์||實況主|streamer|noun
+เกมเมอร์||玩家|gamer|noun
+ซีรีส์||影集；連續劇|series|noun
+ซีรี่ส์||影集；連續劇|series|noun
+ซีซั่น||季（影集）|season|noun
+ตอน||集；時候|episode; when|noun
+เทรลเลอร์||預告片|trailer|noun
+ทีเซอร์||前導預告|teaser|noun
+สปอยล์||劇透|spoil|verb
+สปอย||劇透|spoil|verb
+ซับ||字幕|subtitle (sub)|noun
+ซับไทย||泰文字幕|Thai subtitles|noun
+พากย์||配音|dub|verb
+เอ็มวี||音樂錄影帶|MV|noun
+ซิงเกิล||單曲|single|noun
+อัลบั้ม||專輯；相簿|album|noun
+เพลย์ลิสต์||播放清單|playlist|noun
+พอดแคสต์||Podcast|podcast|noun
+แอป||應用程式（App）|app|noun
+แอพ||應用程式（App）|app|noun
+เว็บ||網站|web(site)|noun
+เว็บไซต์||網站|website|noun
+ลิงก์||連結|link|noun
+ลิงค์||連結|link|noun
+คลิก||點擊|click|verb
+คลิป||影片片段|clip|noun
+ดาวน์โหลด||下載|download|verb
+อัปโหลด||上傳|upload|verb
+อัพโหลด||上傳|upload|verb
+อัปเดต||更新|update|verb
+อัพเดท||更新|update|verb
+อัปเกรด||升級|upgrade|verb
+ล็อกอิน||登入|log in|verb
+ล็อกเอาต์||登出|log out|verb
+พาสเวิร์ด||密碼|password|noun
+แอคเคานต์||帳號|account|noun
+แอคเคาท์||帳號|account|noun
+ไอดี||帳號 ID|ID|noun
+โปรไฟล์||個人檔案|profile|noun
+แชต||聊天|chat|verb
+แชท||聊天|chat|verb
+อินบ็อกซ์||私訊|inbox|verb
+ไดเร็กต์||私訊（DM）|direct (message)|noun
+เมสเสจ||訊息|message|noun
+สติกเกอร์||貼圖；貼紙|sticker|noun
+อีโมจิ||表情符號|emoji|noun
+ฟิลเตอร์||濾鏡|filter|noun
+เซลฟี่||自拍|selfie|verb
+แคปชั่น||圖說；貼文文字|caption|noun
+แคป||截圖|screenshot (cap)|verb
+สกรีนช็อต||螢幕截圖|screenshot|noun
+ไวไฟ||無線網路|Wi-Fi|noun
+เน็ต||網路|(inter)net|noun
+อินเทอร์เน็ต||網際網路|internet|noun
+ออนไลน์||線上|online|adj
+ออฟไลน์||離線|offline|adj
+โซเชียล||社群媒體|social (media)|noun
+แพลตฟอร์ม||平台|platform|noun
+ดิจิทัล||數位|digital|adj
+เทคโนโลยี||科技|technology|noun
+สมาร์ตโฟน||智慧型手機|smartphone|noun
+สมาร์ทโฟน||智慧型手機|smartphone|noun
+แท็บเล็ต||平板電腦|tablet|noun
+โน้ตบุ๊ก||筆記型電腦|notebook (laptop)|noun
+แล็ปท็อป||筆記型電腦|laptop|noun
+ชาร์จ||充電|charge|verb
+แบต||電池（口語）|battery (short)|noun
+แบตเตอรี่||電池|battery|noun
+พาวเวอร์แบงก์||行動電源|power bank|noun
+บลูทูธ||藍牙|Bluetooth|noun
+เอไอ||人工智慧|AI|noun
+ดาต้า||資料；數據|data|noun
+ซอฟต์แวร์||軟體|software|noun
+ฮาร์ดแวร์||硬體|hardware|noun
+เซิร์ฟเวอร์||伺服器|server|noun
+คลาวด์||雲端|cloud|noun
+สแกน||掃描|scan|verb
+คิวอาร์โค้ด||QR 碼|QR code|noun
+โค้ด||代碼；優惠碼|code|noun
+บั๊ก||程式錯誤|bug|noun
+แฮก||駭入|hack|verb
+สแปม||垃圾訊息|spam|noun
+เฟค||假的|fake|adj
+เฟคนิวส์||假新聞|fake news|noun
+ดราม่า||（網路）爭議；戲劇化|drama|noun
+ทัวร์ลง||被網友圍剿（大量留言批評）|to get dogpiled online|verb
+แอนตี้||反對；黑粉|anti|verb
+แบน||抵制；封鎖|ban|verb
+บล็อก||封鎖|block|verb
+รีพอร์ต||檢舉|report|verb
+มีม||迷因|meme|noun
+ฟิน||滿足、過癮（口語）|blissed out (from "finale")|adj
+ชิล||放鬆、悠閒|chill|adj
+ชิลล์||放鬆、悠閒|chill|adj
+คูล||酷|cool|adj
+เฟรนด์ลี่||友善|friendly|adj
+แฮปปี้||開心|happy|adj
+ซีเรียส||嚴肅；認真看待|serious|adj
+เครียด||有壓力；緊繃|stressed|adj
+เซ็ง||煩悶、掃興|bummed|adj
+โอเค||好、可以|OK|intj
+โอเคร||好啦（口語）|OK (slangy)|intj
+บาย||掰掰|bye|intj
+ซอรี่||抱歉|sorry|intj
+แต๊งกิ้ว||謝謝（口語）|thank you|intj
+เซอร์ไพรส์||驚喜|surprise|verb
+ปาร์ตี้||派對|party|noun
+เดต||約會|date|verb
+แฟน||男／女朋友；粉絲|boyfriend/girlfriend; fan|noun
+กิ๊ก||曖昧對象、小三（口語）|fling; side lover|noun
+โสด||單身|single|adj
+เบรก||休息；煞車|break; brake|verb
+เบรค||休息；煞車|break; brake|verb
+ทริป||旅行|trip|noun
+ทัวร์||旅行團；導覽|tour|noun
+ไกด์||導遊|guide|noun
+เช็กอิน||打卡；報到|check in|verb
+เช็คอิน||打卡；報到|check in|verb
+เช็กเอาต์||退房|check out|verb
+เช็ก||檢查；確認|check|verb
+เช็ค||檢查；確認|check|verb
+บุ๊ก||預訂|book|verb
+แคนเซิล||取消|cancel|verb
+คอนเฟิร์ม||確認|confirm|verb
+รีเซ็ต||重設|reset|verb
+รีเฟรช||重新整理|refresh|verb
+รีเทิร์น||回歸；退貨|return|verb
+รีฟันด์||退款|refund|verb
+เคลม||申請理賠；保固維修|claim|verb
+การันตี||保證|guarantee|verb
+เซอร์วิส||服務|service|noun
+สปา||水療|spa|noun
+ฟิตเนส||健身房|fitness (gym)|noun
+ยิม||健身房|gym|noun
+โยคะ||瑜伽|yoga|noun
+เวิร์กเอาต์||健身運動|work out|verb
+ไดเอต||節食減重|diet|verb
+แคลอรี||卡路里|calorie|noun
+โปรตีน||蛋白質|protein|noun
+วิตามิน||維他命|vitamin|noun
+สกินแคร์||保養品|skincare|noun
+เมกอัป||化妝|make-up|noun
+ลิปสติก||口紅|lipstick|noun
+แฟชั่น||時尚|fashion|noun
+ลุค||造型|look|noun
+สไตล์||風格|style|noun
+ไซซ์||尺寸|size|noun
+ไซส์||尺寸|size|noun
+แพ็ก||包裝；一組|pack|noun
+แพ็กเกจ||套裝方案|package|noun
+เซต||一組；套餐|set|noun
+เซ็ต||一組；套餐|set|noun
+เมนู||菜單；菜色|menu|noun
+บุฟเฟต์||吃到飽|buffet|noun
+คาเฟ่||咖啡廳|café|noun
+เบเกอรี่||烘焙坊；麵包甜點|bakery|noun
+เค้ก||蛋糕|cake|noun
+คุกกี้||餅乾|cookie|noun
+ช็อกโกแลต||巧克力|chocolate|noun
+ไอศกรีม||冰淇淋|ice cream|noun
+ไอติม||冰淇淋（口語）|ice cream (colloquial)|noun
+โดนัท||甜甜圈|doughnut|noun
+แซนด์วิช||三明治|sandwich|noun
+เบอร์เกอร์||漢堡|burger|noun
+แฮมเบอร์เกอร์||漢堡|hamburger|noun
+เฟรนช์ฟรายส์||薯條|French fries|noun
+สเต๊ก||牛排|steak|noun
+สลัด||沙拉|salad|noun
+ซุป||湯|soup|noun
+ซอส||醬汁|sauce|noun
+ชีส||起司|cheese|noun
+เบคอน||培根|bacon|noun
+ไส้กรอก||香腸|sausage|noun
+สปาเกตตี||義大利麵|spaghetti|noun
+พาสต้า||義大利麵|pasta|noun
+ซูชิ||壽司|sushi|noun
+ราเมง||拉麵|ramen|noun
+ชาบู||涮涮鍋|shabu|noun
+สุกี้||泰式火鍋|suki (hot pot)|noun
+กาแฟ||咖啡|coffee|noun
+ลาเต้||拿鐵|latte|noun
+เอสเพรสโซ||義式濃縮|espresso|noun
+อเมริกาโน่||美式咖啡|americano|noun
+คาปูชิโน่||卡布奇諾|cappuccino|noun
+มอคค่า||摩卡|mocha|noun
+โกโก้||可可|cocoa|noun
+มัทฉะ||抹茶|matcha|noun
+สมูทตี้||冰沙|smoothie|noun
+โซดา||蘇打水|soda|noun
+เบียร์||啤酒|beer|noun
+ไวน์||葡萄酒|wine|noun
+ค็อกเทล||雞尾酒|cocktail|noun
+ออฟฟิศ||辦公室|office|noun
+มีตติ้ง||會議|meeting|noun
+ประชุมออนไลน์||線上會議|online meeting|noun
+โปรเจกต์||專案|project|noun
+โปรเจ็กต์||專案|project|noun
+เดดไลน์||截止期限|deadline|noun
+พรีเซนต์||簡報；報告|present|verb
+สไลด์||投影片|slide|noun
+ไฟล์||檔案|file|noun
+โฟลเดอร์||資料夾|folder|noun
+อีเมล์||電子郵件|e-mail|noun
+ฟอร์ม||表單；狀態|form|noun
+เทมเพลต||範本|template|noun
+สคริปต์||腳本|script|noun
+ไอเดีย||點子|idea|noun
+คอนเซปต์||概念|concept|noun
+ดีไซน์||設計|design|verb
+โลโก้||標誌|logo|noun
+กราฟิก||平面設計；圖像|graphic|noun
+ทีม||團隊|team|noun
+ทีมเวิร์ก||團隊合作|teamwork|noun
+ลีดเดอร์||領導者|leader|noun
+บอส||老闆|boss|noun
+พาร์ตเนอร์||夥伴|partner|noun
+สปอนเซอร์||贊助商|sponsor|noun
+สตาร์ตอัป||新創公司|start-up|noun
+ฟรีแลนซ์||自由工作者|freelance|noun
+พาร์ตไทม์||兼職|part-time|noun
+ฟูลไทม์||全職|full-time|noun
+โบนัส||獎金|bonus|noun
+คอมมิชชั่น||佣金|commission|noun
+เครดิต||信用；額度|credit|noun
+บัตรเครดิต||信用卡|credit card|noun
+เดบิต||簽帳（卡）|debit|noun
+แบงก์||銀行；鈔票|bank; banknote|noun
+เอทีเอ็ม||提款機|ATM|noun
+โอน||轉帳|to transfer (money)|verb
+พร้อมเพย์||PromptPay（泰國行動支付）|PromptPay|name
+แท็กซี่||計程車|taxi|noun
+มอเตอร์ไซค์||機車|motorcycle|noun
+วิน||機車計程車（口語）|motorcycle taxi (stand)|noun
+บีทีเอส||曼谷空鐵 BTS|BTS Skytrain|name
+เอ็มอาร์ที||曼谷地鐵 MRT|MRT subway|name
+ลิฟต์||電梯|lift|noun
+คอนโด||公寓大樓|condo|noun
+อพาร์ตเมนต์||公寓|apartment|noun
+โฮสเทล||青年旅館|hostel|noun
+รีสอร์ต||度假村|resort|noun
+ล็อบบี้||大廳|lobby|noun
+เคาน์เตอร์||櫃台|counter|noun
+ซูเปอร์มาร์เก็ต||超市|supermarket|noun
+มินิมาร์ท||便利商店|minimart|noun
+เซเว่น||7-11（口語）|7-Eleven (colloquial)|name
+โควิด||新冠肺炎|COVID|noun
+วัคซีน||疫苗|vaccine|noun
+ไวรัส||病毒|virus|noun
+คลินิก||診所|clinic|noun
+แอร์||冷氣；空服員|air conditioner; flight attendant|noun
+ทีวี||電視|TV|noun
+รีโมต||遙控器|remote (control)|noun
+ปลั๊ก||插頭；插座|plug|noun
+สวิตช์||開關|switch|noun
+ฟุตบอล||足球|football|noun
+บาส||籃球（口語）|basketball (short)|noun
+แบดมินตัน||羽球|badminton|noun
+วอลเลย์บอล||排球|volleyball|noun
+เทนนิส||網球|tennis|noun
+กอล์ฟ||高爾夫|golf|noun
+แชมป์||冠軍|champion|noun
+เกม||遊戲；比賽|game|noun
+เลเวล||等級|level|noun
+สกิล||技能|skill|noun

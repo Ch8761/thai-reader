@@ -1,0 +1,405 @@
+# 補充詞彙（本 App 自行整理）：泰文|羅馬拼音|中文|英文|詞性；開頭有 + 的是字典已有、只補中文
+โฟกัส||專注；焦點|focus|verb
+ไลฟ์สด||現場直播|live stream|verb
+คอนเทนต์||內容（影片、貼文等）|content|noun
+ช็อปปิ้ง||購物|shopping|verb
+ช็อป||購物；商店|shop|verb
+ฟีเจอร์||功能|feature|noun
+ฟีดแบ็ก||回饋意見|feedback|noun
+คอมเมนท์||留言；評論|comment|verb
+ไลก์||按讚|like|verb
+ไลค์||按讚|like|verb
+รีแอค||反應；做反應影片|react|verb
+รีแอคชั่น||反應|reaction|noun
+ไวรัล||爆紅；病毒式傳播|viral|adj
+เทรนด์||趨勢；流行|trend|noun
+โปร||優惠；專業|promo; pro|noun
+โปรโมต||宣傳|promote|verb
+ดีล||交易；優惠|deal|noun
+เซล||特賣|sale|noun
+เซลส์||業務員|salesperson|noun
++ออเดอร์||訂單|order|noun
+พรีออเดอร์||預購|pre-order|verb
+แคมเปญ||（行銷）活動|campaign|noun
+อีเว้นท์||活動|event|noun
+แฟนมีตติ้ง||粉絲見面會|fan meeting|noun
+แฟนด้อม||粉絲圈|fandom|noun
++เซเลบ||名人|celebrity|noun
+อินฟลูเอนเซอร์||網紅|influencer|noun
+ครีเอเตอร์||創作者|creator|noun
+สตรีมเมอร์||實況主|streamer|noun
+เกมเมอร์||玩家|gamer|noun
+ซีซั่น||季（影集）|season|noun
+เทรลเลอร์||預告片|trailer|noun
+ทีเซอร์||前導預告|teaser|noun
+สปอยล์||劇透|spoil|verb
+ซับไทย||泰文字幕|Thai subtitles|noun
+เอ็มวี||音樂錄影帶|MV|noun
+เพลย์ลิสต์||播放清單|playlist|noun
+แอพ||應用程式（App）|app|noun
+อัพโหลด||上傳|upload|verb
+อัพเดท||更新|update|verb
+อัปเกรด||升級|upgrade|verb
+ล็อกอิน||登入|log in|verb
+ล็อกเอาต์||登出|log out|verb
+พาสเวิร์ด||密碼|password|noun
+แอคเคานต์||帳號|account|noun
+แอคเคาท์||帳號|account|noun
+ไอดี||帳號 ID|ID|noun
+โปรไฟล์||個人檔案|profile|noun
+แชต||聊天|chat|verb
+แชท||聊天|chat|verb
+อินบ็อกซ์||私訊|inbox|verb
+ไดเร็กต์||私訊（DM）|direct (message)|noun
+เมสเสจ||訊息|message|noun
+อีโมจิ||表情符號|emoji|noun
+ฟิลเตอร์||濾鏡|filter|noun
+แคป||截圖|screenshot (cap)|verb
+ออฟไลน์||離線|offline|adj
+โซเชียล||社群媒體|social (media)|noun
+แพลตฟอร์ม||平台|platform|noun
+สมาร์ทโฟน||智慧型手機|smartphone|noun
+แล็ปท็อป||筆記型電腦|laptop|noun
+พาวเวอร์แบงก์||行動電源|power bank|noun
+บลูทูธ||藍牙|Bluetooth|noun
+ดาต้า||資料；數據|data|noun
+คลาวด์||雲端|cloud|noun
+คิวอาร์โค้ด||QR 碼|QR code|noun
+บั๊ก||程式錯誤|bug|noun
+แฮก||駭入|hack|verb
+สแปม||垃圾訊息|spam|noun
++เฟค||假的|fake|adj
+เฟคนิวส์||假新聞|fake news|noun
++ทัวร์ลง||被網友圍剿（大量留言批評）|to get dogpiled online|verb
+แอนตี้||反對；黑粉|anti|verb
+รีพอร์ต||檢舉|report|verb
+ชิลล์||放鬆、悠閒|chill|adj
+คูล||酷|cool|adj
+เฟรนด์ลี่||友善|friendly|adj
++แฮปปี้||開心|happy|adj
+โอเคร||好啦（口語）|OK (slangy)|intj
+ซอรี่||抱歉|sorry|intj
+แต๊งกิ้ว||謝謝（口語）|thank you|intj
+เดต||約會|date|verb
+เบรค||休息；煞車|break; brake|verb
+ทริป||旅行|trip|noun
+เช็กอิน||打卡；報到|check in|verb
+เช็คอิน||打卡；報到|check in|verb
+เช็กเอาต์||退房|check out|verb
+แคนเซิล||取消|cancel|verb
+คอนเฟิร์ม||確認|confirm|verb
+รีเซ็ต||重設|reset|verb
+รีเฟรช||重新整理|refresh|verb
+รีเทิร์น||回歸；退貨|return|verb
+รีฟันด์||退款|refund|verb
+การันตี||保證|guarantee|verb
+เซอร์วิส||服務|service|noun
+ฟิตเนส||健身房|fitness (gym)|noun
+เวิร์กเอาต์||健身運動|work out|verb
+ไดเอต||節食減重|diet|verb
+สกินแคร์||保養品|skincare|noun
+ลุค||造型|look|noun
+ไซส์||尺寸|size|noun
+แพ็ก||包裝；一組|pack|noun
+แพ็กเกจ||套裝方案|package|noun
+เซต||一組；套餐|set|noun
+เซ็ต||一組；套餐|set|noun
+เบเกอรี่||烘焙坊；麵包甜點|bakery|noun
++เบอร์เกอร์||漢堡|burger|noun
+เฟรนช์ฟรายส์||薯條|French fries|noun
+พาสต้า||義大利麵|pasta|noun
+ราเมง||拉麵|ramen|noun
+ชาบู||涮涮鍋|shabu|noun
+ลาเต้||拿鐵|latte|noun
+เอสเพรสโซ||義式濃縮|espresso|noun
+อเมริกาโน่||美式咖啡|americano|noun
+คาปูชิโน่||卡布奇諾|cappuccino|noun
+มอคค่า||摩卡|mocha|noun
+มัทฉะ||抹茶|matcha|noun
+สมูทตี้||冰沙|smoothie|noun
+มีตติ้ง||會議|meeting|noun
+ประชุมออนไลน์||線上會議|online meeting|noun
+โปรเจกต์||專案|project|noun
+โปรเจ็กต์||專案|project|noun
+เดดไลน์||截止期限|deadline|noun
+พรีเซนต์||簡報；報告|present|verb
+สไลด์||投影片|slide|noun
++อีเมล์||電子郵件|e-mail|noun
+เทมเพลต||範本|template|noun
+สคริปต์||腳本|script|noun
+คอนเซปต์||概念|concept|noun
+โลโก้||標誌|logo|noun
+ทีมเวิร์ก||團隊合作|teamwork|noun
+ลีดเดอร์||領導者|leader|noun
+พาร์ตเนอร์||夥伴|partner|noun
+สปอนเซอร์||贊助商|sponsor|noun
+สตาร์ตอัป||新創公司|start-up|noun
+ฟรีแลนซ์||自由工作者|freelance|noun
+พาร์ตไทม์||兼職|part-time|noun
+ฟูลไทม์||全職|full-time|noun
+โบนัส||獎金|bonus|noun
+คอมมิชชั่น||佣金|commission|noun
+เดบิต||簽帳（卡）|debit|noun
+พร้อมเพย์||PromptPay（泰國行動支付）|PromptPay|name
++มอเตอร์ไซค์||機車|motorcycle|noun
++วิน||機車計程車（口語）|motorcycle taxi (stand)|noun
+บีทีเอส||曼谷空鐵 BTS|BTS Skytrain|name
+เอ็มอาร์ที||曼谷地鐵 MRT|MRT subway|name
+คอนโด||公寓大樓|condo|noun
+อพาร์ตเมนต์||公寓|apartment|noun
+โฮสเทล||青年旅館|hostel|noun
+รีสอร์ต||度假村|resort|noun
+ล็อบบี้||大廳|lobby|noun
+เซเว่น||7-11（口語）|7-Eleven (colloquial)|name
++โควิด||新冠肺炎|COVID|noun
+บาส||籃球（口語）|basketball (short)|noun
+เลเวล||等級|level|noun
+สกิล||技能|skill|noun
+ผัดกะเพรา||打拋（羅勒葉炒肉）|stir-fry with holy basil|noun
+กะเพราหมูสับ||打拋豬（羅勒炒豬絞肉）|minced pork with holy basil|noun
+กะเพราไก่||打拋雞|chicken with holy basil|noun
+ข้าวกะเพรา||打拋飯|rice with holy-basil stir-fry|noun
+ข้าวไข่เจียว||煎蛋飯|omelette on rice|noun
+ข้าวผัดกุ้ง||蝦仁炒飯|shrimp fried rice|noun
+ข้าวผัดปู||蟹肉炒飯|crab fried rice|noun
+ข้าวผัดสับปะรด||鳳梨炒飯|pineapple fried rice|noun
++ข้าวมันไก่||海南雞飯|chicken rice|noun
+ข้าวมันไก่ทอด||炸雞飯|fried chicken rice|noun
+ข้าวหมูแดง||叉燒飯|red BBQ pork on rice|noun
+ข้าวหมูกรอบ||脆皮豬肉飯|crispy pork on rice|noun
++ข้าวขาหมู||豬腳飯|stewed pork leg on rice|noun
+ข้าวหน้าเป็ด||鴨肉飯|duck on rice|noun
++ข้าวต้ม||稀飯|rice soup|noun
++ข้าวเหนียวมะม่วง||芒果糯米飯|mango sticky rice|noun
++ข้าวสวย||白飯|steamed rice|noun
+ข้าวเปล่า||白飯|plain rice|noun
++ข้าวซอย||泰北咖哩麵|khao soi (northern curry noodles)|noun
++ข้าวแกง||咖哩飯（自助配菜飯）|rice with curry|noun
+ข้าวราดแกง||咖哩蓋飯|rice topped with curry|noun
++ข้าวคลุกกะปิ||蝦醬拌飯|rice mixed with shrimp paste|noun
+ข้าวยำ||泰南香草拌飯|southern rice salad|noun
++ต้มยำ||酸辣湯|tom yam|noun
++ต้มยำกุ้ง||酸辣蝦湯（冬蔭功）|tom yam kung|noun
+ต้มข่าไก่||椰奶南薑雞湯|chicken in coconut-galangal soup|noun
+ต้มแซ่บ||東北酸辣湯|spicy Isan soup|noun
+ต้มจืด||清湯|clear soup|noun
+แกงเขียวหวาน||綠咖哩|green curry|noun
++แกงเผ็ด||紅咖哩|red curry|noun
+แกงมัสมั่น||瑪莎曼咖哩|massaman curry|noun
+แกงพะแนง||帕能咖哩|panang curry|noun
++พะแนง||帕能咖哩|panang curry|noun
+แกงจืด||清湯|clear soup|noun
+แกงกะหรี่||黃咖哩|yellow curry|noun
++แกงป่า||叢林咖哩（無椰奶）|jungle curry|noun
++แกงไตปลา||泰南魚內臟咖哩|southern fish-innards curry|noun
+แกงฮังเล||泰北豬肉咖哩|northern hang-le curry|noun
++ส้มตำ||青木瓜沙拉|green papaya salad|noun
+ส้มตำไทย||泰式青木瓜沙拉（不加醃魚）|Thai-style papaya salad|noun
+ตำปูปลาร้า||螃蟹醃魚青木瓜沙拉|papaya salad with crab and fermented fish|noun
++ปลาร้า||醃魚醬|fermented fish|noun
+ลาบหมู||涼拌豬絞肉|pork larb|noun
+ยำวุ้นเส้น||涼拌冬粉|glass noodle salad|noun
+ยำทะเล||涼拌海鮮|seafood salad|noun
+ยำมะม่วง||涼拌青芒果|green mango salad|noun
+ไก่ย่าง||烤雞|grilled chicken|noun
+หมูปิ้ง||烤豬肉串|grilled pork skewers|noun
++หมูกรอบ||脆皮豬肉|crispy pork|noun
++หมูแดง||叉燒|red BBQ pork|noun
+หมูสับ||豬絞肉|minced pork|noun
++หมูกระทะ||泰式烤肉火鍋|Thai BBQ hot pot|noun
+คอหมูย่าง||烤豬頸肉|grilled pork neck|noun
++ไส้อั่ว||泰北香腸|northern Thai sausage|noun
++แหนม||酸肉（發酵豬肉）|fermented pork|noun
+หมูยอ||越式豬肉捲|pork roll|noun
+ลูกชิ้นปิ้ง||烤丸子|grilled meatballs|noun
+หมูสะเต๊ะ||豬肉沙嗲|pork satay|noun
++ปอเปี๊ยะ||春捲|spring roll|noun
+ปอเปี๊ยะทอด||炸春捲|fried spring roll|noun
++ทอดมัน||炸魚餅|fried fish cake|noun
+ทอดมันกุ้ง||炸蝦餅|fried shrimp cake|noun
+กุ้งเผา||烤蝦|grilled prawns|noun
+กุ้งอบวุ้นเส้น||冬粉蝦煲|baked prawns with glass noodles|noun
+ปลาทอด||炸魚|fried fish|noun
+ปลาเผา||鹽烤魚|salt-grilled fish|noun
+ปลากะพง||鱸魚|sea bass|noun
+ปลากะพงนึ่งมะนาว||檸檬蒸鱸魚|steamed sea bass with lime|noun
+ปูผัดผงกะหรี่||咖哩炒蟹|crab in curry powder|noun
++หอยทอด||蚵仔煎（酥脆版）|crispy oyster/mussel pancake|noun
++ออส่วน||蚵仔煎（軟版）|oyster omelette|noun
+ผัดผัก||炒青菜|stir-fried vegetables|noun
+ผัดผักบุ้ง||炒空心菜|stir-fried morning glory|noun
+ผักบุ้งไฟแดง||大火炒空心菜|flash-fried morning glory|noun
++ผัดขี้เมา||醉漢炒麵|drunken noodles|noun
++ราดหน้า||勾芡粿條|noodles in gravy|noun
+ผัดพริกแกง||紅咖哩醬炒肉|stir-fry with curry paste|noun
+ผัดเปรี้ยวหวาน||糖醋炒|sweet and sour stir-fry|noun
+ผัดกระเทียม||蒜炒|stir-fried with garlic|noun
+หมูทอดกระเทียม||蒜香炸豬肉|fried pork with garlic|noun
+ไก่ผัดเม็ดมะม่วง||腰果雞丁|chicken with cashew nuts|noun
++ก๋วยเตี๋ยว||粿條；麵|noodles|noun
+ก๋วยเตี๋ยวเรือ||船麵|boat noodles|noun
+ก๋วยเตี๋ยวต้มยำ||酸辣湯麵|tom yam noodles|noun
++ก๋วยจั๊บ||粿汁（捲粉湯）|rolled rice noodle soup|noun
++เส้นเล็ก||細粿條|thin rice noodles|noun
++เส้นหมี่||米粉|rice vermicelli|noun
+บะหมี่เกี๊ยว||餛飩麵|wonton noodles|noun
+เย็นตาโฟ||釀豆腐（粉紅湯麵）|yen ta fo (pink noodle soup)|noun
++ขนมจีน||泰式米線|khanom chin (rice noodles)|noun
+ขนมจีนน้ำยา||魚咖哩米線|rice noodles with fish curry|noun
++น้ำพริก||辣椒醬（沾醬）|chilli dip|noun
+น้ำพริกกะปิ||蝦醬辣椒醬|shrimp-paste chilli dip|noun
+น้ำพริกหนุ่ม||泰北青辣椒醬|northern green chilli dip|noun
+น้ำพริกอ่อง||泰北番茄肉醬|northern tomato-pork dip|noun
++น้ำจิ้ม||沾醬|dipping sauce|noun
+น้ำจิ้มแจ่ว||東北辣沾醬|Isan chilli dipping sauce|noun
++น้ำปลา||魚露|fish sauce|noun
++พริกน้ำปลา||辣椒魚露|chillies in fish sauce|noun
++กะปิ||蝦醬|shrimp paste|noun
+พริกป่น||辣椒粉|chilli flakes|noun
++กะเพรา||打拋葉（聖羅勒）|holy basil|noun
++โหระพา||九層塔（甜羅勒）|Thai sweet basil|noun
+ใบมะกรูด||檸檬葉|kaffir lime leaf|noun
+ผักชี||香菜|coriander|noun
+ส้มโอ||柚子|pomelo|noun
++แก้วมังกร||火龍果|dragon fruit|noun
+ชาไทย||泰式奶茶|Thai tea|noun
++ชานม||奶茶|milk tea|noun
++ชานมไข่มุก||珍珠奶茶|bubble tea|noun
+ชามะนาว||檸檬茶|lime tea|noun
++โอเลี้ยง||泰式黑冰咖啡|Thai iced black coffee|noun
+นมเย็น||粉紅冰牛奶|pink iced milk|noun
++น้ำเปล่า||白開水|plain water|noun
+น้ำปั่น||冰沙|blended fruit drink|noun
+น้ำใบเตย||香蘭葉茶|pandan drink|noun
+น้ำอัญชัน||蝶豆花茶|butterfly-pea drink|noun
+น้ำเก๊กฮวย||菊花茶|chrysanthemum tea|noun
+น้ำกระเจี๊ยบ||洛神花茶|roselle drink|noun
+ขนมครก||椰奶小煎餅|coconut pancakes|noun
++ขนมเบื้อง||泰式脆餅|crispy pancakes|noun
+ขนมถ้วย||椰奶碗糕|coconut custard cups|noun
+ขนมชั้น||千層糕|layered sweet|noun
+ทองหยิบ||金花糕（蛋黃甜點）|golden egg-yolk sweet|noun
+ทองหยอด||金球（蛋黃甜點）|golden egg-yolk drops|noun
++ฝอยทอง||金絲（蛋黃甜點）|golden egg-yolk threads|noun
++บัวลอย||椰奶湯圓|rice balls in coconut milk|noun
++ลอดช่อง||椰奶粉條|pandan noodles in coconut milk|noun
+ทับทิมกรอบ||紅寶石（椰奶馬蹄）|red rubies dessert|noun
+กล้วยทอด||炸香蕉|fried banana|noun
+กล้วยบวชชี||椰奶香蕉|banana in coconut milk|noun
+ขนมปังสังขยา||卡士達麵包|bread with pandan custard|noun
++ปาท่องโก๋||油條|Chinese doughnut|noun
++ซาลาเปา||包子|steamed bun|noun
++ขนมจีบ||燒賣|shumai|noun
+หมาล่า||麻辣（燙、烤串）|mala|noun
+หม่าล่า||麻辣|mala|noun
++กรุงเทพฯ||曼谷|Bangkok|name
++กรุงเทพมหานคร||曼谷（正式名稱）|Bangkok (official name)|name
++เชียงราย||清萊|Chiang Rai|name
++ลำพูน||南奔|Lamphun|name
++แม่ฮ่องสอน||湄宏順|Mae Hong Son|name
++พะเยา||帕堯|Phayao|name
++อุตรดิตถ์||程逸|Uttaradit|name
++สุโขทัย||素可泰|Sukhothai|name
++พิษณุโลก||彭世洛|Phitsanulok|name
++กำแพงเพชร||甘烹碧|Kamphaeng Phet|name
++เพชรบูรณ์||碧差汶|Phetchabun|name
++นครสวรรค์||那空沙旺（北欖坡）|Nakhon Sawan|name
++อุทัยธานี||烏泰他尼|Uthai Thani|name
++ชัยนาท||猜納|Chai Nat|name
++สิงห์บุรี||信武里|Sing Buri|name
++ลพบุรี||華富里|Lopburi|name
++อ่างทอง||紅統|Ang Thong|name
++สระบุรี||北標|Saraburi|name
++นนทบุรี||暖武里|Nonthaburi|name
++ปทุมธานี||巴吞他尼|Pathum Thani|name
++สมุทรปราการ||北欖|Samut Prakan|name
++สมุทรสาคร||龍仔厝|Samut Sakhon|name
++สมุทรสงคราม||夜功|Samut Songkhram|name
++นครปฐม||佛統|Nakhon Pathom|name
++สุพรรณบุรี||素攀武里|Suphan Buri|name
++กาญจนบุรี||北碧|Kanchanaburi|name
++ราชบุรี||叻丕|Ratchaburi|name
++เพชรบุรี||佛丕|Phetchaburi|name
++ประจวบคีรีขันธ์||巴蜀|Prachuap Khiri Khan|name
++นครนายก||那空那育|Nakhon Nayok|name
++ปราจีนบุรี||巴真|Prachin Buri|name
++สระแก้ว||沙繳|Sa Kaeo|name
++ฉะเชิงเทรา||北柳|Chachoengsao|name
++ชลบุรี||春武里|Chonburi|name
++จันทบุรี||尖竹汶|Chanthaburi|name
++ตราด||達叻|Trat|name
++นครราชสีมา||呵叻（那空叻差是瑪）|Nakhon Ratchasima|name
++โคราช||呵叻|Korat|name
++บุรีรัมย์||武里南|Buriram|name
++ศรีสะเกษ||四色菊|Sisaket|name
++อุบลราชธานี||烏汶|Ubon Ratchathani|name
++ยโสธร||益梭通|Yasothon|name
++อำนาจเจริญ||安納乍能|Amnat Charoen|name
++ขอนแก่น||孔敬|Khon Kaen|name
++มหาสารคาม||瑪哈沙拉堪|Maha Sarakham|name
++ร้อยเอ็ด||黎逸|Roi Et|name
++กาฬสินธุ์||加拉信|Kalasin|name
++สกลนคร||色軍|Sakon Nakhon|name
++นครพนม||那空帕農|Nakhon Phanom|name
++อุดรธานี||烏隆|Udon Thani|name
++หนองคาย||廊開|Nong Khai|name
++หนองบัวลำภู||廊磨喃蒲|Nong Bua Lamphu|name
++บึงกาฬ||汶干|Bueng Kan|name
++ชุมพร||春蓬|Chumphon|name
++ระนอง||拉廊|Ranong|name
++สุราษฎร์ธานี||素叻他尼|Surat Thani|name
++พังงา||攀牙|Phang Nga|name
++นครศรีธรรมราช||洛坤（那空是貪瑪叻）|Nakhon Si Thammarat|name
++พัทลุง||博他侖|Phatthalung|name
++สตูล||沙敦|Satun|name
++ปัตตานี||北大年|Pattani|name
++นราธิวาส||陶公|Narathiwat|name
++หัวหิน||華欣|Hua Hin|name
+ชะอำ||七岩|Cha-am|name
+เกาะสมุย||蘇美島|Ko Samui|name
+สมุย||蘇美島|Samui|name
+เกาะพะงัน||帕岸島|Ko Pha-ngan|name
+เกาะเต่า||龜島|Ko Tao|name
+เกาะพีพี||皮皮島|Ko Phi Phi|name
+เกาะช้าง||象島|Ko Chang|name
+เกาะเสม็ด||沙美島|Ko Samet|name
+เกาะหลีเป๊ะ||麗貝島|Ko Lipe|name
+เกาะล้าน||格蘭島|Ko Lan|name
+เกาะลันตา||蘭塔島|Ko Lanta|name
++หาดใหญ่||合艾|Hat Yai|name
+ปาย||拜縣|Pai|name
+เขาใหญ่||考艾（國家公園）|Khao Yai|name
+เขาหลัก||考拉|Khao Lak|name
+ดอยสุเทพ||素帖山|Doi Suthep|name
+ดอยอินทนนท์||因他暖山（泰國最高峰）|Doi Inthanon|name
++แม่สาย||美塞|Mae Sai|name
+แม่สอด||美索|Mae Sot|name
++สามเหลี่ยมทองคำ||金三角|Golden Triangle|name
+ดำเนินสะดวก||丹能莎朵（水上市場）|Damnoen Saduak|name
++สุวรรณภูมิ||蘇凡納布（機場）|Suvarnabhumi (airport)|name
++สุขุมวิท||素坤逸（路）|Sukhumvit|name
+สีลม||是隆（路）|Silom|name
+สาทร||沙吞（路）|Sathon|name
++ทองหล่อ||通羅|Thong Lo|name
++จตุจักร||恰圖恰（週末市集）|Chatuchak|name
+รัชดา||拉差達|Ratchada|name
++ลาดพร้าว||拉拋|Lat Phrao|name
+บางนา||邦納|Bang Na|name
+แม่น้ำเจ้าพระยา||昭披耶河|Chao Phraya River|name
++แม่น้ำโขง||湄公河|Mekong River|name
+วัดพระแก้ว||玉佛寺|Wat Phra Kaew (Emerald Buddha Temple)|name
+วัดโพธิ์||臥佛寺|Wat Pho|name
+วัดอรุณ||鄭王廟（黎明寺）|Wat Arun|name
+พระบรมมหาราชวัง||大皇宮|Grand Palace|name
+วัดร่องขุ่น||白廟（清萊）|Wat Rong Khun (White Temple)|name
+ไอคอนสยาม||暹羅天地（ICONSIAM）|ICONSIAM|name
+สยามพารากอน||暹羅百麗宮|Siam Paragon|name
+เซ็นทรัลเวิลด์||中央世界購物中心|CentralWorld|name
+เอ็มบีเค||MBK 購物中心|MBK Center|name
+เทอร์มินอล 21||Terminal 21 購物中心|Terminal 21|name
+เอเชียทีค||河濱碼頭夜市|Asiatique|name
+ภาคเหนือ||泰北|Northern Thailand|noun
+ภาคอีสาน||泰國東北（伊善）|Isan (Northeast)|noun
+ภาคใต้||泰南|Southern Thailand|noun
+ภาคกลาง||泰國中部|Central Thailand|noun
++สิงคโปร์||新加坡|Singapore|name
