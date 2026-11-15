@@ -22,3 +22,7 @@
 
 依 CC BY-SA，本專案整理後的字典資料以相同授權（CC BY-SA 4.0）提供。
 Longdo Dict 與 thai2english 只提供開啟其網站的連結，沒有複製任何內容。
+
+## 文字辨識
+
+圖片與掃描 PDF 的泰文辨識使用 OpenThai2.0-OCR-Text（iApp Technology，Apache-2.0；文字偵測為 PaddlePaddle PP-OCRv6，Apache-2.0），以 ONNX Runtime Web（MIT）在裝置上執行。檔案在 `ocr/ot1/`。

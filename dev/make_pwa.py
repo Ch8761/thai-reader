@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.33.0'
+VER = '1.34.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
@@ -31,6 +31,10 @@ shutil.copyfile(os.path.join(D, 'tones.json'), os.path.join(OUT, 'tones.json'))
 shutil.copyfile(os.path.join(D, 'reader.json'), os.path.join(OUT, 'reader.json'))
 for fn in os.listdir(os.path.join(D, 'helpimg', 'webp')):
     shutil.copyfile(os.path.join(D, 'helpimg', 'webp', fn), os.path.join(OUT, 'help', fn))
+# 新的泰文辨識（OpenThai2.0-OCR-Text ＋ ONNX Runtime Web）：放在 ocr/ot1/（資料夾名稱帶版本，內容有改就換名字，因為 ocr/ 底下的檔案會一直留在裝置上）
+os.makedirs(os.path.join(OUT, 'ocr', 'ot1'), exist_ok=True)
+for fn in ('det.onnx', 'rec.onnx', 'rec_dict.txt', 'ort.min.js', 'ort-wasm-simd-threaded.wasm', 'ort-wasm-simd-threaded.mjs', 'thaiocr.js', 'NOTICE-OpenThai.txt'):
+    shutil.copyfile(os.path.join(D, 'ocrx', fn), os.path.join(OUT, 'ocr', 'ot1', fn))
 NM = os.path.join(D, 'ocrpkg', 'node_modules')
 for sub in ('ocr/core', 'ocr/lang', 'ocr/lang2'):
     os.makedirs(os.path.join(OUT, sub), exist_ok=True)
