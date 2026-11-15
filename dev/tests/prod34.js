@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
   await p.setInputFiles('#imgfile', ['ocrtest/photo.jpg']); await p.waitForTimeout(1200); await p.click('#phOk');
   let txt = '';
   for (let i = 0; i < 80; i++) { await p.waitForTimeout(500); txt = await p.evaluate(() => document.getElementById('view-doc').textContent); if (/ไต้หวัน/.test(txt)) break; }
-  const ok = /ปธน.ไต้หวันเตือนให้ระวัง/.test(txt) && reqs.some(r => /^ot1\/det\.onnx/.test(r)) && !reqs.some(r => /tesseract/.test(r));
+  const ok = /ปธน.ไต้หวันเตือนให้ระวัง/.test(txt) && reqs.some(r => /^ot2\/det\.onnx/.test(r)) && !reqs.some(r => /tesseract/.test(r));
   console.log(ok ? 'PASS' : 'FAIL', '正式版：照片用新版辨識讀出泰文，沒有下載舊工具', reqs.join(','), errs.join('|'));
   await b.close(); process.exit(ok ? 0 : 1);
 })();

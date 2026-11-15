@@ -1,5 +1,5 @@
   /* ====== 1.34：新的泰文辨識（OpenThai2.0-OCR-Text，在裝置上跑）；舊的 Tesseract 留作中文與備援 ====== */
-  var OT_DIR = 'ot1/', ot = { ready: null, failed: false, err: '' };
+  var OT_DIR = 'ot2/', ot = { ready: null, failed: false, err: '' };
   function otOn() { try { return localStorage.getItem('thai-ocr-engine') !== 'old'; } catch (err) { return true; } }
   var _ensureOcr42 = ensureOcr;
   function otLoad() {
@@ -41,6 +41,35 @@
     } finally { try { await w.setParameters({ tessedit_pageseg_mode: '3' }); } catch (err) {} }
     if (added) { lines.sort(function (a, b2) { var ay = (a.bbox.y0 + a.bbox.y1) / 2, by = (b2.bbox.y0 + b2.bbox.y1) / 2, h = Math.min(a.bbox.y1 - a.bbox.y0, b2.bbox.y1 - b2.bbox.y0); return Math.abs(ay - by) < h * 0.5 ? a.bbox.x0 - b2.bbox.x0 : ay - by; }); }
   }
+  /* 少數造型很特別的字體（很寬的無圈廣告體），新版會把 ร 認成 ธ、ว 認成 อ。
+     讀出來的行如果拼不出字典裡的詞，就請舊工具也讀一次，同一行取「拼得出比較多詞」的那個 */
+  var otMix = { runs: 0, swaps: 0 };
+  async function otSecondOpinion(cv, r) {
+    if (!DICT) { return; }
+    var lines = r.data.blocks[0].paragraphs[0].lines, bad = [], thai = 0;
+    lines.forEach(function (ln, i) {
+      if ((ln.text.match(/[\u0E01-\u0E2E]/g) || []).length < 3) { return; }
+      thai++; ln._kn = vidKnown(ln.text);
+      if (ln._kn < 0.9) { bad.push(i); }
+    });
+    if (!bad.length || (thai > 3 && bad.length / thai < 0.2)) { return; }
+    var w = await _ensureOcr42();
+    otMix.runs++;
+    try {
+      await w.setParameters({ tessedit_pageseg_mode: '7' });
+      for (var q = 0; q < bad.length && q < 12; q++) {
+        var a = lines[bad[q]], bb = a.bbox, bw = bb.x1 - bb.x0, bh = bb.y1 - bb.y0, pad = Math.round(bh * 0.2), k = Math.min(3, Math.max(1, 70 / bh));
+        var c = document.createElement('canvas'); c.width = Math.round((bw + 2 * pad) * k); c.height = Math.round((bh + 2 * pad) * k);
+        var g = c.getContext('2d'); g.imageSmoothingQuality = 'high';
+        g.drawImage(cv, Math.max(0, bb.x0 - pad), Math.max(0, bb.y0 - pad), bw + 2 * pad, bh + 2 * pad, 0, 0, c.width, c.height);
+        var res = await w.recognize(c, {}, { blocks: false, text: true, hocr: false, tsv: false });
+        var tx = String(res.data.text || '').replace(/\s+/g, ' ').trim(), kn = vidKnown(tx);
+        if ((res.data.confidence || 0) >= 70 && /[\u0E01-\u0E2E]/.test(tx) && kn >= a._kn + 0.1 && Math.abs(tx.replace(/\s/g, '').length - a.text.replace(/\s/g, '').length) <= Math.max(3, a.text.length * 0.3)) {
+          lines[bad[q]] = otTessLine(tx, res.data.confidence, { x: bb.x0, y: bb.y0, w: bw, h: bh }); otMix.swaps++;
+        }
+      }
+    } finally { try { await w.setParameters({ tessedit_pageseg_mode: '3' }); } catch (err) {} ocr.engine = '已載入（新版辨識）'; }
+  }
   var otWorker = {
     ot: true,
     setParameters: function () { return Promise.resolve(); },
@@ -48,6 +77,13 @@
     recognize: async function (cv) {
       var r = await window.ThaiOCR.recognize(cv);
       if (ocrZh() !== 'off' && r.dropped.length) { try { await otChinese(cv, r); } catch (err) {} ocr.engine = '已載入（新版辨識）'; }
+      try { await otSecondOpinion(cv, r); } catch (err) {}
+      return { data: r.data };
+    },
+    /* 影片用：只讀，不找舊工具幫忙（影片那邊本來就會拿幾種讀法互相比） */
+    recognizeOnly: async function (cv) {
+      var r = await window.ThaiOCR.recognize(cv);
+      if (ocrZh() !== 'off' && r.dropped.length) { try { await otChinese(cv, r); } catch (err) {} }
       return { data: r.data };
     }
   };

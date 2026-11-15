@@ -80,8 +80,25 @@
     }
     var win = Math.max(3, Math.min(h | 1, 255)), half = win >> 1, bg2 = new Float32Array(w), tmp = [];
     for (x = 0; x < w; x++) { tmp.length = 0; for (var j = Math.max(0, x - half); j <= Math.min(w - 1, x + half); j++) { tmp.push(bg[j]); } tmp.sort(function (a, b) { return a - b; }); bg2[x] = tmp[tmp.length >> 1]; }
-    var d = new Float32Array(w * h), hist = new Uint32Array(256);
-    for (y = 0; y < h; y++) { for (x = 0; x < w; x++) { var v = Math.abs(gray[y * w + x] - bg2[x]); d[y * w + x] = v; hist[Math.min(255, v | 0)]++; } }
+    var d = new Float32Array(w * h), hist = new Uint32Array(256), sd = new Float32Array(w * h), TT = 40, pos = 0, neg = 0, i0;
+    for (y = 0; y < h; y++) { for (x = 0; x < w; x++) { var sv = gray[y * w + x] - bg2[x]; sd[y * w + x] = sv; if (sv > TT) { pos++; } else if (sv < -TT) { neg++; } } }
+    /* 有描邊的字（白字黑邊、黑字白邊）：畫面上同時有「比背景亮」和「比背景暗」兩種筆畫。
+       被另一種顏色包住、碰不到背景的那一種才是字本身，邊框那一種當成背景，不然字會糊成一團 */
+    var sign = 0;
+    if (pos && neg && Math.min(pos, neg) > 0.25 * Math.max(pos, neg)) {
+      /* 從背景走進筆畫時，先碰到的那一種顏色是邊框 */
+      var vp = 0, vn = 0;
+      for (y = 0; y < h; y++) {
+        var run = 4;
+        for (x = 0; x < w; x++) {
+          var c0 = sd[y * w + x];
+          if (c0 > TT || c0 < -TT) { if (run >= 4) { if (c0 > 0) { vp++; } else { vn++; } } run = 0; }
+          else { run++; }
+        }
+      }
+      if (vn > 3 * vp) { sign = 1; } else if (vp > 3 * vn) { sign = -1; }
+    }
+    for (i0 = 0; i0 < w * h; i0++) { var v = sign ? Math.max(0, sign * sd[i0]) : Math.abs(sd[i0]); d[i0] = v; hist[Math.min(255, v | 0)]++; }
     var tot = w * h, acc = 0, hi = 255;
     for (var i = 0; i < 256; i++) { acc += hist[i]; if (acc >= 0.98 * tot) { hi = i; break; } }
     hi = Math.max(hi, 24);

@@ -7,7 +7,7 @@ const ZH = /[㐀-鿿]/;
   const open = async (opts) => {
     const p = await b.newPage({ viewport: { width: 820, height: 1180 } }); p.setDefaultTimeout(8000); p.errs = [];
     p.on('pageerror', e => p.errs.push(String(e).slice(0, 200)));
-    if (opts.block) { await p.route('**/ocr/ot1/**', r => r.abort()); }
+    if (opts.block) { await p.route('**/ocr/ot2/**', r => r.abort()); }
     await p.goto('http://127.0.0.1:8765/index.html');
     await p.evaluate((o) => { localStorage.clear(); localStorage.setItem('thai-welcome-v1', '1'); localStorage.setItem('thai-quest-quiet', '1'); if (o.en) localStorage.setItem('thai-ui-lang', 'en'); if (o.old) localStorage.setItem('thai-ocr-engine', 'old'); if (o.zhoff) localStorage.setItem('thai-ocr-zh', 'off'); }, opts);
     await p.reload(); await p.waitForTimeout(1300);
