@@ -1,0 +1,139 @@
+# 方言（東北話＝伊善話、北部話＝คำเมือง、南部話）：泰文|羅馬拼音(可空)|中文|英文|詞性
+# 中文開頭用【】標明是哪裡的方言，並寫出對應的中部（標準）說法
+บ่||【東北話、北部話】不（＝ไม่）；放句尾是「嗎」|(Isan, Northern) not; question particle|adv
+เว้า||【東北話】說、講（＝พูด）|(Isan) to speak|verb
+แซ่บ||【東北話】好吃（＝อร่อย）；現在全國都用，也指「夠辣、夠勁」|(Isan) delicious; spicy, hot|adj
+แซ่บหลาย||【東北話】非常好吃（＝อร่อยมาก）|(Isan) very delicious|adj
+เด้อ||【東北話】句尾語氣詞，表示叮嚀、親切（類似 นะ）|(Isan) friendly final particle|part
+เด้อค่ะ||【東北話】句尾語氣詞＋ค่ะ|(Isan) final particle + kha|part
+อีหลี||【東北話】真的（＝จริง ๆ）|(Isan) really|adv
+ข่อย||【東北話】我（＝ฉัน／ผม）|(Isan) I, me|pron
+เฮา||【東北話、北部話】我們；我（＝เรา）|(Isan, Northern) we; I|pron
+เบิ่ง||【東北話】看（＝ดู）|(Isan) to look|verb
+ไส||【東北話】哪裡（＝ไหน）|(Isan) where|adv
+ไปไส||【東北話】去哪裡（＝ไปไหน）|(Isan) where are you going|phrase
+อยู่ไส||【東北話】在哪裡（＝อยู่ไหน）|(Isan) where is it|phrase
+เฮ็ด||【東北話】做（＝ทำ）|(Isan) to do|verb
+หยัง||【東北話、北部話】什麼（＝อะไร）|(Isan, Northern) what|pron
+อิหยัง||【東北話】什麼（＝อะไร）|(Isan) what|pron
+เฮ็ดหยัง||【東北話】做什麼（＝ทำอะไร）|(Isan) doing what|phrase
+จั่งใด๋||【東北話】怎麼樣（＝ยังไง）|(Isan) how|adv
+จั่งซี้||【東北話】這樣（＝อย่างนี้）|(Isan) like this|adv
+จั่งซั้น||【東北話】那樣（＝อย่างนั้น）|(Isan) like that|adv
+ย้อนว่า||【東北話】因為（＝เพราะว่า）|(Isan) because|conj
+มัก||【東北話】喜歡（＝ชอบ）；中部話是「常常」|(Isan) to like|verb
+ฮัก||【東北話、北部話】愛（＝รัก）|(Isan, Northern) to love|verb
+คึดฮอด||【東北話】想念（＝คิดถึง）|(Isan) to miss|verb
+บ่เป็นหยัง||【東北話】沒關係（＝ไม่เป็นไร）|(Isan) never mind|phrase
+เฮือน||【東北話、北部話】房子、家（＝บ้าน／เรือน）|(Isan, Northern) house|noun
+ผู้สาว||【東北話】女孩；女朋友|(Isan) young woman; girlfriend|noun
+ผู้บ่าว||【東北話】男孩；男朋友|(Isan) young man; boyfriend|noun
+อ้าย||【東北話、北部話】哥哥；女生稱男友或年長男性|(Isan, Northern) older brother; boyfriend|noun
+เอื้อย||【東北話】姊姊（＝พี่สาว）|(Isan) older sister|noun
+มื้อนี้||【東北話】今天（＝วันนี้）|(Isan) today|adv
+มื้ออื่น||【東北話】明天（＝พรุ่งนี้）|(Isan) tomorrow|adv
+มื้อวาน||【東北話】昨天（＝เมื่อวาน）|(Isan) yesterday|adv
+ม่วน||【東北話、北部話】好玩、開心（＝สนุก）|(Isan, Northern) fun|adj
+ม่วนหลาย||【東北話】很好玩（＝สนุกมาก）|(Isan) great fun|adj
+หลาย||【東北話】很、非常（＝มาก）；中部話是「許多」|(Isan) very|adv
+คัก||【東北話】很、極；很棒|(Isan) very; great|adv
+โพด||【東北話】太、過頭（＝เกินไป）|(Isan) too much|adv
+แม่น||【東北話】是、對（＝ใช่）|(Isan) yes, correct|adj
+บ่แม่น||【東北話】不是（＝ไม่ใช่）|(Isan) no, not so|phrase
+สิ||【東北話】將要（＝จะ）；中部話是句尾語氣詞|(Isan) will|part
+กะ||【東北話】也、就（＝ก็）|(Isan) also; then|part
+นำ||【東北話】跟、一起（＝ด้วย／กับ）；中部話是「帶領」|(Isan) with, along|prep
+ย่าง||【東北話】走路（＝เดิน）；中部話是「烤」|(Isan) to walk|verb
+แล่น||【東北話】跑（＝วิ่ง）|(Isan) to run|verb
+เข่า||【東北話】飯、米（＝ข้าว）；中部話是「膝蓋」|(Isan) rice|noun
+กินเข่า||【東北話】吃飯（＝กินข้าว）|(Isan) to eat (a meal)|phrase
+ปลาแดก||【東北話】醃魚醬（＝ปลาร้า）|(Isan) fermented fish|noun
+บักหุ่ง||【東北話】木瓜（＝มะละกอ）|(Isan) papaya|noun
+ตำบักหุ่ง||【東北話】青木瓜沙拉（＝ส้มตำ）|(Isan) papaya salad|noun
+บัก||【東北話】加在水果名或男性名字前的字頭（＝มะ／ไอ้）|(Isan) prefix for fruit names or males|part
+ขี้ตั๋ว||【東北話】說謊（＝โกหก）|(Isan) to lie|verb
+ซ่อย||【東北話】幫忙（＝ช่วย）|(Isan) to help|verb
+ฟ้าว||【東北話】趕快（＝รีบ）|(Isan) to hurry|verb
+เซา||【東北話】停止（＝หยุด）|(Isan) to stop|verb
+ฮู้||【東北話、北部話】知道（＝รู้）|(Isan, Northern) to know|verb
+บ่ฮู้||【東北話、北部話】不知道（＝ไม่รู้）|(Isan, Northern) don't know|phrase
+เบิด||【東北話】完了、全部（＝หมด）|(Isan) finished; all|adv
+ฮ้อน||【東北話、北部話】熱（＝ร้อน）|(Isan, Northern) hot|adj
+สำบายดี||【東北話、寮語】你好；好嗎（＝สบายดี）|(Isan, Lao) hello; how are you|phrase
+สำบายดีบ่||【東北話】你好嗎（＝สบายดีไหม）|(Isan) how are you|phrase
+โชคดีเด้อ||【東北話】祝你好運喔|(Isan) good luck|phrase
+ขอบใจหลายๆ||【東北話】非常謝謝（＝ขอบคุณมาก）|(Isan) thank you very much|phrase
+ขอบใจหลาย||【東北話】非常謝謝（＝ขอบคุณมาก）|(Isan) thank you very much|phrase
+ดุ๋||【東北話】常常（＝บ่อย）|(Isan) often|adv
+อยากสิ||【東北話】想要（＝อยากจะ）|(Isan) want to|phrase
+หมู่||【東北話】朋友（＝เพื่อน）；中部話是「群、組」|(Isan) friend|noun
+เจ้า||【北部話】女性的句尾禮貌詞（＝ค่ะ）；【東北話】你|(Northern) polite particle for women; (Isan) you|part
+สวัสดีเจ้า||【北部話】你好（女性說，＝สวัสดีค่ะ）|(Northern) hello (female speaker)|phrase
+ขอบคุณเจ้า||【北部話】謝謝（女性說）|(Northern) thank you (female speaker)|phrase
+ก่อ||【北部話】句尾的「嗎」（＝ไหม）|(Northern) question particle|part
+อู้||【北部話】說、講（＝พูด）|(Northern) to speak|verb
+อู้กำเมือง||【北部話】說北部話|(Northern) to speak Northern Thai|phrase
+กำเมือง||【北部話】北部話（＝คำเมือง）|(Northern) the Northern Thai language|noun
+คำเมือง||北部話（蘭納語）|Northern Thai language|noun
+ลำ||【北部話】好吃（＝อร่อย）|(Northern) delicious|adj
+ลำแต๊ๆ||【北部話】真的很好吃|(Northern) really delicious|phrase
+แต๊||【北部話】真的（＝จริง）|(Northern) really|adv
+แต๊ๆ||【北部話】真的（＝จริง ๆ）|(Northern) really|adv
+ขนาด||【北部話】很、非常（＝มาก）；中部話是「尺寸、連…都」|(Northern) very|adv
+จ้าดนัก||【北部話】非常多、非常（＝มาก ๆ）|(Northern) very much|adv
+นัก||【北部話】多、很（＝มาก）|(Northern) much, many|adv
+ตังใด||【北部話】哪裡（＝ที่ไหน）|(Northern) where|adv
+ยะ||【北部話】做（＝ทำ）|(Northern) to do|verb
+ยะหยัง||【北部話】做什麼（＝ทำอะไร）|(Northern) doing what|phrase
+เปิ้น||【北部話】我（禮貌自稱）；他、別人|(Northern) I (polite); he, others|pron
+ตั๋ว||【北部話】你（親近的人，＝เธอ）；中部話是「票」|(Northern) you (intimate)|pron
+คิง||【北部話】你（朋友間，較粗）|(Northern) you (casual, rough)|pron
+ฮา||【北部話】我（朋友間，較粗）|(Northern) I (casual, rough)|pron
+ปี้||【北部話】哥哥、姊姊（＝พี่）|(Northern) older sibling|noun
+กึ๊ด||【北部話】想（＝คิด）|(Northern) to think|verb
+กึ๊ดเติงหา||【北部話】想念（＝คิดถึง）|(Northern) to miss|verb
+จ๊าง||【北部話】會（能力）；大象（＝ช้าง）|(Northern) can; elephant|verb
+บ่จ๊าง||【北部話】不會（＝ไม่เป็น）|(Northern) cannot|phrase
+ยินดีจ้าดนัก||【北部話】非常感謝|(Northern) thank you very much|phrase
+ยินดีเจ้า||【北部話】謝謝（女性說）|(Northern) thank you (female speaker)|phrase
+เน้อ||【北部話】句尾語氣詞，表示叮嚀（類似 นะ）|(Northern) friendly final particle|part
+กาด||【北部話】市場（＝ตลาด）|(Northern) market|noun
+ละอ่อน||【北部話】小孩（＝เด็ก）|(Northern) child|noun
+แม่ญิง||【北部話】女人（＝ผู้หญิง）|(Northern) woman|noun
+ป้อจาย||【北部話】男人（＝ผู้ชาย）|(Northern) man|noun
+ป้อ||【北部話】爸爸（＝พ่อ）|(Northern) father|noun
+อุ๊ย||【北部話】爺爺、奶奶（稱呼老人家）；中部話是驚訝的「哎呀」|(Northern) grandparent|noun
+แอ่ว||【北部話】去玩、逛（＝เที่ยว）|(Northern) to go out, to visit|verb
+ไปแอ่ว||【北部話】去玩（＝ไปเที่ยว）|(Northern) to go out for fun|phrase
+กิ๋น||【北部話】吃（＝กิน）|(Northern) to eat|verb
+กิ๋นข้าว||【北部話】吃飯（＝กินข้าว）|(Northern) to eat (a meal)|phrase
+จ้วย||【北部話】幫忙（＝ช่วย）|(Northern) to help|verb
+หัน||【北部話】看見（＝เห็น）；中部話是「轉」|(Northern) to see|verb
+ผ่อ||【北部話】看（＝ดู）|(Northern) to look|verb
+จะอี้||【北部話】這樣（＝อย่างนี้）|(Northern) like this|adv
+จะอั้น||【北部話】那樣（＝อย่างนั้น）|(Northern) like that|adv
+จะใด||【北部話】怎麼樣（＝ยังไง）|(Northern) how|adv
+ป๊ะ||【北部話】遇見（＝พบ／เจอ）|(Northern) to meet|verb
+หื้อ||【北部話】給、讓（＝ให้）|(Northern) to give; to let|verb
+ง่าว||【北部話】笨、傻（＝โง่）|(Northern) stupid|adj
+หรอย||【南部話】好吃（＝อร่อย）|(Southern) delicious|adj
+หรอยจังฮู้||【南部話】超級好吃|(Southern) extremely delicious|phrase
+จังฮู้||【南部話】很多、非常（＝มาก）|(Southern) very much|adv
+จังหู้||【南部話】很多、非常（＝มาก）|(Southern) very much|adv
+แหลง||【南部話】說、講（＝พูด）|(Southern) to speak|verb
+แหลงใต้||【南部話】說南部話|(Southern) to speak Southern Thai|phrase
+พรือ||【南部話】怎麼樣（＝ยังไง）|(Southern) how|adv
+พันพรือ||【南部話】怎麼樣、如何（＝เป็นยังไง）|(Southern) how is it|phrase
+ไหร||【南部話】什麼（＝อะไร）|(Southern) what|pron
+ทำไหร||【南部話】做什麼（＝ทำอะไร）|(Southern) doing what|phrase
+หม้าย||【南部話】句尾的「嗎」（＝ไหม）；沒有（＝ไม่มี）|(Southern) question particle; there is none|part
+นุ้ย||【南部話】小（＝เล็ก）；晚輩或女生的自稱|(Southern) small; "I" (younger speaker)|adj
+ขี้หก||【南部話】說謊（＝โกหก）|(Southern) to lie|verb
+หวังเหวิด||【南部話】擔心（＝เป็นห่วง）|(Southern) to worry|verb
+พี่บ่าว||【南部話】哥哥（＝พี่ชาย）|(Southern) older brother|noun
+น้องบ่าว||【南部話】弟弟（＝น้องชาย）|(Southern) younger brother|noun
+หลบบ้าน||【南部話】回家（＝กลับบ้าน）|(Southern) to go home|phrase
+หลบ||【南部話】回去（＝กลับ）；中部話是「躲」|(Southern) to return|verb
+แต่วา||【南部話】昨天（＝เมื่อวาน）|(Southern) yesterday|adv
+ต่อเช้า||【南部話】明天（＝พรุ่งนี้）|(Southern) tomorrow|adv
+ฉาน||【南部話】我（＝ฉัน）|(Southern) I|pron

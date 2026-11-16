@@ -9,6 +9,13 @@
       if (!line || line.charAt(0) === '#') { return; }
       var p = line.split('|'); if (p.length < 3 || !p[0]) { return; }
       var w = p[0].trim(), plus = w.charAt(0) === '+';
+      if (w.charAt(0) === '~') {
+        /* 方言、流行語：字典已有這個字的話，另外加一個意思，不蓋掉原本的 */
+        w = w.slice(1);
+        var ne = [(p[4] || 'noun').trim(), p[1] || '', '', [p[3] || ''], [p[2] || ''], 2];
+        if (Object.prototype.hasOwnProperty.call(DICT, w)) { DICT[w].push(ne); } else { DICT[w] = [ne]; }
+        n++; return;
+      }
       if (plus) {
         /* 字典本來就有、只是沒有中文：補上中文 */
         w = w.slice(1); var e0 = Object.prototype.hasOwnProperty.call(DICT, w) && DICT[w][0];
