@@ -312,3 +312,11 @@
 เกม||遊戲；比賽|game|noun
 เลเวล||等級|level|noun
 สกิล||技能|skill|noun
+มีเดีย||媒體|media|noun
+โซเชียลมีเดีย||社群媒體|social media|noun
+เทอร์มินอล||航廈；總站（Terminal 21 購物中心也叫這個）|terminal|noun
+จอห์น||約翰（人名）|John|noun
+เซนต์||聖（聖人、校名用）|Saint|noun
+แอนด์||和（英文 and 的音譯）|and|conj
+ร็อกแอนด์โรล||搖滾樂|rock and roll|noun
+จอห์นสัน||強森（人名）|Johnson|noun
