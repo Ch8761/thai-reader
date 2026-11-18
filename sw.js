@@ -1,12 +1,20 @@
 /* 泰文閱讀的離線程式。改版時把 VERSION 加一，iPad 會自動換成新版。 */
-const VERSION = 'thai-reader-v1.42.0';
+const VERSION = 'thai-reader-v1.43.0';
 const OCR_CACHE = 'thai-reader-ocr-5.1.1';
+const DATA_CACHE = 'thai-reader-data';
+/* 字典等大資料：檔名帶內容雜湊，存在自己的快取，改版時只下載有變的那幾個 */
+const DATA = ["./data/dictdata.141e3db9b1.js", "./data/namedata.08e9f56c75.js", "./data/ocrfix.4ed03b5549.js", "./data/freqdata.109ebd697a.js", "./data/celebdata.7e26f0d726.js", "./data/lib-pdflib.f87b3575e0.js", "./data/lib-pdfjs.5adb988897.js", "./data/lib-pdfworker.23c6ba23da.js"];
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
+  const getData = (c) => Promise.all(DATA.map((u) => c.match(u).then((hit) => (hit ? null : c.add(u)))));
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE))
+    .then(() => caches.open(DATA_CACHE)).then(getData)
+    .then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== OCR_CACHE).map((k) => caches.delete(k))))
+  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== OCR_CACHE && k !== DATA_CACHE).map((k) => caches.delete(k))))
+    /* 舊版的資料檔不再用到：刪掉 */
+    .then(() => caches.open(DATA_CACHE)).then((c) => c.keys().then((ks) => Promise.all(ks.filter((r) => !DATA.some((u) => r.url.endsWith(u.slice(1)))).map((r) => c.delete(r)))))
     /* 舊的辨識模型（ocr/lang/）不再使用，從快取刪掉 */
     .then(() => caches.open(OCR_CACHE)).then((c) => c.keys().then((ks) => Promise.all(ks.filter((r) => r.url.indexOf('/ocr/lang/') >= 0).map((r) => c.delete(r)))))
     .then(() => self.clients.claim()));
@@ -24,6 +32,10 @@ self.addEventListener('fetch', (e) => {
   }
   /* 讀取文章的小程式：每次都上網，不存起來 */
   if (url.origin === location.origin && url.pathname.indexOf('/api/') >= 0) { return; }
+  if (url.origin === location.origin && url.pathname.indexOf('/data/') >= 0) {
+    e.respondWith(caches.open(DATA_CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => { if (res && res.ok) { c.put(req, res.clone()); } return res; }))));
+    return;
+  }
   if (url.origin === location.origin && url.pathname.indexOf('/ocr/') >= 0) {
     /* 文字辨識工具（約 8 MB）：存在另一個快取，改版時不用重新下載 */
     e.respondWith(caches.open(OCR_CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => { if (res && res.ok) { c.put(req, res.clone()); } return res; }))));

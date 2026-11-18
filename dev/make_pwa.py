@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.42.0'
+VER = '1.43.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
@@ -179,6 +179,25 @@ html = PWA_HEAD + head + '\n</head>\n<body>\n' + body + SW_REG + '</body>\n</htm
 assert '�' not in html
 
 os.makedirs(OUT + '/icons', exist_ok=True)
+# 1.43：大的內嵌資料（字典、人名、函式庫…）拆成另外的檔案。檔名帶內容雜湊，內容沒變就不用重新下載；
+# 頁面每次開都會上網拿最新版，拆開後每次只要下載約 1 MB 而不是 9 MB。
+import hashlib, shutil, re as _re
+DATA_IDS = ['dictdata', 'namedata', 'ocrfix', 'freqdata', 'celebdata', 'lib-pdflib', 'lib-pdfjs', 'lib-pdfworker']
+shutil.rmtree(OUT + '/data', ignore_errors=True); os.makedirs(OUT + '/data', exist_ok=True)
+DATA_FILES = []
+for did in DATA_IDS:
+    m = _re.search(r'<script([^>]*\bid="' + _re.escape(did) + r'"[^>]*)>', html)
+    assert m, did
+    end = html.index('</script>', m.end())
+    attrs, text = m.group(1), html[m.end():end]
+    tm = _re.search(r'type="([^"]+)"', attrs)
+    typ = tm.group(1) if tm else 'text/plain'
+    js = '(function(){var s=document.createElement("script");s.type=' + json.dumps(typ) + ';s.id=' + json.dumps(did) + ';s.text=' + json.dumps(text, ensure_ascii=False) + ';var c=document.currentScript;c.parentNode.insertBefore(s,c);})();\n'
+    h = hashlib.sha1(js.encode('utf-8')).hexdigest()[:10]
+    fn = 'data/' + did + '.' + h + '.js'
+    open(OUT + '/' + fn, 'w', encoding='utf-8').write(js)
+    DATA_FILES.append('./' + fn)
+    html = html[:m.start()] + '<script src="' + fn + '"></script>' + html[end + len('</script>'):]
 open(OUT + '/index.html', 'w', encoding='utf-8').write(html)
 
 manifest = {
@@ -197,12 +216,20 @@ json.dump(manifest, open(OUT + '/manifest.webmanifest', 'w', encoding='utf-8'), 
 SW = '''/* 泰文閱讀的離線程式。改版時把 VERSION 加一，iPad 會自動換成新版。 */
 const VERSION = 'thai-reader-v%s';
 const OCR_CACHE = 'thai-reader-ocr-5.1.1';
+const DATA_CACHE = 'thai-reader-data';
+/* 字典等大資料：檔名帶內容雜湊，存在自己的快取，改版時只下載有變的那幾個 */
+const DATA = %s;
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
+  const getData = (c) => Promise.all(DATA.map((u) => c.match(u).then((hit) => (hit ? null : c.add(u)))));
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE))
+    .then(() => caches.open(DATA_CACHE)).then(getData)
+    .then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== OCR_CACHE).map((k) => caches.delete(k))))
+  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== OCR_CACHE && k !== DATA_CACHE).map((k) => caches.delete(k))))
+    /* 舊版的資料檔不再用到：刪掉 */
+    .then(() => caches.open(DATA_CACHE)).then((c) => c.keys().then((ks) => Promise.all(ks.filter((r) => !DATA.some((u) => r.url.endsWith(u.slice(1)))).map((r) => c.delete(r)))))
     /* 舊的辨識模型（ocr/lang/）不再使用，從快取刪掉 */
     .then(() => caches.open(OCR_CACHE)).then((c) => c.keys().then((ks) => Promise.all(ks.filter((r) => r.url.indexOf('/ocr/lang/') >= 0).map((r) => c.delete(r)))))
     .then(() => self.clients.claim()));
@@ -220,6 +247,10 @@ self.addEventListener('fetch', (e) => {
   }
   /* 讀取文章的小程式：每次都上網，不存起來 */
   if (url.origin === location.origin && url.pathname.indexOf('/api/') >= 0) { return; }
+  if (url.origin === location.origin && url.pathname.indexOf('/data/') >= 0) {
+    e.respondWith(caches.open(DATA_CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => { if (res && res.ok) { c.put(req, res.clone()); } return res; }))));
+    return;
+  }
   if (url.origin === location.origin && url.pathname.indexOf('/ocr/') >= 0) {
     /* 文字辨識工具（約 8 MB）：存在另一個快取，改版時不用重新下載 */
     e.respondWith(caches.open(OCR_CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => { if (res && res.ok) { c.put(req, res.clone()); } return res; }))));
@@ -233,8 +264,10 @@ self.addEventListener('fetch', (e) => {
     })));
   }
 });
-''' % VER
+''' % (VER, json.dumps(DATA_FILES))
 open(OUT + '/sw.js', 'w', encoding='utf-8').write(SW)
+import subprocess
+subprocess.run(['node', '--check', OUT + '/sw.js'], check=True)  # sw.js 寫錯會讓整個 App 無法更新，先檢查語法
 
 # 圖示：綠色圓角方塊；上面奶油色「ไทย」，中間一條線，線下寫「Reader」
 def icon(size, pad=0.0, rounded=True):
