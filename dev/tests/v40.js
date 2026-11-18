@@ -12,7 +12,7 @@ let fails = 0; const ok = (n, c, x) => { if (!c) fails++; console.log((c ? 'PASS
     await p.reload(); await p.waitForTimeout(1800);
     const E = c => p.evaluate(c => window.__ev(c), c);
     // 主頁
-    ok(lang + ' 任務和讀物庫在同一行小字', await E("$('homeQuiet').contains($('questCard')) && $('homeQuiet').contains($('readerOpen'))"));
+    ok(lang + ' 任務在一行小字裡（1.42 起讀物庫移到匯入旁）', await E("$('homeQuiet').contains($('questCard')) && document.querySelector('#view-home .importbar').contains($('readerOpen'))"));
     ok(lang + ' 任務不再是有框的大橫條', await E("getComputedStyle($('questCard')).borderTopWidth") === '0px');
     ok(lang + ' 讀物庫照常打開', await E("$('readerOpen').click(); !rdWrap.hidden"));
     await E("rdClose(); 1");
