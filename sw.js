@@ -1,5 +1,5 @@
 /* 泰文閱讀的離線程式。改版時把 VERSION 加一，iPad 會自動換成新版。 */
-const VERSION = 'thai-reader-v1.44.0';
+const VERSION = 'thai-reader-v1.45.0';
 const OCR_CACHE = 'thai-reader-ocr-5.1.1';
 const DATA_CACHE = 'thai-reader-data';
 /* 字典等大資料：檔名帶內容雜湊，存在自己的快取，改版時只下載有變的那幾個 */

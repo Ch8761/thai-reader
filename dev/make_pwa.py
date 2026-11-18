@@ -3,7 +3,7 @@ import os, json, shutil
 from PIL import Image, ImageDraw, ImageFont
 D = os.path.dirname(os.path.abspath(__file__))
 OUT = '/home/claude/thai-reader'
-VER = '1.44.0'
+VER = '1.45.0'
 s = open(os.path.join(D, 'thai-notes-test.html'), encoding='utf-8').read()
 
 def rep(old, new, count=1):
@@ -197,7 +197,10 @@ for did in DATA_IDS:
     fn = 'data/' + did + '.' + h + '.js'
     open(OUT + '/' + fn, 'w', encoding='utf-8').write(js)
     DATA_FILES.append('./' + fn)
-    html = html[:m.start()] + '<script src="' + fn + '"></script>' + html[end + len('</script>'):]
+    html = html[:m.start()] + '<script src="' + fn + '" onerror="(window.__dataFail=window.__dataFail||[]).push(\'' + did + '\')"></script>' + html[end + len('</script>'):]
+# 資料檔的網址：App 啟動後發現哪個沒載到，會用這個清單自己補載
+urls = {fn.split('/')[-1].split('.')[0]: fn[2:] for fn in DATA_FILES}
+html = html.replace('</head>', '<script>window.__DATA_URLS=' + json.dumps(urls) + ';</script>\n</head>', 1)
 open(OUT + '/index.html', 'w', encoding='utf-8').write(html)
 
 manifest = {

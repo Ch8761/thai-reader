@@ -1897,22 +1897,16 @@ svg.achfl.fl-off { display: none; }
 #view-settings.set2 .setgrp > .setrow.hasswitch { flex-direction: row; flex-wrap: wrap; align-items: center; }
 #view-settings.set2 .setrow.hasswitch > .setlabel { flex: 1 1 0; min-width: 0; }
 #view-settings.set2 .setrow.hasswitch > :not(.setlabel):not(.swt):not(.swhidden) { flex-basis: 100%; order: 3; }
-/* iPad：左邊分類、右邊內容 */
-@media (min-width: 760px) {
-  #view-settings.set2 .settings { display: grid; grid-template-columns: 260px minmax(0, 1fr); column-gap: 28px; align-items: start; }
-  #view-settings.set2 .setsum { grid-column: 1; grid-row: 1; }
-  #view-settings.set2 .setmenu, #view-settings.set2 .setmenu[hidden] { grid-column: 1; grid-row: 2; display: flex !important; }
-  #view-settings.set2 .setgrp, #view-settings.set2 .setmainonly, #view-settings.set2 .testtools { grid-column: 2; grid-row: 1 / span 40; }
-  #view-settings.set2 .vhead .back { display: none !important; }
-  #view-settings.set2 .setmi .smchev { display: none; }
-  #view-settings.set2 .setsum .ssav { width: 40px; height: 40px; font-size: 21px; }
-}
 @media (max-width: 600px) {
   #view-settings.set2 .setgrp > .setrow:not(.hasswitch) { flex-direction: column; align-items: stretch; }
   #view-settings.set2 .setgrp > .setrow:not(.hasswitch) .seg:not(#thFontGroup):not(#fontGroup) { display: grid; }
 }
+
+#view-settings.set3 .settings { max-width: 760px; }
+.setsum.away { display: none !important; }
 .appverrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; } .appverrow .appver { margin: 0; } .appverrow #checkUpd { min-height: 36px; font-size: 14px; border-radius: 999px; } .appverrow .updmsg { font-size: 14px; color: var(--muted); flex-basis: 100%; } .appverrow .updmsg:empty { display: none; }
 </style>
+<script>window.__DATA_URLS={"dictdata": "data/dictdata.26bbd268f1.js", "namedata": "data/namedata.08e9f56c75.js", "ocrfix": "data/ocrfix.4ed03b5549.js", "freqdata": "data/freqdata.109ebd697a.js", "celebdata": "data/celebdata.efa3059955.js", "lib-pdflib": "data/lib-pdflib.f87b3575e0.js", "lib-pdfjs": "data/lib-pdfjs.5adb988897.js", "lib-pdfworker": "data/lib-pdfworker.23c6ba23da.js"};</script>
 </head>
 <body>
 
@@ -2198,7 +2192,7 @@ svg.achfl.fl-off { display: none; }
       <button type="button" class="toggle" id="showTl" aria-pressed="false">顯示</button>
     </div>
   </div>
-    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.44.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
+    <div class="appverrow"><p class="label appver">ไทย Reader 正式版 v1.45.0</p><button type="button" id="checkUpd">檢查更新</button><span class="updmsg" id="updMsg" aria-live="polite"></span></div>
     <details class="testtools" hidden>
       <summary>測試工具（逐項檢查、回報給 Claude）</summary>
   <section aria-labelledby="h-checks">
@@ -3454,11 +3448,11 @@ window.GRAMMAR = window.GRAMMAR.concat([
   window.GRAMMAR.forEach(function (g) { if (add[g.id] && g.m.words) { g.m.words = g.m.words.concat(add[g.id]); } });
 })();
 </script>
-<script src="data/dictdata.26bbd268f1.js"></script>
-<script src="data/namedata.08e9f56c75.js"></script>
-<script src="data/ocrfix.4ed03b5549.js"></script>
-<script src="data/freqdata.109ebd697a.js"></script>
-<script src="data/celebdata.efa3059955.js"></script>
+<script src="data/dictdata.26bbd268f1.js" onerror="(window.__dataFail=window.__dataFail||[]).push('dictdata')"></script>
+<script src="data/namedata.08e9f56c75.js" onerror="(window.__dataFail=window.__dataFail||[]).push('namedata')"></script>
+<script src="data/ocrfix.4ed03b5549.js" onerror="(window.__dataFail=window.__dataFail||[]).push('ocrfix')"></script>
+<script src="data/freqdata.109ebd697a.js" onerror="(window.__dataFail=window.__dataFail||[]).push('freqdata')"></script>
+<script src="data/celebdata.efa3059955.js" onerror="(window.__dataFail=window.__dataFail||[]).push('celebdata')"></script>
 <script type="text/plain" id="slangdata"># 網路用語、口語、可愛說法：泰文|拼音|中文|英文
 งับ|ngáp|「ครับ」的可愛說法（句尾禮貌語氣詞，男女都會用）|cute form of khráp
 ค้าบ|kháap|「ครับ」的可愛說法|cute form of khráp
@@ -3614,7 +3608,7 @@ window.GRAMMAR = window.GRAMMAR.concat([
 ทำได้|tham-dâai|做得到、可以做|can do, be able to do|verb
 มิใช่|mí-châi|（書面）不是、並非|is not (formal)|adv
 ชำรุด|cham-rút|損壞、破損|damaged, broken|adj</script>
-<script src="data/lib-pdflib.f87b3575e0.js"></script>
+<script src="data/lib-pdflib.f87b3575e0.js" onerror="(window.__dataFail=window.__dataFail||[]).push('lib-pdflib')"></script>
 <script type="text/plain" id="lib-pdffix">/* 泰文 PDF 修復：在交給 PDF.js 之前，用字型裡的資訊把壞掉的「字形→文字」對照表修好。
    三種線索：(1) 字形名稱（例如 totaothai_maithothai = ต้）
              (2) 組合字形（標準聲調字形其實是「借用」移位聲調的外形）
@@ -3966,8 +3960,8 @@ window.GRAMMAR = window.GRAMMAR.concat([
   root.ThaiPdfFix = { fixPdfBytes: fixPdfBytes, cleanText: cleanText, garbageCount: garbageCount, nameToUni: nameToUni };
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
-<script src="data/lib-pdfjs.5adb988897.js"></script>
-<script src="data/lib-pdfworker.23c6ba23da.js"></script>
+<script src="data/lib-pdfjs.5adb988897.js" onerror="(window.__dataFail=window.__dataFail||[]).push('lib-pdfjs')"></script>
+<script src="data/lib-pdfworker.23c6ba23da.js" onerror="(window.__dataFail=window.__dataFail||[]).push('lib-pdfworker')"></script>
 <script>
 (function () {
   var PAGE_W = 640, EXTRA = 240, STORE = 'thai-notes-test-v1';
@@ -7776,7 +7770,7 @@ window.GRAMMAR = window.GRAMMAR.concat([
   updateCardButton();
 
   /* ---------- 意見回饋：存到這個測試頁的資料庫，只有擁有者看得到全部 ---------- */
-  var APP_VER = '正式版 v1.44.0';
+  var APP_VER = '正式版 v1.45.0';
   /* Google 表單：每則回饋同時送一份過去，表單再連到試算表 */
   var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc8n5I7EjtxBvTbUM_Z6MkzIElceZYvuDK3Nc9RqWNV08J38w/';
   var GF_ENTRY = { cat: 'entry.26173553', text: 'entry.919369813', ctx: 'entry.94901169' };
@@ -10850,7 +10844,6 @@ window.GRAMMAR = window.GRAMMAR.concat([
     var cur = null;
     window.settingsOpen = settingsOpen;
     function settingsOpen(key) {
-      if (!key && window.matchMedia && window.matchMedia('(min-width: 760px)').matches) { key = cur || 'look'; }
       cur = key && boxes[key] ? key : null;
       menu.querySelectorAll('.setmi').forEach(function (m) { if (m.getAttribute('data-grp') === cur) { m.setAttribute('aria-current', 'page'); } else { m.removeAttribute('aria-current'); } });
       menu.hidden = !!cur; back.hidden = !cur;
@@ -15610,6 +15603,77 @@ window.GRAMMAR = window.GRAMMAR.concat([
   })();
   /* 手機：點進某一類時，上面的程度卡片收起來 */
   (function () { var menu = document.querySelector('#view-settings .setmenu'), sm = $('setSummary'); if (!menu || !sm) { return; } function f() { sm.classList.toggle('away', menu.hidden); } new MutationObserver(f).observe(menu, { attributes: true, attributeFilter: ['hidden'] }); f(); })();
+  /* ==== 1.45：字典等資料沒載到時自動補載（避免整篇被當成「查不到／外來語」）；設定頁 iPad 也用點進去的頁面、說明收回「?」 ==== */
+  function errNote(kind, msg) {
+    try { var a = JSON.parse(localStorage.getItem('thai-errlog') || '[]'); a.push({ t: Date.now(), k: kind, m: String(msg).slice(0, 300), s: '', l: 0 }); localStorage.setItem('thai-errlog', JSON.stringify(a.slice(-10))); } catch (err) {}
+  }
+  var dataFixing = {};
+  function dataMissing(id) {
+    if (id === 'dictdata') { return !DICT; }
+    if (id === 'namedata') { return !entsReady; }
+    if (id === 'celebdata') { return !gazBuiltin || !gazBuiltin.length; }
+    if (id === 'freqdata') { return !rrRank && !$('freqdata'); }
+    if (id === 'ocrfix') { return !$('ocrfix') && (typeof OCR_FIX === 'undefined' || !OCR_FIX || !Object.keys(OCR_FIX).length); }
+    return false;
+  }
+  function dataApply(id) {
+    try {
+      if (id === 'dictdata') { loadDict(); }
+      else if (id === 'namedata') { loadNames(); }
+      else if (id === 'celebdata') { gazBuiltin = null; gazBuild(); }
+      else if (id === 'freqdata') { rrRank = null; }
+      else if (id === 'ocrfix') { if (typeof OCR_FIX !== 'undefined') { OCR_FIX = null; } }
+    } catch (err) { errNote('data', id + ' apply: ' + (err && err.message || err)); }
+  }
+  function dataRedraw() {
+    try { if (state.text) { segs = segment(state.text); renderText(); } } catch (err) {}
+    try { renderHome(); } catch (err) {}
+  }
+  function dataRecover(tries) {
+    var U = window.__DATA_URLS; if (!U) { return; }
+    var need = Object.keys(U).filter(function (id) { return !/^lib-/.test(id) && dataMissing(id) && !dataFixing[id]; });
+    if (!need.length) { return; }
+    errNote('data', '資料沒有載到，自動補載：' + need.join(',') + ((window.__dataFail || []).length ? '（載入失敗：' + window.__dataFail.join(',') + '）' : ''));
+    var left = need.length, okAny = false;
+    need.forEach(function (id) {
+      dataFixing[id] = 1;
+      var old = document.getElementById(id); if (old && !old.textContent) { old.remove(); }
+      var sc = document.createElement('script'); sc.src = U[id] + (tries ? '?r=' + tries : '');
+      sc.onload = function () { dataFixing[id] = 0; dataApply(id); if (!dataMissing(id)) { okAny = true; } if (--left === 0) { done(); } };
+      sc.onerror = function () { dataFixing[id] = 0; if (--left === 0) { done(); } };
+      document.head.appendChild(sc);
+    });
+    function done() {
+      if (okAny) { dataRedraw(); }
+      var still = need.filter(dataMissing);
+      if (still.length && (tries || 0) < 5) { setTimeout(function () { dataRecover((tries || 0) + 1); }, 4000 * ((tries || 0) + 1)); }
+      else if (still.length) { errNote('data', '補載失敗：' + still.join(',')); }
+    }
+  }
+  setTimeout(function () { dataRecover(0); }, 300);
+  window.addEventListener('online', function () { dataRecover(1); });
+
+  /* 斷詞：瀏覽器把一整串泰文當成一個詞（沒有泰文斷詞字典）時，也用字典切開 */
+  var _repairSeg53 = repairSeg;
+  repairSeg = function (out) {
+    if (DICT) {
+      out = [].concat.apply([], out.map(function (x) {
+        if (!x.w || x.gz || x.t.length < 8 || !/^[ก-๎]+$/.test(x.t) || known(x.t)) { return [x]; }
+        var fx = null; try { fx = repairRun(x.t); } catch (err) {}
+        if (!fx || fx.parts.length < 2 || (x.t.length < 12 && !fx.parts.every(function (q) { return q[2]; }))) { return [x]; }
+        return fx.parts.map(function (p) { return { i: x.i + p[0], n: p[1] - p[0], w: true, t: x.t.slice(p[0], p[1]) }; });
+      }));
+    }
+    return _repairSeg53(out);
+  };
+
+  /* 設定：說明只放在「?」裡；iPad 也是點分類進到那一頁 */
+  (function () {
+    var view = $('view-settings'); if (!view) { return; }
+    view.querySelectorAll('.setdesc').forEach(function (d) { d.remove(); });
+    view.querySelectorAll('.setlabel .qhelp').forEach(function (q) { q.hidden = false; });
+    view.classList.add('set3');
+  })();
   function armed(btn, label, confirmLabel, action) {
     var timer = null;
     btn.addEventListener('click', function () {

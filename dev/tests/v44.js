@@ -17,18 +17,15 @@ let fails = 0; const ok = (n, c, x) => { if (!c) fails++; console.log((c ? 'PASS
       const n = await p.locator('#view-settings .setmi').count();
       ok(tag + ' 7 個分類，每個都有圖示', n === 7 && (await p.locator('#view-settings .setmi .smico').count()) === 7, n);
       ok(tag + ' 上方有程度／連續天數卡片', (await p.locator('#setSummary').innerText()).includes(T('程度', 'Level')));
-      if (vp.width > 700) {
-        ok(tag + ' iPad：左邊分類、右邊直接打開「外觀與字體」', await E("!document.querySelector('.setgrp[data-grp=look]').hidden") && await p.locator('#view-settings .setmenu').isVisible());
-      } else {
-        await p.click('.setmi[data-grp="look"]'); await p.waitForTimeout(150);
-        ok(tag + ' 手機：點進去後程度卡片收起來', !(await p.locator('#setSummary').isVisible()));
-      }
+      ok(tag + ' 一開始是分類清單（iPad 也一樣，1.45 起）', await E("document.querySelector('.setgrp[data-grp=look]').hidden") && await p.locator('#view-settings .setmenu').isVisible());
+      await p.click('.setmi[data-grp="look"]'); await p.waitForTimeout(150);
+      ok(tag + ' 點分類進到那一頁：分類清單和程度卡片收起來、有返回鍵', !(await p.locator('#setSummary').isVisible()) && !(await p.locator('#view-settings .setmenu').isVisible()) && await p.locator('#view-settings .vhead .back').isVisible());
       // 泰文字體：卡片不擠
       const boxes = await p.$$eval('#thFontGroup button', bs => bs.map(b => { const r = b.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; }));
       ok(tag + ' 泰文字體是整齊的卡片（同寬、高度 ≥ 80）', boxes.length === 5 && boxes.every(x => x[1] >= 80 && Math.abs(x[0] - boxes[0][0]) <= 2), JSON.stringify(boxes));
       await p.click('#thFontGroup button >> nth=3'); await p.waitForTimeout(150);
       ok(tag + ' 點泰文字體會切換', (await E("localStorage.getItem('thai-thfont')")) === 'kanit');
-      ok(tag + ' 名稱下面直接看得到說明', (await p.locator('.setgrp[data-grp=look] .setdesc').count()) >= 4);
+      ok(tag + ' 說明只在「?」裡（名稱下面不再重複）', (await p.locator('.setgrp[data-grp=look] .setdesc').count()) === 0 && (await p.locator('.setgrp[data-grp=look] .qhelp:visible').count()) === 5);
       // 開關
       await E("settingsOpen('read'); 1"); await p.waitForTimeout(150);
       const sw = p.locator('.setrow:has(#romGroup) .swt');
@@ -61,7 +58,6 @@ let fails = 0; const ok = (n, c, x) => { if (!c) fails++; console.log((c ? 'PASS
       await p.click('#flameGroup button >> nth=0');
       ok(tag + ' 改回會動：火苗回來', !(await E("$('homeStreak').hidden")));
       ok(tag + ' 設定裡的三個選項各有預覽圖示', (await p.locator('#flameGroup .flpv').count()) === 3);
-      if (lang === 'en') { ok(tag + ' 英文介面：說明是英文', !/[一-鿿]/.test(await p.locator('.setgrp[data-grp=look] .setdesc >> nth=0').innerText()), await p.locator('.setgrp[data-grp=look] .setdesc >> nth=0').innerText()); }
       ok(tag + ' 沒有錯誤', errs.length === 0, errs.join(' | '));
       await p.close();
     }
