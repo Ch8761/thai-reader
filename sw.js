@@ -1,9 +1,9 @@
 /* 泰文閱讀的離線程式。改版時把 VERSION 加一，iPad 會自動換成新版。 */
-const VERSION = 'thai-reader-v1.43.0';
+const VERSION = 'thai-reader-v1.44.0';
 const OCR_CACHE = 'thai-reader-ocr-5.1.1';
 const DATA_CACHE = 'thai-reader-data';
 /* 字典等大資料：檔名帶內容雜湊，存在自己的快取，改版時只下載有變的那幾個 */
-const DATA = ["./data/dictdata.141e3db9b1.js", "./data/namedata.08e9f56c75.js", "./data/ocrfix.4ed03b5549.js", "./data/freqdata.109ebd697a.js", "./data/celebdata.7e26f0d726.js", "./data/lib-pdflib.f87b3575e0.js", "./data/lib-pdfjs.5adb988897.js", "./data/lib-pdfworker.23c6ba23da.js"];
+const DATA = ["./data/dictdata.26bbd268f1.js", "./data/namedata.08e9f56c75.js", "./data/ocrfix.4ed03b5549.js", "./data/freqdata.109ebd697a.js", "./data/celebdata.efa3059955.js", "./data/lib-pdflib.f87b3575e0.js", "./data/lib-pdfjs.5adb988897.js", "./data/lib-pdfworker.23c6ba23da.js"];
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => {
   const getData = (c) => Promise.all(DATA.map((u) => c.match(u).then((hit) => (hit ? null : c.add(u)))));

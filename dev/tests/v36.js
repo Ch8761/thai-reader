@@ -43,7 +43,7 @@ const ZH = /[㐀-鿿]/;
     await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250); await p.click('.setmi[data-grp="read"]'); await p.waitForTimeout(250);
     ok(lang + ' 設定 → 閱讀與查詞：有「標示查不到的字」，預設標示', (await p.locator('#unkGroup button').allTextContents()).join() === T('標示,不標示', 'Show,Hide') && (await p.locator('#unkGroup button').nth(0).getAttribute('aria-checked')) === 'true');
     if (lang === 'en') { const row = await p.locator('#unkGroup').locator('xpath=ancestor::div[contains(@class,"setrow")]').innerText(); ok('en 設定列沒有中文', !ZH.test(row), row); }
-    await p.locator('#unkGroup button').nth(1).click(); await p.waitForTimeout(150);
+    await p.locator('.setrow:has(#unkGroup) .swt').click(); await p.waitForTimeout(150);
     await p.click('.tabbar [data-tab="doc"]'); await p.waitForTimeout(300);
     ok(lang + ' 關掉：虛線消失、存起來', (await p.locator('#text mark.unk').count()) === 0 && (await p.evaluate(() => localStorage.getItem('thai-show-unk'))) === '0');
     await E("localStorage.removeItem('thai-show-unk'); renderText(); 1");

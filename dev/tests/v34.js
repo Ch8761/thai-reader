@@ -35,7 +35,7 @@ const ZH = /[㐀-鿿]/;
     ok('辨識出來的字可以查詞（斷詞正常）', hit.t === 'ไต้หวัน', JSON.stringify(hit));
     ok('沒有程式錯誤', p.errs.length === 0, p.errs.join('|'));
     // 設定列
-    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250); await p.click('.setmi[data-grp="read"]'); await p.waitForTimeout(250);
+    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250); await p.click('.setmi[data-grp="ocr"]'); await p.waitForTimeout(250);
     ok('設定 → 閱讀與查詞：有「文字辨識方式」，預設新版', await p.locator('#ocrEngGroup').isVisible() && (await p.locator('#ocrEngGroup button').allTextContents()).join() === '新版,舊版' && (await p.locator('#ocrEngGroup button').nth(0).getAttribute('aria-checked')) === 'true');
     await p.locator('#ocrEngGroup button').nth(1).click(); await p.waitForTimeout(100);
     ok('選舊版：存起來', (await p.evaluate(() => localStorage.getItem('thai-ocr-engine'))) === 'old' && (await p.E('otOn()')) === false);
@@ -63,7 +63,7 @@ const ZH = /[㐀-鿿]/;
   // 4. 英文介面
   {
     const p = await open({ en: true });
-    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250); await p.click('.setmi[data-grp="read"]'); await p.waitForTimeout(250);
+    await p.click('.tabbar [data-tab="settings"]'); await p.waitForTimeout(250); await p.click('.setmi[data-grp="ocr"]'); await p.waitForTimeout(250);
     const row = await p.locator('#ocrEngGroup').locator('xpath=ancestor::div[contains(@class,"setrow")]').innerText();
     ok('en 設定列沒有中文', !ZH.test(row), row);
     await p.locator('#ocrEngGroup').locator('xpath=ancestor::div[contains(@class,"setrow")]').locator('.qhelp').click(); await p.waitForTimeout(150);
